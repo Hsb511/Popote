@@ -12,5 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Neuracr's recipes"
-include ':app'
+include(":app")
+include(":domain")
