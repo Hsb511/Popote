@@ -27,11 +27,18 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.2"
+    }
 }
 
 dependencies {
     implementation("io.coil-kt:coil-compose:2.3.0")
     implementation("androidx.compose.material3:material3:1.0.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.4.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
 }
