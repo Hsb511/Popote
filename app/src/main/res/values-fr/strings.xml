@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_home_display_name">Accueil</string>
+    <string name="navigation_search_display_name">Recherche</string>
+    <string name="navigation_about_display_name">A propos</string>
+</resources>
