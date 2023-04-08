@@ -7,17 +7,20 @@ sealed class RecipeDomainModel(
     open val title: String,
     open val imageUrl: String,
     open val date: LocalDate,
+    open val language: LanguageDomainModel,
 ) {
     data class Summarized(
         override val id: String,
         override val title: String,
         override val imageUrl: String,
         override val date: LocalDate,
+        override val language: LanguageDomainModel,
     ) : RecipeDomainModel(
         id = id,
         title = title,
         imageUrl = imageUrl,
         date = date,
+        language = language,
     )
 
     data class Full(
@@ -25,6 +28,7 @@ sealed class RecipeDomainModel(
         override val title: String,
         override val imageUrl: String,
         override val date: LocalDate,
+        override val language: LanguageDomainModel,
         val author: String,
         val tags: List<String>,
         val servingsNumber: Int,
@@ -38,5 +42,6 @@ sealed class RecipeDomainModel(
         title = title,
         imageUrl = imageUrl,
         date = date,
+        language = language,
     )
 }

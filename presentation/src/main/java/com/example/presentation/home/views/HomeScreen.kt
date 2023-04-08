@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.design_system.flags.NeuracrFlagProperty
 import com.example.design_system.image.NeuracrImageProperty
 import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.home.models.HomeRecipeUiModel
@@ -45,7 +46,8 @@ private fun HomeScreenPreview() {
                         imageProperty = NeuracrImageProperty.Resource(
                             contentDescription = null,
                             imageRes = com.example.design_system.R.drawable.bretzel
-                        )
+                        ),
+                        flagProperty = NeuracrFlagProperty.FRENCH,
                     )
                 }
             )
