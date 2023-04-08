@@ -38,3 +38,14 @@ private fun black35() = Color(0xFF232323)
 internal fun black26() = Color(0xFF1A1A1A)
 private fun black13() = Color(0xFF0D0D0D)
 private fun black() = Color.Black
+
+internal fun frenchBlue() = Color(0xFF0050A4)
+internal fun frenchWhite() = Color(0xFFFFFFFF)
+internal fun frenchRed() = Color(0xFFEF4135)
+
+internal fun ukBlue() = Color(0xFF00247D)
+internal fun ukRed() = Color(0xFFCF142B)
+internal fun ukUsWhite()= Color(0xFFFFFFFF)
+internal fun usBlue() = Color(0xFF3C3B6E)
+internal fun usRed() = Color(0xFFB22234)
+

@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.design_system.flags.NeuracrFlagProperty
 import com.example.design_system.image.NeuracrImageProperty
 import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.R
@@ -58,7 +59,8 @@ private fun HomeContentDataPreview() {
 					imageProperty = NeuracrImageProperty.Resource(
 						contentDescription = null,
 						imageRes = com.example.design_system.R.drawable.bretzel
-					)
+					),
+					flagProperty = NeuracrFlagProperty.FRENCH,
 				)
 			}
 		)
