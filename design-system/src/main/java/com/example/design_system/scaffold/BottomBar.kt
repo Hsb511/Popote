@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,8 +18,7 @@ import com.example.design_system.theming.NeuracrTheme
 @Composable
 internal fun BottomBar(navItemProperties: List<NavItemProperty>) {
 	NavigationBar(
-		containerColor = MaterialTheme.colorScheme.primary,
-		contentColor = MaterialTheme.colorScheme.onPrimary,
+		containerColor = MaterialTheme.colorScheme.inverseSurface,
 		modifier = Modifier.height(56.dp)
 	) {
 		navItemProperties.map { navItemProperty ->
@@ -40,11 +39,11 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>) {
 					)
 				},
 				colors = NavigationBarItemDefaults.colors(
-					selectedIconColor = MaterialTheme.colorScheme.scrim,
-					selectedTextColor = MaterialTheme.colorScheme.scrim,
-					indicatorColor = MaterialTheme.colorScheme.surface,
-					unselectedIconColor = MaterialTheme.colorScheme.onPrimary,
-					unselectedTextColor = MaterialTheme.colorScheme.onPrimary,
+					selectedIconColor = MaterialTheme.colorScheme.inverseOnSurface,
+					selectedTextColor = MaterialTheme.colorScheme.inverseOnSurface,
+					indicatorColor = MaterialTheme.colorScheme.secondary,
+					unselectedIconColor = MaterialTheme.colorScheme.scrim,
+					unselectedTextColor = MaterialTheme.colorScheme.scrim,
 				),
 				modifier = Modifier.offset(y = (-8).dp)
 			)
@@ -59,8 +58,8 @@ private fun BottomBarPreview() {
 		BottomBar(
 			listOf(
 				NavItemProperty("Home", Icons.Filled.Home, true) {},
-				NavItemProperty("Search", Icons.Filled.Search, false) {},
-				NavItemProperty("About", Icons.Filled.Info, false) {},
+				NavItemProperty("Search", Icons.Outlined.Search, false) {},
+				NavItemProperty("About", Icons.Outlined.Info, false) {},
 			)
 		)
 	}

@@ -4,7 +4,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -19,12 +18,14 @@ fun neuracrColorScheme(): ColorScheme {
     val systemUiController = rememberSystemUiController()
     return if (isSystemInDarkTheme()) {
         systemUiController.apply {
-            setSystemBarsColor(color = black26())
+            setStatusBarColor(color = black26())
+            setNavigationBarColor(color = black35())
         }
         neuracrDarkColorScheme
     } else {
         systemUiController.apply {
-            setSystemBarsColor(color = umber())
+            setStatusBarColor(color = umber())
+            setNavigationBarColor(color = black90())
         }
         neuracrLightColorScheme
     }
