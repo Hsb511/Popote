@@ -7,23 +7,29 @@ import androidx.compose.ui.graphics.Color
 internal val neuracrLightColorScheme = lightColorScheme(
     primary = umber(),
     onPrimary = white(),
+	primaryContainer = cornSilk(),
     secondary = olivine(),
     onSecondary = white(),
     surface = taupe(),
     onSurface = white(),
-    scrim = cornSilk(),
+	inverseSurface = black90(),
+	inverseOnSurface = taupe(),
+    scrim = umber(),
 )
 
 internal val neuracrDarkColorScheme = darkColorScheme(
     primary = black26(),
     onPrimary = white(),
+	primaryContainer = black26(),
     secondary = black70(),
     onSecondary = cornSilk(),
     surface = black13(),
     onSurface = white(),
+	inverseSurface = black35(),
+	inverseOnSurface = white(),
     background = black35(),
     onBackground = cornSilk(),
-    scrim = cornSilk(),
+    scrim = black90(),
 )
 
 private fun white() = Color.White
@@ -34,7 +40,7 @@ private fun taupe() = Color(0xFF533F33)
 internal fun black95() = Color(0xFFF3F3F3)
 internal fun black90() = Color(0xFFE2E2E2)
 private fun black70() = Color(0xFF464646)
-private fun black35() = Color(0xFF232323)
+internal fun black35() = Color(0xFF232323)
 internal fun black26() = Color(0xFF1A1A1A)
 private fun black13() = Color(0xFF0D0D0D)
 private fun black() = Color.Black
@@ -48,4 +54,3 @@ internal fun ukRed() = Color(0xFFCF142B)
 internal fun ukUsWhite()= Color(0xFFFFFFFF)
 internal fun usBlue() = Color(0xFF3C3B6E)
 internal fun usRed() = Color(0xFFB22234)
-
