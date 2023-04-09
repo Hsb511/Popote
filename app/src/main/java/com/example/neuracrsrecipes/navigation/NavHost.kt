@@ -24,7 +24,10 @@ import com.example.presentation.home.views.HomeScreen
 internal fun NavHost(context: Context) {
 	val navController = rememberNavController()
 	val navItems = toNavItemProperties(AppPage.values().toList(), context, navController)
-	NeuracrScaffold(navItems) { padding ->
+	NeuracrScaffold(
+		navItemProperties = navItems,
+		navigateUp = { navController.navigateUp() },
+	) { padding ->
 		val paddingModifier = Modifier.padding(padding)
 		NavHost(navController = navController, startDestination = AppPage.HOME.route) {
 			composable(AppPage.HOME.route) { HomeScreen(modifier = paddingModifier) }
