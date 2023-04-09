@@ -18,39 +18,51 @@ import com.example.design_system.theming.NeuracrTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TopBar() {
-    CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
-        ),
-        navigationIcon = {
-            IconButton(onClick = { /* TODO doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.scaffold_navigate_up_a11y)
-                )
-            }
-        },
-        title = {
-            Text(text = stringResource(R.string.scaffold_title))
-        },
-        actions = {
-            IconButton(onClick = { /* TODO doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = stringResource(id = R.string.scaffold_menu_a11y),
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                )
-            }
-        }
-    )
+internal fun TopBar(
+	isHome: Boolean,
+	navigateUp: () -> Unit,
+	openMenu: () -> Unit,
+) {
+	CenterAlignedTopAppBar(
+		colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+			containerColor = MaterialTheme.colorScheme.primary,
+			actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+		),
+		navigationIcon = {
+			if (isHome) {
+				// TODO DISPLAY APP LOGO
+			} else {
+				IconButton(onClick = navigateUp) {
+					Icon(
+						imageVector = Icons.Filled.ArrowBack,
+						contentDescription = stringResource(id = R.string.scaffold_navigate_up_a11y)
+					)
+				}
+			}
+		},
+		title = {
+			Text(text = stringResource(R.string.scaffold_title))
+		},
+		actions = {
+			IconButton(onClick = openMenu) {
+				Icon(
+					imageVector = Icons.Filled.Menu,
+					contentDescription = stringResource(id = R.string.scaffold_menu_a11y),
+					tint = MaterialTheme.colorScheme.onPrimary,
+				)
+			}
+		}
+	)
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun TopBarPreview() {
-    NeuracrTheme {
-        TopBar()
-    }
+	NeuracrTheme {
+		TopBar(
+			isHome = true,
+			navigateUp = {},
+			openMenu = {},
+		)
+	}
 }
