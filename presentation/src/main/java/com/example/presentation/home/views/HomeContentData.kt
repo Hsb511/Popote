@@ -1,14 +1,12 @@
 package com.example.presentation.home.views
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,31 +16,30 @@ import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.R
 import com.example.presentation.home.models.HomeRecipeUiModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContentData(homeRecipeUiModels: List<HomeRecipeUiModel>, modifier: Modifier = Modifier) {
-
-	LazyColumn(
-		verticalArrangement = Arrangement.spacedBy(16.dp),
+	val lazyGridState = rememberLazyStaggeredGridState()
+	LazyVerticalStaggeredGrid(
+		columns = StaggeredGridCells.Adaptive(300.dp),
+		contentPadding = PaddingValues(32.dp),
+		verticalItemSpacing = 16.dp,
+		horizontalArrangement = Arrangement.spacedBy(16.dp),
+		state = lazyGridState,
 		modifier = modifier.fillMaxSize()
 	) {
-		item {
+		item(span = StaggeredGridItemSpan.FullLine) {
 			Text(
 				text = stringResource(id = R.string.home_title),
 				style = MaterialTheme.typography.displaySmall,
 				color = MaterialTheme.colorScheme.onBackground,
-				modifier = Modifier.padding(start = 32.dp, top = 16.dp, end = 32.dp)
 			)
 		}
 		items(homeRecipeUiModels) { homeRecipeUiModel ->
 			HomeRecipeCard(
 				homeRecipeUiModel = homeRecipeUiModel,
-				modifier = Modifier
-					.fillMaxWidth()
-					.padding(horizontal = 32.dp)
+				modifier = Modifier.fillMaxWidth()
 			)
-		}
-		item {
-			Surface(color = Color.Transparent, modifier = Modifier.height(0.dp)) {}
 		}
 	}
 }
