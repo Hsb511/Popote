@@ -3,8 +3,17 @@ package com.example.neuracrsrecipes.navigation
 import androidx.annotation.StringRes
 import com.example.neuracrsrecipes.R
 
-enum class AppPage(val route: String, @StringRes val displayNameId: Int) {
-	HOME("home", R.string.navigation_home_display_name),
-	SEARCH("search", R.string.navigation_search_display_name),
-	ABOUT("about", R.string.navigation_about_display_name),
+sealed class AppPage(open val route: String, @StringRes open val displayNameId: Int) {
+
+	object Home : AppPage("home", R.string.navigation_home_display_name)
+	object Search : AppPage("search", R.string.navigation_search_display_name)
+	object About : AppPage("about", R.string.navigation_about_display_name)
+	sealed class WithArgument(
+		override val route: String,
+		@StringRes override val displayNameId: Int,
+		val argumentName: String
+	) : AppPage(route, displayNameId) {
+
+		object Recipe : WithArgument("home", R.string.navigation_home_display_name, "recipeId")
+	}
 }
