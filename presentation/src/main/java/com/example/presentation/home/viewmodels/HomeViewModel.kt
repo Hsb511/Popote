@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecases.GetAllSummarizedRecipesUseCase
 import com.example.presentation.home.mappers.HomeRecipeMapper
+import com.example.presentation.home.models.HomeRecipeUiModel
 import com.example.presentation.home.models.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

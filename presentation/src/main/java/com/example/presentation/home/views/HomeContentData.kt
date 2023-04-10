@@ -1,6 +1,7 @@
 package com.example.presentation.home.views
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.staggeredgrid.*
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +19,10 @@ import com.example.presentation.home.models.HomeRecipeUiModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeContentData(homeRecipeUiModels: List<HomeRecipeUiModel>, modifier: Modifier = Modifier) {
+fun HomeContentData(
+	homeRecipeUiModels: List<HomeRecipeUiModel>,
+	homeRecipeClick: (HomeRecipeUiModel) -> Unit,
+	modifier: Modifier = Modifier) {
 	val lazyGridState = rememberLazyStaggeredGridState()
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(300.dp),
@@ -38,7 +42,11 @@ fun HomeContentData(homeRecipeUiModels: List<HomeRecipeUiModel>, modifier: Modif
 		items(homeRecipeUiModels) { homeRecipeUiModel ->
 			HomeRecipeCard(
 				homeRecipeUiModel = homeRecipeUiModel,
-				modifier = Modifier.fillMaxWidth()
+				modifier = Modifier
+					.fillMaxWidth()
+					.clickable {
+						homeRecipeClick(homeRecipeUiModel)
+					}
 			)
 		}
 	}
@@ -59,7 +67,8 @@ private fun HomeContentDataPreview() {
 					),
 					flagProperty = NeuracrFlagProperty.FRENCH,
 				)
-			}
+			},
+			{ }
 		)
 	}
 }
