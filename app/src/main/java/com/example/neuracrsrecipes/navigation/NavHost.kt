@@ -21,9 +21,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.design_system.scaffold.NavItemProperty
 import com.example.design_system.scaffold.NeuracrScaffold
-import com.example.presentation.home.views.HomeScreen
+import com.example.presentation.home.HomeScreen
 import com.example.presentation.recipe.extensions.toCleanRecipeId
-import com.example.presentation.recipe.views.RecipeScreen
+import com.example.presentation.recipe.RecipeScreen
 
 @Composable
 internal fun NavHost(context: Context) {
@@ -61,11 +61,16 @@ internal fun NavHost(context: Context) {
 }
 
 @Composable
-internal fun toNavItemProperties(appPages: List<AppPage>, context: Context, navController: NavHostController): List<NavItemProperty> =
+internal fun toNavItemProperties(
+	appPages: List<AppPage>,
+	context: Context,
+	navController: NavHostController
+): List<NavItemProperty> =
 	appPages.map { appPage ->
 		val currentScreenRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 			?: AppPage.Home.route
-		val isSelected = currentScreenRoute == appPage.route
+		val isSelected = currentScreenRoute == appPage.route ||
+			(appPage == AppPage.Home && currentScreenRoute.contains(AppPage.Home.route))
 		val icon = when (appPage) {
 			AppPage.Home -> if (isSelected) Icons.Filled.Home else Icons.Outlined.Home
 			AppPage.Search -> if (isSelected) Icons.Filled.Search else Icons.Outlined.Search

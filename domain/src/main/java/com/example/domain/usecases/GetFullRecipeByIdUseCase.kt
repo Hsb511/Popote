@@ -7,7 +7,8 @@ import javax.inject.Inject
 class GetFullRecipeByIdUseCase @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) {
-    suspend fun invoke(id: String): Result<RecipeDomainModel.Full> = runCatching {
-        recipeRepository.getFullRecipeById(id) ?: throw IllegalArgumentException()
+    suspend fun invoke(recipeId: String): Result<RecipeDomainModel.Full> = runCatching {
+        recipeRepository.loadFullRecipeByIdFromNeuracrIfNeeded(recipeId)
+        recipeRepository.getFullRecipeById(recipeId) ?: throw IllegalArgumentException()
     }
 }

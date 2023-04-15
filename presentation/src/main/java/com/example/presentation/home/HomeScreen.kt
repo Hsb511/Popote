@@ -1,12 +1,10 @@
-package com.example.presentation.home.views
+package com.example.presentation.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.design_system.R
 import com.example.design_system.flags.NeuracrFlagProperty
 import com.example.design_system.image.NeuracrImageProperty
@@ -14,7 +12,8 @@ import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.home.models.HomeRecipeUiModel
 import com.example.presentation.home.models.HomeUiState
 import com.example.presentation.home.models.HomeUiState.*
-import com.example.presentation.home.viewmodels.HomeViewModel
+import com.example.presentation.home.views.HomeContentData
+import com.example.presentation.home.views.HomeContentLoading
 
 @Composable
 fun HomeScreen(

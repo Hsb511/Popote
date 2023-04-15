@@ -1,5 +1,6 @@
 package com.example.data.mappers
 
+import com.example.data.models.FullRecipeDataModel
 import com.example.data.models.SummarizedRecipeDataModel
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -18,4 +19,23 @@ class RawElementsMapper @Inject constructor() {
             throw IllegalArgumentException()
         }
     }
+
+    fun toFullRecipeDataModel(recipeId: String, rawRecipe: Elements) = FullRecipeDataModel(
+        href = recipeId,
+        imgSrc = rawRecipe.select("img").attr("src"),
+        title = rawRecipe.select("h1").text(),
+        subTitle = rawRecipe.select("p").first()!!.text(),
+        instructionTitle = rawRecipe
+            .select("section.recipe__instructions")
+            .html()
+            .split("<h2>")
+            .first()
+            .split("<br>")
+            .first(),
+        lastTitle = rawRecipe
+            .select("section.recipe__instructions")
+            .html()
+            .split("</div>")
+            .last(),
+    )
 }

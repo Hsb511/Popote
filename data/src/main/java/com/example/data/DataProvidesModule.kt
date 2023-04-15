@@ -2,7 +2,8 @@ package com.example.data
 
 import android.content.Context
 import androidx.room.Room
-import com.example.data.daos.RecipeDao
+import com.example.data.daos.FullRecipeDao
+import com.example.data.daos.SummarizedRecipeDao
 import com.example.data.datasources.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,9 @@ class DataProvidesModule {
 
     @Provides
     @Singleton
-    fun provideStationDao(appDatabase: AppDatabase): RecipeDao = appDatabase.recipeDao()
+    fun provideSummarizedRecipeDao(appDatabase: AppDatabase): SummarizedRecipeDao = appDatabase.summarizedRecipeDao()
+
+    @Provides
+    @Singleton
+    fun provideFullRecipeDao(appDatabase: AppDatabase): FullRecipeDao = appDatabase.fullRecipeDao()
 }

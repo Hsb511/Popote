@@ -5,5 +5,6 @@ import com.example.domain.models.RecipeDomainModel
 interface RecipeRepository {
     suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized>
     suspend fun loadAllSummarizedRecipesIfNeeded()
-    suspend fun getFullRecipeById(id: String): RecipeDomainModel.Full?
+    suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String)
+    suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full?
 }

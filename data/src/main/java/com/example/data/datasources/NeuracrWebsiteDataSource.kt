@@ -14,4 +14,9 @@ internal class NeuracrWebsiteDataSource @Inject constructor() {
         .get()
         .select("ul.latest-recipes")
         .select("li")
+
+    fun getRecipeById(recipeId: String): Elements = Jsoup
+        .connect("$NEURACR_WEBSITE_HOME_URL$recipeId")
+        .get()
+        .select("div.main__content")
 }

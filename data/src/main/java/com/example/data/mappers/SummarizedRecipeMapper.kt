@@ -8,6 +8,7 @@ import javax.inject.Inject
 
 class SummarizedRecipeMapper @Inject constructor(
     private val dateMapper: DateMapper,
+    private val languageMapper: LanguageMapper,
 ) {
     fun toSummarizedRecipeDomainModels(summarizedRecipeDataModels: List<SummarizedRecipeDataModel>)
         : List<RecipeDomainModel.Summarized> = summarizedRecipeDataModels.map(::toSummarizedRecipeDomainModel)
@@ -22,10 +23,6 @@ class SummarizedRecipeMapper @Inject constructor(
                 .split("/")
                 .let { splitData -> "${splitData[0]}/${splitData[1]}/${splitData[2]}" }
             ),
-            language = if (summarizedRecipeDataModel.href.split(".html")[0].endsWith("_fr")) {
-                LanguageDomainModel.FRENCH
-            } else {
-                LanguageDomainModel.ENGLISH
-            }
+            language = languageMapper.toLanguageDomainModel(summarizedRecipeDataModel.href),
         )
 }
