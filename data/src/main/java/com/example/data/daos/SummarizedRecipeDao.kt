@@ -6,10 +6,10 @@ import androidx.room.Query
 import com.example.data.models.SummarizedRecipeDataModel
 
 @Dao
-interface RecipeDao {
+interface SummarizedRecipeDao {
     @Query("SELECT * FROM SummarizedRecipeDataModel")
-    fun getAll(): List<SummarizedRecipeDataModel>
+    suspend fun getAll(): List<SummarizedRecipeDataModel>
 
     @Insert
-    fun insertAll(vararg summarizedRecipes: SummarizedRecipeDataModel)
+    suspend fun insertAll(vararg summarizedRecipes: SummarizedRecipeDataModel)
 }

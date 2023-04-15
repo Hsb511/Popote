@@ -35,7 +35,7 @@ internal fun HomeRecipeCard(
         Text(
             text = homeRecipeUiModel.title,
             color = MaterialTheme.colorScheme.onSurface,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.titleSmall,
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .clip(shape = MaterialTheme.shapes.medium.copy(
@@ -43,7 +43,7 @@ internal fun HomeRecipeCard(
                     bottomEnd = CornerSize(0.dp)
                 ))
                 .background(color = MaterialTheme.colorScheme.surface)
-                .padding(horizontal = 12.dp)
+                .padding(start = 12.dp, bottom = 2.dp, end = 12.dp)
         )
         NeuracrFlag(
             neuracrFlagProperty = homeRecipeUiModel.flagProperty,

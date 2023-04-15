@@ -1,6 +1,6 @@
 package com.example.data.repositories
 
-import com.example.data.daos.RecipeDao
+import com.example.data.daos.SummarizedRecipeDao
 import com.example.data.datasources.NeuracrWebsiteDataSource
 import com.example.data.mappers.RawElementsMapper
 import com.example.data.mappers.SummarizedRecipeMapper
@@ -11,13 +11,13 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class RecipeDataRepositoryTest {
-    private val recipeDao: RecipeDao = mockk()
+    private val summarizedRecipeDao: SummarizedRecipeDao = mockk()
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource = mockk()
     private val rawElementsMapper: RawElementsMapper = mockk()
     private val summarizedRecipeMapper: SummarizedRecipeMapper = mockk()
 
     private val recipeDataRepository = RecipeDataRepository(
-        recipeDao, neuracrWebsiteDataSource, rawElementsMapper, summarizedRecipeMapper
+        summarizedRecipeDao, neuracrWebsiteDataSource, rawElementsMapper, summarizedRecipeMapper
     )
 
     @Test
