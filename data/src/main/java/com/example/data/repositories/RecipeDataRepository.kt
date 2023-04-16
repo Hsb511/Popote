@@ -3,8 +3,9 @@ package com.example.data.repositories
 import com.example.data.daos.*
 import com.example.data.datasources.NeuracrWebsiteDataSource
 import com.example.data.mappers.FullRecipeMapper
-import com.example.data.mappers.RawElementsMapper
 import com.example.data.mappers.SummarizedRecipeMapper
+import com.example.data.parsers.FullRecipeParser
+import com.example.data.parsers.SummarizedRecipeParser
 import com.example.domain.models.RecipeDomainModel
 import com.example.domain.repositories.RecipeRepository
 import org.jsoup.select.Elements
@@ -17,7 +18,8 @@ internal class RecipeDataRepository @Inject constructor(
 	private val ingredientDao: IngredientDao,
 	private val instructionDao: InstructionDao,
 	private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
-	private val rawElementsMapper: RawElementsMapper,
+	private val summarizedRecipeParser: SummarizedRecipeParser,
+	private val fullRecipeParser: FullRecipeParser,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
 	private val fullRecipeMapper: FullRecipeMapper,
 ) : RecipeRepository {
@@ -29,7 +31,7 @@ internal class RecipeDataRepository @Inject constructor(
 	override suspend fun loadAllSummarizedRecipesIfNeeded() {
 		if (summarizedRecipeDao.getAll().isEmpty()) {
 			val rawLatestPosts: Elements = neuracrWebsiteDataSource.getLatestPostsFromHome()
-			val summarizedRecipeDataModels = rawElementsMapper.toSummarizedRecipeDataModels(rawLatestPosts)
+			val summarizedRecipeDataModels = summarizedRecipeParser.toSummarizedRecipeDataModels(rawLatestPosts)
 			summarizedRecipeDao.insertAll(*summarizedRecipeDataModels.toTypedArray())
 		}
 	}
@@ -37,7 +39,7 @@ internal class RecipeDataRepository @Inject constructor(
 	override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
 		if (recipeDao.findFullRecipeById(recipeId) == null) {
 			val rawRecipe: Elements = neuracrWebsiteDataSource.getRecipeById(recipeId)
-			val fullRecipeDataModel = rawElementsMapper.toFullRecipeDataModel(recipeId, rawRecipe)
+			val fullRecipeDataModel = fullRecipeParser.toFullRecipeDataModel(recipeId, rawRecipe)
 			recipeDao.insertOrReplace(fullRecipeDataModel.recipe)
 			tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
 			ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())

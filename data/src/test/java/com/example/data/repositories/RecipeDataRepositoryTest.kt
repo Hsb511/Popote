@@ -2,7 +2,7 @@ package com.example.data.repositories
 
 import com.example.data.daos.SummarizedRecipeDao
 import com.example.data.datasources.NeuracrWebsiteDataSource
-import com.example.data.mappers.RawElementsMapper
+import com.example.data.parsers.SummarizedRecipeParser
 import com.example.data.mappers.SummarizedRecipeMapper
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,11 +13,11 @@ import org.junit.Test
 class RecipeDataRepositoryTest {
     private val summarizedRecipeDao: SummarizedRecipeDao = mockk()
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource = mockk()
-    private val rawElementsMapper: RawElementsMapper = mockk()
+    private val summarizedRecipeParser: SummarizedRecipeParser = mockk()
     private val summarizedRecipeMapper: SummarizedRecipeMapper = mockk()
 
     private val recipeDataRepository = RecipeDataRepository(
-        summarizedRecipeDao, neuracrWebsiteDataSource, rawElementsMapper, summarizedRecipeMapper
+        summarizedRecipeDao, neuracrWebsiteDataSource, summarizedRecipeParser, summarizedRecipeMapper
     )
 
     @Test
