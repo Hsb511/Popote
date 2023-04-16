@@ -47,6 +47,16 @@ internal val neuracrTypography = Typography(
 		fontWeight = boldFontWeight(),
 		fontSize = 16.sp,
 	),
+	bodyMedium = TextStyle(
+		fontFamily = neuracrFontFamily(),
+		fontWeight = bodyFontWeight(),
+		fontSize = 16.sp,
+	),
+	bodySmall = TextStyle(
+		fontFamily = neuracrFontFamily(),
+		fontWeight = boldFontWeight(),
+		fontSize = 14.sp,
+	),
 	labelLarge = TextStyle(
 		fontFamily = neuracrFontFamily(),
 		fontWeight = bodyFontWeight(),

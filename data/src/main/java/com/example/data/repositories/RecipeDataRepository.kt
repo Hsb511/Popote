@@ -1,7 +1,6 @@
 package com.example.data.repositories
 
-import com.example.data.daos.FullRecipeDao
-import com.example.data.daos.SummarizedRecipeDao
+import com.example.data.daos.*
 import com.example.data.datasources.NeuracrWebsiteDataSource
 import com.example.data.mappers.FullRecipeMapper
 import com.example.data.mappers.RawElementsMapper
@@ -13,7 +12,10 @@ import javax.inject.Inject
 
 internal class RecipeDataRepository @Inject constructor(
 	private val summarizedRecipeDao: SummarizedRecipeDao,
-	private val fullRecipeDao: FullRecipeDao,
+	private val recipeDao: RecipeDao,
+	private val tagDao: TagDao,
+	private val ingredientDao: IngredientDao,
+	private val instructionDao: InstructionDao,
 	private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
 	private val rawElementsMapper: RawElementsMapper,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
@@ -33,15 +35,18 @@ internal class RecipeDataRepository @Inject constructor(
 	}
 
 	override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
-		if (fullRecipeDao.findById(recipeId) == null) {
+		if (recipeDao.findFullRecipeById(recipeId) == null) {
 			val rawRecipe: Elements = neuracrWebsiteDataSource.getRecipeById(recipeId)
 			val fullRecipeDataModel = rawElementsMapper.toFullRecipeDataModel(recipeId, rawRecipe)
-			fullRecipeDao.insertOrReplace(fullRecipeDataModel)
+			recipeDao.insertOrReplace(fullRecipeDataModel.recipe)
+			tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
+			ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())
+			instructionDao.insertOrReplace(*fullRecipeDataModel.instructions.toTypedArray())
 		}
 	}
 
 	override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? =
-		fullRecipeDao.findById(recipeId)?.let { dataModel ->
+		recipeDao.findFullRecipeById(recipeId)?.let { dataModel ->
 			fullRecipeMapper.toFullRecipeDomainModel(dataModel)
 		}
 }

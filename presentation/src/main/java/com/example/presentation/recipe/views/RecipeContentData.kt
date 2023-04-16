@@ -2,8 +2,6 @@ package com.example.presentation.recipe.views
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -46,11 +44,14 @@ fun RecipeContentData(
 				text = with(recipeUiModel) { "$date - ${stringResource(id = R.string.recipe_written_by)} $author" },
 				style = MaterialTheme.typography.labelLarge,
 			)
-			LazyRow {
+			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				items(recipeUiModel.tags) { tag ->
-					SuggestionChip(
+					ElevatedSuggestionChip(
 						onClick = { /*TODO*/ },
-						label = { Text(text = tag) }
+						label = { Text(
+							text = tag,
+							color = MaterialTheme.colorScheme.onSurface
+						) }
 					)
 				}
 			}
@@ -67,7 +68,10 @@ fun RecipeContentData(
 			)
 			RecipeIngredientsWidget()
 			Divider(modifier = Modifier.padding(top = 8.dp))
-			Text(text = recipeUiModel.description)
+			Text(
+				text = recipeUiModel.description,
+				style = MaterialTheme.typography.bodyMedium,
+			)
 			Text(
 				text = stringResource(id = R.string.recipe_instructions_title),
 				style = MaterialTheme.typography.titleLarge,
