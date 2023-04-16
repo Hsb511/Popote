@@ -16,7 +16,7 @@ import com.example.design_system.theming.NeuracrTheme
 @Composable
 fun HomeContentLoading(modifier: Modifier = Modifier) {
 	LazyColumn(
-		contentPadding = PaddingValues(32.dp),
+		contentPadding = PaddingValues(16.dp),
 		verticalArrangement = Arrangement.spacedBy(16.dp),
 		modifier = modifier
 			.fillMaxSize()
