@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Relation
 
 data class FullRecipeDataModel(
-	@Embedded val recipe: RecipeDataModel,
+	@Embedded val recipe: BaseRecipeDataModel,
 	@Relation(
 		parentColumn = "href",
 		entityColumn = "recipeId"
@@ -22,14 +22,4 @@ data class FullRecipeDataModel(
 		entityColumn = "recipeId"
 	)
 	val instructions: List<InstructionDataModel>,
-)
-
-@Entity
-data class RecipeDataModel(
-	@PrimaryKey val href: String,
-	val imgSrc: String,
-	val title: String,
-	val subTitle: String,
-	val instructionTitle: String,
-	val lastTitle: String,
 )

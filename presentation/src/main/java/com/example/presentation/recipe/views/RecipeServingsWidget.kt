@@ -42,6 +42,7 @@ fun RecipeServingsWidget(
 			Text(
 				text = "-",
 				style = MaterialTheme.typography.titleLarge,
+				color = MaterialTheme.colorScheme.onSecondary,
 				modifier = Modifier.clickable {
 					if (servingsAmount.value > 1) {
 						servingsAmount.value--
@@ -53,6 +54,7 @@ fun RecipeServingsWidget(
 			Text(
 				text = "+",
 				style = MaterialTheme.typography.titleLarge,
+				color = MaterialTheme.colorScheme.onSecondary,
 				modifier = Modifier.clickable { servingsAmount.value++ },
 			)
 		},

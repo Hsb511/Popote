@@ -48,10 +48,12 @@ fun RecipeContentData(
 				items(recipeUiModel.tags) { tag ->
 					ElevatedSuggestionChip(
 						onClick = { /*TODO*/ },
-						label = { Text(
-							text = tag,
-							color = MaterialTheme.colorScheme.onSurface
-						) }
+						label = {
+							Text(
+								text = tag,
+								color = MaterialTheme.colorScheme.onSurface
+							)
+						}
 					)
 				}
 			}
@@ -66,7 +68,7 @@ fun RecipeContentData(
 				text = stringResource(id = R.string.recipe_ingredients_title),
 				style = MaterialTheme.typography.titleLarge,
 			)
-			RecipeIngredientsWidget()
+			RecipeIngredientsWidget(recipeUiModel.ingredients)
 			Divider(modifier = Modifier.padding(top = 8.dp))
 			Text(
 				text = recipeUiModel.description,
@@ -104,8 +106,13 @@ fun RecipeContentDataPreview() {
 				servingsAmount = 4,
 				description = "description",
 				conclusion = "conclusion",
-
+				ingredients = listOf(
+					"0.5 - lime",
+					"15 mL - sugar syrup",
+					"12 - raspberry (frozen)",
+					"12 - mint leaf",
 				)
+			)
 		)
 	}
 }

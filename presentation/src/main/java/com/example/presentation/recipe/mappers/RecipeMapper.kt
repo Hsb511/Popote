@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 class RecipeMapper @Inject constructor(
 	private val dateMapper: DateMapper,
+	private val ingredientMapper: IngredientMapper,
 ) {
 	fun toRecipeUiModel(fullRecipe: RecipeDomainModel.Full) = RecipeUiModel(
 		title = fullRecipe.title,
@@ -14,6 +15,7 @@ class RecipeMapper @Inject constructor(
 		author = fullRecipe.author,
 		tags = fullRecipe.tags,
 		image = NeuracrImageProperty.Remote(null, fullRecipe.imageUrl),
+		ingredients = ingredientMapper.toStringList(fullRecipe.ingredients),
 		servingsAmount = fullRecipe.servingsNumber,
 		description = fullRecipe.startingText,
 		conclusion = fullRecipe.endingText,
