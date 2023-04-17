@@ -24,7 +24,7 @@ class RecipeViewModel @Inject constructor(
 
 	fun getRecipe(sanitizedRecipeId: String?) {
 		if (sanitizedRecipeId == null) {
-			_uiState.value = RecipeUiState.Error
+			_uiState.value = RecipeUiState.Error("The recipe link is invalid")
 		} else {
 			viewModelScope.launch(Dispatchers.IO) {
 				getFullRecipeByIdUseCase.invoke(sanitizedRecipeId.toUrlRecipeId())
@@ -34,7 +34,7 @@ class RecipeViewModel @Inject constructor(
 						)
 					}
 					.onFailure {
-						_uiState.value = RecipeUiState.Error
+						_uiState.value = RecipeUiState.Error("${it.javaClass.simpleName} ${it.localizedMessage}" ?: "an error occured")
 					}
 			}
 		}

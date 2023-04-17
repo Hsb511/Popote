@@ -27,7 +27,7 @@ fun RecipeScreen(
 fun RecipeScreen(recipeUiState: RecipeUiState, modifier: Modifier) {
 	when (recipeUiState) {
 		is RecipeUiState.Data -> RecipeContentData(recipeUiState.recipe, modifier)
-		is RecipeUiState.Error -> TODO()
+		is RecipeUiState.Error -> Text(text = recipeUiState.message, modifier)
 		is RecipeUiState.Loading -> Text(text = "TODO loading...", modifier)
 	}
 }

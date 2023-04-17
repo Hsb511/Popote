@@ -8,7 +8,7 @@ import com.example.data.models.*
 @Database(
 	entities = [
 		SummarizedRecipeDataModel::class,
-		RecipeDataModel::class,
+		BaseRecipeDataModel::class,
 		TagDataModel::class,
 		IngredientDataModel::class,
 		InstructionDataModel::class,

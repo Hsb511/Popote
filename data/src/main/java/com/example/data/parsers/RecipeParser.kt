@@ -1,11 +1,11 @@
 package com.example.data.parsers
 
-import com.example.data.models.RecipeDataModel
+import com.example.data.models.BaseRecipeDataModel
 import org.jsoup.select.Elements
 import javax.inject.Inject
 
 class RecipeParser @Inject constructor() {
-	fun toRecipeDataModel(recipeId: String, rawRecipe: Elements) = RecipeDataModel(
+	fun toRecipeDataModel(recipeId: String, rawRecipe: Elements) = BaseRecipeDataModel(
 		href = recipeId,
 		imgSrc = rawRecipe.select("img").attr("src"),
 		title = rawRecipe.select("h1").text(),
