@@ -44,7 +44,7 @@ fun RecipeIngredientsWidget(
 	) {
 		Row(
 			verticalAlignment = Alignment.CenterVertically,
-			modifier = Modifier.padding(all = 16.dp)
+			modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
 		) {
 			Text(
 				text = stringResource(id = R.string.recipe_number_of_servings),
