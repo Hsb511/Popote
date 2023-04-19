@@ -9,6 +9,7 @@ data class BaseRecipeDataModel(
 	val imgSrc: String,
 	val title: String,
 	val subTitle: String,
+	val servingsAmount: Int,
 	val instructionTitle: String,
 	val lastTitle: String,
 )

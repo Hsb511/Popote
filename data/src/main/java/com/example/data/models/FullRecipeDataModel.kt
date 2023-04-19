@@ -1,8 +1,6 @@
 package com.example.data.models
 
 import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import androidx.room.Relation
 
 data class FullRecipeDataModel(

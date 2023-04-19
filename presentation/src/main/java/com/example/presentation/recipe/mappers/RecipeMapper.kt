@@ -15,8 +15,8 @@ class RecipeMapper @Inject constructor(
 		author = fullRecipe.author,
 		tags = fullRecipe.tags,
 		image = NeuracrImageProperty.Remote(null, fullRecipe.imageUrl),
-		ingredients = ingredientMapper.toStringList(fullRecipe.ingredients),
-		servingsAmount = fullRecipe.servingsNumber,
+		ingredients = ingredientMapper.toIngredientUiModel(fullRecipe.ingredients),
+		defaultServingsAmount = fullRecipe.servingsNumber,
 		description = fullRecipe.startingText,
 		conclusion = fullRecipe.endingText,
 	)
