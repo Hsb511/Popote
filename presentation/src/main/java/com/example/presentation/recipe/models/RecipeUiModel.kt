@@ -8,8 +8,8 @@ data class RecipeUiModel(
 	val author: String,
 	val tags: List<String>,
 	val image: NeuracrImageProperty,
-	val ingredients: List<String>,
-	val servingsAmount: Int,
+	val ingredients: List<IngredientUiModel>,
+	val defaultServingsAmount: Int,
 	val description: String,
 	val conclusion: String,
 	// TODO

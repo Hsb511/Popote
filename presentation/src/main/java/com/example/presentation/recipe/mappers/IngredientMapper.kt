@@ -1,20 +1,22 @@
 package com.example.presentation.recipe.mappers
 
 import com.example.domain.models.IngredientDomainModel
+import com.example.presentation.recipe.models.IngredientUiModel
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
-class IngredientMapper @Inject constructor(){
-	fun toStringList(ingredients: List<IngredientDomainModel>): List<String> =
+class IngredientMapper @Inject constructor(
+	private val quantityMapper: QuantityMapper,
+) {
+	fun toIngredientUiModel(ingredients: List<IngredientDomainModel>): List<IngredientUiModel> =
 		ingredients.map(::toString)
 
-	private fun toString(ingredient: IngredientDomainModel): String = when(ingredient) {
+	private fun toString(ingredient: IngredientDomainModel): IngredientUiModel = when (ingredient) {
 		is IngredientDomainModel.WithQuantity.WithUnit -> with(ingredient) {
-			"${quantity.roundToInt()} $unit - $label"
+			IngredientUiModel(quantity = quantityMapper.toString(quantity), label = " $unit - $label")
 		}
 		is IngredientDomainModel.WithQuantity.WithoutUnit -> with(ingredient) {
-			"${quantity.roundToInt()} - $label"
+			IngredientUiModel(quantity = quantityMapper.toString(quantity), label = label)
 		}
-		is IngredientDomainModel.WithoutQuantity -> ingredient.label
+		is IngredientDomainModel.WithoutQuantity -> IngredientUiModel(quantity = null, label = ingredient.label)
 	}
 }

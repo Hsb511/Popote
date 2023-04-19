@@ -7,9 +7,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -22,18 +19,18 @@ import com.example.design_system.theming.NeuracrTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeServingsWidget(
-	servingsAmount: MutableState<Int>,
-	defaultServingsAmount: Int,
+	currentServingsAmount: String,
+	onValueChanged: (String) -> Unit,
+	onAddOneServing: () -> Unit,
+	onSubtractOneServing: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	val localFocusManager = LocalFocusManager.current
 
 	OutlinedTextField(
-		value = servingsAmount.value.toString(),
+		value = currentServingsAmount,
 		onValueChange = { newValue ->
-			servingsAmount.value = newValue.toIntOrNull()?.let {
-				if (it > 0) it else 1
-			} ?: defaultServingsAmount
+			onValueChanged(newValue)
 		},
 		singleLine = true,
 		textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
@@ -43,11 +40,7 @@ fun RecipeServingsWidget(
 				text = "-",
 				style = MaterialTheme.typography.titleLarge,
 				color = MaterialTheme.colorScheme.onSecondary,
-				modifier = Modifier.clickable {
-					if (servingsAmount.value > 1) {
-						servingsAmount.value--
-					}
-				},
+				modifier = Modifier.clickable(onClick = onSubtractOneServing),
 			)
 		},
 		trailingIcon = {
@@ -55,7 +48,7 @@ fun RecipeServingsWidget(
 				text = "+",
 				style = MaterialTheme.typography.titleLarge,
 				color = MaterialTheme.colorScheme.onSecondary,
-				modifier = Modifier.clickable { servingsAmount.value++ },
+				modifier = Modifier.clickable(onClick = onAddOneServing),
 			)
 		},
 		keyboardOptions = KeyboardOptions(
@@ -78,11 +71,11 @@ fun RecipeServingsWidget(
 @Preview(showSystemUi = true)
 fun RecipeServingsWidgetPreview() {
 	NeuracrTheme {
-		val defaultServingsAmount = 4
-		val servingsAmount = remember { mutableStateOf(defaultServingsAmount) }
 		RecipeServingsWidget(
-			servingsAmount = servingsAmount,
-			defaultServingsAmount = defaultServingsAmount,
+			currentServingsAmount = "4",
+			onValueChanged = {},
+			onAddOneServing = {},
+			onSubtractOneServing = {},
 		)
 	}
 }

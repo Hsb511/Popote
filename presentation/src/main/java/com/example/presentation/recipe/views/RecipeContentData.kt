@@ -19,12 +19,17 @@ import com.example.design_system.image.NeuracrImage
 import com.example.design_system.image.NeuracrImageProperty
 import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.R
+import com.example.presentation.recipe.models.IngredientUiModel
 import com.example.presentation.recipe.models.RecipeUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeContentData(
 	recipeUiModel: RecipeUiModel,
+	currentServingsAmount: String,
+	onValueChanged: (String) -> Unit,
+	onAddOneServing: () -> Unit,
+	onSubtractOneServing: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	Column(modifier = modifier.fillMaxSize()) {
@@ -68,7 +73,13 @@ fun RecipeContentData(
 				text = stringResource(id = R.string.recipe_ingredients_title),
 				style = MaterialTheme.typography.titleLarge,
 			)
-			RecipeIngredientsWidget(recipeUiModel.ingredients)
+			RecipeIngredientsWidget(
+				ingredients = recipeUiModel.ingredients,
+				currentServingsAmount = currentServingsAmount,
+				onValueChanged = onValueChanged,
+				onAddOneServing = onAddOneServing,
+				onSubtractOneServing = onSubtractOneServing,
+			)
 			Divider(modifier = Modifier.padding(top = 8.dp))
 			Text(
 				text = recipeUiModel.description,
@@ -103,16 +114,20 @@ fun RecipeContentDataPreview() {
 				author = "Guiiiii",
 				tags = listOf("swiss", "bread"),
 				image = NeuracrImageProperty.Resource(null, com.example.design_system.R.drawable.bretzel),
-				servingsAmount = 4,
+				defaultServingsAmount = 4,
 				description = "description",
 				conclusion = "conclusion",
 				ingredients = listOf(
-					"0.5 - lime",
-					"15 mL - sugar syrup",
-					"12 - raspberry (frozen)",
-					"12 - mint leaf",
+					IngredientUiModel("0.5", " - lime"),
+					IngredientUiModel("15", " mL - sugar syrup"),
+					IngredientUiModel("12", " - raspberry (frozen)"),
+					IngredientUiModel("12", " - mint leaf"),
 				)
-			)
+			),
+			onAddOneServing = {},
+			onSubtractOneServing = {},
+			currentServingsAmount = "4",
+			onValueChanged = {},
 		)
 	}
 }

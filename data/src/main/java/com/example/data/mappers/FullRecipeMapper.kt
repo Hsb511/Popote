@@ -22,7 +22,7 @@ class FullRecipeMapper @Inject constructor(
 		language = languageMapper.toLanguageDomainModel(fullRecipeDataModel.recipe.href),
 		author = fullRecipeDataModel.recipe.subTitle.split(" - Written by ").last(),
 		tags = fullRecipeDataModel.tags.map { it.label },
-		servingsNumber = 0,
+		servingsNumber = fullRecipeDataModel.recipe.servingsAmount,
 		ingredients = ingredientMapper.toIngredientListDomainModel(fullRecipeDataModel.ingredients),
 		startingText = fullRecipeDataModel.recipe.instructionTitle,
 		instructions = listOf(),
