@@ -56,7 +56,9 @@ class RecipeViewModel @Inject constructor(
 	}
 
 	fun addOneService() {
-		currentServingsAmount.value++
+		if (currentServingsAmount.value < 999) {
+			currentServingsAmount.value++
+		}
 		updateRecipeData()
 	}
 
@@ -68,8 +70,12 @@ class RecipeViewModel @Inject constructor(
 	}
 
 	fun updateRecipeData(newServingsAmount: String) {
-		newServingsAmount.toIntOrNull()?.let {
-			currentServingsAmount.value = it
+		newServingsAmount.toIntOrNull()?.let { newServingsAmount ->
+			currentServingsAmount.value = when {
+				newServingsAmount < 1 -> 1
+				newServingsAmount > 999 -> 999
+				else -> newServingsAmount
+			}
 			updateRecipeData()
 		}
 	}
