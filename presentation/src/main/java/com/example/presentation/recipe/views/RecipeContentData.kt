@@ -70,7 +70,8 @@ fun RecipeContentData(
 			)
 			Text(
 				text = stringResource(id = R.string.recipe_ingredients_title),
-				style = MaterialTheme.typography.titleLarge,
+				style = MaterialTheme.typography.headlineSmall,
+				modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
 			)
 			RecipeIngredientsWidget(
 				ingredients = recipeUiModel.ingredients,
@@ -86,10 +87,15 @@ fun RecipeContentData(
 			)
 			Text(
 				text = stringResource(id = R.string.recipe_instructions_title),
-				style = MaterialTheme.typography.titleLarge,
+				style = MaterialTheme.typography.headlineSmall,
+				modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
 			)
-			RecipeInstructionsWidget(recipeUiModel.instructions, Modifier.padding(vertical = 16.dp))
-			Text(text = recipeUiModel.conclusion)
+			RecipeInstructionsWidget(recipeUiModel.instructions)
+			Text(
+				text = recipeUiModel.conclusion,
+				style = MaterialTheme.typography.bodyMedium,
+				modifier = Modifier.padding(top = 16.dp),
+			)
 		}
 	}
 }
