@@ -14,6 +14,7 @@ internal val neuracrLightColorScheme = lightColorScheme(
     onSurface = white(),
 	inverseSurface = black90(),
 	inverseOnSurface = taupe(),
+	outline = black(),
 	outlineVariant = black90(),
     scrim = umber(),
 )
@@ -23,13 +24,14 @@ internal val neuracrDarkColorScheme = darkColorScheme(
     onPrimary = white(),
 	primaryContainer = black26(),
     secondary = black50(),
-    onSecondary = cornSilk(),
+    onSecondary = white(),
     surface = black13(),
     onSurface = white(),
 	inverseSurface = black35(),
 	inverseOnSurface = white(),
     background = black35(),
     onBackground = cornSilk(),
+	outline = white(),
 	outlineVariant = black70(),
     scrim = black90(),
 )

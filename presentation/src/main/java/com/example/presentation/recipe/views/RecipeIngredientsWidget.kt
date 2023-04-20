@@ -1,9 +1,6 @@
 package com.example.presentation.recipe.views
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
@@ -12,13 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextIndent
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.R
 import com.example.presentation.recipe.models.IngredientUiModel
@@ -44,7 +36,7 @@ fun RecipeIngredientsWidget(
 	) {
 		Row(
 			verticalAlignment = Alignment.CenterVertically,
-			modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
+			modifier = Modifier.padding(all = 16.dp)
 		) {
 			Text(
 				text = stringResource(id = R.string.recipe_number_of_servings),
@@ -65,16 +57,16 @@ fun RecipeIngredientsWidget(
 					} ?: ingredient.label
 				}
 				.forEach { ingredient ->
-					val paragraphStyle = ParagraphStyle(textIndent = TextIndent(restLine = 12.sp))
-					Text(
-						buildAnnotatedString {
-							withStyle(style = paragraphStyle) {
-								append(bullet)
-								append("\t\t")
-								append(ingredient)
-							}
-						}
-					)
+					Row {
+						Text(
+							text = "$bullet",
+							modifier = Modifier.width(32.dp)
+						)
+						Text(
+							text = ingredient,
+							modifier = Modifier.fillMaxWidth()
+						)
+					}
 				}
 		}
 	}

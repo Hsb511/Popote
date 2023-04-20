@@ -8,5 +8,5 @@ data class InstructionDataModel(
 	@PrimaryKey(autoGenerate = true) val id: Long = 0L,
 	val recipeId: String,
 	val label: String,
-	val number: Int,
+	val order: Int,
 )

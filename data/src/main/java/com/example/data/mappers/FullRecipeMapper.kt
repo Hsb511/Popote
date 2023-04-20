@@ -9,6 +9,7 @@ class FullRecipeMapper @Inject constructor(
 	private val dateMapper: DateMapper,
 	private val languageMapper: LanguageMapper,
 	private val ingredientMapper: IngredientMapper,
+	private val instructionMapper: InstructionMapper,
 ) {
 	fun toFullRecipeDomainModel(fullRecipeDataModel: FullRecipeDataModel) = RecipeDomainModel.Full(
 		id = fullRecipeDataModel.recipe.href,
@@ -25,7 +26,7 @@ class FullRecipeMapper @Inject constructor(
 		servingsNumber = fullRecipeDataModel.recipe.servingsAmount,
 		ingredients = ingredientMapper.toIngredientListDomainModel(fullRecipeDataModel.ingredients),
 		startingText = fullRecipeDataModel.recipe.instructionTitle,
-		instructions = listOf(),
+		instructions = instructionMapper.toInstructionListDomainModel(fullRecipeDataModel.instructions),
 		endingText = fullRecipeDataModel.recipe.lastTitle,
 		sections = listOf()
 	)

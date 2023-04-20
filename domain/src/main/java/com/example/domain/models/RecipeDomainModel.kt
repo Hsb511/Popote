@@ -34,7 +34,7 @@ sealed class RecipeDomainModel(
         val servingsNumber: Int,
         val ingredients: List<IngredientDomainModel>,
         val startingText: String,
-        val instructions: List<String>,
+        val instructions: List<InstructionDomainModel>,
         val endingText: String,
         val sections: List<SectionDomainModel>,
     ) : RecipeDomainModel(
