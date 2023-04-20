@@ -7,10 +7,10 @@ import javax.inject.Inject
 class IngredientMapper @Inject constructor(
 	private val quantityMapper: QuantityMapper,
 ) {
-	fun toIngredientUiModel(ingredients: List<IngredientDomainModel>): List<IngredientUiModel> =
-		ingredients.map(::toString)
+	fun toIngredientUiModels(ingredients: List<IngredientDomainModel>): List<IngredientUiModel> =
+		ingredients.map(this::toIngredientUiModel)
 
-	private fun toString(ingredient: IngredientDomainModel): IngredientUiModel = when (ingredient) {
+	private fun toIngredientUiModel(ingredient: IngredientDomainModel): IngredientUiModel = when (ingredient) {
 		is IngredientDomainModel.WithQuantity.WithUnit -> with(ingredient) {
 			IngredientUiModel(quantity = quantityMapper.toString(quantity), label = " $unit - $label")
 		}

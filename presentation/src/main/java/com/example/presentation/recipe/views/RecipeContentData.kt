@@ -1,6 +1,5 @@
 package com.example.presentation.recipe.views
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -10,7 +9,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +18,7 @@ import com.example.design_system.image.NeuracrImageProperty
 import com.example.design_system.theming.NeuracrTheme
 import com.example.presentation.R
 import com.example.presentation.recipe.models.IngredientUiModel
+import com.example.presentation.recipe.models.InstructionUiModel
 import com.example.presentation.recipe.models.RecipeUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,15 +88,7 @@ fun RecipeContentData(
 				text = stringResource(id = R.string.recipe_instructions_title),
 				style = MaterialTheme.typography.titleLarge,
 			)
-			OutlinedCard(
-				colors = CardDefaults.outlinedCardColors(
-					containerColor = Color.Transparent,
-					contentColor = MaterialTheme.colorScheme.onBackground,
-				),
-				border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary),
-			) {
-				Text(text = "Instructions list")
-			}
+			RecipeInstructionsWidget(recipeUiModel.instructions, Modifier.padding(vertical = 16.dp))
 			Text(text = recipeUiModel.conclusion)
 		}
 	}
@@ -122,6 +113,12 @@ fun RecipeContentDataPreview() {
 					IngredientUiModel("15", " mL - sugar syrup"),
 					IngredientUiModel("12", " - raspberry (frozen)"),
 					IngredientUiModel("12", " - mint leaf"),
+				),
+				instructions = listOf(
+					InstructionUiModel(1, "Boil some water in a pot"),
+					InstructionUiModel(2, "Chop the shallots finely"),
+					InstructionUiModel(3, "Put your salmon in a gratin dish. Season with salt, pepper and some of the shallots. Cover the dish with Cellophane"
+					)
 				)
 			),
 			onAddOneServing = {},
