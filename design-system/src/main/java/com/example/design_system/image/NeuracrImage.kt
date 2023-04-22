@@ -25,17 +25,18 @@ fun NeuracrImage(
 ) {
 	val imageModifier = modifier
 		.clip(shape = MaterialTheme.shapes.medium)
-		.heightIn(max = maxImageHeight)
 	when (neuracrImageProperty) {
 		is NeuracrImageProperty.Resource -> Image(
 			painter = painterResource(neuracrImageProperty.imageRes),
 			contentDescription = neuracrImageProperty.contentDescription,
 			contentScale = ContentScale.FillWidth,
-			modifier = imageModifier,
+			modifier = imageModifier.heightIn(max = maxImageHeight),
 		)
 		is NeuracrImageProperty.Remote -> {
 			var isImageLoading by remember { mutableStateOf(true) }
+			var dynamicMaxImageHeight = maxImageHeight
 			if (isImageLoading) {
+				dynamicMaxImageHeight = 1.dp
 				NeuracrShimmer(modifier.height(maxImageHeight))
 			}
 			AsyncImage(
@@ -45,7 +46,7 @@ fun NeuracrImage(
 				onSuccess = {
 					isImageLoading = false
 				},
-				modifier = imageModifier,
+				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
 			)
 		}
 		is NeuracrImageProperty.None -> {}
