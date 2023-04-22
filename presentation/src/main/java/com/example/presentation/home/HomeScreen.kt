@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.design_system.R
+import com.example.design_system.error.NeuracrError
 import com.example.design_system.flags.NeuracrFlagProperty
 import com.example.design_system.image.NeuracrImageProperty
 import com.example.design_system.theming.NeuracrTheme
@@ -36,7 +37,7 @@ private fun HomeScreen(
 ) {
 	when (homeUiState) {
 		is Loading -> HomeContentLoading(modifier)
-		is Error -> {}
+		is Error -> NeuracrError(homeUiState.message, modifier)
 		is Data -> HomeContentData(
 			homeRecipeUiModels = homeUiState.recipes,
 			homeRecipeClick = homeRecipeClick,

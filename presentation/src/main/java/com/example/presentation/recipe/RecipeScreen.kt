@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.design_system.error.NeuracrError
 import com.example.presentation.recipe.models.RecipeUiState
 import com.example.presentation.recipe.views.RecipeContentData
 import com.example.presentation.recipe.views.RecipeContentLoading
@@ -44,7 +45,7 @@ fun RecipeScreen(
 			onSubtractOneServing = onSubtractOneServing,
 			modifier = modifier
 		)
-		is RecipeUiState.Error -> Text(text = recipeUiState.message, modifier)
+		is RecipeUiState.Error -> NeuracrError(recipeUiState.message, modifier)
 		is RecipeUiState.Loading -> RecipeContentLoading(modifier)
 	}
 }
