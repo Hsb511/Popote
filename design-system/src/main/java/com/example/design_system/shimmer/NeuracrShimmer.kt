@@ -3,23 +3,54 @@ package com.example.design_system.shimmer
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import com.example.design_system.theming.NeuracrTheme
 import com.example.design_system.theming.black90
 import com.example.design_system.theming.black95
 
 @Composable
 fun NeuracrShimmer(modifier: Modifier = Modifier) {
+	Box(
+		modifier = modifier
+			.clip(shape = MaterialTheme.shapes.medium)
+			.background(shimmerBrush())
+	) {}
+}
+
+@Composable
+fun NeuracrShimmer(
+	textStyle: TextStyle,
+	modifier: Modifier = Modifier
+) {
+	NeuracrShimmer(textStyle.fontSize, modifier)
+}
+
+@Composable
+fun NeuracrShimmer(
+	fontSize: TextUnit,
+	modifier: Modifier = Modifier
+) {
 	Box(modifier = modifier
 		.clip(shape = MaterialTheme.shapes.medium)
-		.background(shimmerBrush())) {}
+		.background(shimmerBrush())
+		.height(
+			with(LocalDensity.current) {
+				fontSize.toDp()
+			}
+		)
+	) {}
 }
+
 
 @Composable
 @Preview(showSystemUi = true)
