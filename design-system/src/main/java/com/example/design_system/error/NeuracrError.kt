@@ -31,11 +31,12 @@ fun NeuracrError(message: String, modifier: Modifier = Modifier) {
 		horizontalAlignment = Alignment.CenterHorizontally,
 		modifier = modifier
 			.fillMaxSize()
-			.padding(horizontal = 32.dp, vertical = 64.dp)
+			.padding(all = 32.dp)
 	) {
 		NeuracrImage(
 			neuracrImageProperty = NeuracrImageProperty.Resource(null, R.drawable.neuracr_error),
-			maxImageHeight = 300.dp
+			maxImageHeight = 230.dp,
+			modifier = Modifier.padding(top = 32.dp)
 		)
 		Text(
 			text = stringResource(id = R.string.error_title),

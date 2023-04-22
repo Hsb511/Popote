@@ -18,13 +18,14 @@ import com.example.design_system.theming.NeuracrTheme
 fun NeuracrScaffold(
 	navItemProperties: List<NavItemProperty>,
 	navigateUp: () -> Unit,
+	isNavigationEmpty: Boolean,
 	content: @Composable (PaddingValues) -> Unit
 ) {
 	Scaffold(
 		content = content,
 		topBar = {
 			TopBar(
-				isHome = navItemProperties.firstOrNull { it.title == "Home" }?.isSelected ?: false,
+				isNavigationEmpty = isNavigationEmpty,
 				navigateUp = navigateUp,
 				openMenu = {},
 			)
@@ -46,6 +47,7 @@ fun NeuracrScaffoldPreview() {
 				NavItemProperty("About", Icons.Filled.Info, false) {},
 			),
 			{},
+			isNavigationEmpty = true,
 		) {}
 	}
 }

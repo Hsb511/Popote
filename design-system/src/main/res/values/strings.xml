@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="scaffold_title" translatable="false">Neuracr\'s Recipes</string>
+    <string name="scaffold_title" translatable="false">Popote</string>
     <string name="scaffold_menu_a11y">menu</string>
     <string name="scaffold_navigate_up_a11y">navigate up</string>
 
