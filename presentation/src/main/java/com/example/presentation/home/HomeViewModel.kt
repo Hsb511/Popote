@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             getAllSummarizedRecipesUseCase.invoke().onFailure {
-                _uiState.value = HomeUiState.Error
+                _uiState.value = HomeUiState.Error(message = "${it.javaClass.simpleName} ${it.localizedMessage}")
             }.onSuccess { recipes ->
                 _uiState.value = HomeUiState.Data(recipes = recipes.map { homeRecipeMapper.toUiModel(it) })
             }

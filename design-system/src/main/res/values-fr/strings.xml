@@ -2,4 +2,9 @@
 <resources>
     <string name="scaffold_menu_a11y">menu</string>
     <string name="scaffold_navigate_up_a11y">retour en arrière</string>
+
+    <string name="error_title">Désolé une erreur s\'est produite !</string>
+    <string name="error_description">Veuillez vérifier si vous avez accès à internet. Le cas échéant vous pouvez visiter notre site web directement en cliquant ci-dessous.</string>
+    <string name="error_website_button">Aller sur le site</string>
+    <string name="error_expand">Etendre pour voir l\'erreur</string>
 </resources>
