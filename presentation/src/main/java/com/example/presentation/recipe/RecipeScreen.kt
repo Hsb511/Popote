@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.presentation.recipe.models.RecipeUiState
 import com.example.presentation.recipe.views.RecipeContentData
+import com.example.presentation.recipe.views.RecipeContentLoading
 
 @Composable
 fun RecipeScreen(
@@ -44,6 +45,6 @@ fun RecipeScreen(
 			modifier = modifier
 		)
 		is RecipeUiState.Error -> Text(text = recipeUiState.message, modifier)
-		is RecipeUiState.Loading -> Text(text = "TODO loading...", modifier)
+		is RecipeUiState.Loading -> RecipeContentLoading(modifier)
 	}
 }

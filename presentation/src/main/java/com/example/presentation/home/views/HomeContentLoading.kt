@@ -24,14 +24,10 @@ fun HomeContentLoading(modifier: Modifier = Modifier) {
 	) {
 		item {
 			NeuracrShimmer(
+				textStyle = MaterialTheme.typography.displaySmall,
 				modifier = Modifier
 					.padding(start = 16.dp, top = 16.dp, end = 16.dp)
 					.width(200.dp)
-					.height(
-						with(LocalDensity.current) {
-							MaterialTheme.typography.displaySmall.fontSize.toDp()
-						}
-					)
 			)
 		}
 		items(List(3) {}) {
