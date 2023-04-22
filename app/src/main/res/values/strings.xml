@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Neuracr\'s recipes</string>
+    <string name="app_name" translatable="false">Popote</string>
 
     <string name="navigation_home_display_name">Home</string>
     <string name="navigation_search_display_name">Search</string>

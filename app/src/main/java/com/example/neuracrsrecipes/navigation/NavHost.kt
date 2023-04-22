@@ -32,6 +32,7 @@ internal fun NavHost(context: Context) {
 	NeuracrScaffold(
 		navItemProperties = navItems,
 		navigateUp = { navController.navigateUp() },
+		isNavigationEmpty = navController.previousBackStackEntry == null,
 	) { padding ->
 		val paddingModifier = Modifier.padding(padding)
 		NavHost(navController = navController, startDestination = AppPage.Home.route) {
