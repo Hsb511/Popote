@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -22,7 +23,9 @@ import com.example.design_system.theming.NeuracrTheme
 internal fun TopBar(
 	isNavigationEmpty: Boolean,
 	navigateUp: () -> Unit,
+	drawerState: DrawerState,
 	openMenu: () -> Unit,
+	closeMenu: () -> Unit,
 ) {
 	CenterAlignedTopAppBar(
 		colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -55,17 +58,29 @@ internal fun TopBar(
 			)
 		},
 		actions = {
-			IconButton(onClick = openMenu) {
-				Icon(
-					imageVector = Icons.Filled.Menu,
-					contentDescription = stringResource(id = R.string.scaffold_menu_a11y),
-					tint = MaterialTheme.colorScheme.onPrimary,
-				)
+			when (drawerState.currentValue) {
+				DrawerValue.Closed ->
+					IconButton(onClick = openMenu) {
+						Icon(
+							imageVector = Icons.Filled.Menu,
+							contentDescription = stringResource(id = R.string.scaffold_open_menu_a11y),
+							tint = MaterialTheme.colorScheme.onPrimary,
+						)
+					}
+				DrawerValue.Open ->
+					IconButton(onClick = closeMenu) {
+						Icon(
+							imageVector = Icons.Filled.Close,
+							contentDescription = stringResource(id = R.string.scaffold_close_menu_a11y),
+							tint = MaterialTheme.colorScheme.onPrimary,
+						)
+					}
 			}
 		}
 	)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(showBackground = true)
 private fun TopBarPreview() {
@@ -73,7 +88,9 @@ private fun TopBarPreview() {
 		TopBar(
 			isNavigationEmpty = true,
 			navigateUp = {},
+			drawerState = DrawerState(DrawerValue.Closed),
 			openMenu = {},
+			closeMenu = {},
 		)
 	}
 }

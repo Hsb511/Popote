@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="scaffold_title" translatable="false">Popote</string>
-    <string name="scaffold_menu_a11y">menu</string>
+    <string name="scaffold_open_menu_a11y">open lateral menu</string>
+    <string name="scaffold_close_menu_a11y">close lateral menu</string>
     <string name="scaffold_navigate_up_a11y">navigate up</string>
 
     <string name="error_title">Sorry an error occurred !</string>
