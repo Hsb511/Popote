@@ -6,6 +6,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -18,6 +20,9 @@ import com.example.design_system.theming.NeuracrTheme
 fun NeuracrScaffold(
 	navItemProperties: List<NavItemProperty>,
 	navigateUp: () -> Unit,
+	drawerState: DrawerState,
+	openMenu: () -> Unit,
+	closeMenu: () -> Unit,
 	isNavigationEmpty: Boolean,
 	content: @Composable (PaddingValues) -> Unit
 ) {
@@ -27,7 +32,9 @@ fun NeuracrScaffold(
 			TopBar(
 				isNavigationEmpty = isNavigationEmpty,
 				navigateUp = navigateUp,
-				openMenu = {},
+				drawerState = drawerState,
+				openMenu = openMenu,
+				closeMenu = closeMenu,
 			)
 		},
 		bottomBar = { BottomBar(navItemProperties) },
@@ -36,6 +43,7 @@ fun NeuracrScaffold(
 	)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(showSystemUi = true)
 fun NeuracrScaffoldPreview() {
@@ -47,6 +55,9 @@ fun NeuracrScaffoldPreview() {
 				NavItemProperty("About", Icons.Filled.Info, false) {},
 			),
 			{},
+			drawerState = DrawerState(DrawerValue.Closed),
+			openMenu = {},
+			closeMenu = {},
 			isNavigationEmpty = true,
 		) {}
 	}
