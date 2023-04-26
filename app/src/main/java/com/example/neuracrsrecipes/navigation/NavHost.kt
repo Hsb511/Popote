@@ -1,7 +1,6 @@
 package com.example.neuracrsrecipes.navigation
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
@@ -13,6 +12,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.design_system.scaffold.NavItemProperty
 import com.example.design_system.scaffold.NeuracrScaffold
+import com.example.design_system.wip.NeuracrPageInProgress
 import com.example.presentation.drawer.ModalMenuDrawer
 import com.example.presentation.home.HomeScreen
 import com.example.presentation.recipe.RecipeScreen
@@ -75,10 +76,10 @@ internal fun NavHost(context: Context) {
 					)
 				}
 				composable(route = AppPage.Search.route) {
-
+					NeuracrPageInProgress(Modifier.padding(padding))
 				}
 				composable(route = AppPage.About.route) {
-
+					NeuracrPageInProgress(Modifier.padding(padding))
 				}
 			}
 		}
