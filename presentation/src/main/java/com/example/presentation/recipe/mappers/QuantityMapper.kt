@@ -10,8 +10,8 @@ class QuantityMapper @Inject constructor() {
 	private val format1Digit = DecimalFormat("#.#").apply { roundingMode = RoundingMode.DOWN }
 
 	fun toString(quantity: Float): String = when {
-		quantity < 1f -> format2Digits.format(quantity)
-		quantity < 10f -> format1Digit.format(quantity)
+		quantity < 10f -> format2Digits.format(quantity)
+		quantity < 100f -> format1Digit.format(quantity)
 		else -> quantity.roundToInt().toString()
 	}
 }
