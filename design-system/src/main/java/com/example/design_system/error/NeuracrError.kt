@@ -64,7 +64,8 @@ fun NeuracrError(message: String, modifier: Modifier = Modifier) {
 				}
 			}) {
 			Text(
-				text = stringResource(id = R.string.error_website_button)
+				text = stringResource(id = R.string.error_website_button),
+				style = MaterialTheme.typography.labelLarge,
 			)
 			Icon(
 				imageVector = Icons.Filled.Send,
@@ -78,12 +79,14 @@ fun NeuracrError(message: String, modifier: Modifier = Modifier) {
 		) {
 			Text(
 				text = stringResource(id = R.string.error_expand),
-				style = MaterialTheme.typography.bodySmall
+				style = MaterialTheme.typography.labelLarge,
+				color = MaterialTheme.colorScheme.onBackground,
 			)
 			Icon(
 				imageVector = if (isErrorShown) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
 				contentDescription = null,
-				modifier = Modifier.padding(start = 8.dp)
+				modifier = Modifier.padding(start = 8.dp),
+				tint = MaterialTheme.colorScheme.onBackground,
 			)
 		}
 		if (isErrorShown) {

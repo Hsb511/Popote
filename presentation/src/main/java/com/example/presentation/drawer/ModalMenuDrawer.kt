@@ -34,7 +34,7 @@ fun ModalMenuDrawer(drawerState: DrawerState, modifier: Modifier = Modifier, con
 						ClickableText(
 							text = AnnotatedString("neuracr"),
 							style = MaterialTheme.typography.bodyLarge.copy(
-								color = MaterialTheme.colorScheme.onSecondary,
+								color = MaterialTheme.colorScheme.onSurfaceVariant,
 								textDecoration = TextDecoration.Underline,
 							),
 							onClick = {
@@ -47,7 +47,7 @@ fun ModalMenuDrawer(drawerState: DrawerState, modifier: Modifier = Modifier, con
 						ClickableText(
 							text = AnnotatedString("Hsb511"),
 							style = MaterialTheme.typography.bodyLarge.copy(
-								color = MaterialTheme.colorScheme.onSecondary,
+								color = MaterialTheme.colorScheme.onSurfaceVariant,
 								textDecoration = TextDecoration.Underline,
 							),
 							onClick = {
