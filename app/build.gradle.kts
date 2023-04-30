@@ -7,6 +7,10 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
+val majorVersion = 1
+val minorVersion = 0
+val fixVersion = 0
+
 android {
     namespace = "com.example.neuracrsrecipes"
     compileSdk = 33
@@ -15,8 +19,8 @@ android {
         applicationId = "com.example.neuracrsrecipes"
         minSdk = 23
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = majorVersion * 10000 + minorVersion * 100 + fixVersion
+        versionName = "$majorVersion.$minorVersion.$fixVersion"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
