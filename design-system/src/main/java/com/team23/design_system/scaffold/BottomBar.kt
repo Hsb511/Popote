@@ -6,7 +6,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
 
 @Composable
-internal fun BottomBar(navItemProperties: List<NavItemProperty>) {
+internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -> Unit) {
 	NavigationBar(
 		containerColor = MaterialTheme.colorScheme.inverseSurface,
 		modifier = Modifier.height(56.dp)
@@ -24,7 +29,10 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>) {
 		navItemProperties.map { navItemProperty ->
 			NavigationBarItem(
 				selected = navItemProperty.isSelected,
-				onClick = navItemProperty.onNavigate,
+				onClick = {
+					navItemProperty.onNavigate()
+					closeMenu()
+				},
 				icon = {
 					Icon(
 						imageVector = navItemProperty.icon,
@@ -61,7 +69,7 @@ private fun BottomBarPreview() {
 				NavItemProperty("Search", Icons.Outlined.Search, false) {},
 				NavItemProperty("About", Icons.Outlined.Info, false) {},
 			)
-		)
+		) {}
 	}
 }
 
