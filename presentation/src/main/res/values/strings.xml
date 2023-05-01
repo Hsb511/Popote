@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- home -->
+    <string name="home_title">Latest posts</string>
+
+    <!-- recipe -->
+    <string name="recipe_written_by">Written by</string>
+    <string name="recipe_ingredients_title">Ingredients</string>
+    <string name="recipe_number_of_servings">Number of servings</string>
+    <string name="recipe_instructions_title">Instructions</string>
+</resources>
