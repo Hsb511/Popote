@@ -3,13 +3,29 @@ package com.team23.design_system.error
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,16 +37,21 @@ import com.team23.design_system.R
 import com.team23.design_system.image.NeuracrImage
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun NeuracrError(message: String, modifier: Modifier = Modifier) {
 	val context = LocalContext.current
 	var isErrorShown by remember { mutableStateOf(false) }
+	val scrollState = rememberScrollState()
+	val scope = rememberCoroutineScope()
 	Column(
 		verticalArrangement = Arrangement.spacedBy(16.dp),
 		horizontalAlignment = Alignment.CenterHorizontally,
 		modifier = modifier
 			.fillMaxSize()
+			.verticalScroll(scrollState)
 			.padding(all = 32.dp)
 	) {
 		NeuracrImage(
@@ -75,7 +96,12 @@ fun NeuracrError(message: String, modifier: Modifier = Modifier) {
 		}
 		OutlinedButton(
 			border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary),
-			onClick = { isErrorShown = !isErrorShown },
+			onClick = {
+				isErrorShown = !isErrorShown
+				scope.launch(Dispatchers.IO) {
+					scrollState.scrollTo(Int.MAX_VALUE)
+				}
+			},
 		) {
 			Text(
 				text = stringResource(id = R.string.error_expand),
