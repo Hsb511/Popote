@@ -1,9 +1,9 @@
-package com.example.data.repositories
+package com.team23.data.repositories
 
-import com.example.data.daos.SummarizedRecipeDao
-import com.example.data.datasources.NeuracrWebsiteDataSource
-import com.example.data.parsers.SummarizedRecipeParser
-import com.example.data.mappers.SummarizedRecipeMapper
+import com.team23.data.daos.SummarizedRecipeDao
+import com.team23.data.datasources.NeuracrWebsiteDataSource
+import com.team23.data.parsers.SummarizedRecipeParser
+import com.team23.data.mappers.SummarizedRecipeMapper
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

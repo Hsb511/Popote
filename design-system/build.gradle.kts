@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.design_system"
+    namespace = "com.team23.design_system"
     compileSdk = 33
 
     defaultConfig {

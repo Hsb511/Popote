@@ -1,4 +1,4 @@
-package com.example.data.mappers
+package com.team23.data.mappers
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

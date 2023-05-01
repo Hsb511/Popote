@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.presentation"
+    namespace = "com.team23.presentation"
     compileSdk = 33
 
     defaultConfig {
