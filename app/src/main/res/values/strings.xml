@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">Popote</string>
+
+    <string name="navigation_home_display_name">Home</string>
+    <string name="navigation_search_display_name">Search</string>
+    <string name="navigation_about_display_name">About</string>
+</resources>
