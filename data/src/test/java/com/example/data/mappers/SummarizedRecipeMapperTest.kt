@@ -1,13 +1,13 @@
-package com.example.data.mappers
+package com.team23.data.mappers
 
-import com.example.data.fixtures.getFirstLocalDate
-import com.example.data.fixtures.getFirstSummarizedRecipeDomainModel
-import com.example.data.fixtures.getFirstSummarizedRecipeFromRawHtml
-import com.example.data.fixtures.getSecondLocalDate
-import com.example.data.fixtures.getSecondSummarizedRecipeDomainModel
-import com.example.data.fixtures.getSecondSummarizedRecipeFromRawHtml
-import com.example.data.models.SummarizedRecipeDataModel
-import com.example.domain.models.RecipeDomainModel
+import com.team23.data.fixtures.getFirstLocalDate
+import com.team23.data.fixtures.getFirstSummarizedRecipeDomainModel
+import com.team23.data.fixtures.getFirstSummarizedRecipeFromRawHtml
+import com.team23.data.fixtures.getSecondLocalDate
+import com.team23.data.fixtures.getSecondSummarizedRecipeDomainModel
+import com.team23.data.fixtures.getSecondSummarizedRecipeFromRawHtml
+import com.team23.data.models.SummarizedRecipeDataModel
+import com.team23.domain.models.RecipeDomainModel
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals

@@ -1,8 +1,8 @@
-package com.example.domain.usecases
+package com.team23.domain.usecases
 
-import com.example.domain.fixtures.getEmptySummarizedRecipe
-import com.example.domain.models.RecipeDomainModel
-import com.example.domain.repositories.RecipeRepository
+import com.team23.domain.fixtures.getEmptySummarizedRecipe
+import com.team23.domain.models.RecipeDomainModel
+import com.team23.domain.repositories.RecipeRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

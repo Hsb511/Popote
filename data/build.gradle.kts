@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.team23.data"
     compileSdk = 33
 
     defaultConfig {

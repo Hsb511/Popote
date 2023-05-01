@@ -1,4 +1,4 @@
-package com.example.neuracrsrecipes
+package com.team23.neuracrsrecipes
 
 import org.junit.Test
 

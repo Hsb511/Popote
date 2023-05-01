@@ -1,10 +1,10 @@
-package com.example.data.mappers
+package com.team23.data.mappers
 
-import com.example.data.fixtures.getFirstSummarizedRecipeFromRawHtml
-import com.example.data.fixtures.getSecondSummarizedRecipeFromRawHtml
-import com.example.data.fixtures.rawHtmlToParse
-import com.example.data.models.SummarizedRecipeDataModel
-import com.example.data.parsers.SummarizedRecipeParser
+import com.team23.data.fixtures.getFirstSummarizedRecipeFromRawHtml
+import com.team23.data.fixtures.getSecondSummarizedRecipeFromRawHtml
+import com.team23.data.fixtures.rawHtmlToParse
+import com.team23.data.models.SummarizedRecipeDataModel
+import com.team23.data.parsers.SummarizedRecipeParser
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements

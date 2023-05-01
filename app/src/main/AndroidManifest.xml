@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:name="com.example.neuracrsrecipes.MainApplication"
+        android:name="com.team23.neuracrsrecipes.MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +13,7 @@
         android:theme="@style/Theme.NeuracrsRecipes"
         tools:targetApi="31">
         <activity
-            android:name="com.example.neuracrsrecipes.MainActivity"
+            android:name="com.team23.neuracrsrecipes.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
