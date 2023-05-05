@@ -15,21 +15,19 @@ import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
-import com.team23.presentation.home.models.HomeRecipeUiModel
+import com.team23.presentation.home.models.SummarizedRecipeUiModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContentData(
-	homeRecipeUiModels: List<HomeRecipeUiModel>,
-	homeRecipeClick: (HomeRecipeUiModel) -> Unit,
+	summarizedRecipeUiModels: List<SummarizedRecipeUiModel>,
+	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier) {
-	val lazyGridState = rememberLazyStaggeredGridState()
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(300.dp),
 		contentPadding = PaddingValues(32.dp),
 		verticalItemSpacing = 16.dp,
 		horizontalArrangement = Arrangement.spacedBy(16.dp),
-		state = lazyGridState,
 		modifier = modifier.fillMaxSize()
 	) {
 		item(span = StaggeredGridItemSpan.FullLine) {
@@ -39,9 +37,9 @@ fun HomeContentData(
 				color = MaterialTheme.colorScheme.onBackground,
 			)
 		}
-		items(homeRecipeUiModels) { homeRecipeUiModel ->
+		items(summarizedRecipeUiModels) { homeRecipeUiModel ->
 			HomeRecipeCard(
-				homeRecipeUiModel = homeRecipeUiModel,
+				summarizedRecipeUiModel = homeRecipeUiModel,
 				modifier = Modifier
 					.fillMaxWidth()
 					.clickable {
@@ -57,8 +55,8 @@ fun HomeContentData(
 private fun HomeContentDataPreview() {
 	NeuracrTheme {
 		HomeContentData(
-			homeRecipeUiModels = List(6) {
-				HomeRecipeUiModel(
+			summarizedRecipeUiModels = List(6) {
+				SummarizedRecipeUiModel(
 					id = "",
 					title = "bretzels",
 					imageProperty = NeuracrImageProperty.Resource(
