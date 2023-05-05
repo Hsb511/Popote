@@ -3,6 +3,7 @@ package com.team23.design_system.image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,14 +23,21 @@ fun NeuracrImage(
 	neuracrImageProperty: NeuracrImageProperty,
 	maxImageHeight: Dp,
 	modifier: Modifier = Modifier,
+	contentScale: ContentScale = ContentScale.FillWidth,
+	hasNoCornerEnd: Boolean = false,
 ) {
 	val imageModifier = modifier
-		.clip(shape = MaterialTheme.shapes.medium)
+		.clip(
+			shape = if (hasNoCornerEnd) MaterialTheme.shapes.medium.copy(
+				topEnd = CornerSize(0.dp),
+				bottomEnd = CornerSize(0.dp),
+			) else MaterialTheme.shapes.medium
+		)
 	when (neuracrImageProperty) {
 		is NeuracrImageProperty.Resource -> Image(
 			painter = painterResource(neuracrImageProperty.imageRes),
 			contentDescription = neuracrImageProperty.contentDescription,
-			contentScale = ContentScale.FillWidth,
+			contentScale = contentScale,
 			modifier = imageModifier.heightIn(max = maxImageHeight),
 		)
 		is NeuracrImageProperty.Remote -> {
@@ -42,7 +50,7 @@ fun NeuracrImage(
 			AsyncImage(
 				model = neuracrImageProperty.url,
 				contentDescription = neuracrImageProperty.contentDescription,
-				contentScale = ContentScale.FillWidth,
+				contentScale = contentScale,
 				onSuccess = {
 					isImageLoading = false
 				},

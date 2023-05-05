@@ -8,4 +8,7 @@
     <string name="recipe_ingredients_title">Ingrédients</string>
     <string name="recipe_number_of_servings">Nombre de personnes</string>
     <string name="recipe_instructions_title">Instructions</string>
+
+    <!-- search -->
+    <string name="search_textfield_placeholder">Ecrire pour rechercher…</string>
 </resources>

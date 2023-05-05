@@ -30,6 +30,7 @@ import com.team23.presentation.drawer.ModalMenuDrawer
 import com.team23.presentation.home.HomeScreen
 import com.team23.presentation.recipe.RecipeScreen
 import com.team23.presentation.recipe.extensions.toCleanRecipeId
+import com.team23.presentation.search.SearchScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -76,7 +77,7 @@ internal fun NavHost(context: Context) {
 					)
 				}
 				composable(route = AppPage.Search.route) {
-					NeuracrPageInProgress(Modifier.padding(padding))
+					SearchScreen()
 				}
 				composable(route = AppPage.About.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
