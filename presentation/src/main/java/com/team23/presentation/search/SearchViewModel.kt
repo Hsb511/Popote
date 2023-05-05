@@ -25,7 +25,7 @@ class SearchViewModel @Inject constructor(
 	val searchValue = mutableStateOf("")
 	val recipes: List<SummarizedRecipeUiModel> = List(6) {
 		SummarizedRecipeUiModel(
-			id = "",
+			id = "/recipes/2022/03/06/bretzels.html",
 			title = "Soupe de courgettes et boursin",
 			imageProperty = NeuracrImageProperty.Resource(
 				contentDescription = null,
@@ -49,8 +49,7 @@ class SearchViewModel @Inject constructor(
 	}
 
 	fun onTagSelected(tag: TagUiModel) {
-		val newTags =
-			_tags.value.toMutableList().filter { it.label != tag.label } + tag.copy(isSelected = !tag.isSelected)
+		val newTags = _tags.value.filter { it.label != tag.label } + tag.copy(isSelected = !tag.isSelected)
 		val (selected, unselected) = newTags.partition { it.isSelected }
 		_tags.value = selected.sortedBy { it.label } + unselected.sortedBy { it.label }
 	}

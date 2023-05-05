@@ -8,4 +8,5 @@ data class SearchUiModel(
 	val tags: List<TagUiModel>,
 	val onTagSelected: (TagUiModel) -> Unit,
 	val recipes: List<SummarizedRecipeUiModel>,
+	val onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 )

@@ -12,7 +12,6 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -62,7 +61,7 @@ internal fun NavHost(context: Context) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
 						homeRecipeClick = { homeRecipeUiModel ->
-							navController.navigate("${AppPage.WithArgument.Recipe.route}/${homeRecipeUiModel.id.toCleanRecipeId()}") // TODO ID
+							navController.navigateToRecipe(homeRecipeUiModel.id)
 						}
 					)
 				}
@@ -77,7 +76,11 @@ internal fun NavHost(context: Context) {
 					)
 				}
 				composable(route = AppPage.Search.route) {
-					SearchScreen()
+					SearchScreen(
+						onRecipeClick = { recipeUiModel ->
+							navController.navigateToRecipe(recipeUiModel.id)
+						}
+					)
 				}
 				composable(route = AppPage.About.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
@@ -111,3 +114,7 @@ internal fun toNavItemProperties(
 			onNavigate = { navController.navigate(appPage.route) },
 		)
 	}
+
+private fun NavHostController.navigateToRecipe(recipeId: String) {
+	this.navigate("${AppPage.WithArgument.Recipe.route}/${recipeId.toCleanRecipeId()}")
+}
