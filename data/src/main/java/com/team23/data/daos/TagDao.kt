@@ -1,12 +1,14 @@
 package com.team23.data.daos
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.*
 import com.team23.data.models.TagDataModel
 
 @Dao
 interface TagDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertOrReplace(vararg tagDataModel: TagDataModel)
+
+	@Transaction
+	@Query("SELECT * FROM TagDataModel")
+	suspend fun loadAll(): List<TagDataModel>
 }

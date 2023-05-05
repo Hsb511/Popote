@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -33,7 +34,7 @@ fun SearchScreen(modifier: Modifier = Modifier, searchViewModel: SearchViewModel
 		searchUiModel = SearchUiModel(
 			searchValue = searchViewModel.searchValue.value,
 			onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
-			tags = searchViewModel.tags,
+			tags = searchViewModel.tags.collectAsState().value,
 			onTagSelected = { tag -> searchViewModel.onTagSelected(tag) },
 			recipes = searchViewModel.recipes,
 		),
