@@ -11,7 +11,7 @@ import com.team23.domain.repositories.RecipeRepository
 import org.jsoup.select.Elements
 import javax.inject.Inject
 
-internal class RecipeDataRepository @Inject constructor(
+internal class RecipeRepositoryImpl @Inject constructor(
 	private val summarizedRecipeDao: SummarizedRecipeDao,
 	private val recipeDao: RecipeDao,
 	private val tagDao: TagDao,
