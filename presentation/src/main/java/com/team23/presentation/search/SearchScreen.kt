@@ -2,6 +2,7 @@ package com.team23.presentation.search
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
@@ -29,7 +30,11 @@ import com.team23.presentation.search.models.TagUiModel
 import com.team23.presentation.search.views.SearchRecipeCard
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, searchViewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(
+	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	modifier: Modifier = Modifier,
+	searchViewModel: SearchViewModel = hiltViewModel()
+) {
 	SearchScreen(
 		searchUiModel = SearchUiModel(
 			searchValue = searchViewModel.searchValue.value,
@@ -37,6 +42,7 @@ fun SearchScreen(modifier: Modifier = Modifier, searchViewModel: SearchViewModel
 			tags = searchViewModel.tags.collectAsState().value,
 			onTagSelected = { tag -> searchViewModel.onTagSelected(tag) },
 			recipes = searchViewModel.recipes,
+			onRecipeClick = onRecipeClick,
 		),
 		modifier = modifier,
 	)
@@ -111,12 +117,13 @@ private fun SearchScreen(
 			modifier = modifier.fillMaxSize()
 		) {
 			items(searchUiModel.recipes) { recipe ->
-				SearchRecipeCard(recipe)
+				SearchRecipeCard(recipe, modifier = Modifier.clickable {
+					searchUiModel.onRecipeClick(recipe)
+				})
 			}
 		}
 	}
 }
-
 
 @Composable
 @Preview(showSystemUi = true)
@@ -146,6 +153,7 @@ private fun SearchScreenPreview() {
 						flagProperty = NeuracrFlagProperty.FRENCH,
 					)
 				},
+				onRecipeClick = {},
 			),
 		)
 	}
