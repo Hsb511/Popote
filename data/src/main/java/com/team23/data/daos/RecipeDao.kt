@@ -1,8 +1,8 @@
 package com.team23.data.daos
 
 import androidx.room.*
-import com.team23.data.models.FullRecipeDataModel
 import com.team23.data.models.BaseRecipeDataModel
+import com.team23.data.models.FullRecipeDataModel
 
 @Dao
 interface RecipeDao {
