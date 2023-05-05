@@ -2,6 +2,7 @@ package com.team23.data.daos
 
 import androidx.room.*
 import com.team23.data.models.TagDataModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TagDao {
@@ -11,4 +12,8 @@ interface TagDao {
 	@Transaction
 	@Query("SELECT * FROM TagDataModel")
 	suspend fun loadAll(): List<TagDataModel>
+
+	@Transaction
+	@Query("SELECT * FROM TagDataModel WHERE label IN (:tagLabels)")
+	fun loadAllByLabel(tagLabels: List<String>): Flow<List<TagDataModel>>
 }

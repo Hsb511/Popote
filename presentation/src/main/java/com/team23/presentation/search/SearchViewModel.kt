@@ -3,10 +3,9 @@ package com.team23.presentation.search
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.team23.design_system.R
-import com.team23.design_system.flags.NeuracrFlagProperty
-import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
+import com.team23.domain.usecases.SearchSummarizedRecipesUseCase
+import com.team23.presentation.home.mappers.SummarizedRecipeMapper
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.search.mappers.TagMapper
 import com.team23.presentation.search.models.TagUiModel
@@ -20,20 +19,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
+	private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
 	private val tagMapper: TagMapper,
+	private val summarizedRecipeMapper: SummarizedRecipeMapper,
 ) : ViewModel() {
 	val searchValue = mutableStateOf("")
-	val recipes: List<SummarizedRecipeUiModel> = List(6) {
-		SummarizedRecipeUiModel(
-			id = "/recipes/2022/03/06/bretzels.html",
-			title = "Soupe de courgettes et boursin",
-			imageProperty = NeuracrImageProperty.Resource(
-				contentDescription = null,
-				imageRes = R.drawable.bretzel
-			),
-			flagProperty = NeuracrFlagProperty.FRENCH,
-		)
-	}
+
+	private val _recipes = MutableStateFlow<List<SummarizedRecipeUiModel>>(emptyList())
+	val recipes: StateFlow<List<SummarizedRecipeUiModel>> = _recipes
+
 	private val _tags = MutableStateFlow<List<TagUiModel>>(emptyList())
 	val tags: StateFlow<List<TagUiModel>> = _tags
 
@@ -41,16 +35,37 @@ class SearchViewModel @Inject constructor(
 		viewModelScope.launch(Dispatchers.IO) {
 			_tags.value = tagMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
 		}
+		searchNewRecipes()
 	}
 
 	fun onValueChange(newValue: String) {
 		searchValue.value = newValue
-		// TODO UPDATE RECIPES
+		searchNewRecipes(searchText = newValue)
 	}
 
 	fun onTagSelected(tag: TagUiModel) {
 		val newTags = _tags.value.filter { it.label != tag.label } + tag.copy(isSelected = !tag.isSelected)
 		val (selected, unselected) = newTags.partition { it.isSelected }
-		_tags.value = selected.sortedBy { it.label } + unselected.sortedBy { it.label }
+		val recomputedTags = selected.sortedBy { it.label } + unselected.sortedBy { it.label }
+		_tags.value = recomputedTags
+		searchNewRecipes(tagsList = recomputedTags.filterAndMap())
 	}
+
+	private fun searchNewRecipes(
+		searchText: String = searchValue.value,
+		tagsList: List<String> = tags.value.filterAndMap(),
+	) {
+		viewModelScope.launch(Dispatchers.IO) {
+			searchSummarizedRecipesUseCase.invoke(
+				searchText = searchText,
+				tagsList = tagsList,
+			).collect { recipes ->
+				_recipes.value = recipes.map { recipe ->
+					summarizedRecipeMapper.toUiModel(recipe)
+				}
+			}
+		}
+	}
+
+	private fun List<TagUiModel>.filterAndMap() = filter { it.isSelected }.map { it.label }
 }

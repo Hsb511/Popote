@@ -7,7 +7,7 @@ import com.team23.domain.models.RecipeDomainModel
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import javax.inject.Inject
 
-class HomeRecipeMapper @Inject constructor() {
+class SummarizedRecipeMapper @Inject constructor() {
     fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized)= SummarizedRecipeUiModel(
         id = summarizedRecipe.id,
         title = summarizedRecipe.title,

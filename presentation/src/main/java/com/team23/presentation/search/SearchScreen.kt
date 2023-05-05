@@ -41,7 +41,7 @@ fun SearchScreen(
 			onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
 			tags = searchViewModel.tags.collectAsState().value,
 			onTagSelected = { tag -> searchViewModel.onTagSelected(tag) },
-			recipes = searchViewModel.recipes,
+			recipes = searchViewModel.recipes.collectAsState().value,
 			onRecipeClick = onRecipeClick,
 		),
 		modifier = modifier,
