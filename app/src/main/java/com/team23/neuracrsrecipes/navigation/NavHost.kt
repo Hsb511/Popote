@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDrawerState
@@ -30,6 +31,7 @@ import com.team23.presentation.home.HomeScreen
 import com.team23.presentation.recipe.RecipeScreen
 import com.team23.presentation.recipe.extensions.toCleanRecipeId
 import com.team23.presentation.search.SearchScreen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -37,23 +39,28 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun NavHost(context: Context) {
 	val navController = rememberNavController()
-	val navItems = toNavItemProperties(listOf(AppPage.Home, AppPage.Search, AppPage.About), context, navController)
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
+	val navItems = toNavItemProperties(
+		listOf(AppPage.Home, AppPage.Search, AppPage.About),
+		context,
+		navController,
+		scope,
+		drawerState
+	)
 	NeuracrScaffold(
 		navItemProperties = navItems,
-		navigateUp = { navController.navigateUp() },
+		navigateUp = {
+			navController.navigateUp()
+			scope.launch(Dispatchers.IO) { drawerState.close() }
+		},
 		isNavigationEmpty = navController.previousBackStackEntry == null,
 		drawerState = drawerState,
 		openMenu = {
-			scope.launch(Dispatchers.IO) {
-				drawerState.open()
-			}
+			scope.launch(Dispatchers.IO) { drawerState.open() }
 		},
 		closeMenu = {
-			scope.launch(Dispatchers.IO) {
-				drawerState.close()
-			}
+			scope.launch(Dispatchers.IO) { drawerState.close() }
 		}
 	) { padding ->
 		ModalMenuDrawer(drawerState, Modifier.padding(padding)) {
@@ -90,11 +97,14 @@ internal fun NavHost(context: Context) {
 	}
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun toNavItemProperties(
 	appPages: List<AppPage>,
 	context: Context,
-	navController: NavHostController
+	navController: NavHostController,
+	scope: CoroutineScope,
+	drawerState: DrawerState,
 ): List<NavItemProperty> =
 	appPages.map { appPage ->
 		val currentScreenRoute = navController.currentBackStackEntryAsState().value?.destination?.route
@@ -111,7 +121,10 @@ internal fun toNavItemProperties(
 			title = context.getString(appPage.displayNameId),
 			icon = icon,
 			isSelected = isSelected,
-			onNavigate = { navController.navigate(appPage.route) },
+			onNavigate = {
+				navController.navigate(appPage.route)
+				scope.launch(Dispatchers.IO) { drawerState.close() }
+			},
 		)
 	}
 
