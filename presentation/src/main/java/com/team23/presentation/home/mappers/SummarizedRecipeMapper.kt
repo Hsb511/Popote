@@ -4,11 +4,11 @@ import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.domain.models.LanguageDomainModel
 import com.team23.domain.models.RecipeDomainModel
-import com.team23.presentation.home.models.HomeRecipeUiModel
+import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import javax.inject.Inject
 
-class HomeRecipeMapper @Inject constructor() {
-    fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized)= HomeRecipeUiModel(
+class SummarizedRecipeMapper @Inject constructor() {
+    fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized)= SummarizedRecipeUiModel(
         id = summarizedRecipe.id,
         title = summarizedRecipe.title,
         imageProperty = NeuracrImageProperty.Remote(

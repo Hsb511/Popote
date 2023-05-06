@@ -1,5 +1,6 @@
 package com.team23.design_system.scaffold
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -61,17 +62,8 @@ internal fun TopBar(
 			)
 		},
 		actions = {
-			when (drawerState.currentValue) {
-				DrawerValue.Closed ->
-					IconButton(onClick = openMenu) {
-						Icon(
-							imageVector = Icons.Filled.Menu,
-							contentDescription = stringResource(id = R.string.scaffold_open_menu_a11y),
-							tint = MaterialTheme.colorScheme.onPrimary,
-						)
-					}
-
-				DrawerValue.Open ->
+			Crossfade(targetState = drawerState.currentValue == DrawerValue.Open) { isDrawerOpen ->
+				if (isDrawerOpen) {
 					IconButton(onClick = closeMenu) {
 						Icon(
 							imageVector = Icons.Filled.Close,
@@ -79,6 +71,15 @@ internal fun TopBar(
 							tint = MaterialTheme.colorScheme.onPrimary,
 						)
 					}
+				} else {
+					IconButton(onClick = openMenu) {
+						Icon(
+							imageVector = Icons.Filled.Menu,
+							contentDescription = stringResource(id = R.string.scaffold_open_menu_a11y),
+							tint = MaterialTheme.colorScheme.onPrimary,
+						)
+					}
+				}
 			}
 		}
 	)

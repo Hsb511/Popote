@@ -8,10 +8,12 @@ import com.team23.data.parsers.FullRecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.models.RecipeDomainModel
 import com.team23.domain.repositories.RecipeRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.jsoup.select.Elements
 import javax.inject.Inject
 
-internal class RecipeDataRepository @Inject constructor(
+internal class RecipeRepositoryImpl @Inject constructor(
 	private val summarizedRecipeDao: SummarizedRecipeDao,
 	private val recipeDao: RecipeDao,
 	private val tagDao: TagDao,
@@ -50,5 +52,10 @@ internal class RecipeDataRepository @Inject constructor(
 	override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? =
 		recipeDao.findFullRecipeById(recipeId)?.let { dataModel ->
 			fullRecipeMapper.toFullRecipeDomainModel(dataModel)
+		}
+
+	override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
+		summarizedRecipeDao.searchBaseRecipeByTitle(searchText).map {
+			summarizedRecipeMapper.toSummarizedRecipeDomainModels(it)
 		}
 }

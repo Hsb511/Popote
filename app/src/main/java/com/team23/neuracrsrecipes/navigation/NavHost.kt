@@ -3,13 +3,8 @@ package com.team23.neuracrsrecipes.navigation
 import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,6 +25,8 @@ import com.team23.presentation.drawer.ModalMenuDrawer
 import com.team23.presentation.home.HomeScreen
 import com.team23.presentation.recipe.RecipeScreen
 import com.team23.presentation.recipe.extensions.toCleanRecipeId
+import com.team23.presentation.search.SearchScreen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -37,23 +34,28 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun NavHost(context: Context) {
 	val navController = rememberNavController()
-	val navItems = toNavItemProperties(listOf(AppPage.Home, AppPage.Search, AppPage.About), context, navController)
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
+	val navItems = toNavItemProperties(
+		listOf(AppPage.Home, AppPage.Search, AppPage.Upload, AppPage.About),
+		context,
+		navController,
+		scope,
+		drawerState
+	)
 	NeuracrScaffold(
 		navItemProperties = navItems,
-		navigateUp = { navController.navigateUp() },
+		navigateUp = {
+			navController.navigateUp()
+			scope.launch(Dispatchers.IO) { drawerState.close() }
+		},
 		isNavigationEmpty = navController.previousBackStackEntry == null,
 		drawerState = drawerState,
 		openMenu = {
-			scope.launch(Dispatchers.IO) {
-				drawerState.open()
-			}
+			scope.launch(Dispatchers.IO) { drawerState.open() }
 		},
 		closeMenu = {
-			scope.launch(Dispatchers.IO) {
-				drawerState.close()
-			}
+			scope.launch(Dispatchers.IO) { drawerState.close() }
 		}
 	) { padding ->
 		ModalMenuDrawer(drawerState, Modifier.padding(padding)) {
@@ -61,7 +63,7 @@ internal fun NavHost(context: Context) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
 						homeRecipeClick = { homeRecipeUiModel ->
-							navController.navigate("${AppPage.WithArgument.Recipe.route}/${homeRecipeUiModel.id.toCleanRecipeId()}") // TODO ID
+							navController.navigateToRecipe(homeRecipeUiModel.id)
 						}
 					)
 				}
@@ -76,8 +78,16 @@ internal fun NavHost(context: Context) {
 					)
 				}
 				composable(route = AppPage.Search.route) {
+					SearchScreen(
+						onRecipeClick = { recipeUiModel ->
+							navController.navigateToRecipe(recipeUiModel.id)
+						}
+					)
+				}
+				composable(route = AppPage.Upload.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
 				}
+
 				composable(route = AppPage.About.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
 				}
@@ -86,11 +96,14 @@ internal fun NavHost(context: Context) {
 	}
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun toNavItemProperties(
 	appPages: List<AppPage>,
 	context: Context,
-	navController: NavHostController
+	navController: NavHostController,
+	scope: CoroutineScope,
+	drawerState: DrawerState,
 ): List<NavItemProperty> =
 	appPages.map { appPage ->
 		val currentScreenRoute = navController.currentBackStackEntryAsState().value?.destination?.route
@@ -100,6 +113,7 @@ internal fun toNavItemProperties(
 		val icon = when (appPage) {
 			AppPage.Home -> if (isSelected) Icons.Filled.Home else Icons.Outlined.Home
 			AppPage.Search -> if (isSelected) Icons.Filled.Search else Icons.Outlined.Search
+			AppPage.Upload -> if (isSelected) Icons.Filled.AddCircle else Icons.Outlined.Add
 			AppPage.About -> if (isSelected) Icons.Filled.Info else Icons.Outlined.Info
 			else -> Icons.Filled.Done
 		}
@@ -107,6 +121,13 @@ internal fun toNavItemProperties(
 			title = context.getString(appPage.displayNameId),
 			icon = icon,
 			isSelected = isSelected,
-			onNavigate = { navController.navigate(appPage.route) },
+			onNavigate = {
+				navController.navigate(appPage.route)
+				scope.launch(Dispatchers.IO) { drawerState.close() }
+			},
 		)
 	}
+
+private fun NavHostController.navigateToRecipe(recipeId: String) {
+	this.navigate("${AppPage.WithArgument.Recipe.route}/${recipeId.toCleanRecipeId()}")
+}

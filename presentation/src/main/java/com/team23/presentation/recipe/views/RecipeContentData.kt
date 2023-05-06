@@ -55,19 +55,23 @@ fun RecipeContentData(
 						label = {
 							Text(
 								text = tag,
-								color = MaterialTheme.colorScheme.onSurface
+								color = MaterialTheme.colorScheme.onSurface,
 							)
 						}
 					)
 				}
 			}
-			NeuracrImage(
-				neuracrImageProperty = recipeUiModel.image,
-				maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
+			Card(
+				elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
 				modifier = Modifier
 					.padding(vertical = 8.dp)
 					.fillMaxWidth(),
-			)
+			) {
+				NeuracrImage(
+					neuracrImageProperty = recipeUiModel.image,
+					maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
+				)
+			}
 			Text(
 				text = stringResource(id = R.string.recipe_ingredients_title),
 				style = MaterialTheme.typography.headlineSmall,
