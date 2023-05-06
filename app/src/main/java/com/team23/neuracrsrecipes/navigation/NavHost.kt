@@ -3,13 +3,8 @@ package com.team23.neuracrsrecipes.navigation
 import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,7 +37,7 @@ internal fun NavHost(context: Context) {
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
 	val navItems = toNavItemProperties(
-		listOf(AppPage.Home, AppPage.Search, AppPage.About),
+		listOf(AppPage.Home, AppPage.Search, AppPage.Upload, AppPage.About),
 		context,
 		navController,
 		scope,
@@ -89,6 +84,10 @@ internal fun NavHost(context: Context) {
 						}
 					)
 				}
+				composable(route = AppPage.Upload.route) {
+					NeuracrPageInProgress(Modifier.padding(padding))
+				}
+
 				composable(route = AppPage.About.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
 				}
@@ -114,6 +113,7 @@ internal fun toNavItemProperties(
 		val icon = when (appPage) {
 			AppPage.Home -> if (isSelected) Icons.Filled.Home else Icons.Outlined.Home
 			AppPage.Search -> if (isSelected) Icons.Filled.Search else Icons.Outlined.Search
+			AppPage.Upload -> if (isSelected) Icons.Filled.AddCircle else Icons.Outlined.Add
 			AppPage.About -> if (isSelected) Icons.Filled.Info else Icons.Outlined.Info
 			else -> Icons.Filled.Done
 		}

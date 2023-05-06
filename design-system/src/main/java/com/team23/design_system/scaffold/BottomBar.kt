@@ -1,5 +1,6 @@
 package com.team23.design_system.scaffold
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
