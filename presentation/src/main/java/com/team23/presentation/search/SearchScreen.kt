@@ -1,23 +1,15 @@
 package com.team23.presentation.search
 
-import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,8 +20,11 @@ import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.search.models.SearchUiModel
 import com.team23.presentation.search.models.TagUiModel
-import com.team23.presentation.search.views.SearchFilterChip
+import com.team23.presentation.search.models.TagsRowUiModel
+import com.team23.presentation.search.models.TextFieldUiModel
 import com.team23.presentation.search.views.SearchRecipeCard
+import com.team23.presentation.search.views.SearchTagsRow
+import com.team23.presentation.search.views.SearchTextField
 
 @Composable
 fun SearchScreen(
@@ -39,10 +34,14 @@ fun SearchScreen(
 ) {
 	SearchScreen(
 		searchUiModel = SearchUiModel(
-			searchValue = searchViewModel.searchValue.value,
-			onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
-			tags = searchViewModel.tags.collectAsState().value,
-			onTagSelected = { tag -> searchViewModel.onTagSelected(tag) },
+			textField = TextFieldUiModel(
+				searchValue = searchViewModel.searchValue.value,
+				onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
+			),
+			tagsRow = TagsRowUiModel(
+				tags = searchViewModel.tags.collectAsState().value,
+				onTagSelected = { tag -> searchViewModel.onTagSelected(tag) },
+			),
 			recipes = searchViewModel.recipes.collectAsState().value,
 			onRecipeClick = onRecipeClick,
 		),
@@ -50,7 +49,7 @@ fun SearchScreen(
 	)
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SearchScreen(
 	searchUiModel: SearchUiModel,
@@ -62,43 +61,9 @@ private fun SearchScreen(
 			.padding(start = 16.dp, top = 16.dp, end = 16.dp)
 			.fillMaxSize()
 	) {
-		OutlinedTextField(
-			value = searchUiModel.searchValue,
-			onValueChange = searchUiModel.onValueChange,
-			maxLines = 1,
-			singleLine = true,
-			shape = MaterialTheme.shapes.small,
-			colors = TextFieldDefaults.outlinedTextFieldColors(
-				textColor = MaterialTheme.colorScheme.onSurfaceVariant
-			),
-			placeholder = {
-				Text(
-					text = stringResource(id = com.team23.presentation.R.string.search_textfield_placeholder),
-					color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.69f),
-				)
-			},
-			leadingIcon = {
-				Icon(
-					imageVector = Icons.Filled.Search,
-					contentDescription = null,
-					tint = MaterialTheme.colorScheme.primary,
-				)
-			},
-			modifier = Modifier.fillMaxWidth(),
-		)
+		SearchTextField(searchUiModel.textField)
 
-		val rowsCount = if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) 1 else 2
-		val horizontalItemSpacing = 8.dp
-		LazyHorizontalStaggeredGrid(
-			rows = StaggeredGridCells.Fixed(count = rowsCount),
-			horizontalItemSpacing = horizontalItemSpacing,
-			verticalArrangement = Arrangement.spacedBy(8.dp),
-			modifier = Modifier.height(32.dp * rowsCount + horizontalItemSpacing)
-		) {
-			items(searchUiModel.tags) { tag ->
-				SearchFilterChip(tag, searchUiModel.onTagSelected)
-			}
-		}
+		SearchTagsRow(searchUiModel.tagsRow)
 
 		LazyVerticalGrid(
 			columns = GridCells.Adaptive(300.dp),
@@ -127,17 +92,21 @@ private fun SearchScreenPreview() {
 	NeuracrTheme {
 		SearchScreen(
 			searchUiModel = SearchUiModel(
-				searchValue = "Bretzels",
-				onValueChange = { },
-				tags = listOf(
-					TagUiModel("soup", true),
-					TagUiModel("veggie", true),
-					TagUiModel("cocktail", false),
-					TagUiModel("drink", false),
-					TagUiModel("main", false),
-					TagUiModel("italian", true)
+				textField = TextFieldUiModel(
+					searchValue = "Bretzels",
+					onValueChange = { },
 				),
-				onTagSelected = { },
+				tagsRow = TagsRowUiModel(
+					tags = listOf(
+						TagUiModel("soup", true),
+						TagUiModel("veggie", true),
+						TagUiModel("cocktail", false),
+						TagUiModel("drink", false),
+						TagUiModel("main", false),
+						TagUiModel("italian", true)
+					),
+					onTagSelected = { },
+				),
 				recipes = List(6) {
 					SummarizedRecipeUiModel(
 						id = "",
@@ -151,6 +120,7 @@ private fun SearchScreenPreview() {
 				},
 				onRecipeClick = {},
 			),
+			modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
 		)
 	}
 }
