@@ -41,7 +41,7 @@ fun SearchRecipeCard(
 					neuracrImageProperty = summarizedRecipeUiModel.imageProperty,
 					maxImageHeight = 200.dp,
 					hasNoCornerEnd = true,
-					contentScale = ContentScale.FillHeight,
+					contentScale = ContentScale.FillBounds,
 					modifier = Modifier.fillMaxHeight(),
 				)
 			}

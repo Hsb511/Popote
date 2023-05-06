@@ -8,8 +8,5 @@ interface RecipeRepository {
     suspend fun loadAllSummarizedRecipesIfNeeded()
     suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String)
     suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full?
-    fun getSummarizedRecipesBySearchTextAndTags(
-        searchText: String,
-        tagsList: List<String>,
-    ): Flow<List<RecipeDomainModel.Summarized>>
+    fun getSummarizedRecipesBySearchText(searchText: String, ): Flow<List<RecipeDomainModel.Summarized>>
 }

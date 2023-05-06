@@ -4,12 +4,13 @@ import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.search.models.SearchUiModel
 import com.team23.presentation.search.models.TagUiModel
+import com.team23.presentation.search.views.SearchFilterChip
 import com.team23.presentation.search.views.SearchRecipeCard
 
 @Composable
@@ -63,6 +65,12 @@ private fun SearchScreen(
 		OutlinedTextField(
 			value = searchUiModel.searchValue,
 			onValueChange = searchUiModel.onValueChange,
+			maxLines = 1,
+			singleLine = true,
+			shape = MaterialTheme.shapes.small,
+			colors = TextFieldDefaults.outlinedTextFieldColors(
+				textColor = MaterialTheme.colorScheme.onSurfaceVariant
+			),
 			placeholder = {
 				Text(
 					text = stringResource(id = com.team23.presentation.R.string.search_textfield_placeholder),
@@ -76,7 +84,6 @@ private fun SearchScreen(
 					tint = MaterialTheme.colorScheme.primary,
 				)
 			},
-			colors = TextFieldDefaults.outlinedTextFieldColors(textColor = MaterialTheme.colorScheme.onSurfaceVariant),
 			modifier = Modifier.fillMaxWidth(),
 		)
 
@@ -89,37 +96,26 @@ private fun SearchScreen(
 			modifier = Modifier.height(32.dp * rowsCount + horizontalItemSpacing)
 		) {
 			items(searchUiModel.tags) { tag ->
-				FilterChip(
-					selected = tag.isSelected,
-					onClick = { searchUiModel.onTagSelected(tag) },
-					label = {
-						Text(
-							text = tag.label,
-							style = MaterialTheme.typography.bodySmall,
-						)
-					},
-					leadingIcon = if (tag.isSelected) {
-						{
-							Icon(
-								imageVector = Icons.Filled.Check,
-								contentDescription = null,
-							)
-						}
-					} else null
-				)
+				SearchFilterChip(tag, searchUiModel.onTagSelected)
 			}
 		}
 
-		LazyVerticalStaggeredGrid(
-			columns = StaggeredGridCells.Adaptive(300.dp),
-			verticalItemSpacing = 16.dp,
+		LazyVerticalGrid(
+			columns = GridCells.Adaptive(300.dp),
+			verticalArrangement = Arrangement.spacedBy(16.dp),
 			horizontalArrangement = Arrangement.spacedBy(16.dp),
+			contentPadding = PaddingValues(bottom = 16.dp),
 			modifier = modifier.fillMaxSize()
 		) {
 			items(searchUiModel.recipes) { recipe ->
-				SearchRecipeCard(recipe, modifier = Modifier.clickable {
-					searchUiModel.onRecipeClick(recipe)
-				})
+				SearchRecipeCard(
+					summarizedRecipeUiModel = recipe,
+					modifier = Modifier
+						.animateItemPlacement()
+						.clickable {
+							searchUiModel.onRecipeClick(recipe)
+						}
+				)
 			}
 		}
 	}

@@ -14,6 +14,6 @@ interface TagDao {
 	suspend fun loadAll(): List<TagDataModel>
 
 	@Transaction
-	@Query("SELECT * FROM TagDataModel WHERE label IN (:tagLabels)")
-	fun loadAllByLabel(tagLabels: List<String>): Flow<List<TagDataModel>>
+	@Query("SELECT recipeId FROM TagDataModel WHERE label IN (:tagLabels)")
+	fun getRecipeIdByLabel(tagLabels: List<String>): Flow<List<String>>
 }
