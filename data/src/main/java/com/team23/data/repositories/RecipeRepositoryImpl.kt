@@ -9,7 +9,7 @@ import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.models.RecipeDomainModel
 import com.team23.domain.repositories.RecipeRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import org.jsoup.select.Elements
 import javax.inject.Inject
 
@@ -54,17 +54,8 @@ internal class RecipeRepositoryImpl @Inject constructor(
 			fullRecipeMapper.toFullRecipeDomainModel(dataModel)
 		}
 
-	override fun getSummarizedRecipesBySearchTextAndTags(
-		searchText: String,
-		tagsList: List<String>
-	): Flow<List<RecipeDomainModel.Summarized>> =
-		// TODO GET FULLRECIPES AND PUT THE COMBINE IN THE USE CASE
-		combine(
-			summarizedRecipeDao.searchBaseRecipeByTitle(searchText),
-			tagDao.loadAllByLabel(tagsList),
-		) { recipes, tags ->
-			summarizedRecipeMapper.toSummarizedRecipeDomainModels(
-				recipes.filter { recipe -> if (tagsList.isNotEmpty()) tags.map { it.recipeId }.contains(recipe.href) else true }
-			).sortedBy { it.title }
+	override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
+		summarizedRecipeDao.searchBaseRecipeByTitle(searchText).map {
+			summarizedRecipeMapper.toSummarizedRecipeDomainModels(it)
 		}
 }
