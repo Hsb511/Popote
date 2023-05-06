@@ -1,7 +1,7 @@
 package com.team23.presentation.search.views
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,10 +20,10 @@ fun SearchFilterChip(tag: TagUiModel, onTagSelected: (TagUiModel) -> Unit) {
 				style = MaterialTheme.typography.bodySmall,
 			)
 		},
-		leadingIcon = if (tag.isSelected) {
+		trailingIcon = if (tag.isSelected) {
 			{
 				Icon(
-					imageVector = Icons.Filled.Check,
+					imageVector = Icons.Filled.Close,
 					contentDescription = null,
 				)
 			}
@@ -34,9 +34,9 @@ fun SearchFilterChip(tag: TagUiModel, onTagSelected: (TagUiModel) -> Unit) {
 @Composable
 @Preview(showBackground = true)
 fun SearchFilterChipPreview() {
-    NeuracrTheme {
-	    SearchFilterChip(
-		    TagUiModel("soup", true)
+	NeuracrTheme {
+		SearchFilterChip(
+			TagUiModel("soup", true)
 		) {}
-    }
+	}
 }

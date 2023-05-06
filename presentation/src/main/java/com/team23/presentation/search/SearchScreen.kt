@@ -56,9 +56,9 @@ private fun SearchScreen(
 	modifier: Modifier = Modifier
 ) {
 	Column(
-		verticalArrangement = Arrangement.spacedBy(16.dp),
+		verticalArrangement = Arrangement.spacedBy(8.dp),
 		modifier = modifier
-			.padding(start = 16.dp, top = 16.dp, end = 16.dp)
+			.padding(start = 16.dp, top = 8.dp, end = 16.dp)
 			.fillMaxSize()
 	) {
 		SearchTextField(searchUiModel.textField)
