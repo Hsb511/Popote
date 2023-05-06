@@ -44,21 +44,22 @@ class SearchViewModel @Inject constructor(
 	}
 
 	fun onTagSelected(tag: TagUiModel) {
-		val newTags = _tags.value.filter { it.label != tag.label } + tag.copy(isSelected = !tag.isSelected)
-		val (selected, unselected) = newTags.partition { it.isSelected }
-		val recomputedTags = selected.sortedBy { it.label } + unselected.sortedBy { it.label }
-		_tags.value = recomputedTags
-		searchNewRecipes(tagsList = recomputedTags.filterAndMap())
+		val tagIndex = _tags.value.indexOf(tag)
+		val newTags = _tags.value.toMutableList()
+		newTags.removeAt(tagIndex)
+		newTags.add(tagIndex, tag.copy(isSelected = !tag.isSelected))
+		_tags.value = newTags
+		searchNewRecipes(tagsList = newTags)
 	}
 
 	private fun searchNewRecipes(
 		searchText: String = searchValue.value,
-		tagsList: List<String> = tags.value.filterAndMap(),
+		tagsList: List<TagUiModel> = tags.value,
 	) {
 		viewModelScope.launch(Dispatchers.IO) {
 			searchSummarizedRecipesUseCase.invoke(
 				searchText = searchText,
-				tagsList = tagsList,
+				tagsList = tagsList.filter { it.isSelected }.map { it.label },
 			).collect { recipes ->
 				_recipes.value = recipes.map { recipe ->
 					summarizedRecipeMapper.toUiModel(recipe)
@@ -66,6 +67,4 @@ class SearchViewModel @Inject constructor(
 			}
 		}
 	}
-
-	private fun List<TagUiModel>.filterAndMap() = filter { it.isSelected }.map { it.label }
 }
