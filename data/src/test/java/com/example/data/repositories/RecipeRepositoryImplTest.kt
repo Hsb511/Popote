@@ -10,13 +10,13 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class RecipeDataRepositoryTest {
+class RecipeRepositoryImplTest {
     private val summarizedRecipeDao: SummarizedRecipeDao = mockk()
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource = mockk()
     private val summarizedRecipeParser: SummarizedRecipeParser = mockk()
     private val summarizedRecipeMapper: SummarizedRecipeMapper = mockk()
 
-    private val recipeDataRepository = RecipeDataRepository(
+    private val recipeRepositoryImpl = RecipeRepositoryImpl(
         summarizedRecipeDao, neuracrWebsiteDataSource, summarizedRecipeParser, summarizedRecipeMapper
     )
 

@@ -10,7 +10,7 @@ import com.team23.design_system.error.NeuracrError
 import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
-import com.team23.presentation.home.models.HomeRecipeUiModel
+import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.home.models.HomeUiState
 import com.team23.presentation.home.models.HomeUiState.*
 import com.team23.presentation.home.views.HomeContentData
@@ -18,7 +18,7 @@ import com.team23.presentation.home.views.HomeContentLoading
 
 @Composable
 fun HomeScreen(
-	homeRecipeClick: (HomeRecipeUiModel) -> Unit,
+	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
 	homeViewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -32,14 +32,14 @@ fun HomeScreen(
 @Composable
 private fun HomeScreen(
 	homeUiState: HomeUiState,
-	homeRecipeClick: (HomeRecipeUiModel) -> Unit,
+	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	when (homeUiState) {
 		is Loading -> HomeContentLoading(modifier)
 		is Error -> NeuracrError(homeUiState.message, modifier)
 		is Data -> HomeContentData(
-			homeRecipeUiModels = homeUiState.recipes,
+			summarizedRecipeUiModels = homeUiState.recipes,
 			homeRecipeClick = homeRecipeClick,
 			modifier = modifier,
 		)
@@ -53,7 +53,7 @@ private fun HomeScreenPreview() {
 		HomeScreen(
 			homeUiState = Data(
 				recipes = List(6) {
-					HomeRecipeUiModel(
+					SummarizedRecipeUiModel(
 						id = "",
 						title = "bretzels",
 						imageProperty = NeuracrImageProperty.Resource(

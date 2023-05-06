@@ -8,4 +8,11 @@
     <string name="recipe_ingredients_title">Ingredients</string>
     <string name="recipe_number_of_servings">Number of servings</string>
     <string name="recipe_instructions_title">Instructions</string>
+
+    <!-- search -->
+    <string name="search_textfield_placeholder">Type to search…</string>
+    <string name="search_textfield_label">Search by text</string>
+    <string name="search_tags_row_label">Search by tags</string>
+    <string name="search_tags_row_expand_indication">Click to expand tags</string>
+    <string name="search_tags_select_tag_indication">Click a tag to select it</string>
 </resources>

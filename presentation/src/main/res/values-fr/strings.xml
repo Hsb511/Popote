@@ -8,4 +8,11 @@
     <string name="recipe_ingredients_title">Ingrédients</string>
     <string name="recipe_number_of_servings">Nombre de personnes</string>
     <string name="recipe_instructions_title">Instructions</string>
+
+    <!-- search -->
+    <string name="search_textfield_placeholder">Ecrire pour rechercher…</string>
+    <string name="search_textfield_label">Recherche par texte</string>
+    <string name="search_tags_row_label">Recherche par mots clés</string>
+    <string name="search_tags_row_expand_indication">Cliquer pour voir les tags</string>
+    <string name="search_tags_select_tag_indication">Cliquer sur un tag pour filtrer</string>
 </resources>
