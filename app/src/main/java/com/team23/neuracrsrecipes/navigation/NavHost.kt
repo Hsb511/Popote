@@ -21,7 +21,9 @@ import androidx.navigation.navArgument
 import com.team23.design_system.scaffold.NavItemProperty
 import com.team23.design_system.scaffold.NeuracrScaffold
 import com.team23.design_system.wip.NeuracrPageInProgress
+import com.team23.neuracrsrecipes.BuildConfig
 import com.team23.presentation.drawer.ModalMenuDrawer
+import com.team23.presentation.drawer.models.DrawerUiModel
 import com.team23.presentation.home.HomeScreen
 import com.team23.presentation.recipe.RecipeScreen
 import com.team23.presentation.recipe.extensions.toCleanRecipeId
@@ -58,7 +60,7 @@ internal fun NavHost(context: Context) {
 			scope.launch(Dispatchers.IO) { drawerState.close() }
 		}
 	) { padding ->
-		ModalMenuDrawer(drawerState, Modifier.padding(padding)) {
+		ModalMenuDrawer(DrawerUiModel(drawerState, BuildConfig.VERSION_NAME), Modifier.padding(padding)) {
 			NavHost(navController = navController, startDestination = AppPage.Home.route) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
