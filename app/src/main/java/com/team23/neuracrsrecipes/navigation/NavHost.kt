@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.twotone.Favorite
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,7 +40,7 @@ internal fun NavHost(context: Context) {
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
 	val navItems = toNavItemProperties(
-		listOf(AppPage.Home, AppPage.Search, AppPage.Upload, AppPage.About),
+		listOf(AppPage.Home, AppPage.Search, AppPage.Upload, AppPage.Favorite),
 		context,
 		navController,
 		scope,
@@ -90,7 +91,7 @@ internal fun NavHost(context: Context) {
 					NeuracrPageInProgress(Modifier.padding(padding))
 				}
 
-				composable(route = AppPage.About.route) {
+				composable(route = AppPage.Favorite.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
 				}
 			}
@@ -116,7 +117,7 @@ internal fun toNavItemProperties(
 			AppPage.Home -> if (isSelected) Icons.Filled.Home else Icons.Outlined.Home
 			AppPage.Search -> if (isSelected) Icons.Filled.Search else Icons.Outlined.Search
 			AppPage.Upload -> if (isSelected) Icons.Filled.AddCircle else Icons.Outlined.Add
-			AppPage.About -> if (isSelected) Icons.Filled.Info else Icons.Outlined.Info
+			AppPage.Favorite -> if (isSelected) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
 			else -> Icons.Filled.Done
 		}
 		NavItemProperty(

@@ -8,7 +8,7 @@ sealed class AppPage(open val route: String, @StringRes open val displayNameId: 
 	object Home : AppPage("home", R.string.navigation_home_display_name)
 	object Search : AppPage("search", R.string.navigation_search_display_name)
 	object Upload : AppPage("upload", R.string.navigation_upload_display_name)
-	object About : AppPage("about", R.string.navigation_about_display_name)
+	object Favorite : AppPage("favorite", R.string.navigation_favorite_display_name)
 	sealed class WithArgument(
 		override val route: String,
 		@StringRes override val displayNameId: Int,
