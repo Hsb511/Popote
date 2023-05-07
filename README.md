@@ -1,2 +1,2 @@
-# Neuracr-s-Recipes
+# Popote
 Android app for browsing Neuracr's recipes !
