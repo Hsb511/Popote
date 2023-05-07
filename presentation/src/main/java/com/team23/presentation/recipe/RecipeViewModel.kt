@@ -32,7 +32,7 @@ class RecipeViewModel @Inject constructor(
 		if (sanitizedRecipeId == null) {
 			_uiState.value = RecipeUiState.Error("The recipe link is invalid")
 		} else {
-			viewModelScope.launch(Dispatchers.IO) {
+			viewModelScope.launch(Dispatchers.Main) {
 				getFullRecipeByIdUseCase.invoke(sanitizedRecipeId.toUrlRecipeId())
 					.onSuccess { fullRecipe ->
 						val recipeUiModel = recipeMapper.toRecipeUiModel(fullRecipe)
