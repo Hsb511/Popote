@@ -1,6 +1,7 @@
 package com.team23.data.fixtures
 
 import com.team23.data.models.SummarizedRecipeDataModel
+import com.team23.domain.models.LanguageDomainModel
 import com.team23.domain.models.RecipeDomainModel
 import java.time.LocalDate
 
@@ -33,14 +34,16 @@ internal fun getFirstSummarizedRecipeDomainModel() = RecipeDomainModel.Summarize
     id = "/recipes/2022/12/19/zucchini_boursin_soup_fr.html",
     title = "Soupe de courgettes et boursin",
     imageUrl = "https://neuracr.github.io/assets/images/zucchini_boursin_soup.jpg",
-    date = getFirstLocalDate()
+    date = getFirstLocalDate(),
+    language = LanguageDomainModel.FRENCH,
 )
 
 internal fun getSecondSummarizedRecipeDomainModel() = RecipeDomainModel.Summarized(
     id = "/recipes/2022/12/04/carrot_curry_soup_fr.html",
     title = "Soupe de carottes au curry",
     imageUrl = "https://neuracr.github.io/assets/images/carrot_curry_soup.jpg",
-    date = getSecondLocalDate()
+    date = getSecondLocalDate(),
+    language = LanguageDomainModel.FRENCH,
 )
 
 internal val rawHtmlToParse = """

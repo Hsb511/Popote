@@ -12,5 +12,5 @@ class TagRepositoryImpl @Inject constructor(
 ) : TagRepository {
 	override suspend fun getAllTags(): List<String> = tagMapper.toTagDomainModel(tagDao.loadAll())
 	override fun getRecipeIdByTags(tagsList: List<String>): Flow<List<String>> =
-		tagDao.getRecipeIdByLabel(tagsList)
+		tagDao.getRecipeIdByLabel(tagsList.flatMap { tagMapper.translateBackToEnglish(it) })
 }
