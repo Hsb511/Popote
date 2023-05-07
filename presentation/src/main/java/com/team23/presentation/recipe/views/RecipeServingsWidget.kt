@@ -15,11 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
+import com.team23.presentation.R
 
 @Composable
 fun RecipeServingsWidget(
@@ -58,7 +60,7 @@ fun RecipeServingsWidget(
 			singleLine = true,
 			textStyle = LocalTextStyle.current.copy(
 				color = MaterialTheme.colorScheme.onPrimary,
-				textAlign = TextAlign.Center,
+				textAlign = TextAlign.End,
 			),
 			keyboardOptions = KeyboardOptions(
 				keyboardType = KeyboardType.Number
@@ -67,12 +69,26 @@ fun RecipeServingsWidget(
 				localFocusManager.clearFocus()
 			}),
 			modifier = modifier
-				.width(32.dp)
+				.width(
+					currentServingsAmount
+						.toIntOrNull()
+						?.let { servings ->
+							when {
+								servings < 10 -> 16.dp
+								servings < 100 -> 24.dp
+								else -> 32.dp
+							}
+						} ?: 32.dp
+				)
 				.pointerInput(Unit) {
 					detectTapGestures(onTap = {
 						localFocusManager.clearFocus()
 					})
 				}
+		)
+		Text(
+			text = stringResource(id = R.string.recipe_number_of_servings),
+			modifier = Modifier.padding(horizontal = 8.dp)
 		)
 		IconButton(
 			onClick = onAddOneServing,
@@ -88,7 +104,7 @@ fun RecipeServingsWidget(
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 fun RecipeServingsWidgetPreview() {
 	NeuracrTheme {
 		RecipeServingsWidget(
