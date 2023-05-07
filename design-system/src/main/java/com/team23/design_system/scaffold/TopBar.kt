@@ -44,7 +44,10 @@ internal fun TopBar(
 						.padding(vertical = 6.dp)
 				)
 			} else {
-				IconButton(onClick = navigateUp) {
+				IconButton(onClick = {
+					navigateUp()
+					closeMenu()
+				}) {
 					Icon(
 						imageVector = Icons.Filled.ArrowBack,
 						contentDescription = stringResource(id = R.string.scaffold_navigate_up_a11y)
