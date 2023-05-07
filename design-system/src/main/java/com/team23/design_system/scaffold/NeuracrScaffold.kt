@@ -37,7 +37,12 @@ fun NeuracrScaffold(
 				closeMenu = closeMenu,
 			)
 		},
-		bottomBar = { BottomBar(navItemProperties) },
+		bottomBar = {
+			BottomBar(
+				navItemProperties = navItemProperties,
+				closeMenu = closeMenu,
+			)
+		},
 		floatingActionButton = { FloatingActionButton() },
 		modifier = Modifier.fillMaxSize()
 	)
