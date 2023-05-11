@@ -29,6 +29,7 @@ fun RecipeContentData(
 	onValueChanged: (String) -> Unit,
 	onAddOneServing: () -> Unit,
 	onSubtractOneServing: () -> Unit,
+	onTagClicked: (String) -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	Column(modifier = modifier.fillMaxSize()) {
@@ -51,7 +52,7 @@ fun RecipeContentData(
 			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				items(recipeUiModel.tags) { tag ->
 					ElevatedSuggestionChip(
-						onClick = { /*TODO*/ },
+						onClick = { onTagClicked(tag) },
 						label = {
 							Text(
 								text = tag,
@@ -135,6 +136,7 @@ fun RecipeContentDataPreview() {
 			onSubtractOneServing = {},
 			currentServingsAmount = "4",
 			onValueChanged = {},
+			onTagClicked = {},
 		)
 	}
 }

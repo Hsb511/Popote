@@ -12,6 +12,7 @@ import com.team23.presentation.recipe.views.RecipeContentLoading
 @Composable
 fun RecipeScreen(
 	cleanRecipeId: String?,
+	onTagClicked: (String) -> Unit,
 	modifier: Modifier = Modifier,
 	recipeViewModel: RecipeViewModel = hiltViewModel()
 ) {
@@ -22,6 +23,7 @@ fun RecipeScreen(
 		onValueChanged = { currentServingsAmount -> recipeViewModel.updateRecipeData(currentServingsAmount) },
 		onAddOneServing = { recipeViewModel.addOneService() },
 		onSubtractOneServing = { recipeViewModel.subtractOneService() },
+		onTagClicked = onTagClicked,
 		modifier = modifier,
 	)
 }
@@ -33,6 +35,7 @@ fun RecipeScreen(
 	onValueChanged: (String) -> Unit,
 	onAddOneServing: () -> Unit,
 	onSubtractOneServing: () -> Unit,
+	onTagClicked: (String) -> Unit,
 	modifier: Modifier
 ) {
 	when (recipeUiState) {
@@ -42,6 +45,7 @@ fun RecipeScreen(
 			onValueChanged = onValueChanged,
 			onAddOneServing = onAddOneServing,
 			onSubtractOneServing = onSubtractOneServing,
+			onTagClicked = onTagClicked,
 			modifier = modifier
 		)
 		is RecipeUiState.Error -> NeuracrError(recipeUiState.message, modifier)

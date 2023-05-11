@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.material.icons.twotone.Favorite
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -77,7 +76,10 @@ internal fun NavHost(context: Context) {
 					})
 				) { navBackStackEntry ->
 					RecipeScreen(
-						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName)
+						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName),
+						onTagClicked = { tag ->
+							navController.navigate("${AppPage.WithArgument.Search.route}/$tag")
+						}
 					)
 				}
 				composable(route = AppPage.Search.route) {
@@ -85,6 +87,14 @@ internal fun NavHost(context: Context) {
 						onRecipeClick = { recipeUiModel ->
 							navController.navigateToRecipe(recipeUiModel.id)
 						}
+					)
+				}
+				composable(route = "${AppPage.Search.route}/{${AppPage.WithArgument.Search.argumentName}}") { navBackStackEntry ->
+					SearchScreen(
+						onRecipeClick = { recipeUiModel ->
+							navController.navigateToRecipe(recipeUiModel.id)
+						},
+						selectedTag = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Search.argumentName),
 					)
 				}
 				composable(route = AppPage.Upload.route) {

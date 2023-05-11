@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,9 +32,15 @@ class SearchViewModel @Inject constructor(
 	private val _tags = MutableStateFlow<List<TagUiModel>>(emptyList())
 	val tags: StateFlow<List<TagUiModel>> = _tags
 
+	var selectedTag: String? = null
+
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			_tags.value = tagMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
+			val tags = tagMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
+			withContext(Dispatchers.Main) { _tags.value = tags }
+			selectedTag?.let { tag ->
+				onTagSelected(TagUiModel(label = tag, isSelected = false))
+			}
 		}
 		searchNewRecipes()
 	}
@@ -61,9 +68,8 @@ class SearchViewModel @Inject constructor(
 				searchText = searchText,
 				tagsList = tagsList.filter { it.isSelected }.map { it.label },
 			).collect { recipes ->
-				_recipes.value = recipes.map { recipe ->
-					summarizedRecipeMapper.toUiModel(recipe)
-				}
+				val recipeUiModels = recipes.map { recipe -> summarizedRecipeMapper.toUiModel(recipe) }
+				withContext(Dispatchers.Main) { _recipes.value = recipeUiModels }
 			}
 		}
 	}
