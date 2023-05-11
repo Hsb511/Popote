@@ -28,7 +28,7 @@ fun NeuracrLike(
 		Icon(
 			imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
 			contentDescription = stringResource(id = R.string.favorite_button_content_description),
-			tint = MaterialTheme.colorScheme.error,
+			tint = if (isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground,
 		)
 	}
 }
