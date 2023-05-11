@@ -3,18 +3,30 @@ package com.team23.presentation.search.views
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -34,6 +46,7 @@ import com.team23.presentation.search.models.TagsRowUiModel
 fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier) {
 	val focusManager = LocalFocusManager.current
 	val keyboard = LocalSoftwareKeyboardController.current
+	val interactionSource = remember { MutableInteractionSource() }
 	var searchTagValue by remember { mutableStateOf("") }
 	var isMenuExpanded by remember { mutableStateOf(false) }
 
@@ -47,6 +60,7 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 		maxLines = 1,
 		singleLine = true,
 		shape = MaterialTheme.shapes.small,
+		interactionSource = interactionSource,
 		colors = TextFieldDefaults.outlinedTextFieldColors(
 			textColor = MaterialTheme.colorScheme.onSurfaceVariant
 		),
@@ -91,16 +105,17 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 		),
 		modifier = modifier
 			.fillMaxWidth()
+			.clickable {
+				isMenuExpanded = true
+			}
 			.onFocusChanged { focusState ->
 				isMenuExpanded = focusState.hasFocus
 			},
 	)
 
 	val selectedTags = tagsRowUiModel.tags.filter { it.isSelected }
-	LazyHorizontalStaggeredGrid(
-		rows = StaggeredGridCells.Fixed(count = 1),
-		horizontalItemSpacing = 8.dp,
-		verticalArrangement = Arrangement.spacedBy(8.dp),
+	LazyRow(
+		horizontalArrangement = Arrangement.spacedBy(8.dp),
 		modifier = Modifier
 			.height(if (selectedTags.isEmpty()) 0.dp else 48.dp)
 			.padding(top = 8.dp, bottom = 8.dp)
@@ -109,18 +124,25 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 			SearchFilterChip(tag, tagsRowUiModel.onTagSelected)
 		}
 	}
-	LazyVerticalGrid(
-		columns = GridCells.Adaptive(100.dp),
-		horizontalArrangement = Arrangement.spacedBy(8.dp),
-		modifier = if (isMenuExpanded) Modifier.offset(y = -(8.dp)) else Modifier.height(0.dp)
-	) {
-		items(tagsRowUiModel.tags
-			.filter { !it.isSelected }
-			.filter { it.label.contains(searchTagValue) }
-		) { tag ->
-			SearchFilterChip(tag = tag, onTagSelected = tagsRowUiModel.onTagSelected)
+
+	if (isMenuExpanded) {
+		LazyHorizontalStaggeredGrid(
+			rows = StaggeredGridCells.Fixed(3),
+			horizontalItemSpacing = 8.dp,
+			verticalArrangement = Arrangement.spacedBy(8.dp),
+			modifier = Modifier
+				.height(34.dp * 3 + 8.dp * 2)
+				.padding(bottom = 4.dp)
+		) {
+			items(tagsRowUiModel.tags
+				.filter { !it.isSelected }
+				.filter { it.label.contains(searchTagValue) }
+			) { tag ->
+				SearchFilterChip(tag = tag, onTagSelected = tagsRowUiModel.onTagSelected)
+			}
 		}
 	}
+
 }
 
 @Composable
