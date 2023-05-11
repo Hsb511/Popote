@@ -13,4 +13,5 @@ data class RecipeUiModel(
 	val defaultServingsAmount: Int,
 	val description: String,
 	val conclusion: String,
+	val isFavorite: Boolean,
 )

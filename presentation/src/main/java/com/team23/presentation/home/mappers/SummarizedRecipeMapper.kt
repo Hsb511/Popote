@@ -8,16 +8,19 @@ import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import javax.inject.Inject
 
 class SummarizedRecipeMapper @Inject constructor() {
-    fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized)= SummarizedRecipeUiModel(
-        id = summarizedRecipe.id,
-        title = summarizedRecipe.title,
-        imageProperty = NeuracrImageProperty.Remote(
-            contentDescription = summarizedRecipe.title,
-            url = summarizedRecipe.imageUrl,
-        ),
-        flagProperty = when(summarizedRecipe.language) {
-            LanguageDomainModel.ENGLISH -> NeuracrFlagProperty.UK_US
-            LanguageDomainModel.FRENCH -> NeuracrFlagProperty.FRENCH
-        }
-    )
+	fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized) = with(summarizedRecipe) {
+		SummarizedRecipeUiModel(
+			id = id,
+			title = title,
+			imageProperty = NeuracrImageProperty.Remote(
+				contentDescription = title,
+				url = imageUrl,
+			),
+			flagProperty = when (language) {
+				LanguageDomainModel.ENGLISH -> NeuracrFlagProperty.UK_US
+				LanguageDomainModel.FRENCH -> NeuracrFlagProperty.FRENCH
+			},
+			isFavorite = isFavorite,
+		)
+	}
 }

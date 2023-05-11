@@ -29,6 +29,7 @@ class FullRecipeMapper @Inject constructor(
 		startingText = fullRecipeDataModel.recipe.instructionTitle,
 		instructions = instructionMapper.toInstructionListDomainModel(fullRecipeDataModel.instructions),
 		endingText = fullRecipeDataModel.recipe.lastTitle,
-		sections = listOf()
+		sections = listOf(),
+		isFavorite = false, // TODO
 	)
 }

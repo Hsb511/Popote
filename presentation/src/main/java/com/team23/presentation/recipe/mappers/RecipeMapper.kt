@@ -21,5 +21,6 @@ class RecipeMapper @Inject constructor(
 		instructions = instructionMapper.toInstructionUiModels(fullRecipe.instructions),
 		description = fullRecipe.startingText,
 		conclusion = fullRecipe.endingText,
+		isFavorite = fullRecipe.isFavorite,
 	)
 }

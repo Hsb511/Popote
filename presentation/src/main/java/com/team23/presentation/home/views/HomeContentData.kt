@@ -64,6 +64,7 @@ private fun HomeContentDataPreview() {
 						imageRes = com.team23.design_system.R.drawable.bretzel
 					),
 					flagProperty = NeuracrFlagProperty.FRENCH,
+					isFavorite = true,
 				)
 			},
 			{ }

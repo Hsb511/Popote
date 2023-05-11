@@ -18,6 +18,7 @@ import com.team23.design_system.flags.NeuracrFlag
 import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImage
 import com.team23.design_system.image.NeuracrImageProperty
+import com.team23.design_system.like.NeuracrLike
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 
@@ -69,6 +70,11 @@ fun SearchRecipeCard(
 						.width(30.dp)
 						.height(20.dp)
 				)
+				NeuracrLike(
+					isFavorite = summarizedRecipeUiModel.isFavorite,
+					onFavoriteClick = { /* TODO */ },
+					modifier = Modifier.align(Alignment.BottomEnd)
+				)
 			}
 		}
 	}
@@ -87,6 +93,7 @@ fun SearchRecipeCardPreview() {
 				),
 				title = "Bretzels",
 				flagProperty = NeuracrFlagProperty.FRENCH,
+				isFavorite = true,
 			),
 		)
 	}

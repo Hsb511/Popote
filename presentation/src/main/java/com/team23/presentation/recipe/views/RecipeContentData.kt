@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -15,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.image.NeuracrImage
 import com.team23.design_system.image.NeuracrImageProperty
+import com.team23.design_system.like.NeuracrLike
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.recipe.models.IngredientUiModel
@@ -68,10 +70,17 @@ fun RecipeContentData(
 					.padding(vertical = 8.dp)
 					.fillMaxWidth(),
 			) {
-				NeuracrImage(
-					neuracrImageProperty = recipeUiModel.image,
-					maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
-				)
+				Box {
+					NeuracrImage(
+						neuracrImageProperty = recipeUiModel.image,
+						maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
+					)
+					NeuracrLike(
+						isFavorite = recipeUiModel.isFavorite,
+						onFavoriteClick = { /* TODO */ },
+						modifier = Modifier.align(Alignment.BottomEnd)
+					)
+				}
 			}
 			Text(
 				text = stringResource(id = R.string.recipe_ingredients_title),
@@ -130,7 +139,8 @@ fun RecipeContentDataPreview() {
 					InstructionUiModel(2, "Chop the shallots finely"),
 					InstructionUiModel(3, "Put your salmon in a gratin dish. Season with salt, pepper and some of the shallots. Cover the dish with Cellophane"
 					)
-				)
+				),
+				isFavorite = true,
 			),
 			onAddOneServing = {},
 			onSubtractOneServing = {},
