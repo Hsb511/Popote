@@ -122,7 +122,8 @@ internal fun toNavItemProperties(
 		val currentScreenRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 			?: AppPage.Home.route
 		val isSelected = currentScreenRoute == appPage.route ||
-			(appPage == AppPage.Home && currentScreenRoute.contains(AppPage.Home.route))
+			(appPage == AppPage.Home && currentScreenRoute.contains(AppPage.Home.route)) ||
+			(appPage == AppPage.Search && currentScreenRoute.contains(AppPage.Search.route))
 		val icon = when (appPage) {
 			AppPage.Home -> if (isSelected) Icons.Filled.Home else Icons.Outlined.Home
 			AppPage.Search -> if (isSelected) Icons.Filled.Search else Icons.Outlined.Search
