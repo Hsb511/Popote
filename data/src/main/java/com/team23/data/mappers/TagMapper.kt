@@ -31,7 +31,7 @@ private val tagsTranslation: Map<String, Map<String, String>> = mapOf(
 	"quick" to mapOf("fr" to "rapide"),
 	"rice" to mapOf("fr" to "riz"),
 	"rum" to mapOf("fr" to "rhum"),
-	"soupe" to mapOf("fr" to "soupe"),
+	"soup" to mapOf("fr" to "soupe"),
 	"starter" to mapOf("fr" to "entrée"),
 	"swiss" to mapOf("fr" to "suisse"),
 	"tex-mex" to mapOf("fr" to "tex-mex"),

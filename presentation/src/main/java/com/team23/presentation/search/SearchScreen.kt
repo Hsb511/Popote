@@ -30,8 +30,10 @@ import com.team23.presentation.search.views.SearchTextField
 fun SearchScreen(
 	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
+	selectedTag: String? = null,
 	searchViewModel: SearchViewModel = hiltViewModel()
 ) {
+	searchViewModel.selectedTag = selectedTag
 	SearchScreen(
 		searchUiModel = SearchUiModel(
 			textField = TextFieldUiModel(
