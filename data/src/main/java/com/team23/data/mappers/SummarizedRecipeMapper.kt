@@ -24,5 +24,6 @@ class SummarizedRecipeMapper @Inject constructor(
                 .let { splitData -> "${splitData[0]}/${splitData[1]}/${splitData[2]}" }
             ),
             language = languageMapper.toLanguageDomainModel(summarizedRecipeDataModel.href),
+            isFavorite = false, // TODO
         )
 }

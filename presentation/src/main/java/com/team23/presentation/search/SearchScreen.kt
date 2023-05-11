@@ -118,6 +118,7 @@ private fun SearchScreenPreview() {
 							imageRes = R.drawable.bretzel
 						),
 						flagProperty = NeuracrFlagProperty.FRENCH,
+						isFavorite = true,
 					)
 				},
 				onRecipeClick = {},

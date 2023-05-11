@@ -8,4 +8,5 @@ data class SummarizedRecipeUiModel(
     val title: String,
     val imageProperty: NeuracrImageProperty,
     val flagProperty: NeuracrFlagProperty,
+    val isFavorite: Boolean,
 )
