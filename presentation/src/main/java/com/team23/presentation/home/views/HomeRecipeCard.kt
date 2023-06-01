@@ -28,6 +28,7 @@ import com.team23.presentation.home.models.SummarizedRecipeUiModel
 @Composable
 internal fun HomeRecipeCard(
 	summarizedRecipeUiModel: SummarizedRecipeUiModel,
+	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	Card(
@@ -71,7 +72,7 @@ internal fun HomeRecipeCard(
 			)
 			NeuracrLike(
 				isFavorite = summarizedRecipeUiModel.isFavorite,
-				onFavoriteClick = { /* TODO */ },
+				onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
 				modifier = Modifier.align(Alignment.BottomEnd)
 			)
 		}
@@ -91,6 +92,6 @@ private fun SummarizedRecipeCardPreview() {
 			title = "Bretzels",
 			flagProperty = NeuracrFlagProperty.FRENCH,
 			isFavorite = true,
-		),
+		), {}
 	)
 }

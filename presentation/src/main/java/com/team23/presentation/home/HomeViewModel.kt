@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.GetAllSummarizedRecipesUseCase
 import com.team23.domain.usecases.GetFullRecipeByIdUseCase
+import com.team23.domain.usecases.UpdateFavoriteUseCase
 import com.team23.presentation.home.mappers.SummarizedRecipeMapper
 import com.team23.presentation.home.models.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ class HomeViewModel @Inject constructor(
     private val getAllSummarizedRecipesUseCase: GetAllSummarizedRecipesUseCase,
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
@@ -32,6 +34,12 @@ class HomeViewModel @Inject constructor(
                     getFullRecipeByIdUseCase.invoke(recipe.id)
                 }
             }
+        }
+    }
+
+    fun recipeClick(recipeId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateFavoriteUseCase.invoke(recipeId)
         }
     }
 }

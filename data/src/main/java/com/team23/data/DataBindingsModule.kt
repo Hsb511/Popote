@@ -1,7 +1,9 @@
 package com.team23.data
 
+import com.team23.data.repositories.FavoriteRepositoryImpl
 import com.team23.data.repositories.RecipeRepositoryImpl
 import com.team23.data.repositories.TagRepositoryImpl
+import com.team23.domain.repositories.FavoriteRepository
 import com.team23.domain.repositories.RecipeRepository
 import com.team23.domain.repositories.TagRepository
 import dagger.Binds
@@ -17,4 +19,7 @@ abstract class DataBindingsModule {
 
     @Binds
     internal abstract fun bindTagRepository(impl: TagRepositoryImpl): TagRepository
+
+    @Binds
+    internal abstract fun bindFavoriteRepository(impl: FavoriteRepositoryImpl): FavoriteRepository
 }
