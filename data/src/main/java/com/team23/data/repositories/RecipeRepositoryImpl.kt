@@ -1,6 +1,11 @@
 package com.team23.data.repositories
 
-import com.team23.data.daos.*
+import com.team23.data.daos.FavoriteDao
+import com.team23.data.daos.IngredientDao
+import com.team23.data.daos.InstructionDao
+import com.team23.data.daos.RecipeDao
+import com.team23.data.daos.SummarizedRecipeDao
+import com.team23.data.daos.TagDao
 import com.team23.data.datasources.NeuracrWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
@@ -19,6 +24,7 @@ internal class RecipeRepositoryImpl @Inject constructor(
 	private val tagDao: TagDao,
 	private val ingredientDao: IngredientDao,
 	private val instructionDao: InstructionDao,
+	private val favoriteDao: FavoriteDao,
 	private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
 	private val summarizedRecipeParser: SummarizedRecipeParser,
 	private val fullRecipeParser: FullRecipeParser,
@@ -27,7 +33,9 @@ internal class RecipeRepositoryImpl @Inject constructor(
 ) : RecipeRepository {
 	override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
 		val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
-		return summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels)
+		return summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels).map { recipe ->
+			recipe.copy(isFavorite = favoriteDao.isStored(recipe.id))
+		}
 	}
 
 	override suspend fun loadAllSummarizedRecipesIfNeeded() {
@@ -51,11 +59,15 @@ internal class RecipeRepositoryImpl @Inject constructor(
 
 	override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? =
 		recipeDao.findFullRecipeById(recipeId)?.let { dataModel ->
-			fullRecipeMapper.toFullRecipeDomainModel(dataModel)
+			fullRecipeMapper.toFullRecipeDomainModel(dataModel).copy(
+				isFavorite = favoriteDao.isStored(recipeId)
+			)
 		}
 
 	override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
 		summarizedRecipeDao.searchBaseRecipeByTitle(searchText).map {
-			summarizedRecipeMapper.toSummarizedRecipeDomainModels(it)
+			summarizedRecipeMapper.toSummarizedRecipeDomainModels(it).map { recipe ->
+				recipe.copy(isFavorite = favoriteDao.isStored(recipe.id))
+			}
 		}
 }
