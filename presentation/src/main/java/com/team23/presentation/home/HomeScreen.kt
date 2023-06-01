@@ -25,6 +25,7 @@ fun HomeScreen(
 	HomeScreen(
 		homeUiState = homeViewModel.uiState.collectAsState().value,
 		homeRecipeClick = homeRecipeClick,
+		onFavoriteClick = { recipe -> homeViewModel.recipeClick(recipe.id) },
 		modifier = modifier
 	)
 }
@@ -33,6 +34,7 @@ fun HomeScreen(
 private fun HomeScreen(
 	homeUiState: HomeUiState,
 	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	when (homeUiState) {
@@ -41,6 +43,7 @@ private fun HomeScreen(
 		is Data -> HomeContentData(
 			summarizedRecipeUiModels = homeUiState.recipes,
 			homeRecipeClick = homeRecipeClick,
+			onFavoriteClick = onFavoriteClick,
 			modifier = modifier,
 		)
 	}
@@ -64,7 +67,7 @@ private fun HomeScreenPreview() {
 						isFavorite = true,
 					)
 				}
-			), {}
+			), {}, {}
 		)
 	}
 }

@@ -24,6 +24,7 @@ import com.team23.design_system.wip.NeuracrPageInProgress
 import com.team23.neuracrsrecipes.BuildConfig
 import com.team23.presentation.drawer.ModalMenuDrawer
 import com.team23.presentation.drawer.models.DrawerUiModel
+import com.team23.presentation.favorite.FavoriteScreen
 import com.team23.presentation.home.HomeScreen
 import com.team23.presentation.recipe.RecipeScreen
 import com.team23.presentation.recipe.extensions.toCleanRecipeId
@@ -102,7 +103,7 @@ internal fun NavHost(context: Context) {
 				}
 
 				composable(route = AppPage.Favorite.route) {
-					NeuracrPageInProgress(Modifier.padding(padding))
+					FavoriteScreen()
 				}
 			}
 		}

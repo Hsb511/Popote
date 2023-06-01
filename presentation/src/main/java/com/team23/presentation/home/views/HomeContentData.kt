@@ -22,6 +22,7 @@ import com.team23.presentation.home.models.SummarizedRecipeUiModel
 fun HomeContentData(
 	summarizedRecipeUiModels: List<SummarizedRecipeUiModel>,
 	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier) {
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(300.dp),
@@ -40,6 +41,7 @@ fun HomeContentData(
 		items(summarizedRecipeUiModels) { homeRecipeUiModel ->
 			HomeRecipeCard(
 				summarizedRecipeUiModel = homeRecipeUiModel,
+				onFavoriteClick = onFavoriteClick,
 				modifier = Modifier
 					.fillMaxWidth()
 					.clickable {
@@ -66,8 +68,7 @@ private fun HomeContentDataPreview() {
 					flagProperty = NeuracrFlagProperty.FRENCH,
 					isFavorite = true,
 				)
-			},
-			{ }
+			}, {}, {}
 		)
 	}
 }
