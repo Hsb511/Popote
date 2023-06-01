@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.team23.data.daos.*
 import com.team23.data.datasources.AppDatabase
+import com.team23.data.datasources.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,7 @@ class DataProvidesModule {
 	@Singleton
 	fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
 		Room.databaseBuilder(context, AppDatabase::class.java, "neuracr-s_recipes_db")
+			.addMigrations(MIGRATION_1_2)
 			.build()
 
 	@Provides
@@ -37,4 +39,8 @@ class DataProvidesModule {
 	@Provides
 	@Singleton
 	fun provideInstructionDao(appDatabase: AppDatabase): InstructionDao = appDatabase.instructionDao()
+
+	@Provides
+	@Singleton
+	fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao = appDatabase.favoriteDao()
 }
