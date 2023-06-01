@@ -1,5 +1,8 @@
 package com.team23.presentation.favorite
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.theming.NeuracrTheme
@@ -64,15 +68,21 @@ fun FavoriteScreen(
 	onDisplayClick: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
+	val animation = tween<Dp>(
+		durationMillis = 600,
+		easing = FastOutSlowInEasing
+	)
+	val contentPadding: Dp by animateDpAsState(if (displayType == DisplayType.BigCard) 32.dp else 16.dp, animation)
+	val headerPadding: Dp by animateDpAsState(if (displayType == DisplayType.BigCard) 0.dp else 16.dp, animation)
+
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(if (displayType == DisplayType.SmallCard) 150.dp else 300.dp),
-		contentPadding = PaddingValues(if (displayType == DisplayType.BigCard) 32.dp else 16.dp),
+		contentPadding = PaddingValues(contentPadding),
 		verticalItemSpacing = 16.dp,
 		horizontalArrangement = Arrangement.spacedBy(16.dp),
 		modifier = modifier.fillMaxSize()
 	) {
 		item(span = StaggeredGridItemSpan.FullLine) {
-			val headerPadding = if (displayType == DisplayType.BigCard) 0.dp else 16.dp
 			Row(
 				modifier = Modifier
 					.fillMaxSize()
