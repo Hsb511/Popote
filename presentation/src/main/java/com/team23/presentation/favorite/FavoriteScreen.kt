@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,8 +30,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.team23.design_system.display.DisplayBigCard
+import com.team23.design_system.display.DisplayList
+import com.team23.design_system.display.DisplaySmallCard
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
+import com.team23.presentation.common.extensions.next
 import com.team23.presentation.favorite.models.DisplayType
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.home.views.HomeRecipeCard
@@ -50,11 +52,7 @@ fun FavoriteScreen(
 		summarizedRecipes = summarizedRecipes,
 		displayType = displayType,
 		onFavoriteClick = { recipe -> favoriteViewModel.onFavoriteClick(recipe.id) },
-		onDisplayClick = {
-			val enumValues = DisplayType.values()
-			val nextOrdinal = (displayType.ordinal + 1) % enumValues.size
-			displayType = enumValues[nextOrdinal]
-		},
+		onDisplayClick = { displayType = displayType.next() },
 		modifier = modifier,
 	)
 }
@@ -94,11 +92,17 @@ fun FavoriteScreen(
 					color = MaterialTheme.colorScheme.onBackground,
 				)
 				Spacer(modifier = Modifier.weight(1f))
-				IconButton(onClick = onDisplayClick) {
-					Icon(
-						imageVector = Icons.Filled.ShoppingCart,
-						contentDescription = stringResource(id = R.string.favorite_display_button_a11y)
-					)
+				IconButton(
+					onClick = onDisplayClick,
+					modifier = Modifier.offset(x = 4.dp, y = (-4).dp)
+				) {
+					val tint = MaterialTheme.colorScheme.onBackground
+					val iconModifier = Modifier.padding(all = 6.dp)
+					when (displayType.next()) {
+						DisplayType.BigCard -> DisplayBigCard(tint = tint, modifier = iconModifier)
+						DisplayType.SmallCard -> DisplaySmallCard(tint = tint, modifier = iconModifier)
+						DisplayType.List -> DisplayList(tint = tint, modifier = iconModifier)
+					}
 				}
 			}
 		}
