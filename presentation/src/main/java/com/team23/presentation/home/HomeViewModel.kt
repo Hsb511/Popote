@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun recipeClick(recipeId: String) {
+    fun favoriteClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             updateFavoriteUseCase.invoke(recipeId)
         }

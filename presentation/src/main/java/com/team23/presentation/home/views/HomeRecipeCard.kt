@@ -12,6 +12,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,12 +35,9 @@ internal fun HomeRecipeCard(
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
-	Card(
-		elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-	) {
-		Box(
-			modifier = modifier.clip(shape = MaterialTheme.shapes.medium)
-		) {
+	var isFavorite by remember { mutableStateOf(summarizedRecipeUiModel.isFavorite) }
+	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
+		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
 			NeuracrImage(
 				neuracrImageProperty = summarizedRecipeUiModel.imageProperty,
 				maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
@@ -71,8 +72,11 @@ internal fun HomeRecipeCard(
 					.height(20.dp)
 			)
 			NeuracrLike(
-				isFavorite = summarizedRecipeUiModel.isFavorite,
-				onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
+				isFavorite = isFavorite,
+				onFavoriteClick = {
+					onFavoriteClick(summarizedRecipeUiModel)
+					isFavorite = !isFavorite
+				},
 				modifier = Modifier.align(Alignment.BottomEnd)
 			)
 		}

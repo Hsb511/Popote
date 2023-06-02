@@ -25,7 +25,7 @@ fun HomeScreen(
 	HomeScreen(
 		homeUiState = homeViewModel.uiState.collectAsState().value,
 		homeRecipeClick = homeRecipeClick,
-		onFavoriteClick = { recipe -> homeViewModel.recipeClick(recipe.id) },
+		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe.id) },
 		modifier = modifier
 	)
 }

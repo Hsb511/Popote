@@ -7,6 +7,7 @@ data class SearchUiModel(
 	val tagsRow: TagsRowUiModel,
 	val recipes: List<SummarizedRecipeUiModel>,
 	val onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	val onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 )
 
 data class TextFieldUiModel(

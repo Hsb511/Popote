@@ -46,6 +46,7 @@ fun SearchScreen(
 			),
 			recipes = searchViewModel.recipes.collectAsState().value,
 			onRecipeClick = onRecipeClick,
+			onFavoriteClick = { recipe -> searchViewModel.favoriteClick(recipe.id) },
 		),
 		modifier = modifier,
 	)
@@ -77,6 +78,7 @@ private fun SearchScreen(
 			items(searchUiModel.recipes) { recipe ->
 				SearchRecipeCard(
 					summarizedRecipeUiModel = recipe,
+					onFavoriteClick = searchUiModel.onFavoriteClick,
 					modifier = Modifier
 						.animateItemPlacement()
 						.clickable {
@@ -122,6 +124,7 @@ private fun SearchScreenPreview() {
 					)
 				},
 				onRecipeClick = {},
+				onFavoriteClick = {},
 			),
 			modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
 		)
