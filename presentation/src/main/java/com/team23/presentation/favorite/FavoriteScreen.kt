@@ -110,7 +110,10 @@ fun FavoriteScreen(
 					onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
 				)
 
-				DisplayType.List -> SearchRecipeCard(summarizedRecipeUiModel = summarizedRecipe)
+				DisplayType.List -> SearchRecipeCard(
+					summarizedRecipeUiModel = summarizedRecipe,
+					onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
+				)
 			}
 		}
 	}

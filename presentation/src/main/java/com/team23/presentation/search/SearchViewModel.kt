@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.domain.usecases.SearchSummarizedRecipesUseCase
+import com.team23.domain.usecases.UpdateFavoriteUseCase
 import com.team23.presentation.home.mappers.SummarizedRecipeMapper
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.search.mappers.TagMapper
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
 	private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
+	private val updateFavoriteUseCase: UpdateFavoriteUseCase,
 	private val tagMapper: TagMapper,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
 ) : ViewModel() {
@@ -71,6 +73,12 @@ class SearchViewModel @Inject constructor(
 				val recipeUiModels = recipes.map { recipe -> summarizedRecipeMapper.toUiModel(recipe) }
 				withContext(Dispatchers.Main) { _recipes.value = recipeUiModels }
 			}
+		}
+	}
+
+	fun favoriteClick(recipeId: String) {
+		viewModelScope.launch(Dispatchers.IO) {
+			updateFavoriteUseCase.invoke(recipeId)
 		}
 	}
 }
