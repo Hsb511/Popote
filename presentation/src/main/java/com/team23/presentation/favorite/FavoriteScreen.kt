@@ -28,12 +28,14 @@ import com.team23.presentation.home.models.SummarizedRecipeUiModel
 
 @Composable
 fun FavoriteScreen(
+	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
 	favoriteViewModel: FavoriteViewModel = hiltViewModel()
 ) {
 	val favoriteUiState by favoriteViewModel.uiState.collectAsState()
 	FavoriteScreen(
 		favoriteUiState = favoriteUiState,
+		onRecipeClick = onRecipeClick,
 		onFavoriteClick = { recipe -> favoriteViewModel.onFavoriteClick(recipe.id) },
 		onDisplayClick = { favoriteViewModel.onDisplayTypeClick() },
 		modifier = modifier,
@@ -44,6 +46,7 @@ fun FavoriteScreen(
 @Composable
 fun FavoriteScreen(
 	favoriteUiState: FavoriteUiState,
+	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	onDisplayClick: () -> Unit,
 	modifier: Modifier = Modifier,
@@ -75,6 +78,7 @@ fun FavoriteScreen(
 					FavoriteItem(
 						displayType = displayType,
 						summarizedRecipe = summarizedRecipe,
+						onRecipeClick = onRecipeClick,
 						onFavoriteClick = onFavoriteClick,
 					)
 				}
@@ -89,6 +93,6 @@ fun FavoriteScreen(
 @Preview(showSystemUi = true)
 fun FavoriteScreenPreview() {
 	NeuracrTheme {
-		FavoriteScreen()
+		FavoriteScreen({})
 	}
 }
