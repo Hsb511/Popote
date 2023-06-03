@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.team23.data.daos.FavoriteDao
 import com.team23.data.daos.IngredientDao
 import com.team23.data.daos.InstructionDao
+import com.team23.data.daos.PreferenceDao
 import com.team23.data.daos.RecipeDao
 import com.team23.data.daos.SummarizedRecipeDao
 import com.team23.data.daos.TagDao
@@ -14,6 +15,7 @@ import com.team23.data.models.BaseRecipeDataModel
 import com.team23.data.models.FavoriteDataModel
 import com.team23.data.models.IngredientDataModel
 import com.team23.data.models.InstructionDataModel
+import com.team23.data.models.PreferenceDataModel
 import com.team23.data.models.SummarizedRecipeDataModel
 import com.team23.data.models.TagDataModel
 
@@ -26,6 +28,7 @@ import com.team23.data.models.TagDataModel
 		IngredientDataModel::class,
 		InstructionDataModel::class,
 		FavoriteDataModel::class,
+		PreferenceDataModel::class,
 	],
 	exportSchema = true
 )
@@ -40,10 +43,12 @@ abstract class AppDatabase : RoomDatabase() {
 	abstract fun ingredientDao(): IngredientDao
 	abstract fun instructionDao(): InstructionDao
 	abstract fun favoriteDao(): FavoriteDao
+	abstract fun preferenceDao(): PreferenceDao
 }
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
 	override fun migrate(database: SupportSQLiteDatabase) {
 		database.execSQL("CREATE TABLE IF NOT EXISTS `FavoriteDataModel` (`id` INTEGER NOT NULL, `recipeId` TEXT NOT NULL, PRIMARY KEY(`id`))")
+		database.execSQL("CREATE TABLE IF NOT EXISTS `PreferenceDataModel` (`id` INTEGER NOT NULL, `label` TEXT NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`id`))")
 	}
 }

@@ -25,7 +25,6 @@ class DataProvidesModule {
 	@Provides
 	@Singleton
 	fun provideSummarizedRecipeDao(appDatabase: AppDatabase): SummarizedRecipeDao = appDatabase.summarizedRecipeDao()
-
 	@Provides
 	@Singleton
 	fun provideFullRecipeDao(appDatabase: AppDatabase): RecipeDao = appDatabase.fullRecipeDao()
@@ -35,12 +34,13 @@ class DataProvidesModule {
 	@Provides
 	@Singleton
 	fun provideIngredientDao(appDatabase: AppDatabase): IngredientDao = appDatabase.ingredientDao()
-
 	@Provides
 	@Singleton
 	fun provideInstructionDao(appDatabase: AppDatabase): InstructionDao = appDatabase.instructionDao()
-
 	@Provides
 	@Singleton
 	fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao = appDatabase.favoriteDao()
+	@Provides
+	@Singleton
+	fun providePreferenceDao(appDatabase: AppDatabase): PreferenceDao = appDatabase.preferenceDao()
 }
