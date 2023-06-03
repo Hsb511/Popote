@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.GetFullRecipeByIdUseCase
+import com.team23.domain.usecases.UpdateFavoriteUseCase
 import com.team23.presentation.recipe.extensions.toUrlRecipeId
 import com.team23.presentation.recipe.mappers.QuantityMapper
 import com.team23.presentation.recipe.mappers.RecipeMapper
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
 	private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
+	private val updateFavoriteUseCase: UpdateFavoriteUseCase,
 	private val recipeMapper: RecipeMapper,
 	private val quantityMapper: QuantityMapper,
 ) : ViewModel() {
@@ -70,13 +72,19 @@ class RecipeViewModel @Inject constructor(
 	}
 
 	fun updateRecipeData(newServingsAmount: String) {
-		newServingsAmount.toIntOrNull()?.let { newServingsAmount ->
+		newServingsAmount.toIntOrNull()?.let { newServingsAmountInt ->
 			currentServingsAmount.value = when {
-				newServingsAmount < 1 -> 1
-				newServingsAmount > 999 -> 999
-				else -> newServingsAmount
+				newServingsAmountInt < 1 -> 1
+				newServingsAmountInt > 999 -> 999
+				else -> newServingsAmountInt
 			}
 			updateRecipeData()
+		}
+	}
+
+	fun favoriteClick(recipeId: String) {
+		viewModelScope.launch(Dispatchers.IO) {
+			updateFavoriteUseCase.invoke(recipeId)
 		}
 	}
 

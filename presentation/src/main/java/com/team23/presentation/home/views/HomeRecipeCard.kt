@@ -12,10 +12,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +30,6 @@ internal fun HomeRecipeCard(
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
-	var isFavorite by remember { mutableStateOf(summarizedRecipeUiModel.isFavorite) }
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
 			NeuracrImage(
@@ -71,11 +66,8 @@ internal fun HomeRecipeCard(
 					.height(20.dp)
 			)
 			NeuracrLike(
-				isFavorite = isFavorite,
-				onFavoriteClick = {
-					onFavoriteClick(summarizedRecipeUiModel)
-					isFavorite = !isFavorite
-				},
+				isFavorite = summarizedRecipeUiModel.isFavorite,
+				onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
 				modifier = Modifier.align(Alignment.BottomEnd)
 			)
 		}

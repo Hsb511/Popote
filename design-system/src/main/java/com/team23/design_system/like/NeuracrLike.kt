@@ -28,20 +28,22 @@ fun NeuracrLike(
 	onFavoriteClick: () -> Unit,
 	modifier: Modifier = Modifier
 ) {
-	val initialColor = computeColor(isFavorite)
+	var isFavoriteVar by remember { mutableStateOf(isFavorite) }
+	val initialColor = computeColor(isFavoriteVar)
 	var currentColor: Color by remember { mutableStateOf(initialColor) }
-	currentColor = computeColor(isFavorite)
+	currentColor = computeColor(isFavoriteVar)
 
 	IconButton(
 		onClick = {
 			onFavoriteClick()
+			isFavoriteVar = !isFavoriteVar
 		},
 		modifier = modifier.offset(x = 8.dp, y = 8.dp),
 	) {
 
 		Crossfade(targetState = currentColor, animationSpec = tween(500)) { color ->
 			Icon(
-				imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+				imageVector = if (isFavoriteVar) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
 				contentDescription = stringResource(id = R.string.favorite_button_content_description),
 				tint = color,
 			)

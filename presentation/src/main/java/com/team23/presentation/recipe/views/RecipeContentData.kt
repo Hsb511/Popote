@@ -32,6 +32,7 @@ fun RecipeContentData(
 	onAddOneServing: () -> Unit,
 	onSubtractOneServing: () -> Unit,
 	onTagClicked: (String) -> Unit,
+	onFavoriteClick: (RecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	Column(modifier = modifier.fillMaxSize()) {
@@ -77,7 +78,7 @@ fun RecipeContentData(
 					)
 					NeuracrLike(
 						isFavorite = recipeUiModel.isFavorite,
-						onFavoriteClick = { /* TODO */ },
+						onFavoriteClick = { onFavoriteClick(recipeUiModel) },
 						modifier = Modifier.align(Alignment.BottomEnd)
 					)
 				}
@@ -120,6 +121,7 @@ fun RecipeContentDataPreview() {
 	NeuracrTheme {
 		RecipeContentData(
 			recipeUiModel = RecipeUiModel(
+				id = "",
 				title = "Bretzels ! Bretzels !",
 				date = "23 Octobre 2023",
 				author = "Guiiiii",
@@ -147,6 +149,7 @@ fun RecipeContentDataPreview() {
 			currentServingsAmount = "4",
 			onValueChanged = {},
 			onTagClicked = {},
+			onFavoriteClick = {},
 		)
 	}
 }

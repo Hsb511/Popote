@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.error.NeuracrError
+import com.team23.presentation.recipe.models.RecipeUiModel
 import com.team23.presentation.recipe.models.RecipeUiState
 import com.team23.presentation.recipe.views.RecipeContentData
 import com.team23.presentation.recipe.views.RecipeContentLoading
@@ -24,6 +25,7 @@ fun RecipeScreen(
 		onAddOneServing = { recipeViewModel.addOneService() },
 		onSubtractOneServing = { recipeViewModel.subtractOneService() },
 		onTagClicked = onTagClicked,
+		onFavoriteClick = { recipe -> recipeViewModel.favoriteClick(recipe.id) },
 		modifier = modifier,
 	)
 }
@@ -36,6 +38,7 @@ fun RecipeScreen(
 	onAddOneServing: () -> Unit,
 	onSubtractOneServing: () -> Unit,
 	onTagClicked: (String) -> Unit,
+	onFavoriteClick: (RecipeUiModel) -> Unit,
 	modifier: Modifier
 ) {
 	when (recipeUiState) {
@@ -46,7 +49,8 @@ fun RecipeScreen(
 			onAddOneServing = onAddOneServing,
 			onSubtractOneServing = onSubtractOneServing,
 			onTagClicked = onTagClicked,
-			modifier = modifier
+			onFavoriteClick = onFavoriteClick,
+			modifier = modifier,
 		)
 		is RecipeUiState.Error -> NeuracrError(recipeUiState.message, modifier)
 		is RecipeUiState.Loading -> RecipeContentLoading(modifier)
