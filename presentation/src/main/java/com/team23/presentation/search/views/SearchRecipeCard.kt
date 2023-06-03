@@ -1,6 +1,12 @@
 package com.team23.presentation.search.views
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -17,13 +23,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.team23.design_system.R
 import com.team23.design_system.flags.NeuracrFlag
-import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImage
-import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.like.NeuracrLike
 import com.team23.design_system.theming.NeuracrTheme
+import com.team23.presentation.common.samples.RecipeSamples.summarizedRecipeSample
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 
 @Composable
@@ -95,17 +99,6 @@ fun SearchRecipeCard(
 @Preview(showBackground = true)
 fun SearchRecipeCardPreview() {
 	NeuracrTheme {
-		SearchRecipeCard(
-			SummarizedRecipeUiModel(
-				id = "",
-				imageProperty = NeuracrImageProperty.Resource(
-					contentDescription = null,
-					imageRes = R.drawable.bretzel
-				),
-				title = "Bretzels",
-				flagProperty = NeuracrFlagProperty.FRENCH,
-				isFavorite = true,
-			), { }
-		)
+		SearchRecipeCard(summarizedRecipeSample, { })
 	}
 }
