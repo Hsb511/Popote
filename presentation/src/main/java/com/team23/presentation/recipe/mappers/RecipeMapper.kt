@@ -11,6 +11,7 @@ class RecipeMapper @Inject constructor(
 	private val instructionMapper: InstructionMapper,
 ) {
 	fun toRecipeUiModel(fullRecipe: RecipeDomainModel.Full) = RecipeUiModel(
+		id = fullRecipe.id,
 		title = fullRecipe.title,
 		date = dateMapper.toSubtitleDate(fullRecipe.date, fullRecipe.language),
 		author = fullRecipe.author,
