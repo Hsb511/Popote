@@ -23,10 +23,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.flags.NeuracrFlag
-import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImage
-import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.like.NeuracrLike
+import com.team23.presentation.common.samples.RecipeSamples.summarizedRecipeSample
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 
 @Composable
@@ -86,16 +85,5 @@ internal fun HomeRecipeCard(
 @Composable
 @Preview(showBackground = true)
 private fun SummarizedRecipeCardPreview() {
-	HomeRecipeCard(
-		SummarizedRecipeUiModel(
-			id = "",
-			imageProperty = NeuracrImageProperty.Resource(
-				contentDescription = null,
-				imageRes = com.team23.design_system.R.drawable.bretzel
-			),
-			title = "Bretzels",
-			flagProperty = NeuracrFlagProperty.FRENCH,
-			isFavorite = true,
-		), {}
-	)
+	HomeRecipeCard(summarizedRecipeSample, {})
 }
