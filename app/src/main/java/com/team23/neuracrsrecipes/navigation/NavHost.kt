@@ -27,7 +27,6 @@ import com.team23.presentation.drawer.models.DrawerUiModel
 import com.team23.presentation.favorite.FavoriteScreen
 import com.team23.presentation.home.HomeScreen
 import com.team23.presentation.recipe.RecipeScreen
-import com.team23.presentation.recipe.extensions.toCleanRecipeId
 import com.team23.presentation.search.SearchScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +36,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun NavHost(context: Context) {
 	val navController = rememberNavController()
+	val navigator = Navigator(navController)
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
 	val navItems = toNavItemProperties(
@@ -54,20 +54,14 @@ internal fun NavHost(context: Context) {
 		},
 		isNavigationEmpty = navController.previousBackStackEntry == null,
 		drawerState = drawerState,
-		openMenu = {
-			scope.launch(Dispatchers.IO) { drawerState.open() }
-		},
-		closeMenu = {
-			scope.launch(Dispatchers.IO) { drawerState.close() }
-		}
+		openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
+		closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
 	) { padding ->
 		ModalMenuDrawer(DrawerUiModel(drawerState, BuildConfig.VERSION_NAME), Modifier.padding(padding)) {
 			NavHost(navController = navController, startDestination = AppPage.Home.route) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
-						homeRecipeClick = { homeRecipeUiModel ->
-							navController.navigateToRecipe(homeRecipeUiModel.id)
-						}
+						onRecipeClick = { homeRecipeUiModel -> navigator.openRecipe(homeRecipeUiModel.id) }
 					)
 				}
 				composable(
@@ -78,23 +72,17 @@ internal fun NavHost(context: Context) {
 				) { navBackStackEntry ->
 					RecipeScreen(
 						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName),
-						onTagClicked = { tag ->
-							navController.navigate("${AppPage.WithArgument.Search.route}/$tag")
-						}
+						onTagClicked = { tag -> navigator.openSearch(tag) }
 					)
 				}
 				composable(route = AppPage.Search.route) {
 					SearchScreen(
-						onRecipeClick = { recipeUiModel ->
-							navController.navigateToRecipe(recipeUiModel.id)
-						}
+						onRecipeClick = { recipeUiModel -> navigator.openRecipe(recipeUiModel.id) }
 					)
 				}
 				composable(route = "${AppPage.Search.route}/{${AppPage.WithArgument.Search.argumentName}}") { navBackStackEntry ->
 					SearchScreen(
-						onRecipeClick = { recipeUiModel ->
-							navController.navigateToRecipe(recipeUiModel.id)
-						},
+						onRecipeClick = { recipeUiModel -> navigator.openRecipe(recipeUiModel.id) },
 						selectedTag = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Search.argumentName),
 					)
 				}
@@ -103,7 +91,9 @@ internal fun NavHost(context: Context) {
 				}
 
 				composable(route = AppPage.Favorite.route) {
-					FavoriteScreen()
+					FavoriteScreen(
+						onRecipeClick = { recipeUiModel -> navigator.openRecipe(recipeUiModel.id) },
+					)
 				}
 			}
 		}
@@ -142,7 +132,3 @@ internal fun toNavItemProperties(
 			},
 		)
 	}
-
-private fun NavHostController.navigateToRecipe(recipeId: String) {
-	this.navigate("${AppPage.WithArgument.Recipe.route}/${recipeId.toCleanRecipeId()}")
-}

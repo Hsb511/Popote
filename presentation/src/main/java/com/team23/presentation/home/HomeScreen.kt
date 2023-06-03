@@ -18,13 +18,13 @@ import com.team23.presentation.home.views.HomeContentLoading
 
 @Composable
 fun HomeScreen(
-	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
 	homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 	HomeScreen(
 		homeUiState = homeViewModel.uiState.collectAsState().value,
-		homeRecipeClick = homeRecipeClick,
+		homeRecipeClick = onRecipeClick,
 		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe.id) },
 		modifier = modifier
 	)

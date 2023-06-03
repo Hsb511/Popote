@@ -1,5 +1,6 @@
 package com.team23.presentation.favorite.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,21 +17,25 @@ import com.team23.presentation.search.views.SearchRecipeCard
 fun FavoriteItem(
 	displayType: DisplayType,
 	summarizedRecipe: SummarizedRecipeUiModel,
+	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
+	val recipeItemModifier = modifier.clickable {
+		onRecipeClick(summarizedRecipe)
+	}
 	when (displayType) {
 		DisplayType.BigCard,
 		DisplayType.SmallCard -> HomeRecipeCard(
 			summarizedRecipeUiModel = summarizedRecipe,
 			onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
-			modifier = modifier,
+			modifier = recipeItemModifier,
 		)
 
 		DisplayType.List -> SearchRecipeCard(
 			summarizedRecipeUiModel = summarizedRecipe,
 			onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
-			modifier = modifier,
+			modifier = recipeItemModifier,
 		)
 	}
 }
@@ -42,7 +47,8 @@ fun FavoriteItemPreview(@PreviewParameter(SampleDisplayTypeProvider::class) disp
 		FavoriteItem(
 			displayType = displayType,
 			summarizedRecipe = summarizedRecipeSample,
-			onFavoriteClick = {}
+			onFavoriteClick = {},
+			onRecipeClick = {},
 		)
 	}
 }
