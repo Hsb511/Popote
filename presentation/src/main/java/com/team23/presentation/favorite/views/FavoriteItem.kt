@@ -30,12 +30,14 @@ fun FavoriteItem(
 			summarizedRecipeUiModel = summarizedRecipe,
 			onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
 			modifier = recipeItemModifier,
+			isFavoritePage = true,
 		)
 
 		DisplayType.List -> SearchRecipeCard(
 			summarizedRecipeUiModel = summarizedRecipe,
 			onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
 			modifier = recipeItemModifier,
+			isFavoritePage = true,
 		)
 	}
 }

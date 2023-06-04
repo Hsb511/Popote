@@ -30,7 +30,8 @@ import com.team23.presentation.home.models.SummarizedRecipeUiModel
 fun SearchRecipeCard(
 	summarizedRecipeUiModel: SummarizedRecipeUiModel,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
+	isFavoritePage: Boolean = false,
 ) {
 	Card(
 		elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -82,7 +83,8 @@ fun SearchRecipeCard(
 					onFavoriteClick = {
 						onFavoriteClick(summarizedRecipeUiModel)
 					},
-					modifier = Modifier.align(Alignment.BottomEnd)
+					modifier = Modifier.align(Alignment.BottomEnd),
+					isFavoritePage = isFavoritePage,
 				)
 			}
 		}

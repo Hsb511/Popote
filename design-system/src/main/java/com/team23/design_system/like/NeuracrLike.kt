@@ -26,12 +26,13 @@ import com.team23.design_system.theming.NeuracrTheme
 fun NeuracrLike(
 	isFavorite: Boolean,
 	onFavoriteClick: () -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
+	isFavoritePage: Boolean = false,
 ) {
 	var isFavoriteVar by remember { mutableStateOf(isFavorite) }
-	val initialColor = computeColor(isFavoriteVar)
+	val initialColor = computeColor(isFavoritePage, isFavoriteVar)
 	var currentColor: Color by remember { mutableStateOf(initialColor) }
-	currentColor = computeColor(isFavoriteVar)
+	currentColor = computeColor(isFavoritePage, isFavoriteVar)
 
 	IconButton(
 		onClick = {
@@ -43,7 +44,7 @@ fun NeuracrLike(
 
 		Crossfade(targetState = currentColor, animationSpec = tween(500)) { color ->
 			Icon(
-				imageVector = if (isFavoriteVar) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+				imageVector = if (isFavoritePage || isFavoriteVar) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
 				contentDescription = stringResource(id = R.string.favorite_button_content_description),
 				tint = color,
 			)
@@ -52,8 +53,8 @@ fun NeuracrLike(
 }
 
 @Composable
-private fun computeColor(isFavorite: Boolean) =
-	if (isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surface.copy(alpha = 0.69f)
+private fun computeColor(isFavoritePage: Boolean, isFavorite: Boolean) =
+	if (isFavoritePage || isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surface.copy(alpha = 0.69f)
 
 @Composable
 @Preview(showBackground = true)
