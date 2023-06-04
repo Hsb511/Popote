@@ -53,7 +53,7 @@ fun NeuracrLike(
 
 @Composable
 private fun computeColor(isFavorite: Boolean) =
-	if (isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
+	if (isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surface.copy(alpha = 0.69f)
 
 @Composable
 @Preview(showBackground = true)

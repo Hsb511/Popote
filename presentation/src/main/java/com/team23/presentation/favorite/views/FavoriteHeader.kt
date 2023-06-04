@@ -1,5 +1,6 @@
 package com.team23.presentation.favorite.views
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -54,11 +55,14 @@ fun FavoriteHeader(
 		) {
 			val tint = MaterialTheme.colorScheme.onBackground
 			val iconModifier = Modifier.padding(all = 8.dp)
-			when (displayType.next()) {
-				DisplayType.BigCard -> DisplayBigCard(tint = tint, modifier = iconModifier)
-				DisplayType.SmallCard -> DisplaySmallCard(tint = tint, modifier = iconModifier)
-				DisplayType.List -> DisplayList(tint = tint, modifier = iconModifier)
+			Crossfade(targetState = displayType.next(), animationSpec = tween(500)) { displayType ->
+				when (displayType) {
+					DisplayType.BigCard -> DisplayBigCard(tint = tint, modifier = iconModifier)
+					DisplayType.SmallCard -> DisplaySmallCard(tint = tint, modifier = iconModifier)
+					DisplayType.List -> DisplayList(tint = tint, modifier = iconModifier)
+				}
 			}
+
 		}
 	}
 }
