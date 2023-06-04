@@ -28,7 +28,8 @@ import com.team23.presentation.home.models.SummarizedRecipeUiModel
 internal fun HomeRecipeCard(
 	summarizedRecipeUiModel: SummarizedRecipeUiModel,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
+	isFavoritePage: Boolean = false,
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
@@ -68,7 +69,8 @@ internal fun HomeRecipeCard(
 			NeuracrLike(
 				isFavorite = summarizedRecipeUiModel.isFavorite,
 				onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
-				modifier = Modifier.align(Alignment.BottomEnd)
+				modifier = Modifier.align(Alignment.BottomEnd),
+				isFavoritePage = isFavoritePage,
 			)
 		}
 	}
