@@ -7,8 +7,11 @@ import javax.inject.Inject
 class GetAllSummarizedRecipesUseCase @Inject constructor(
     private val recipeRepository: RecipeRepository,
 ) {
-    suspend fun invoke(): Result<List<RecipeDomainModel.Summarized>> = runCatching {
+    suspend fun invoke(): Result<Pair<List<RecipeDomainModel.Summarized>, Int>> = runCatching {
+        val currentCount = recipeRepository.getCountSummarizedRecipes()
         recipeRepository.loadAllSummarizedRecipesIfNeeded()
-        recipeRepository.getAllSummarizedRecipes()
+        val recipes = recipeRepository.getAllSummarizedRecipes()
+        val newRecipesCount = recipes.size - currentCount
+        Pair(recipes, newRecipesCount)
     }
 }

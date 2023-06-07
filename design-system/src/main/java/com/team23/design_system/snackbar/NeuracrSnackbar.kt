@@ -2,6 +2,7 @@ package com.team23.design_system.snackbar
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarData
@@ -34,6 +35,13 @@ internal fun NeuracrSnackbar(
 					)
 				}
 			}
+		} ?: snackbarData.visuals.duration.takeIf { it == SnackbarDuration.Indefinite }?.let {
+			{
+				CircularProgressIndicator(
+					color = SnackbarDefaults.actionColor,
+					modifier = Modifier.padding(all = 8.dp)
+				)
+			}
 		},
 		modifier = modifier.padding(12.dp),
 	) {
@@ -52,7 +60,7 @@ fun SnackbarPreview() {
 			snackbarData = object : SnackbarData {
 				override val visuals = object : SnackbarVisuals {
 					override val message = "Tomato soup has been added to your favorites"
-					override val actionLabel: String = "UNDO"
+					override val actionLabel = null
 					override val duration = SnackbarDuration.Indefinite
 					override val withDismissAction = false
 				}

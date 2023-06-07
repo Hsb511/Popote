@@ -125,9 +125,7 @@ class RecipeViewModel @Inject constructor(
 				)
 			}
 
-			viewModelScope.launch(Dispatchers.IO) {
-				_uiState.emit(RecipeUiState.Data(recipeWithQuantitiesUpdated))
-			}
+			_uiState.value = RecipeUiState.Data(recipeWithQuantitiesUpdated)
 		}
 	}
 }

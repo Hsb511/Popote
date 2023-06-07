@@ -12,9 +12,12 @@ import com.team23.design_system.error.NeuracrError
 import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
-import com.team23.presentation.home.models.SummarizedRecipeUiModel
+import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.home.models.HomeUiState
-import com.team23.presentation.home.models.HomeUiState.*
+import com.team23.presentation.home.models.HomeUiState.Data
+import com.team23.presentation.home.models.HomeUiState.Error
+import com.team23.presentation.home.models.HomeUiState.Loading
+import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.home.views.HomeContentData
 import com.team23.presentation.home.views.HomeContentLoading
 
@@ -26,10 +29,13 @@ fun HomeScreen(
 	homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 	val context = LocalContext.current
+	homeViewModel.snackbarHandler = SnackbarHandler(snackbarHostState, context)
+	val state = homeViewModel.uiState.collectAsState(initial = Loading)
+
 	HomeScreen(
-		homeUiState = homeViewModel.uiState.collectAsState().value,
+		homeUiState = state.value,
 		homeRecipeClick = onRecipeClick,
-		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe, snackbarHostState, context) },
+		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe) },
 		modifier = modifier
 	)
 }

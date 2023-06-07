@@ -9,6 +9,9 @@
     <!-- snackbar -->
     <string name="snackbar_favorite">a été ajouté à vos favoris</string>
     <string name="snackbar_favorite_action">annuler</string>
+    <string name="snackbar_loading_one">Chargement d\'une nouvelle recette</string>
+    <string name="snackbar_loading_several">Chargement de %d nouvelles recettes</string>
+    <string name="snackbar_loading_done">Chargement terminé</string>
 
     <!-- home -->
     <string name="home_title">Dernières recettes</string>
