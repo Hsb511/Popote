@@ -38,6 +38,8 @@ internal class RecipeRepositoryImpl @Inject constructor(
 		}
 	}
 
+	override suspend fun getCountSummarizedRecipes(): Int = summarizedRecipeDao.getCount()
+
 	override suspend fun loadAllSummarizedRecipesIfNeeded() {
 		if (summarizedRecipeDao.getAll().isEmpty()) {
 			val rawLatestPosts: Elements = neuracrWebsiteDataSource.getLatestPostsFromHome()

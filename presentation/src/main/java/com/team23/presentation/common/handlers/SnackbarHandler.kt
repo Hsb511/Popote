@@ -18,4 +18,27 @@ class SnackbarHandler(
 			duration = SnackbarDuration.Short,
 		)
 	}
+
+	suspend fun showLoadingRecipe(recipeCount: Int): SnackbarResult {
+		snackbarHostState.currentSnackbarData?.dismiss()
+		return when (recipeCount) {
+			0 -> SnackbarResult.Dismissed
+			1 -> snackbarHostState.showSnackbar(
+				message = context.getString(R.string.snackbar_loading_one),
+				duration = SnackbarDuration.Indefinite,
+			)
+			else -> snackbarHostState.showSnackbar(
+				message = context.getString(R.string.snackbar_loading_several, recipeCount),
+				duration = SnackbarDuration.Indefinite,
+			)
+		}
+	}
+
+	suspend fun showLoadingEnded(): SnackbarResult {
+		snackbarHostState.currentSnackbarData?.dismiss()
+		return snackbarHostState.showSnackbar(
+			message = context.getString(R.string.snackbar_loading_done),
+			duration = SnackbarDuration.Short,
+		)
+	}
 }

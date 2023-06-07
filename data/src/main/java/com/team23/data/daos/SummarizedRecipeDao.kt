@@ -2,8 +2,8 @@ package com.team23.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.team23.data.models.BaseRecipeDataModel
 import com.team23.data.models.SummarizedRecipeDataModel
 import kotlinx.coroutines.flow.Flow
 
@@ -12,7 +12,10 @@ interface SummarizedRecipeDao {
     @Query("SELECT * FROM SummarizedRecipeDataModel")
     suspend fun getAll(): List<SummarizedRecipeDataModel>
 
-    @Insert
+    @Query("SELECT COUNT(*) FROM SummarizedRecipeDataModel")
+    suspend fun getCount(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg summarizedRecipes: SummarizedRecipeDataModel)
 
     @Query("SELECT * FROM SummarizedRecipeDataModel WHERE title LIKE '%' || :search || '%'")

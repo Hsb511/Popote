@@ -1,7 +1,5 @@
 package com.team23.presentation.home
 
-import android.content.Context
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,25 +27,34 @@ class HomeViewModel @Inject constructor(
 	private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
 	val uiState: StateFlow<HomeUiState> = _uiState
 
+	var snackbarHandler: SnackbarHandler? = null
+
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
-			getAllSummarizedRecipesUseCase.invoke().onFailure {
-				_uiState.value = HomeUiState.Error(message = "${it.javaClass.simpleName} ${it.localizedMessage}")
-			}.onSuccess { recipes ->
-				_uiState.value = HomeUiState.Data(recipes = recipes.map { summarizedRecipeMapper.toUiModel(it) })
-				recipes.forEach { recipe ->
-					getFullRecipeByIdUseCase.invoke(recipe.id)
+			getAllSummarizedRecipesUseCase.invoke()
+				.onFailure {
+					_uiState.value = HomeUiState.Error(message = "${it.javaClass.simpleName} ${it.localizedMessage}")
+				}.onSuccess { data ->
+					val recipes = data.first
+					val newRecipesCount = data.second
+					snackbarHandler?.showLoadingRecipe(newRecipesCount)
+					_uiState.value = HomeUiState.Data(recipes = recipes.map { summarizedRecipeMapper.toUiModel(it) })
+					recipes.forEach { recipe ->
+						getFullRecipeByIdUseCase.invoke(recipe.id)
+					}
+					if (newRecipesCount != 0) {
+						snackbarHandler?.showLoadingEnded()
+					}
 				}
-			}
 		}
 	}
 
-	fun favoriteClick(recipe: SummarizedRecipeUiModel, snackbarHostState: SnackbarHostState, context: Context) {
+	fun favoriteClick(recipe: SummarizedRecipeUiModel) {
 		viewModelScope.launch(Dispatchers.IO) {
 			updateFavoriteUseCase.invoke(recipe.id)
 			recomputeState(recipe.id)
 			if (!recipe.isFavorite) {
-				val result = SnackbarHandler(snackbarHostState, context).showFavoriteSnackbar(recipe.title)
+				val result = snackbarHandler?.showFavoriteSnackbar(recipe.title)
 				if (result == SnackbarResult.ActionPerformed) {
 					updateFavoriteUseCase.invoke(recipe.id)
 					recomputeState(recipe.id)
