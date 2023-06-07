@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="navigation_home_display_name">Accueil</string>
-    <string name="navigation_search_display_name">Recherche</string>
-    <string name="navigation_upload_display_name">Ajouter</string>
-    <string name="navigation_favorite_display_name">Favoris</string>
+
 </resources>

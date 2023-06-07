@@ -1,8 +1,10 @@
 package com.team23.presentation.home
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.R
@@ -18,14 +20,16 @@ import com.team23.presentation.home.views.HomeContentLoading
 
 @Composable
 fun HomeScreen(
+	snackbarHostState: SnackbarHostState,
 	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
 	homeViewModel: HomeViewModel = hiltViewModel()
 ) {
+	val context = LocalContext.current
 	HomeScreen(
 		homeUiState = homeViewModel.uiState.collectAsState().value,
 		homeRecipeClick = onRecipeClick,
-		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe.id) },
+		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe, snackbarHostState, context) },
 		modifier = modifier
 	)
 }

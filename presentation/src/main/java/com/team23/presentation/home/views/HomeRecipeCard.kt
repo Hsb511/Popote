@@ -29,7 +29,6 @@ internal fun HomeRecipeCard(
 	summarizedRecipeUiModel: SummarizedRecipeUiModel,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
-	isFavoritePage: Boolean = false,
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
@@ -40,7 +39,7 @@ internal fun HomeRecipeCard(
 			)
 			Text(
 				text = summarizedRecipeUiModel.title,
-				color = MaterialTheme.colorScheme.onSurface,
+				color = MaterialTheme.colorScheme.onTertiary,
 				style = MaterialTheme.typography.titleSmall,
 				modifier = Modifier
 					.align(Alignment.BottomStart)
@@ -50,7 +49,7 @@ internal fun HomeRecipeCard(
 							bottomEnd = CornerSize(0.dp)
 						)
 					)
-					.background(color = MaterialTheme.colorScheme.surface)
+					.background(color = MaterialTheme.colorScheme.tertiary)
 					.padding(start = 12.dp, bottom = 2.dp, end = 12.dp)
 			)
 			NeuracrFlag(
@@ -70,7 +69,6 @@ internal fun HomeRecipeCard(
 				isFavorite = summarizedRecipeUiModel.isFavorite,
 				onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
 				modifier = Modifier.align(Alignment.BottomEnd),
-				isFavoritePage = isFavoritePage,
 			)
 		}
 	}

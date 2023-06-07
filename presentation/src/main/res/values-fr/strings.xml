@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- navigation -->
+    <string name="navigation_home_display_name">Accueil</string>
+    <string name="navigation_search_display_name">Recherche</string>
+    <string name="navigation_upload_display_name">Ajouter</string>
+    <string name="navigation_favorite_display_name">Favoris</string>
+
+    <!-- snackbar -->
+    <string name="snackbar_favorite">a été ajouté à vos favoris</string>
+    <string name="snackbar_favorite_action">annuler</string>
+
     <!-- home -->
     <string name="home_title">Dernières recettes</string>
 
