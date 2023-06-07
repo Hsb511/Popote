@@ -33,4 +33,7 @@
     <!-- favorite -->
     <string name="favorite_title">Mes favoris</string>
     <string name="favorite_display_button_a11y">Changer l\'affichage de vos favoris</string>
+    <string name="favorite_empty_title">Wow c\'est vide par ici !</string>
+    <string name="favorite_empty_description_part1">Vous pouvez épingler vos favoris ici en cliquant sur le</string>
+    <string name="favorite_empty_description_part2">en bas à droite des images des recettes.</string>
 </resources>

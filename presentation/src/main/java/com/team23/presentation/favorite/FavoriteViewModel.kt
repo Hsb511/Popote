@@ -36,10 +36,14 @@ class FavoriteViewModel @Inject constructor(
 			getAllFavoritesUseCase.invoke().map { recipes ->
 				recipes.map { summarizedRecipeMapper.toUiModel(it) }
 			}.collect { favorites ->
-				_uiState.value = FavoriteUiState.Data(
-					displayType = displayType,
-					favorites = favorites,
-				)
+				_uiState.value = if (favorites.isEmpty()) {
+					FavoriteUiState.Data.Empty
+				} else {
+					FavoriteUiState.Data.WithFavorites(
+						displayType = displayType,
+						favorites = favorites,
+					)
+				}
 			}
 		}
 	}
@@ -52,7 +56,7 @@ class FavoriteViewModel @Inject constructor(
 
 	fun onDisplayTypeClick() {
 		val currentState = _uiState.value
-		if (currentState is FavoriteUiState.Data) {
+		if (currentState is FavoriteUiState.Data.WithFavorites) {
 			val newDisplayType = currentState.displayType.next()
 			_uiState.value = currentState.copy(
 				displayType = newDisplayType,

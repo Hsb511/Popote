@@ -33,4 +33,7 @@
     <!-- favorite -->
     <string name="favorite_title">My favorites</string>
     <string name="favorite_display_button_a11y">Change your favorites display</string>
+    <string name="favorite_empty_title">Wow this is empty here !</string>
+    <string name="favorite_empty_description_part1">You can save your favorite recipes by clicking on the</string>
+    <string name="favorite_empty_description_part2">at the bottom right of the recipe picture.</string>
 </resources>
