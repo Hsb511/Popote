@@ -77,17 +77,20 @@ internal fun NavHost(context: Context) {
 					})
 				) { navBackStackEntry ->
 					RecipeScreen(
+						snackbarHostState = snackbarHostState,
 						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName),
 						onTagClicked = { tag -> navigationHandler.openSearch(tag) }
 					)
 				}
 				composable(route = AppPage.Search.route) {
 					SearchScreen(
+						snackbarHostState = snackbarHostState,
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) }
 					)
 				}
 				composable(route = "${AppPage.Search.route}/{${AppPage.WithArgument.Search.argumentName}}") { navBackStackEntry ->
 					SearchScreen(
+						snackbarHostState = snackbarHostState,
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
 						selectedTag = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Search.argumentName),
 					)

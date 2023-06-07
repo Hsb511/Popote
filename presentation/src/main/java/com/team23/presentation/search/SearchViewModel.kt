@@ -1,11 +1,15 @@
 package com.team23.presentation.search
 
+import android.content.Context
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.domain.usecases.SearchSummarizedRecipesUseCase
 import com.team23.domain.usecases.UpdateFavoriteUseCase
+import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.home.mappers.SummarizedRecipeMapper
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.search.mappers.TagMapper
@@ -76,9 +80,27 @@ class SearchViewModel @Inject constructor(
 		}
 	}
 
-	fun favoriteClick(recipeId: String) {
+	fun favoriteClick(recipe: SummarizedRecipeUiModel, snackbarHostState: SnackbarHostState, context: Context) {
 		viewModelScope.launch(Dispatchers.IO) {
-			updateFavoriteUseCase.invoke(recipeId)
+			updateFavoriteUseCase.invoke(recipe.id)
+			recomputeState(recipe.id)
+			if (!recipe.isFavorite) {
+				val result = SnackbarHandler(snackbarHostState, context).showFavoriteSnackbar(recipe.title)
+				if (result == SnackbarResult.ActionPerformed) {
+					updateFavoriteUseCase.invoke(recipe.id)
+					recomputeState(recipe.id)
+				}
+			}
 		}
+	}
+
+	private fun recomputeState(recipeId: String) {
+		val currentState = _recipes.value
+		val newRecipes = currentState.toMutableList()
+		val recipe = newRecipes.first { recipe -> recipe.id == recipeId }
+		val recipeIndex = newRecipes.indexOf(recipe)
+		newRecipes.remove(recipe)
+		newRecipes.add(recipeIndex, recipe.copy(isFavorite = !recipe.isFavorite))
+		_recipes.value = newRecipes
 	}
 }

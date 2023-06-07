@@ -1,14 +1,19 @@
 package com.team23.presentation.recipe
 
+import android.content.Context
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.GetFullRecipeByIdUseCase
 import com.team23.domain.usecases.UpdateFavoriteUseCase
+import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.recipe.extensions.toUrlRecipeId
 import com.team23.presentation.recipe.mappers.QuantityMapper
 import com.team23.presentation.recipe.mappers.RecipeMapper
 import com.team23.presentation.recipe.models.IngredientUiModel
+import com.team23.presentation.recipe.models.RecipeUiModel
 import com.team23.presentation.recipe.models.RecipeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -82,9 +87,24 @@ class RecipeViewModel @Inject constructor(
 		}
 	}
 
-	fun favoriteClick(recipeId: String) {
+	fun favoriteClick(recipe: RecipeUiModel, snackbarHostState: SnackbarHostState, context: Context) {
 		viewModelScope.launch(Dispatchers.IO) {
-			updateFavoriteUseCase.invoke(recipeId)
+			updateFavoriteUseCase.invoke(recipe.id)
+			recomputeState(recipe)
+			if (!recipe.isFavorite) {
+				val result = SnackbarHandler(snackbarHostState, context).showFavoriteSnackbar(recipe.title)
+				if (result == SnackbarResult.ActionPerformed) {
+					updateFavoriteUseCase.invoke(recipe.id)
+					recomputeState(recipe)
+				}
+			}
+		}
+	}
+
+	private fun recomputeState(recipe: RecipeUiModel) {
+		val currentState = _uiState.value
+		if (currentState is RecipeUiState.Data) {
+			_uiState.value = RecipeUiState.Data(recipe.copy(isFavorite = !recipe.isFavorite))
 		}
 	}
 
