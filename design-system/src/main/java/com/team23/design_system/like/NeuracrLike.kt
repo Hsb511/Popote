@@ -27,24 +27,19 @@ fun NeuracrLike(
 	isFavorite: Boolean,
 	onFavoriteClick: () -> Unit,
 	modifier: Modifier = Modifier,
-	isFavoritePage: Boolean = false,
 ) {
-	var isFavoriteVar by remember { mutableStateOf(isFavorite) }
-	val initialColor = computeColor(isFavoritePage, isFavoriteVar)
+	val initialColor = computeColor(isFavorite)
 	var currentColor: Color by remember { mutableStateOf(initialColor) }
-	currentColor = computeColor(isFavoritePage, isFavoriteVar)
+	currentColor = computeColor(isFavorite)
 
 	IconButton(
-		onClick = {
-			onFavoriteClick()
-			isFavoriteVar = !isFavoriteVar
-		},
+		onClick = { onFavoriteClick() },
 		modifier = modifier.offset(x = 8.dp, y = 8.dp),
 	) {
 
 		Crossfade(targetState = currentColor, animationSpec = tween(500)) { color ->
 			Icon(
-				imageVector = if (isFavoritePage || isFavoriteVar) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+				imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
 				contentDescription = stringResource(id = R.string.favorite_button_content_description),
 				tint = color,
 			)
@@ -53,8 +48,8 @@ fun NeuracrLike(
 }
 
 @Composable
-private fun computeColor(isFavoritePage: Boolean, isFavorite: Boolean) =
-	if (isFavoritePage || isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surface.copy(alpha = 0.69f)
+private fun computeColor(isFavorite: Boolean) =
+	if (isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f)
 
 @Composable
 @Preview(showBackground = true)

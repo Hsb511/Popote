@@ -86,7 +86,7 @@ fun RecipeIngredientsWidget(
 				Icon(
 					painter = painterResource(id = R.drawable.ic_content_copy),
 					contentDescription = stringResource(id = R.string.recipe_copy_to_clipboard_a11y),
-					tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.69f),
+					tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
 				)
 			}
 		}

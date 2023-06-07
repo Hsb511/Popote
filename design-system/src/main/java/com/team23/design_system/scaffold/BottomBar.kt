@@ -28,7 +28,6 @@ import com.team23.design_system.theming.NeuracrTheme
 @Composable
 internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -> Unit) {
 	NavigationBar(
-		containerColor = MaterialTheme.colorScheme.inverseSurface,
 		modifier = Modifier.height(56.dp)
 	) {
 		navItemProperties.map { navItemProperty ->
@@ -41,7 +40,7 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -
 				icon = {
 					Crossfade(targetState = navItemProperty.icon, animationSpec = tween(500)) { imageVector ->
 						if (imageVector == Icons.Filled.Search) {
-							FillSearchIcon(tint = MaterialTheme.colorScheme.inverseOnSurface)
+							FillSearchIcon(tint = MaterialTheme.colorScheme.onSurface)
 						} else {
 							Icon(
 								imageVector = imageVector,
@@ -58,8 +57,8 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -
 					)
 				},
 				colors = NavigationBarItemDefaults.colors(
-					selectedIconColor = MaterialTheme.colorScheme.inverseOnSurface,
-					selectedTextColor = MaterialTheme.colorScheme.inverseOnSurface,
+					selectedIconColor = MaterialTheme.colorScheme.onSurface,
+					selectedTextColor = MaterialTheme.colorScheme.onSurface,
 					indicatorColor = MaterialTheme.colorScheme.secondary,
 					unselectedIconColor = MaterialTheme.colorScheme.scrim,
 					unselectedTextColor = MaterialTheme.colorScheme.scrim,

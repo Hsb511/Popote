@@ -1,7 +1,7 @@
-package com.team23.neuracrsrecipes.navigation
+package com.team23.presentation.common.handlers
 
 import androidx.annotation.StringRes
-import com.team23.neuracrsrecipes.R
+import com.team23.presentation.R
 
 sealed class AppPage(open val route: String, @StringRes open val displayNameId: Int) {
 
@@ -16,6 +16,6 @@ sealed class AppPage(open val route: String, @StringRes open val displayNameId: 
 	) : AppPage(route, displayNameId) {
 
 		object Recipe : WithArgument("home", R.string.navigation_home_display_name, "recipeId")
-		object Search: WithArgument("search", R.string.navigation_search_display_name, "tag")
+		object Search : WithArgument("search", R.string.navigation_search_display_name, "tag")
 	}
 }

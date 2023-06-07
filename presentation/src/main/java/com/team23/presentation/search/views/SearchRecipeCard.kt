@@ -31,7 +31,6 @@ fun SearchRecipeCard(
 	summarizedRecipeUiModel: SummarizedRecipeUiModel,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
-	isFavoritePage: Boolean = false,
 ) {
 	Card(
 		elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -84,7 +83,6 @@ fun SearchRecipeCard(
 						onFavoriteClick(summarizedRecipeUiModel)
 					},
 					modifier = Modifier.align(Alignment.BottomEnd),
-					isFavoritePage = isFavoritePage,
 				)
 			}
 		}

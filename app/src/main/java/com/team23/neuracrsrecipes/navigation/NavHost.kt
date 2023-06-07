@@ -8,6 +8,7 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,6 +23,8 @@ import com.team23.design_system.scaffold.NavItemProperty
 import com.team23.design_system.scaffold.NeuracrScaffold
 import com.team23.design_system.wip.NeuracrPageInProgress
 import com.team23.neuracrsrecipes.BuildConfig
+import com.team23.presentation.common.handlers.AppPage
+import com.team23.presentation.common.handlers.NavigationHandler
 import com.team23.presentation.drawer.ModalMenuDrawer
 import com.team23.presentation.drawer.models.DrawerUiModel
 import com.team23.presentation.favorite.FavoriteScreen
@@ -36,7 +39,8 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun NavHost(context: Context) {
 	val navController = rememberNavController()
-	val navigator = Navigator(navController)
+	val navigationHandler = NavigationHandler(navController)
+	val snackbarHostState = remember { SnackbarHostState() }
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
 	val navItems = toNavItemProperties(
@@ -47,6 +51,7 @@ internal fun NavHost(context: Context) {
 		drawerState
 	)
 	NeuracrScaffold(
+		snackbarHostState = snackbarHostState,
 		navItemProperties = navItems,
 		navigateUp = {
 			navController.navigateUp()
@@ -61,7 +66,8 @@ internal fun NavHost(context: Context) {
 			NavHost(navController = navController, startDestination = AppPage.Home.route) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
-						onRecipeClick = { homeRecipeUiModel -> navigator.openRecipe(homeRecipeUiModel.id) }
+						snackbarHostState = snackbarHostState,
+						onRecipeClick = { homeRecipeUiModel -> navigationHandler.openRecipe(homeRecipeUiModel.id) },
 					)
 				}
 				composable(
@@ -72,17 +78,17 @@ internal fun NavHost(context: Context) {
 				) { navBackStackEntry ->
 					RecipeScreen(
 						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName),
-						onTagClicked = { tag -> navigator.openSearch(tag) }
+						onTagClicked = { tag -> navigationHandler.openSearch(tag) }
 					)
 				}
 				composable(route = AppPage.Search.route) {
 					SearchScreen(
-						onRecipeClick = { recipeUiModel -> navigator.openRecipe(recipeUiModel.id) }
+						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) }
 					)
 				}
 				composable(route = "${AppPage.Search.route}/{${AppPage.WithArgument.Search.argumentName}}") { navBackStackEntry ->
 					SearchScreen(
-						onRecipeClick = { recipeUiModel -> navigator.openRecipe(recipeUiModel.id) },
+						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
 						selectedTag = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Search.argumentName),
 					)
 				}
@@ -92,7 +98,7 @@ internal fun NavHost(context: Context) {
 
 				composable(route = AppPage.Favorite.route) {
 					FavoriteScreen(
-						onRecipeClick = { recipeUiModel -> navigator.openRecipe(recipeUiModel.id) },
+						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
 					)
 				}
 			}

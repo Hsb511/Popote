@@ -1,9 +1,9 @@
-package com.team23.neuracrsrecipes.navigation
+package com.team23.presentation.common.handlers
 
 import androidx.navigation.NavHostController
 import com.team23.presentation.recipe.extensions.toCleanRecipeId
 
-class Navigator(
+class NavigationHandler(
 	private val navController: NavHostController,
 ) {
 	fun openRecipe(recipeId: String) {

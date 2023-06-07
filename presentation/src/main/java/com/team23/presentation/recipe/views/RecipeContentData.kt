@@ -55,12 +55,13 @@ fun RecipeContentData(
 			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				items(recipeUiModel.tags) { tag ->
 					ElevatedSuggestionChip(
+						colors = SuggestionChipDefaults.elevatedSuggestionChipColors(
+							containerColor = MaterialTheme.colorScheme.tertiary,
+							labelColor = MaterialTheme.colorScheme.onTertiary,
+						),
 						onClick = { onTagClicked(tag) },
 						label = {
-							Text(
-								text = tag,
-								color = MaterialTheme.colorScheme.onSurface,
-							)
+							Text(text = tag)
 						}
 					)
 				}
