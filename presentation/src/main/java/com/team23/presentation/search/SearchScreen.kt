@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,11 +29,13 @@ import com.team23.presentation.search.views.SearchTextField
 
 @Composable
 fun SearchScreen(
+	snackbarHostState: SnackbarHostState,
 	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier,
 	selectedTag: String? = null,
 	searchViewModel: SearchViewModel = hiltViewModel()
 ) {
+	val context = LocalContext.current
 	searchViewModel.selectedTag = selectedTag
 	SearchScreen(
 		searchUiModel = SearchUiModel(
@@ -46,7 +49,7 @@ fun SearchScreen(
 			),
 			recipes = searchViewModel.recipes.collectAsState().value,
 			onRecipeClick = onRecipeClick,
-			onFavoriteClick = { recipe -> searchViewModel.favoriteClick(recipe.id) },
+			onFavoriteClick = { recipe -> searchViewModel.favoriteClick(recipe, snackbarHostState, context) },
 		),
 		modifier = modifier,
 	)
