@@ -2,7 +2,7 @@ package com.team23.presentation.common.samples
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.team23.presentation.common.samples.RecipeSamples.summarizedRecipeSample
-import com.team23.presentation.favorite.models.DisplayType
+import com.team23.design_system.display.DisplayType
 import com.team23.presentation.favorite.models.FavoriteUiState
 
 object FavoriteSamples {

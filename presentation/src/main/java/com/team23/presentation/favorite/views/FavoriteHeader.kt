@@ -1,8 +1,6 @@
 package com.team23.presentation.favorite.views
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,21 +11,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.display.DisplayBigCard
 import com.team23.design_system.display.DisplayList
 import com.team23.design_system.display.DisplaySmallCard
+import com.team23.design_system.display.DisplayType
+import com.team23.design_system.display.SampleDisplayTypeProvider
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.common.extensions.next
-import com.team23.presentation.common.samples.RecipeSamples.SampleDisplayTypeProvider
-import com.team23.presentation.favorite.models.DisplayType
 
 @Composable
 fun FavoriteHeader(
@@ -35,8 +31,7 @@ fun FavoriteHeader(
 	onDisplayClick: () -> Unit,
 	modifier: Modifier = Modifier
 ) {
-	val animation = tween<Dp>(durationMillis = 600, easing = FastOutSlowInEasing)
-	val headerPadding: Dp by animateDpAsState(if (displayType == DisplayType.BigCard) 0.dp else 16.dp, animation)
+	val headerPadding = if (displayType == DisplayType.BigCard) 0.dp else 16.dp
 
 	Row(
 		modifier = modifier

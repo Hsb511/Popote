@@ -1,5 +1,6 @@
 package com.team23.presentation.favorite.models
 
+import com.team23.design_system.display.DisplayType
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 
 sealed class FavoriteUiState {
