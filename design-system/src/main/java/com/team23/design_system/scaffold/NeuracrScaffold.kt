@@ -1,7 +1,9 @@
 package com.team23.design_system.scaffold
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -22,6 +24,9 @@ import com.team23.design_system.theming.NeuracrTheme
 @Composable
 fun NeuracrScaffold(
 	snackbarHostState: SnackbarHostState,
+	scrollState: ScrollState,
+	heightToBeFaded: Float,
+	title: String?,
 	navItemProperties: List<NavItemProperty>,
 	navigateUp: () -> Unit,
 	drawerState: DrawerState,
@@ -35,6 +40,9 @@ fun NeuracrScaffold(
 		topBar = {
 			TopBar(
 				isNavigationEmpty = isNavigationEmpty,
+				scrollState = scrollState,
+				heightToBeFaded = heightToBeFaded,
+				title = title,
 				navigateUp = navigateUp,
 				drawerState = drawerState,
 				openMenu = openMenu,
@@ -62,6 +70,9 @@ fun NeuracrScaffoldPreview() {
 	NeuracrTheme {
 		NeuracrScaffold(
 			snackbarHostState = remember { SnackbarHostState() },
+			scrollState = rememberScrollState(),
+			heightToBeFaded = 0f,
+			title = "Bretzels",
 			listOf(
 				NavItemProperty("Home", Icons.Filled.Home, true) {},
 				NavItemProperty("Search", Icons.Filled.Search, false) {},

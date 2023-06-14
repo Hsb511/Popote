@@ -2,6 +2,7 @@ package com.team23.neuracrsrecipes.navigation
 
 import android.content.Context
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
@@ -43,6 +44,9 @@ internal fun NavHost(context: Context) {
 	val snackbarHostState = remember { SnackbarHostState() }
 	val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 	val scope = rememberCoroutineScope()
+	val scrollState = rememberScrollState()
+	val heightToBeFaded = remember { mutableStateOf(0f) }
+	val title: MutableState<String?> = remember { mutableStateOf(null) }
 	val navItems = toNavItemProperties(
 		listOf(AppPage.Home, AppPage.Search, AppPage.Upload, AppPage.Favorite),
 		context,
@@ -52,6 +56,9 @@ internal fun NavHost(context: Context) {
 	)
 	NeuracrScaffold(
 		snackbarHostState = snackbarHostState,
+		scrollState = scrollState,
+		heightToBeFaded = heightToBeFaded.value,
+		title = title.value,
 		navItemProperties = navItems,
 		navigateUp = {
 			navController.navigateUp()
@@ -69,6 +76,7 @@ internal fun NavHost(context: Context) {
 						snackbarHostState = snackbarHostState,
 						onRecipeClick = { homeRecipeUiModel -> navigationHandler.openRecipe(homeRecipeUiModel.id) },
 					)
+					title.value = null
 				}
 				composable(
 					route = "${AppPage.WithArgument.Recipe.route}/{${AppPage.WithArgument.Recipe.argumentName}}",
@@ -77,16 +85,23 @@ internal fun NavHost(context: Context) {
 					})
 				) { navBackStackEntry ->
 					RecipeScreen(
+						scrollState = scrollState,
 						snackbarHostState = snackbarHostState,
+						heightToBeFaded = heightToBeFaded,
+						title = title,
 						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName),
 						onTagClicked = { tag -> navigationHandler.openSearch(tag) }
 					)
+					LaunchedEffect(scrollState) {
+						scrollState.animateScrollTo(0)
+					}
 				}
 				composable(route = AppPage.Search.route) {
 					SearchScreen(
 						snackbarHostState = snackbarHostState,
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) }
 					)
+					title.value = null
 				}
 				composable(route = "${AppPage.Search.route}/{${AppPage.WithArgument.Search.argumentName}}") { navBackStackEntry ->
 					SearchScreen(
@@ -94,15 +109,18 @@ internal fun NavHost(context: Context) {
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
 						selectedTag = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Search.argumentName),
 					)
+					title.value = null
 				}
 				composable(route = AppPage.Upload.route) {
 					NeuracrPageInProgress(Modifier.padding(padding))
+					title.value = null
 				}
 
 				composable(route = AppPage.Favorite.route) {
 					FavoriteScreen(
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
 					)
+					title.value = null
 				}
 			}
 		}

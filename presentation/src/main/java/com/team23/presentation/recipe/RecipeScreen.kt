@@ -1,7 +1,9 @@
 package com.team23.presentation.recipe
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,6 +16,9 @@ import com.team23.presentation.recipe.views.RecipeContentLoading
 
 @Composable
 fun RecipeScreen(
+	scrollState: ScrollState,
+	heightToBeFaded: MutableState<Float>,
+	title: MutableState<String?>,
 	snackbarHostState: SnackbarHostState,
 	cleanRecipeId: String?,
 	onTagClicked: (String) -> Unit,
@@ -24,6 +29,9 @@ fun RecipeScreen(
 	recipeViewModel.getRecipe(cleanRecipeId)
 	RecipeScreen(
 		recipeUiState = recipeViewModel.uiState.collectAsState().value,
+		scrollState = scrollState,
+		heightToBeFaded = heightToBeFaded,
+		title = title,
 		currentServingsAmount = recipeViewModel.currentServingsAmount.value.toString(),
 		onValueChanged = { currentServingsAmount -> recipeViewModel.updateRecipeData(currentServingsAmount) },
 		onAddOneServing = { recipeViewModel.addOneService() },
@@ -37,6 +45,9 @@ fun RecipeScreen(
 @Composable
 fun RecipeScreen(
 	recipeUiState: RecipeUiState,
+	scrollState: ScrollState,
+	heightToBeFaded: MutableState<Float>,
+	title: MutableState<String?>,
 	currentServingsAmount: String,
 	onValueChanged: (String) -> Unit,
 	onAddOneServing: () -> Unit,
@@ -45,17 +56,23 @@ fun RecipeScreen(
 	onFavoriteClick: (RecipeUiModel) -> Unit,
 	modifier: Modifier
 ) {
+	title.value = null
 	when (recipeUiState) {
-		is RecipeUiState.Data -> RecipeContentData(
-			recipeUiModel = recipeUiState.recipe,
-			currentServingsAmount = currentServingsAmount,
-			onValueChanged = onValueChanged,
-			onAddOneServing = onAddOneServing,
-			onSubtractOneServing = onSubtractOneServing,
-			onTagClicked = onTagClicked,
-			onFavoriteClick = onFavoriteClick,
-			modifier = modifier,
-		)
+		is RecipeUiState.Data -> {
+			RecipeContentData(
+				recipeUiModel = recipeUiState.recipe,
+				scrollState = scrollState,
+				heightToBeFaded = heightToBeFaded,
+				currentServingsAmount = currentServingsAmount,
+				onValueChanged = onValueChanged,
+				onAddOneServing = onAddOneServing,
+				onSubtractOneServing = onSubtractOneServing,
+				onTagClicked = onTagClicked,
+				onFavoriteClick = onFavoriteClick,
+				modifier = modifier,
+			)
+			title.value = recipeUiState.recipe.title
+		}
 		is RecipeUiState.Error -> NeuracrError(recipeUiState.message, modifier)
 		is RecipeUiState.Loading -> RecipeContentLoading(modifier)
 	}
