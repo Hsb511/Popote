@@ -1,5 +1,6 @@
 package com.team23.presentation.favorite.views
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,7 +60,9 @@ fun FavoriteDataEmptyScreen(modifier: Modifier = Modifier) {
 				Icon(
 					imageVector = Icons.Outlined.FavoriteBorder,
 					contentDescription = null,
-					tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
+					tint = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.tertiary.copy(
+						alpha = 0.69f
+					),
 					modifier = Modifier.fillMaxSize(),
 				)
 			}
