@@ -15,15 +15,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.R
+import com.team23.design_system.cell.NeuracrCell
+import com.team23.design_system.display.DisplayType
 import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
+import com.team23.presentation.home.models.toNeuracrCellProperty
 import com.team23.presentation.search.models.SearchUiModel
 import com.team23.presentation.search.models.TagUiModel
 import com.team23.presentation.search.models.TagsRowUiModel
 import com.team23.presentation.search.models.TextFieldUiModel
-import com.team23.presentation.search.views.SearchRecipeCard
 import com.team23.presentation.search.views.SearchTagsRow
 import com.team23.presentation.search.views.SearchTextField
 
@@ -79,9 +81,13 @@ private fun SearchScreen(
 			modifier = modifier.fillMaxSize()
 		) {
 			items(searchUiModel.recipes) { recipe ->
-				SearchRecipeCard(
-					summarizedRecipeUiModel = recipe,
-					onFavoriteClick = searchUiModel.onFavoriteClick,
+				NeuracrCell(
+					neuracrCellProperty = recipe.toNeuracrCellProperty(
+						displayType = DisplayType.List,
+						onFavoriteClick = {
+							searchUiModel.onFavoriteClick(recipe)
+						},
+					),
 					modifier = Modifier
 						.animateItemPlacement()
 						.clickable {

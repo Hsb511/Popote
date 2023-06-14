@@ -11,11 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.team23.design_system.cell.NeuracrCell
+import com.team23.design_system.display.DisplayType
 import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
+import com.team23.presentation.home.models.toNeuracrCellProperty
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -23,7 +26,8 @@ fun HomeContentData(
 	summarizedRecipeUiModels: List<SummarizedRecipeUiModel>,
 	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
-	modifier: Modifier = Modifier) {
+	modifier: Modifier = Modifier
+) {
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(300.dp),
 		contentPadding = PaddingValues(32.dp),
@@ -39,9 +43,13 @@ fun HomeContentData(
 			)
 		}
 		items(summarizedRecipeUiModels) { homeRecipeUiModel ->
-			HomeRecipeCard(
-				summarizedRecipeUiModel = homeRecipeUiModel,
-				onFavoriteClick = onFavoriteClick,
+			NeuracrCell(
+				neuracrCellProperty = homeRecipeUiModel.toNeuracrCellProperty(
+					displayType = DisplayType.BigCard,
+					onFavoriteClick = {
+						onFavoriteClick(homeRecipeUiModel)
+					}
+				),
 				modifier = Modifier
 					.fillMaxWidth()
 					.clickable {

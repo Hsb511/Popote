@@ -1,11 +1,9 @@
-package com.team23.presentation.home.views
+package com.team23.design_system.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -18,27 +16,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.team23.design_system.flags.NeuracrFlag
+import com.team23.design_system.display.DisplayType
+import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImage
-import com.team23.design_system.like.NeuracrLike
-import com.team23.presentation.common.samples.RecipeSamples.summarizedRecipeSample
-import com.team23.presentation.home.models.SummarizedRecipeUiModel
+import com.team23.design_system.image.NeuracrImageProperty
 
 @Composable
-internal fun HomeRecipeCard(
-	summarizedRecipeUiModel: SummarizedRecipeUiModel,
-	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+internal fun CellCard(
+	neuracrCellProperty: NeuracrCellProperty,
 	modifier: Modifier = Modifier,
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
 			NeuracrImage(
-				neuracrImageProperty = summarizedRecipeUiModel.imageProperty,
+				neuracrImageProperty = neuracrCellProperty.imageProperty,
 				maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
 				modifier = Modifier.fillMaxWidth()
 			)
 			Text(
-				text = summarizedRecipeUiModel.title,
+				text = neuracrCellProperty.title,
 				color = MaterialTheme.colorScheme.onTertiary,
 				style = MaterialTheme.typography.titleSmall,
 				modifier = Modifier
@@ -52,30 +48,28 @@ internal fun HomeRecipeCard(
 					.background(color = MaterialTheme.colorScheme.tertiary)
 					.padding(start = 12.dp, bottom = 2.dp, end = 12.dp)
 			)
-			NeuracrFlag(
-				neuracrFlagProperty = summarizedRecipeUiModel.flagProperty,
-				modifier = Modifier
-					.align(Alignment.TopEnd)
-					.clip(
-						shape = MaterialTheme.shapes.medium.copy(
-							topStart = CornerSize(0.dp),
-							bottomEnd = CornerSize(0.dp)
-						)
-					)
-					.width(30.dp)
-					.height(20.dp)
-			)
-			NeuracrLike(
-				isFavorite = summarizedRecipeUiModel.isFavorite,
-				onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
-				modifier = Modifier.align(Alignment.BottomEnd),
-			)
+			CellFlag(neuracrCellProperty.flagProperty)
+			CellLike(neuracrCellProperty.isFavorite, neuracrCellProperty.onFavoriteClick)
 		}
 	}
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun SummarizedRecipeCardPreview() {
-	HomeRecipeCard(summarizedRecipeSample, {})
+internal fun CellCardPreview() {
+    MaterialTheme {
+	    CellCard(
+		    NeuracrCellProperty(
+			    displayType = DisplayType.BigCard,
+			    title = "bretzels",
+			    imageProperty = NeuracrImageProperty.Resource(
+				    contentDescription = null,
+				    imageRes = com.team23.design_system.R.drawable.bretzel
+			    ),
+			    flagProperty = NeuracrFlagProperty.FRENCH,
+			    isFavorite = true,
+			    onFavoriteClick = {}
+		    )
+		)
+    }
 }

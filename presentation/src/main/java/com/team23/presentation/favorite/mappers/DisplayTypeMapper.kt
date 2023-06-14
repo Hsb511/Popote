@@ -1,7 +1,7 @@
 package com.team23.presentation.favorite.mappers
 
 import com.team23.domain.models.PreferenceDomainModel
-import com.team23.presentation.favorite.models.DisplayType
+import com.team23.design_system.display.DisplayType
 import javax.inject.Inject
 
 class DisplayTypeMapper @Inject constructor() {
