@@ -5,7 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,14 +13,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGri
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,16 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.search.models.TagUiModel
 import com.team23.presentation.search.models.TagsRowUiModel
+import com.team23.presentation.search.models.TextFieldUiModel
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier) {
 	val focusManager = LocalFocusManager.current
@@ -54,57 +44,28 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 		focusManager.clearFocus()
 	}
 
-	OutlinedTextField(
-		value = searchTagValue,
-		onValueChange = { newValue -> searchTagValue = newValue },
-		maxLines = 1,
-		singleLine = true,
-		shape = MaterialTheme.shapes.small,
-		interactionSource = interactionSource,
-		colors = TextFieldDefaults.outlinedTextFieldColors(
-			textColor = MaterialTheme.colorScheme.onSurfaceVariant
-		),
-		label = { Text(text = stringResource(id = R.string.search_tags_row_label)) },
-		placeholder = {
-			Text(
-				text = stringResource(id = R.string.search_textfield_placeholder),
-				style = MaterialTheme.typography.bodyLarge,
-				color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.69f),
-			)
-		},
-		leadingIcon = {
-			Icon(
-				painter = painterResource(id = R.drawable.ic_tag),
-				contentDescription = null,
-				tint = MaterialTheme.colorScheme.primary,
-			)
-		},
-		trailingIcon = {
-			if (searchTagValue.isNotEmpty()) {
-				Icon(
-					imageVector = Icons.Filled.Delete,
-					contentDescription = null,
-					tint = MaterialTheme.colorScheme.primary,
-					modifier = Modifier.clickable {
-						searchTagValue = ""
-					}
-				)
-			}
-		},
-		keyboardActions = KeyboardActions(
-			onDone = {
-				keyboard?.hide()
-				focusManager.clearFocus()
-				searchTagValue = ""
-			},
-			onGo = {
-				keyboard?.hide()
-				focusManager.clearFocus()
-				searchTagValue = ""
-			}
+	SearchTextField(
+		textFieldUiModel = TextFieldUiModel(
+			searchValue = searchTagValue,
+			onValueChange = { newValue -> searchTagValue = newValue },
+			interactionSource = interactionSource,
+			label = R.string.search_tags_row_label,
+			placeholder = R.string.search_textfield_placeholder,
+			leadingIcon = TextFieldUiModel.IconUiModel.Painter(R.drawable.ic_tag),
+			keyboardActions = KeyboardActions(
+				onDone = {
+					keyboard?.hide()
+					focusManager.clearFocus()
+					searchTagValue = ""
+				},
+				onGo = {
+					keyboard?.hide()
+					focusManager.clearFocus()
+					searchTagValue = ""
+				}
+			),
 		),
 		modifier = modifier
-			.fillMaxWidth()
 			.clickable {
 				isMenuExpanded = true
 			}
