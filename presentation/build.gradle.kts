@@ -43,11 +43,11 @@ dependencies {
     implementation(project(":data"))
 
     // COMPOSE
-    implementation("androidx.compose.foundation:foundation:1.4.1")
-    implementation("androidx.compose.material3:material3:1.0.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.1")
+    implementation("androidx.compose.foundation:foundation:1.4.3")
+    implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.0")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
 
     // HILT
     implementation("com.google.dagger:hilt-android:2.44")

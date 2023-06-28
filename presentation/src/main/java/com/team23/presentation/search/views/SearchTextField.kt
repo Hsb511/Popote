@@ -5,7 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,7 +19,6 @@ import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.search.SearchSamples.previewTextFieldSample
 import com.team23.presentation.search.models.TextFieldUiModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchTextField(
 	textFieldUiModel: TextFieldUiModel,
