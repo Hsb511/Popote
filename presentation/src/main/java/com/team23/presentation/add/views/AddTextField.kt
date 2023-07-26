@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
@@ -26,6 +28,7 @@ fun AddTextField(
 	onTextChange: (String) -> Unit,
 	style: TextStyle,
 	placeholder: String,
+	singleLine: Boolean,
 	modifier: Modifier = Modifier,
 ) {
 	var text by remember { mutableStateOf(initialText) }
@@ -38,6 +41,12 @@ fun AddTextField(
 		},
 		textStyle = style,
 		cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+		singleLine = singleLine,
+		keyboardOptions = if (singleLine) {
+			KeyboardOptions(imeAction = ImeAction.Next)
+		} else {
+			KeyboardOptions.Default
+		},
 		decorationBox = { innerTextField ->
 			Box(modifier = Modifier.padding(horizontal = textHorizontalPadding)) {
 				if (text.isNullOrEmpty()) {
@@ -73,6 +82,7 @@ fun AddTextFieldPreview() {
 			onTextChange = {},
 			placeholder = "value",
 			style = MaterialTheme.typography.displayLarge,
+			singleLine = false,
 		)
 	}
 }

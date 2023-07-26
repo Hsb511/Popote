@@ -73,6 +73,7 @@ fun AddScreen(
 			onTextChange = addRecipe.onTitleChange,
 			style = MaterialTheme.typography.displaySmall,
 			placeholder = "Recipe title",
+			singleLine = true,
 			modifier = Modifier.fillMaxWidth()
 		)
 
@@ -92,6 +93,7 @@ fun AddScreen(
 				onTextChange = addRecipe.onAuthorChange,
 				style = MaterialTheme.typography.labelLarge,
 				placeholder = "Author's name",
+				singleLine = true,
 				modifier = Modifier.padding(start = 8.dp),
 			)
 		}
@@ -128,6 +130,7 @@ fun AddScreen(
 			onTextChange = addRecipe.onDescriptionChange,
 			style = MaterialTheme.typography.bodyMedium,
 			placeholder = "Description of your recipe, advice for the cooking or cooking time, ...",
+			singleLine = false,
 			modifier = Modifier
 				.fillMaxWidth()
 				.heightIn(min = 64.dp),
@@ -146,6 +149,7 @@ fun AddScreen(
 			onTextChange = addRecipe.onConclusionChange,
 			style = MaterialTheme.typography.bodyMedium,
 			placeholder = "A conclusion to your recipe, sides you can cook it with or preparation idea",
+			singleLine = false,
 			modifier = Modifier
 				.fillMaxWidth()
 				.heightIn(min = 64.dp),
