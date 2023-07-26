@@ -2,8 +2,6 @@ package com.team23.presentation.add.views
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -16,9 +14,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
+import com.team23.presentation.R
 
 @Composable
 fun AddTagChip(
@@ -40,7 +40,7 @@ fun AddTagChip(
 		modifier = Modifier.width(80.dp)
 	) {
 		Icon(
-			imageVector = Icons.Filled.Add,
+			painter = painterResource(id = R.drawable.ic_tag),
 			contentDescription = "Add",
 		)
 	}

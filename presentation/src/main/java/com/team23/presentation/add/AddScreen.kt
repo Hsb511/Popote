@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,8 +28,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.add.models.AddRecipeUiModel
+import com.team23.presentation.add.views.AddImageButton
 import com.team23.presentation.add.views.AddTagSection
 import com.team23.presentation.add.views.AddTextField
+import com.team23.presentation.recipe.views.RecipeIngredientsWidget
+import com.team23.presentation.recipe.views.RecipeInstructionsWidget
 
 @Composable
 fun AddScreen(
@@ -68,6 +72,7 @@ fun AddScreen(
 			initialText = title.value,
 			onTextChange = addRecipe.onTitleChange,
 			style = MaterialTheme.typography.displaySmall,
+			placeholder = "Recipe title",
 			modifier = Modifier.fillMaxWidth()
 		)
 
@@ -86,6 +91,7 @@ fun AddScreen(
 				initialText = addRecipe.recipe.author,
 				onTextChange = addRecipe.onAuthorChange,
 				style = MaterialTheme.typography.labelLarge,
+				placeholder = "Author's name",
 				modifier = Modifier.padding(start = 8.dp),
 			)
 		}
@@ -96,43 +102,54 @@ fun AddScreen(
 			onRemoveTag = addRecipe.onRemoveTag,
 		)
 
-		/*
-
-		Card(
-			elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+		AddImageButton(
 			modifier = Modifier
 				.padding(vertical = 8.dp)
 				.fillMaxWidth(),
-		) { }
+		)
+
 		Text(
 			text = stringResource(id = R.string.recipe_ingredients_title),
 			style = MaterialTheme.typography.headlineSmall,
 			modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
 		)
+
 		RecipeIngredientsWidget(
-			ingredients = recipeUiModel.ingredients,
-			currentServingsAmount = currentServingsAmount,
-			onValueChanged = onValueChanged,
-			onAddOneServing = onAddOneServing,
-			onSubtractOneServing = onSubtractOneServing,
+			ingredients = addRecipe.recipe.ingredients,
+			currentServingsAmount = addRecipe.recipe.defaultServingsAmount.toString(),
+			onValueChanged = addRecipe.onServingsAmountChange,
+			onAddOneServing = addRecipe.onAddOneServing,
+			onSubtractOneServing = addRecipe.onSubtractOneServing,
 		)
 		Divider(modifier = Modifier.padding(top = 8.dp))
-		Text(
-			text = recipeUiModel.description,
+
+		AddTextField(
+			initialText = addRecipe.recipe.description,
+			onTextChange = addRecipe.onDescriptionChange,
 			style = MaterialTheme.typography.bodyMedium,
+			placeholder = "Description of your recipe, advice for the cooking or cooking time, ...",
+			modifier = Modifier
+				.fillMaxWidth()
+				.heightIn(min = 64.dp),
 		)
+
 		Text(
 			text = stringResource(id = R.string.recipe_instructions_title),
 			style = MaterialTheme.typography.headlineSmall,
 			modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
 		)
-		RecipeInstructionsWidget(recipeUiModel.instructions)
-		Text(
-			text = recipeUiModel.conclusion,
+
+		RecipeInstructionsWidget(addRecipe.recipe.instructions)
+
+		AddTextField(
+			initialText = addRecipe.recipe.conclusion,
+			onTextChange = addRecipe.onConclusionChange,
 			style = MaterialTheme.typography.bodyMedium,
-			modifier = Modifier.padding(top = 16.dp),
+			placeholder = "A conclusion to your recipe, sides you can cook it with or preparation idea",
+			modifier = Modifier
+				.fillMaxWidth()
+				.heightIn(min = 64.dp),
 		)
-		 */
 	}
 }
 
