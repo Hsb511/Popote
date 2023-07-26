@@ -26,8 +26,15 @@ class AddViewModel @Inject constructor(
 		onTitleChange = { newTitle -> onTitleChange(newTitle) },
 		onAuthorChange = { newAuthor -> onAuthorChange(newAuthor) },
 		onAddTag = { newTag -> onAddTag(newTag) },
-		onRemoveTag = { tag -> onRemoveTag(tag) }
+		onRemoveTag = { tag -> onRemoveTag(tag) },
+		onAddIngredient = {},
+		onServingsAmountChange = {},
+		onAddOneServing = {},
+		onSubtractOneServing = {},
+		onDescriptionChange = { newDescription -> onDescriptionChange(newDescription) },
+		onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) }
 	)
+
 	private val _tags = MutableStateFlow<List<String>>(emptyList())
 	val tags: StateFlow<List<String>> = _tags
 
@@ -57,5 +64,13 @@ class AddViewModel @Inject constructor(
 		currentTags.remove(tag)
 		_recipe.value = _recipe.value.copy(tags = currentTags)
 		_tags.value = _tags.value + tag
+	}
+
+	private fun onDescriptionChange(newDescription: String) {
+		_recipe.value = _recipe.value.copy(description = newDescription)
+	}
+
+	private fun onConclusionChange(newConclusion: String) {
+		_recipe.value = _recipe.value.copy(conclusion = newConclusion)
 	}
 }
