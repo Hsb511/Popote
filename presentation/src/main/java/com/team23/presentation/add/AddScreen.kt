@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.add.models.AddRecipeUiModel
+import com.team23.presentation.add.views.AddTagSection
 import com.team23.presentation.add.views.AddTextField
 
 @Composable
@@ -38,6 +40,7 @@ fun AddScreen(
 ) {
 	AddScreen(
 		addRecipe = addViewModel.initialRecipe,
+		allTags = addViewModel.tags.collectAsState().value,
 		scrollState = scrollState,
 		heightToBeFaded = heightToBeFaded,
 		title = title,
@@ -48,6 +51,7 @@ fun AddScreen(
 @Composable
 fun AddScreen(
 	addRecipe: AddRecipeUiModel,
+	allTags: List<String>,
 	scrollState: ScrollState,
 	heightToBeFaded: MutableState<Float>,
 	title: MutableState<String?>,
@@ -85,6 +89,12 @@ fun AddScreen(
 				modifier = Modifier.padding(start = 8.dp),
 			)
 		}
+
+		AddTagSection(
+			allTags = allTags,
+			onAddTag = addRecipe.onAddTag,
+			onRemoveTag = addRecipe.onRemoveTag,
+		)
 
 		/*
 

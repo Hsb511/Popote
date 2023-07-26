@@ -6,5 +6,6 @@ data class AddRecipeUiModel(
 	val recipe: RecipeUiModel,
 	val onTitleChange: (String) -> Unit,
 	val onAuthorChange: (String) -> Unit,
-	val onAddTag: () -> Unit,
+	val onAddTag: (String) -> Unit,
+	val onRemoveTag: (String) -> Unit,
 )
