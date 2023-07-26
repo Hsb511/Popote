@@ -24,6 +24,7 @@ import com.team23.design_system.scaffold.NavItemProperty
 import com.team23.design_system.scaffold.NeuracrScaffold
 import com.team23.design_system.wip.NeuracrPageInProgress
 import com.team23.neuracrsrecipes.BuildConfig
+import com.team23.presentation.add.AddScreen
 import com.team23.presentation.common.handlers.AppPage
 import com.team23.presentation.common.handlers.NavigationHandler
 import com.team23.presentation.drawer.ModalMenuDrawer
@@ -112,7 +113,11 @@ internal fun NavHost(context: Context) {
 					title.value = null
 				}
 				composable(route = AppPage.Upload.route) {
-					NeuracrPageInProgress(Modifier.padding(padding))
+					AddScreen(
+						scrollState = scrollState,
+						heightToBeFaded = heightToBeFaded,
+						title = title,
+					)
 					title.value = null
 				}
 
