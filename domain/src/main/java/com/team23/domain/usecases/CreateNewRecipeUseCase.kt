@@ -15,7 +15,7 @@ class CreateNewRecipeUseCase @Inject constructor() {
 		isFavorite = false,
 		author = "",
 		tags = listOf(),
-		servingsNumber = 0,
+		servingsNumber = 1,
 		ingredients = listOf(),
 		startingText = "",
 		instructions = listOf(),

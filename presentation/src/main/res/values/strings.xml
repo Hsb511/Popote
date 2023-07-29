@@ -36,4 +36,10 @@
     <string name="favorite_empty_title">Wow this is empty here !</string>
     <string name="favorite_empty_description_part1">You can save your favorite recipes by clicking on the</string>
     <string name="favorite_empty_description_part2">at the bottom right of the recipe picture.</string>
+
+    <!-- Add recipe screen -->
+    <string name="add_recipe_title">Recipe title</string>
+    <string name="add_recipe_author_name">Author\'s name</string>
+    <string name="add_recipe_description">Description of your recipe, advice for the cooking or cooking time, …</string>
+    <string name="add_recipe_conclusion">A conclusion to your recipe, sides you can cook it with or preparation ideas</string>
 </resources>

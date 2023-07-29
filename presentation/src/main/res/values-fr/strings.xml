@@ -36,4 +36,10 @@
     <string name="favorite_empty_title">Wow c\'est vide par ici !</string>
     <string name="favorite_empty_description_part1">Vous pouvez épingler vos favoris ici en cliquant sur le</string>
     <string name="favorite_empty_description_part2">en bas à droite des images des recettes.</string>
+
+    <!-- Add recipe screen -->
+    <string name="add_recipe_title">Titre de la recette</string>
+    <string name="add_recipe_author_name">Nom de l\'auteur</string>
+    <string name="add_recipe_description">Description de la recette, conseils pour la préparation, temps de cuisson, …</string>
+    <string name="add_recipe_conclusion">Conclusion à la recette, accompagnements pour le service ou idées de présentation</string>
 </resources>

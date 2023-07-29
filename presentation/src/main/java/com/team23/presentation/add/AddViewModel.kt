@@ -6,10 +6,14 @@ import com.team23.domain.usecases.CreateNewRecipeUseCase
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.recipe.mappers.RecipeMapper
+import com.team23.presentation.recipe.models.RecipeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,16 +25,20 @@ class AddViewModel @Inject constructor(
 ) : ViewModel() {
 	private val _recipe = MutableStateFlow(recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke()))
 
-	val initialRecipe: AddRecipeUiModel = AddRecipeUiModel(
-		recipe = _recipe.value,
+	val recipe: StateFlow<AddRecipeUiModel> = _recipe
+		.map(::createAddRecipe)
+		.stateIn(viewModelScope, SharingStarted.Eagerly, createAddRecipe(_recipe.value))
+
+	private fun createAddRecipe(recipe: RecipeUiModel) = AddRecipeUiModel(
+		recipe = recipe,
 		onTitleChange = { newTitle -> onTitleChange(newTitle) },
 		onAuthorChange = { newAuthor -> onAuthorChange(newAuthor) },
 		onAddTag = { newTag -> onAddTag(newTag) },
 		onRemoveTag = { tag -> onRemoveTag(tag) },
-		onAddIngredient = {},
-		onServingsAmountChange = {},
-		onAddOneServing = {},
-		onSubtractOneServing = {},
+		onAddIngredient = { },
+		onServingsAmountChange = { newServingsAmount -> onServingsAmountChange(newServingsAmount)},
+		onAddOneServing = { onAddOneServing() },
+		onSubtractOneServing = { onSubtractOneServing() },
 		onDescriptionChange = { newDescription -> onDescriptionChange(newDescription) },
 		onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) }
 	)
@@ -66,6 +74,26 @@ class AddViewModel @Inject constructor(
 		_tags.value = _tags.value + tag
 	}
 
+	private fun onServingsAmountChange(newAmount: String) {
+		val newServingsAmount = newAmount
+			.toIntOrNull()
+			?.coerceIn(SERVINGS_AMOUNT_MIN, SERVINGS_AMOUNT_MAX)
+			?: SERVINGS_AMOUNT_MIN
+		_recipe.value = _recipe.value.copy(defaultServingsAmount = newServingsAmount)
+	}
+
+	private fun onAddOneServing() {
+		if (_recipe.value.defaultServingsAmount < SERVINGS_AMOUNT_MAX) {
+			_recipe.value = _recipe.value.copy(defaultServingsAmount = _recipe.value.defaultServingsAmount + 1)
+		}
+	}
+
+	private fun onSubtractOneServing() {
+		if (_recipe.value.defaultServingsAmount > SERVINGS_AMOUNT_MIN) {
+			_recipe.value = _recipe.value.copy(defaultServingsAmount = _recipe.value.defaultServingsAmount - 1)
+		}
+	}
+
 	private fun onDescriptionChange(newDescription: String) {
 		_recipe.value = _recipe.value.copy(description = newDescription)
 	}
@@ -74,3 +102,6 @@ class AddViewModel @Inject constructor(
 		_recipe.value = _recipe.value.copy(conclusion = newConclusion)
 	}
 }
+
+private const val SERVINGS_AMOUNT_MIN = 1
+private const val SERVINGS_AMOUNT_MAX = 999

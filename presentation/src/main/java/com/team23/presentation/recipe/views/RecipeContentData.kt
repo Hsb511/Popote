@@ -27,6 +27,7 @@ import com.team23.design_system.like.NeuracrLike
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.recipe.models.IngredientUiModel
+import com.team23.presentation.recipe.models.IngredientsUiModel
 import com.team23.presentation.recipe.models.InstructionUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
 
@@ -103,11 +104,13 @@ fun RecipeContentData(
 			modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
 		)
 		RecipeIngredientsWidget(
-			ingredients = recipeUiModel.ingredients,
-			currentServingsAmount = currentServingsAmount,
-			onValueChanged = onValueChanged,
-			onAddOneServing = onAddOneServing,
-			onSubtractOneServing = onSubtractOneServing,
+			IngredientsUiModel.FromRecipeScreen(
+				ingredients = recipeUiModel.ingredients,
+				currentServingsAmount = currentServingsAmount,
+				onValueChanged = onValueChanged,
+				onAddOneServing = onAddOneServing,
+				onSubtractOneServing = onSubtractOneServing,
+			)
 		)
 		Divider(modifier = Modifier.padding(top = 8.dp))
 		Text(
