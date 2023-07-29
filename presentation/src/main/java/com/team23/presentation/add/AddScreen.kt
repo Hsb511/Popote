@@ -31,6 +31,7 @@ import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.add.views.AddImageButton
 import com.team23.presentation.add.views.AddTagSection
 import com.team23.presentation.add.views.AddTextField
+import com.team23.presentation.recipe.models.IngredientsUiModel
 import com.team23.presentation.recipe.views.RecipeIngredientsWidget
 import com.team23.presentation.recipe.views.RecipeInstructionsWidget
 
@@ -43,7 +44,7 @@ fun AddScreen(
 	addViewModel: AddViewModel = hiltViewModel(),
 ) {
 	AddScreen(
-		addRecipe = addViewModel.initialRecipe,
+		addRecipe = addViewModel.recipe.collectAsState().value,
 		allTags = addViewModel.tags.collectAsState().value,
 		scrollState = scrollState,
 		heightToBeFaded = heightToBeFaded,
@@ -72,7 +73,7 @@ fun AddScreen(
 			initialText = title.value,
 			onTextChange = addRecipe.onTitleChange,
 			style = MaterialTheme.typography.displaySmall,
-			placeholder = "Recipe title",
+			placeholder = stringResource(id = R.string.add_recipe_title),
 			singleLine = true,
 			modifier = Modifier.fillMaxWidth()
 		)
@@ -92,7 +93,7 @@ fun AddScreen(
 				initialText = addRecipe.recipe.author,
 				onTextChange = addRecipe.onAuthorChange,
 				style = MaterialTheme.typography.labelLarge,
-				placeholder = "Author's name",
+				placeholder = stringResource(id = R.string.add_recipe_author_name),
 				singleLine = true,
 				modifier = Modifier.padding(start = 8.dp),
 			)
@@ -117,11 +118,14 @@ fun AddScreen(
 		)
 
 		RecipeIngredientsWidget(
-			ingredients = addRecipe.recipe.ingredients,
-			currentServingsAmount = addRecipe.recipe.defaultServingsAmount.toString(),
-			onValueChanged = addRecipe.onServingsAmountChange,
-			onAddOneServing = addRecipe.onAddOneServing,
-			onSubtractOneServing = addRecipe.onSubtractOneServing,
+			IngredientsUiModel.FromAddScreen(
+				ingredients = addRecipe.recipe.ingredients,
+				currentServingsAmount = addRecipe.recipe.defaultServingsAmount.toString(),
+				onValueChanged = addRecipe.onServingsAmountChange,
+				onAddOneServing = addRecipe.onAddOneServing,
+				onSubtractOneServing = addRecipe.onSubtractOneServing,
+				onAddIngredients = { /* TODO LINK TO VM METHOD */ },
+			)
 		)
 		Divider(modifier = Modifier.padding(top = 8.dp))
 
@@ -129,7 +133,7 @@ fun AddScreen(
 			initialText = addRecipe.recipe.description,
 			onTextChange = addRecipe.onDescriptionChange,
 			style = MaterialTheme.typography.bodyMedium,
-			placeholder = "Description of your recipe, advice for the cooking or cooking time, ...",
+			placeholder = stringResource(id = R.string.add_recipe_description),
 			singleLine = false,
 			modifier = Modifier
 				.fillMaxWidth()
@@ -148,7 +152,7 @@ fun AddScreen(
 			initialText = addRecipe.recipe.conclusion,
 			onTextChange = addRecipe.onConclusionChange,
 			style = MaterialTheme.typography.bodyMedium,
-			placeholder = "A conclusion to your recipe, sides you can cook it with or preparation idea",
+			placeholder = stringResource(id = R.string.add_recipe_conclusion),
 			singleLine = false,
 			modifier = Modifier
 				.fillMaxWidth()
