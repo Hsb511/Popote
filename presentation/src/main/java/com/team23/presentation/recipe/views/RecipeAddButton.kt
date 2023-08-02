@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -18,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RecipeAddIngredientButton(
-	onAddIngredients: () -> Unit,
+fun RecipeAddButton(
+	onAddClick: () -> Unit,
 	widgetWidth: Int,
 	modifier: Modifier = Modifier,
 ) {
@@ -30,9 +29,8 @@ fun RecipeAddIngredientButton(
 		modifier = modifier.fillMaxWidth()
 	) {
 		Button(
-			onClick = { onAddIngredients() },
+			onClick = { onAddClick() },
 			modifier = Modifier
-				.padding(bottom = 16.dp)
 				.width(with(density) { widgetWidth.toDp() })
 				.height(34.dp)
 		) {
@@ -47,7 +45,7 @@ fun RecipeAddIngredientButton(
 @Composable
 @Preview(showBackground = true)
 fun RecipeAddIngredientButtonPreview() {
-    MaterialTheme {
-	    RecipeAddIngredientButton(onAddIngredients = {}, widgetWidth = 32)
-    }
+	MaterialTheme {
+		RecipeAddButton(onAddClick = {}, widgetWidth = 32)
+	}
 }

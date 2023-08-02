@@ -7,6 +7,7 @@ import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.recipe.mappers.RecipeMapper
 import com.team23.presentation.recipe.models.IngredientUiModel
+import com.team23.presentation.recipe.models.InstructionUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -41,11 +42,14 @@ class AddViewModel @Inject constructor(
 		onAddIngredient = { onAddIngredient() },
 		onDeleteIngredient = { index -> onDeleteIngredient(index) },
 		onUpdateIngredient = { ingredient, index -> onUpdateIngredient(ingredient, index) },
-		onServingsAmountChange = { newServingsAmount -> onServingsAmountChange(newServingsAmount)},
+		onServingsAmountChange = { newServingsAmount -> onServingsAmountChange(newServingsAmount) },
 		onAddOneServing = { onAddOneServing() },
 		onSubtractOneServing = { onSubtractOneServing() },
 		onDescriptionChange = { newDescription -> onDescriptionChange(newDescription) },
-		onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) }
+		onAddInstruction = { onAddInstruction() },
+		onDeleteInstruction = { instruction -> onDeleteInstruction(instruction) },
+		onUpdateInstruction = { instruction -> onUpdateInstruction(instruction) },
+		onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) },
 	)
 
 	init {
@@ -120,6 +124,26 @@ class AddViewModel @Inject constructor(
 
 	private fun onDescriptionChange(newDescription: String) {
 		_recipe.value = _recipe.value.copy(description = newDescription)
+	}
+
+	private fun onAddInstruction() {
+		val instructions = _recipe.value.instructions
+		val newInstruction = InstructionUiModel(order = instructions.size + 1, label = "")
+		_recipe.value = _recipe.value.copy(instructions = instructions + newInstruction)
+	}
+
+	private fun onDeleteInstruction(instruction: InstructionUiModel) {
+		val instructions = _recipe.value.instructions.toMutableList()
+		instructions.remove(instruction)
+		_recipe.value = _recipe.value.copy(instructions = instructions)
+	}
+
+	private fun onUpdateInstruction(newInstruction: InstructionUiModel) {
+		val instructions = _recipe.value.instructions.toMutableList()
+		val index = instructions.indexOfFirst { instruction -> newInstruction.order == instruction.order }
+		instructions.removeAt(index)
+		instructions.add(index, newInstruction)
+		_recipe.value = _recipe.value.copy(instructions = instructions)
 	}
 
 	private fun onConclusionChange(newConclusion: String) {

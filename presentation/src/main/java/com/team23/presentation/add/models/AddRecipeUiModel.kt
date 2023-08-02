@@ -1,6 +1,7 @@
 package com.team23.presentation.add.models
 
 import com.team23.presentation.recipe.models.IngredientUiModel
+import com.team23.presentation.recipe.models.InstructionUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
 
 data class AddRecipeUiModel(
@@ -16,6 +17,8 @@ data class AddRecipeUiModel(
 	val onAddOneServing: () -> Unit,
 	val onSubtractOneServing: () -> Unit,
 	val onDescriptionChange: (String) -> Unit,
+	val onAddInstruction: () -> Unit,
+	val onDeleteInstruction: (InstructionUiModel) -> Unit,
+	val onUpdateInstruction: (InstructionUiModel) -> Unit,
 	val onConclusionChange: (String) -> Unit,
-
 )

@@ -43,4 +43,5 @@
     <string name="add_recipe_description">Description de la recette, conseils pour la préparation, temps de cuisson, …</string>
     <string name="add_recipe_conclusion">Conclusion à la recette, accompagnements pour le service ou idées de présentation</string>
     <string name="add_recipe_ingredient_label">Nom de l\'ingrédient</string>
+    <string name="add_recipe_instruction_placeholder">Ecrivez votre étape de la recette</string>
 </resources>

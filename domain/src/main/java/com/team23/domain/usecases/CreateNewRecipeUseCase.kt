@@ -1,6 +1,7 @@
 package com.team23.domain.usecases
 
 import com.team23.domain.models.IngredientDomainModel
+import com.team23.domain.models.InstructionDomainModel
 import com.team23.domain.models.LanguageDomainModel
 import com.team23.domain.models.RecipeDomainModel
 import java.time.LocalDate
@@ -19,7 +20,7 @@ class CreateNewRecipeUseCase @Inject constructor() {
 		servingsNumber = 1,
 		ingredients = listOf(IngredientDomainModel.WithoutQuantity("")),
 		startingText = "",
-		instructions = listOf(),
+		instructions = listOf(InstructionDomainModel(order = 1, label = "")),
 		endingText = "",
 		sections = listOf(),
 	)
