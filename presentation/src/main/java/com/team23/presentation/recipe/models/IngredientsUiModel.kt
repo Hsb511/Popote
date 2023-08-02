@@ -21,7 +21,9 @@ sealed class IngredientsUiModel(
 		override val onValueChanged: (String) -> Unit,
 		override val onAddOneServing: () -> Unit,
 		override val onSubtractOneServing: () -> Unit,
-		val onAddIngredients: (IngredientUiModel) -> Unit,
+		val onAddIngredient: () -> Unit,
+		val onDeleteIngredient: (Int) -> Unit,
+		val onUpdateIngredient: (IngredientUiModel, Int) -> Unit,
 	): IngredientsUiModel(ingredients, currentServingsAmount, onValueChanged, onAddOneServing, onSubtractOneServing)
 
 }

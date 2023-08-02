@@ -16,7 +16,10 @@ import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.recipe.models.InstructionUiModel
 
 @Composable
-fun RecipeInstructionsWidget(instructions: List<InstructionUiModel>, modifier: Modifier = Modifier) {
+fun RecipeInstructionsWidget(
+	instructions: List<InstructionUiModel>,
+	modifier: Modifier = Modifier,
+) {
 	OutlinedCard(
 		colors = CardDefaults.outlinedCardColors(
 			containerColor = Color.Transparent,

@@ -9,34 +9,30 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
 
 @Composable
 fun AddTextField(
-	initialText: String?,
+	text: String?,
 	onTextChange: (String) -> Unit,
 	style: TextStyle,
 	placeholder: String,
 	singleLine: Boolean,
 	modifier: Modifier = Modifier,
+	keyboardType: KeyboardType = KeyboardType.Text,
 ) {
-	var text by remember { mutableStateOf(initialText) }
 	val textHorizontalPadding = 4.dp
 	BasicTextField(
 		value = text ?: "",
 		onValueChange = { value ->
-			text = value
 			onTextChange(value)
 		},
 		textStyle = style,
@@ -46,7 +42,7 @@ fun AddTextField(
 			KeyboardOptions(imeAction = ImeAction.Next)
 		} else {
 			KeyboardOptions.Default
-		},
+		}.copy(keyboardType = keyboardType),
 		decorationBox = { innerTextField ->
 			Box(modifier = Modifier.padding(horizontal = textHorizontalPadding)) {
 				if (text.isNullOrEmpty()) {
@@ -78,7 +74,7 @@ fun AddTextField(
 fun AddTextFieldPreview() {
 	NeuracrTheme {
 		AddTextField(
-			initialText = "value",
+			text = "value",
 			onTextChange = {},
 			placeholder = "value",
 			style = MaterialTheme.typography.displayLarge,

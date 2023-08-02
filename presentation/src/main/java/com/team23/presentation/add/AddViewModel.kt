@@ -6,6 +6,7 @@ import com.team23.domain.usecases.CreateNewRecipeUseCase
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.recipe.mappers.RecipeMapper
+import com.team23.presentation.recipe.models.IngredientUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +25,12 @@ class AddViewModel @Inject constructor(
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
 ) : ViewModel() {
 	private val _recipe = MutableStateFlow(recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke()))
-
 	val recipe: StateFlow<AddRecipeUiModel> = _recipe
 		.map(::createAddRecipe)
 		.stateIn(viewModelScope, SharingStarted.Eagerly, createAddRecipe(_recipe.value))
+
+	private val _tags = MutableStateFlow<List<String>>(emptyList())
+	val tags: StateFlow<List<String>> = _tags
 
 	private fun createAddRecipe(recipe: RecipeUiModel) = AddRecipeUiModel(
 		recipe = recipe,
@@ -35,7 +38,9 @@ class AddViewModel @Inject constructor(
 		onAuthorChange = { newAuthor -> onAuthorChange(newAuthor) },
 		onAddTag = { newTag -> onAddTag(newTag) },
 		onRemoveTag = { tag -> onRemoveTag(tag) },
-		onAddIngredient = { },
+		onAddIngredient = { onAddIngredient() },
+		onDeleteIngredient = { index -> onDeleteIngredient(index) },
+		onUpdateIngredient = { ingredient, index -> onUpdateIngredient(ingredient, index) },
 		onServingsAmountChange = { newServingsAmount -> onServingsAmountChange(newServingsAmount)},
 		onAddOneServing = { onAddOneServing() },
 		onSubtractOneServing = { onSubtractOneServing() },
@@ -43,13 +48,14 @@ class AddViewModel @Inject constructor(
 		onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) }
 	)
 
-	private val _tags = MutableStateFlow<List<String>>(emptyList())
-	val tags: StateFlow<List<String>> = _tags
-
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
 			_tags.value = getAndSortAllTagsUseCase.invoke()
 		}
+	}
+
+	fun onSaveButtonClick() {
+
 	}
 
 	private fun onTitleChange(newTitle: String) {
@@ -72,6 +78,24 @@ class AddViewModel @Inject constructor(
 		currentTags.remove(tag)
 		_recipe.value = _recipe.value.copy(tags = currentTags)
 		_tags.value = _tags.value + tag
+	}
+
+	private fun onAddIngredient() {
+		val newIngredients = _recipe.value.ingredients + IngredientUiModel("", "", "")
+		_recipe.value = _recipe.value.copy(ingredients = newIngredients)
+	}
+
+	private fun onDeleteIngredient(index: Int) {
+		val ingredients = _recipe.value.ingredients.toMutableList()
+		ingredients.removeAt(index)
+		_recipe.value = _recipe.value.copy(ingredients = ingredients)
+	}
+
+	private fun onUpdateIngredient(ingredient: IngredientUiModel, index: Int) {
+		val ingredients = _recipe.value.ingredients.toMutableList()
+		ingredients.removeAt(index)
+		ingredients.add(index, ingredient)
+		_recipe.value = _recipe.value.copy(ingredients = ingredients)
 	}
 
 	private fun onServingsAmountChange(newAmount: String) {
