@@ -28,10 +28,10 @@ import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.recipe.models.IngredientsUiModel
 import com.team23.presentation.recipe.models.InstructionUiModel
+import com.team23.presentation.recipe.models.InstructionsUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
 import com.team23.presentation.recipe.models.ingredientsPreviewSamples
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeContentData(
 	recipeUiModel: RecipeUiModel,
@@ -110,7 +110,7 @@ fun RecipeContentData(
 				onValueChanged = onValueChanged,
 				onAddOneServing = onAddOneServing,
 				onSubtractOneServing = onSubtractOneServing,
-			)
+			),
 		)
 		Divider(modifier = Modifier.padding(top = 8.dp))
 		Text(
@@ -122,7 +122,7 @@ fun RecipeContentData(
 			style = MaterialTheme.typography.headlineSmall,
 			modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
 		)
-		RecipeInstructionsWidget(recipeUiModel.instructions)
+		RecipeInstructionsWidget(InstructionsUiModel.FromRecipeScreen(recipeUiModel.instructions))
 		Text(
 			text = recipeUiModel.conclusion,
 			style = MaterialTheme.typography.bodyMedium,

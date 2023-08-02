@@ -34,6 +34,7 @@ import com.team23.presentation.add.views.AddSaveButton
 import com.team23.presentation.add.views.AddTagSection
 import com.team23.presentation.add.views.AddTextField
 import com.team23.presentation.recipe.models.IngredientsUiModel
+import com.team23.presentation.recipe.models.InstructionsUiModel
 import com.team23.presentation.recipe.views.RecipeIngredientsWidget
 import com.team23.presentation.recipe.views.RecipeInstructionsWidget
 
@@ -67,6 +68,8 @@ fun AddScreen(
 	heightToBeFaded: MutableState<Float>,
 	modifier: Modifier = Modifier,
 ) {
+	val addButtonWidth = remember { mutableStateOf(0) }
+
 	Column(
 		modifier = modifier
 			.fillMaxSize()
@@ -123,7 +126,7 @@ fun AddScreen(
 		)
 
 		RecipeIngredientsWidget(
-			IngredientsUiModel.FromAddScreen(
+			ingredientsUiModel = IngredientsUiModel.FromAddScreen(
 				ingredients = addRecipe.recipe.ingredients,
 				currentServingsAmount = addRecipe.recipe.defaultServingsAmount.toString(),
 				onValueChanged = addRecipe.onServingsAmountChange,
@@ -132,7 +135,8 @@ fun AddScreen(
 				onAddIngredient = addRecipe.onAddIngredient,
 				onDeleteIngredient = addRecipe.onDeleteIngredient,
 				onUpdateIngredient = addRecipe.onUpdateIngredient,
-			)
+			),
+			addButtonWidth = addButtonWidth,
 		)
 		Divider(modifier = Modifier.padding(top = 8.dp))
 
@@ -154,10 +158,16 @@ fun AddScreen(
 		)
 
 		RecipeInstructionsWidget(
-			instructions = addRecipe.recipe.instructions,
+			instructions = InstructionsUiModel.FromAddScreen(
+				instructions = addRecipe.recipe.instructions,
+				onAddInstruction = addRecipe.onAddInstruction,
+				onDeleteInstruction = addRecipe.onDeleteInstruction,
+				onUpdateInstruction = addRecipe.onUpdateInstruction,
+			),
 			modifier = Modifier
 				.fillMaxWidth()
 				.padding(bottom = 16.dp),
+			addButtonWidth = addButtonWidth.value,
 		)
 
 		AddTextField(

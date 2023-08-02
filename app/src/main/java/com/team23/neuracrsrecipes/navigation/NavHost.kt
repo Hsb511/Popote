@@ -129,7 +129,6 @@ internal fun NavHost(context: Context) {
 	}
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun toNavItemProperties(
 	appPages: List<AppPage>,
