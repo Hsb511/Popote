@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -29,6 +30,7 @@ import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.add.views.AddImageButton
+import com.team23.presentation.add.views.AddSaveButton
 import com.team23.presentation.add.views.AddTagSection
 import com.team23.presentation.add.views.AddTextField
 import com.team23.presentation.recipe.models.IngredientsUiModel
@@ -39,18 +41,22 @@ import com.team23.presentation.recipe.views.RecipeInstructionsWidget
 fun AddScreen(
 	scrollState: ScrollState,
 	heightToBeFaded: MutableState<Float>,
-	title: MutableState<String?>,
 	modifier: Modifier = Modifier,
 	addViewModel: AddViewModel = hiltViewModel(),
 ) {
-	AddScreen(
-		addRecipe = addViewModel.recipe.collectAsState().value,
-		allTags = addViewModel.tags.collectAsState().value,
-		scrollState = scrollState,
-		heightToBeFaded = heightToBeFaded,
-		title = title,
-		modifier = modifier,
-	)
+	Scaffold(
+		floatingActionButton = {
+			AddSaveButton { addViewModel.onSaveButtonClick() }
+		}
+	) { padding ->
+		AddScreen(
+			addRecipe = addViewModel.recipe.collectAsState().value,
+			allTags = addViewModel.tags.collectAsState().value,
+			scrollState = scrollState,
+			heightToBeFaded = heightToBeFaded,
+			modifier = modifier.padding(padding),
+		)
+	}
 }
 
 @Composable
@@ -59,7 +65,6 @@ fun AddScreen(
 	allTags: List<String>,
 	scrollState: ScrollState,
 	heightToBeFaded: MutableState<Float>,
-	title: MutableState<String?>,
 	modifier: Modifier = Modifier,
 ) {
 	Column(
@@ -70,7 +75,7 @@ fun AddScreen(
 			.background(color = MaterialTheme.colorScheme.background)
 	) {
 		AddTextField(
-			initialText = title.value,
+			text = addRecipe.recipe.title,
 			onTextChange = addRecipe.onTitleChange,
 			style = MaterialTheme.typography.displaySmall,
 			placeholder = stringResource(id = R.string.add_recipe_title),
@@ -90,7 +95,7 @@ fun AddScreen(
 				style = MaterialTheme.typography.labelLarge,
 			)
 			AddTextField(
-				initialText = addRecipe.recipe.author,
+				text = addRecipe.recipe.author,
 				onTextChange = addRecipe.onAuthorChange,
 				style = MaterialTheme.typography.labelLarge,
 				placeholder = stringResource(id = R.string.add_recipe_author_name),
@@ -124,13 +129,15 @@ fun AddScreen(
 				onValueChanged = addRecipe.onServingsAmountChange,
 				onAddOneServing = addRecipe.onAddOneServing,
 				onSubtractOneServing = addRecipe.onSubtractOneServing,
-				onAddIngredients = { /* TODO LINK TO VM METHOD */ },
+				onAddIngredient = addRecipe.onAddIngredient,
+				onDeleteIngredient = addRecipe.onDeleteIngredient,
+				onUpdateIngredient = addRecipe.onUpdateIngredient,
 			)
 		)
 		Divider(modifier = Modifier.padding(top = 8.dp))
 
 		AddTextField(
-			initialText = addRecipe.recipe.description,
+			text = addRecipe.recipe.description,
 			onTextChange = addRecipe.onDescriptionChange,
 			style = MaterialTheme.typography.bodyMedium,
 			placeholder = stringResource(id = R.string.add_recipe_description),
@@ -146,10 +153,15 @@ fun AddScreen(
 			modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
 		)
 
-		RecipeInstructionsWidget(addRecipe.recipe.instructions)
+		RecipeInstructionsWidget(
+			instructions = addRecipe.recipe.instructions,
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(bottom = 16.dp),
+		)
 
 		AddTextField(
-			initialText = addRecipe.recipe.conclusion,
+			text = addRecipe.recipe.conclusion,
 			onTextChange = addRecipe.onConclusionChange,
 			style = MaterialTheme.typography.bodyMedium,
 			placeholder = stringResource(id = R.string.add_recipe_conclusion),
@@ -168,7 +180,6 @@ fun AddScreenPreview() {
 		AddScreen(
 			scrollState = rememberScrollState(),
 			heightToBeFaded = remember { mutableStateOf(120f) },
-			title = remember { mutableStateOf("") },
 		)
 	}
 }

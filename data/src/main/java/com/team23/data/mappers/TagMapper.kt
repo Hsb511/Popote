@@ -18,7 +18,7 @@ class TagMapper @Inject constructor() {
 private val tagsTranslation: Map<String, Map<String, String>> = mapOf(
 	"alsacian" to mapOf("fr" to "alsacien"),
 	"american" to mapOf("fr" to "américain"),
-	"chinese" to mapOf("fr" to "chinoise"),
+	"chinese" to mapOf("fr" to "chinois"),
 	"dessert" to mapOf("fr" to "dessert"),
 	"desert" to mapOf("fr" to "dessert"),
 	"dish" to mapOf("fr" to "plat"),

@@ -42,4 +42,7 @@
     <string name="add_recipe_author_name">Author\'s name</string>
     <string name="add_recipe_description">Description of your recipe, advice for the cooking or cooking time, …</string>
     <string name="add_recipe_conclusion">A conclusion to your recipe, sides you can cook it with or preparation ideas</string>
+    <string name="add_recipe_ingredient_quantity" translatable="false">10</string>
+    <string name="add_recipe_ingredient_unit" translatable="false">mL</string>
+    <string name="add_recipe_ingredient_label">Ingredient\'s name</string>
 </resources>

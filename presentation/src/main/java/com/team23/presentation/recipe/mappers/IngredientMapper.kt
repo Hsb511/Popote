@@ -12,11 +12,11 @@ class IngredientMapper @Inject constructor(
 
 	private fun toIngredientUiModel(ingredient: IngredientDomainModel): IngredientUiModel = when (ingredient) {
 		is IngredientDomainModel.WithQuantity.WithUnit -> with(ingredient) {
-			IngredientUiModel(quantity = quantityMapper.toString(quantity), label = " $unit - $label")
+			IngredientUiModel(quantity = quantityMapper.toString(quantity), unit = unit, label = label)
 		}
 		is IngredientDomainModel.WithQuantity.WithoutUnit -> with(ingredient) {
-			IngredientUiModel(quantity = quantityMapper.toString(quantity), label = label)
+			IngredientUiModel(quantity = quantityMapper.toString(quantity), unit = null, label = label)
 		}
-		is IngredientDomainModel.WithoutQuantity -> IngredientUiModel(quantity = null, label = ingredient.label)
+		is IngredientDomainModel.WithoutQuantity -> IngredientUiModel(quantity = null, unit = null, label = ingredient.label)
 	}
 }

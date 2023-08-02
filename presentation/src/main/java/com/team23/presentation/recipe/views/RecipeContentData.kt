@@ -26,10 +26,10 @@ import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.like.NeuracrLike
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
-import com.team23.presentation.recipe.models.IngredientUiModel
 import com.team23.presentation.recipe.models.IngredientsUiModel
 import com.team23.presentation.recipe.models.InstructionUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
+import com.team23.presentation.recipe.models.ingredientsPreviewSamples
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -146,12 +146,7 @@ fun RecipeContentDataPreview() {
 				defaultServingsAmount = 4,
 				description = "description",
 				conclusion = "conclusion",
-				ingredients = listOf(
-					IngredientUiModel("0.5", " - lime"),
-					IngredientUiModel("15", " mL - sugar syrup"),
-					IngredientUiModel("12", " - raspberry (frozen)"),
-					IngredientUiModel("12", " - mint leaf"),
-				),
+				ingredients = ingredientsPreviewSamples,
 				instructions = listOf(
 					InstructionUiModel(1, "Boil some water in a pot"),
 					InstructionUiModel(2, "Chop the shallots finely"),
