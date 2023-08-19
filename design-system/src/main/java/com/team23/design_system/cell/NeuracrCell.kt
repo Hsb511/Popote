@@ -7,8 +7,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.team23.design_system.display.DisplayType
 import com.team23.design_system.display.SampleDisplayTypeProvider
-import com.team23.design_system.flags.NeuracrFlagProperty
-import com.team23.design_system.image.NeuracrImageProperty
 
 @Composable
 fun NeuracrCell(
@@ -27,18 +25,6 @@ fun NeuracrCell(
 @Preview(showBackground = true)
 fun NeuracrFlagPropertyCellPreview(@PreviewParameter(SampleDisplayTypeProvider::class) displayType: DisplayType) {
 	MaterialTheme {
-		NeuracrCell(
-			NeuracrCellProperty(
-				displayType = displayType,
-				title = "bretzels",
-				imageProperty = NeuracrImageProperty.Resource(
-					contentDescription = null,
-					imageRes = com.team23.design_system.R.drawable.bretzel
-				),
-				flagProperty = NeuracrFlagProperty.FRENCH,
-				isFavorite = true,
-				onFavoriteClick = {}
-			)
-		)
+		NeuracrCell(neuracrCellProperty = getNeuracrCellPropertySample(displayType))
 	}
 }

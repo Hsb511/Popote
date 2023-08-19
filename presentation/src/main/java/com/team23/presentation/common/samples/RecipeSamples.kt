@@ -15,5 +15,6 @@ internal object RecipeSamples {
 		title = "Bretzels",
 		flagProperty = NeuracrFlagProperty.FRENCH,
 		isFavorite = true,
+		isLocallySaved = true,
 	)
 }

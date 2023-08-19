@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.team23.design_system.cell.CellLocalPhone
 import com.team23.design_system.image.NeuracrImage
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.like.NeuracrLike
@@ -91,6 +92,7 @@ fun RecipeContentData(
 					neuracrImageProperty = recipeUiModel.image,
 					maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
 				)
+				CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
 				NeuracrLike(
 					isFavorite = recipeUiModel.isFavorite,
 					onFavoriteClick = { onFavoriteClick(recipeUiModel) },
@@ -156,6 +158,7 @@ fun RecipeContentDataPreview() {
 					)
 				),
 				isFavorite = true,
+				isLocallySaved = true,
 			),
 			scrollState = rememberScrollState(),
 			heightToBeFaded = remember { mutableStateOf(0f) },

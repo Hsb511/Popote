@@ -17,10 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.team23.design_system.display.DisplayType
-import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImage
-import com.team23.design_system.image.NeuracrImageProperty
 
 @Composable
 fun CellList(
@@ -53,8 +50,12 @@ fun CellList(
 						.padding(all = 8.dp)
 						.align(Alignment.CenterStart)
 				)
-				CellFlag(neuracrCellProperty.flagProperty)
-				CellLike(neuracrCellProperty.isFavorite, neuracrCellProperty.onFavoriteClick)
+				CellFlag(neuracrCellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
+				CellLike(
+					neuracrCellProperty.isFavorite,
+					neuracrCellProperty.onFavoriteClick,
+					Modifier.align(Alignment.BottomEnd)
+				)
 			}
 		}
 	}
@@ -64,18 +65,6 @@ fun CellList(
 @Preview(showBackground = true)
 fun CellListPreview() {
 	MaterialTheme {
-		CellList(
-			NeuracrCellProperty(
-				displayType = DisplayType.BigCard,
-				title = "bretzels",
-				imageProperty = NeuracrImageProperty.Resource(
-					contentDescription = null,
-					imageRes = com.team23.design_system.R.drawable.bretzel
-				),
-				flagProperty = NeuracrFlagProperty.FRENCH,
-				isFavorite = true,
-				onFavoriteClick = {}
-			)
-		)
+		CellList(getNeuracrCellPropertySample())
 	}
 }

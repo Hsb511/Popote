@@ -14,4 +14,7 @@
 
     <!-- favorite -->
     <string name="favorite_button_content_description">Like to save in your favorites</string>
+
+    <!-- locally saved -->
+    <string name="locally_saved_button_content_description">Indicate that this recipe was created by you and is only available on this phone</string>
 </resources>
