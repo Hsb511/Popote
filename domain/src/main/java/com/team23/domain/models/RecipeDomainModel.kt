@@ -9,6 +9,7 @@ sealed class RecipeDomainModel(
     open val date: LocalDate,
     open val language: LanguageDomainModel,
     open val isFavorite: Boolean,
+    open val source: Source,
 ) {
     data class Summarized(
         override val id: String,
@@ -17,6 +18,7 @@ sealed class RecipeDomainModel(
         override val date: LocalDate,
         override val language: LanguageDomainModel,
         override val isFavorite: Boolean,
+        override val source: Source = Source.Local.Saved,
     ) : RecipeDomainModel(
         id = id,
         title = title,
@@ -24,6 +26,7 @@ sealed class RecipeDomainModel(
         date = date,
         language = language,
         isFavorite = isFavorite,
+        source = source,
     )
 
     data class Full(
@@ -33,6 +36,7 @@ sealed class RecipeDomainModel(
         override val date: LocalDate,
         override val language: LanguageDomainModel,
         override val isFavorite: Boolean,
+        override val source: Source = Source.Local.Saved,
         val author: String,
         val tags: List<String>,
         val servingsNumber: Int,
@@ -48,5 +52,14 @@ sealed class RecipeDomainModel(
         date = date,
         language = language,
         isFavorite = isFavorite,
+        source = source,
     )
+
+    sealed class Source {
+        object Remote: Source()
+        sealed class Local: Source() {
+            object Saved: Local()
+            object Temporary: Local()
+        }
+    }
 }

@@ -16,10 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.team23.design_system.display.DisplayType
-import com.team23.design_system.flags.NeuracrFlagProperty
 import com.team23.design_system.image.NeuracrImage
-import com.team23.design_system.image.NeuracrImageProperty
 
 @Composable
 internal fun CellCard(
@@ -33,6 +30,7 @@ internal fun CellCard(
 				maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
 				modifier = Modifier.fillMaxWidth()
 			)
+			CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
 			Text(
 				text = neuracrCellProperty.title,
 				color = MaterialTheme.colorScheme.onTertiary,
@@ -48,8 +46,12 @@ internal fun CellCard(
 					.background(color = MaterialTheme.colorScheme.tertiary)
 					.padding(start = 12.dp, bottom = 2.dp, end = 12.dp)
 			)
-			CellFlag(neuracrCellProperty.flagProperty)
-			CellLike(neuracrCellProperty.isFavorite, neuracrCellProperty.onFavoriteClick)
+			CellFlag(neuracrCellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
+			CellLike(
+				neuracrCellProperty.isFavorite,
+				neuracrCellProperty.onFavoriteClick,
+				Modifier.align(Alignment.BottomEnd)
+			)
 		}
 	}
 }
@@ -57,19 +59,7 @@ internal fun CellCard(
 @Composable
 @Preview(showBackground = true)
 internal fun CellCardPreview() {
-    MaterialTheme {
-	    CellCard(
-		    NeuracrCellProperty(
-			    displayType = DisplayType.BigCard,
-			    title = "bretzels",
-			    imageProperty = NeuracrImageProperty.Resource(
-				    contentDescription = null,
-				    imageRes = com.team23.design_system.R.drawable.bretzel
-			    ),
-			    flagProperty = NeuracrFlagProperty.FRENCH,
-			    isFavorite = true,
-			    onFavoriteClick = {}
-		    )
-		)
-    }
+	MaterialTheme {
+		CellCard(neuracrCellProperty = getNeuracrCellPropertySample())
+	}
 }

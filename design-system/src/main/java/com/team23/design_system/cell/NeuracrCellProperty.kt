@@ -10,5 +10,6 @@ data class NeuracrCellProperty(
 	val title: String,
 	val flagProperty: NeuracrFlagProperty,
 	val isFavorite: Boolean,
+	val isLocallySaved: Boolean,
 	val onFavoriteClick: () -> Unit,
 )

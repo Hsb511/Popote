@@ -13,10 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.cell.NeuracrCell
 import com.team23.design_system.display.DisplayType
-import com.team23.design_system.flags.NeuracrFlagProperty
-import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
+import com.team23.presentation.common.samples.RecipeSamples.summarizedRecipeSample
 import com.team23.presentation.home.models.SummarizedRecipeUiModel
 import com.team23.presentation.home.models.toNeuracrCellProperty
 
@@ -65,18 +64,7 @@ fun HomeContentData(
 private fun HomeContentDataPreview() {
 	NeuracrTheme {
 		HomeContentData(
-			summarizedRecipeUiModels = List(6) {
-				SummarizedRecipeUiModel(
-					id = "",
-					title = "bretzels",
-					imageProperty = NeuracrImageProperty.Resource(
-						contentDescription = null,
-						imageRes = com.team23.design_system.R.drawable.bretzel
-					),
-					flagProperty = NeuracrFlagProperty.FRENCH,
-					isFavorite = true,
-				)
-			}, {}, {}
+			summarizedRecipeUiModels = List(6) { summarizedRecipeSample }, {}, {}
 		)
 	}
 }

@@ -11,6 +11,7 @@ data class SummarizedRecipeUiModel(
     val imageProperty: NeuracrImageProperty,
     val flagProperty: NeuracrFlagProperty,
     val isFavorite: Boolean,
+    val isLocallySaved: Boolean,
 )
 
 fun SummarizedRecipeUiModel.toNeuracrCellProperty(
@@ -22,5 +23,6 @@ fun SummarizedRecipeUiModel.toNeuracrCellProperty(
     title = title,
     flagProperty = flagProperty,
     isFavorite = isFavorite,
+    isLocallySaved = isLocallySaved,
     onFavoriteClick = onFavoriteClick,
 )
