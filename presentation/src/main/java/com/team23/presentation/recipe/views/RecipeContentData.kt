@@ -92,7 +92,9 @@ fun RecipeContentData(
 					neuracrImageProperty = recipeUiModel.image,
 					maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
 				)
-				CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
+				if (recipeUiModel.isLocallySaved) {
+					CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
+				}
 				NeuracrLike(
 					isFavorite = recipeUiModel.isFavorite,
 					onFavoriteClick = { onFavoriteClick(recipeUiModel) },

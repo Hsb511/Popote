@@ -30,7 +30,9 @@ internal fun CellCard(
 				maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
 				modifier = Modifier.fillMaxWidth()
 			)
-			CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
+			if (neuracrCellProperty.isLocallySaved) {
+				CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
+			}
 			Text(
 				text = neuracrCellProperty.title,
 				color = MaterialTheme.colorScheme.onTertiary,

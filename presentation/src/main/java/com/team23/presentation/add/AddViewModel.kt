@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.CreateNewRecipeUseCase
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
+import com.team23.domain.usecases.UpdateTempRecipeUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.recipe.mappers.RecipeMapper
 import com.team23.presentation.recipe.models.IngredientUiModel
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,11 +24,13 @@ import javax.inject.Inject
 @HiltViewModel
 class AddViewModel @Inject constructor(
 	createNewRecipeUseCase: CreateNewRecipeUseCase,
+	updateTempRecipeUseCase: UpdateTempRecipeUseCase,
 	recipeMapper: RecipeMapper,
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
 ) : ViewModel() {
 	private val _recipe = MutableStateFlow(recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke()))
 	val recipe: StateFlow<AddRecipeUiModel> = _recipe
+		.onEach { recipeUiModel -> updateTempRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(recipeUiModel)) }
 		.map(::createAddRecipe)
 		.stateIn(viewModelScope, SharingStarted.Eagerly, createAddRecipe(_recipe.value))
 
