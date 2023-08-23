@@ -1,9 +1,11 @@
 package com.team23.presentation.recipe.mappers
 
 import com.team23.design_system.image.NeuracrImageProperty
+import com.team23.domain.models.LanguageDomainModel
 import com.team23.domain.models.RecipeDomainModel
 import com.team23.domain.models.RecipeDomainModel.Source
 import com.team23.presentation.recipe.models.RecipeUiModel
+import java.util.Locale
 import javax.inject.Inject
 
 class RecipeMapper @Inject constructor(
@@ -26,6 +28,29 @@ class RecipeMapper @Inject constructor(
 			conclusion = endingText,
 			isFavorite = isFavorite,
 			isLocallySaved = source is Source.Local.Saved,
+		)
+	}
+
+	fun toRecipeDomainModel(recipeUiModel: RecipeUiModel) = with(recipeUiModel) {
+		RecipeDomainModel.Full(
+			id = id,
+			title = title,
+			date = dateMapper.toLocalDate(recipeUiModel.date),
+			author = author,
+			tags = tags,
+			imageUrl = (image as? NeuracrImageProperty.Remote)?.url ?: "",
+			ingredients = ingredientMapper.toIngredientDomainModels(ingredients),
+			servingsNumber = defaultServingsAmount,
+			instructions = instructionMapper.toInstructionDomainModels(instructions),
+			startingText = description,
+			endingText = conclusion,
+			isFavorite = isFavorite,
+			source = Source.Local.Temporary,
+			language = when (Locale.getDefault().language) {
+				"fr" -> LanguageDomainModel.FRENCH
+				else -> LanguageDomainModel.ENGLISH
+			},
+			sections = emptyList(),
 		)
 	}
 }

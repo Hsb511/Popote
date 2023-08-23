@@ -18,7 +18,7 @@ sealed class RecipeDomainModel(
         override val date: LocalDate,
         override val language: LanguageDomainModel,
         override val isFavorite: Boolean,
-        override val source: Source = Source.Local.Saved,
+        override val source: Source,
     ) : RecipeDomainModel(
         id = id,
         title = title,
@@ -32,11 +32,12 @@ sealed class RecipeDomainModel(
     data class Full(
         override val id: String,
         override val title: String,
+        // TODO CHANGE THAT FOR LOCAL IMAGE
         override val imageUrl: String,
         override val date: LocalDate,
         override val language: LanguageDomainModel,
         override val isFavorite: Boolean,
-        override val source: Source = Source.Local.Saved,
+        override val source: Source,
         val author: String,
         val tags: List<String>,
         val servingsNumber: Int,

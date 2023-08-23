@@ -31,5 +31,6 @@ class FullRecipeMapper @Inject constructor(
 		endingText = fullRecipeDataModel.recipe.lastTitle,
 		sections = listOf(),
 		isFavorite = false,
+		source = RecipeDomainModel.Source.Remote,
 	)
 }

@@ -23,5 +23,6 @@ class CreateNewRecipeUseCase @Inject constructor() {
 		instructions = listOf(InstructionDomainModel(order = 1, label = "")),
 		endingText = "",
 		sections = listOf(),
+		source = RecipeDomainModel.Source.Local.Temporary,
 	)
 }
