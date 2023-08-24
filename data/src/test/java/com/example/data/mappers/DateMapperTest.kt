@@ -14,7 +14,7 @@ class DateMapperTest {
         val validDateString = "2023/04/23"
 
         // When
-        val actualLocalDate = dateMapper.toLocalDate(validDateString)
+        val actualLocalDate = dateMapper.toLocalDateFromHrefDate(validDateString)
         val expectedLocalDate = LocalDate.of(2023, 4, 23)
 
         // Then
@@ -28,7 +28,7 @@ class DateMapperTest {
         val invalidDateString = "2023/13/23"
 
         // When
-        dateMapper.toLocalDate(invalidDateString)
+        dateMapper.toLocalDateFromHrefDate(invalidDateString)
 
         // Then
         // Expect DateTimeParseException
@@ -40,7 +40,7 @@ class DateMapperTest {
         val emptyDateString = ""
 
         // When
-        dateMapper.toLocalDate(emptyDateString)
+        dateMapper.toLocalDateFromHrefDate(emptyDateString)
 
         // Then
         // Expect DateTimeParseException
