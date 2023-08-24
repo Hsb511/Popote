@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -42,12 +43,16 @@ import com.team23.presentation.recipe.views.RecipeInstructionsWidget
 fun AddScreen(
 	scrollState: ScrollState,
 	heightToBeFaded: MutableState<Float>,
+	snackbarHostState: SnackbarHostState,
 	modifier: Modifier = Modifier,
 	addViewModel: AddViewModel = hiltViewModel(),
 ) {
+	val savedSnackbarMessage = stringResource(id = R.string.add_recipe_save_snackbar_message)
 	Scaffold(
 		floatingActionButton = {
-			AddSaveButton { addViewModel.onSaveButtonClick() }
+			AddSaveButton {
+				addViewModel.onSaveButtonClick(snackbarHostState, savedSnackbarMessage)
+			}
 		}
 	) { padding ->
 		AddScreen(
@@ -190,6 +195,7 @@ fun AddScreenPreview() {
 		AddScreen(
 			scrollState = rememberScrollState(),
 			heightToBeFaded = remember { mutableStateOf(120f) },
+			snackbarHostState = SnackbarHostState(),
 		)
 	}
 }

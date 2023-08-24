@@ -12,4 +12,7 @@ interface RecipeDao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertOrReplace(vararg baseRecipeDataModel: BaseRecipeDataModel)
+
+	@Query("DELETE FROM BaseRecipeDataModel WHERE href = :recipeId")
+	suspend fun deleteByRecipeId(recipeId: String)
 }

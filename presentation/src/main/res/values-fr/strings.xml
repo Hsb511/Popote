@@ -44,4 +44,9 @@
     <string name="add_recipe_conclusion">Conclusion à la recette, accompagnements pour le service ou idées de présentation</string>
     <string name="add_recipe_ingredient_label">Nom de l\'ingrédient</string>
     <string name="add_recipe_instruction_placeholder">Ecrivez votre étape de la recette</string>
+    <string name="add_recipe_save_dialog_title">Confirmation de sauvegarde</string>
+    <string name="add_recipe_save_dialog_text">Si vous êtes sûr d\'avoir terminé et d\'avoir rempli tous les champs, cliquez sur confirmer. Sinon pour continuer de modifier votre recette, cliquez sur ignorer.</string>
+    <string name="add_recipe_save_dialog_dismiss">ignorer</string>
+    <string name="add_recipe_save_dialog_confirm">confirmer</string>
+    <string name="add_recipe_save_snackbar_message">a été sauvegardée sur votre téléphone</string>
 </resources>

@@ -46,4 +46,9 @@
     <string name="add_recipe_ingredient_unit" translatable="false">mL</string>
     <string name="add_recipe_ingredient_label">Ingredient\'s name</string>
     <string name="add_recipe_instruction_placeholder">Type your recipe step here</string>
+    <string name="add_recipe_save_dialog_title">Confirm saving</string>
+    <string name="add_recipe_save_dialog_text">If you are certain that you have finished and filled out all the fields, click on "confirm". Otherwise, to continue editing your recipe, click on "dismiss".</string>
+    <string name="add_recipe_save_dialog_dismiss">dismiss</string>
+    <string name="add_recipe_save_dialog_confirm">confirm</string>
+    <string name="add_recipe_save_snackbar_message">has been saved in your phone</string>
 </resources>
