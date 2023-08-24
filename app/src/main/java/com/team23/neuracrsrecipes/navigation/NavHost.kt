@@ -115,6 +115,7 @@ internal fun NavHost(context: Context) {
 					AddScreen(
 						scrollState = scrollState,
 						heightToBeFaded = heightToBeFaded,
+						snackbarHostState = snackbarHostState,
 					)
 				}
 

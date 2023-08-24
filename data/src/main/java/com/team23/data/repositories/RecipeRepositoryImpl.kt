@@ -9,6 +9,8 @@ import com.team23.data.daos.TagDao
 import com.team23.data.datasources.NeuracrWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
+import com.team23.data.models.FullRecipeDataModel
+import com.team23.data.models.SummarizedRecipeDataModel
 import com.team23.data.parsers.FullRecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.models.RecipeDomainModel
@@ -52,10 +54,7 @@ internal class RecipeRepositoryImpl @Inject constructor(
 		if (recipeDao.findFullRecipeById(recipeId) == null) {
 			val rawRecipe: Elements = neuracrWebsiteDataSource.getRecipeById(recipeId)
 			val fullRecipeDataModel = fullRecipeParser.toFullRecipeDataModel(recipeId, rawRecipe)
-			recipeDao.insertOrReplace(fullRecipeDataModel.recipe)
-			tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
-			ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())
-			instructionDao.insertOrReplace(*fullRecipeDataModel.instructions.toTypedArray())
+			insertOrReplaceFullRecipe(fullRecipeDataModel)
 		}
 	}
 
@@ -77,12 +76,49 @@ internal class RecipeRepositoryImpl @Inject constructor(
 		val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
 		val recipeId = fullRecipeDataModel.recipe.href
 
+		deleteDataByRecipeId(recipeId)
+		insertOrReplaceFullRecipe(fullRecipeDataModel)
+	}
+
+	override suspend fun saveRecipe(recipeId: String) {
+		val tempRecipeId = ""
+		val recipeToSave = recipeDao.findFullRecipeById(tempRecipeId)?.let { fullRecipe ->
+			fullRecipe.copy(
+				recipe = fullRecipe.recipe.copy(
+					href = recipeId,
+					isTemporary = false,
+				),
+				tags = fullRecipe.tags.map { it.copy(recipeId = recipeId) },
+				ingredients = fullRecipe.ingredients.map { it.copy(recipeId = recipeId) },
+				instructions = fullRecipe.instructions.map { it.copy(recipeId = recipeId) },
+			)
+		}
+
+		deleteDataByRecipeId(tempRecipeId)
+		recipeDao.deleteByRecipeId(tempRecipeId)
+
+		recipeToSave?.let { recipe ->
+			insertOrReplaceFullRecipe(recipe)
+			summarizedRecipeDao.insertAll(
+				SummarizedRecipeDataModel(
+					href = recipe.recipe.href,
+					imgSrc = recipe.recipe.imgSrc,
+					title = recipe.recipe.title,
+				)
+			)
+		}
+	}
+
+	private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
 		recipeDao.insertOrReplace(fullRecipeDataModel.recipe)
-		tagDao.deleteAllByRecipeId(recipeId)
 		tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
-		ingredientDao.deleteAllByRecipeId(recipeId)
 		ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())
-		instructionDao.deleteAllByRecipeId(recipeId)
 		instructionDao.insertOrReplace(*fullRecipeDataModel.instructions.toTypedArray())
+	}
+
+	private suspend fun deleteDataByRecipeId(recipeId: String) {
+		tagDao.deleteAllByRecipeId(recipeId)
+		ingredientDao.deleteAllByRecipeId(recipeId)
+		instructionDao.deleteAllByRecipeId(recipeId)
 	}
 }

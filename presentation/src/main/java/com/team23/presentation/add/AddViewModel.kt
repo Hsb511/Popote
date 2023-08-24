@@ -1,10 +1,13 @@
 package com.team23.presentation.add
 
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.CreateNewRecipeUseCase
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.domain.usecases.LoadTemporaryRecipeUseCase
+import com.team23.domain.usecases.SaveRecipeUseCase
 import com.team23.domain.usecases.UpdateTempRecipeUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.recipe.mappers.RecipeMapper
@@ -24,13 +27,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-	createNewRecipeUseCase: CreateNewRecipeUseCase,
 	updateTempRecipeUseCase: UpdateTempRecipeUseCase,
+	private val createNewRecipeUseCase: CreateNewRecipeUseCase,
 	private val recipeMapper: RecipeMapper,
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
 	private val loadTemporaryRecipeUseCase: LoadTemporaryRecipeUseCase,
+	private val saveRecipeUseCase: SaveRecipeUseCase,
 ) : ViewModel() {
-	private val _recipe = MutableStateFlow(recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke()))
+	private val _recipe = MutableStateFlow(createNewRecipe())
 	val recipe: StateFlow<AddRecipeUiModel> = _recipe
 		.onEach { recipeUiModel ->
 			viewModelScope.launch(Dispatchers.IO) {
@@ -71,9 +75,19 @@ class AddViewModel @Inject constructor(
 		}
 	}
 
-	fun onSaveButtonClick() {
-
+	fun onSaveButtonClick(snackbarHostState: SnackbarHostState, message: String) {
+		val recipeTitle = _recipe.value.title
+		viewModelScope.launch(Dispatchers.IO) {
+			saveRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(_recipe.value))
+			snackbarHostState.showSnackbar(
+				message = "$recipeTitle $message",
+				duration = SnackbarDuration.Short,
+			)
+		}
+		_recipe.value = createNewRecipe()
 	}
+
+	private fun createNewRecipe() = recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke())
 
 	private fun onTitleChange(newTitle: String) {
 		_recipe.value = _recipe.value.copy(title = newTitle)
