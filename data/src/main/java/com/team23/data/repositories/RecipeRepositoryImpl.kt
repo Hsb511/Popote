@@ -72,4 +72,17 @@ internal class RecipeRepositoryImpl @Inject constructor(
 				recipe.copy(isFavorite = favoriteDao.isStored(recipe.id))
 			}
 		}
+
+	override suspend fun updateRecipe(recipe: RecipeDomainModel.Full) {
+		val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
+		val recipeId = fullRecipeDataModel.recipe.href
+
+		recipeDao.insertOrReplace(fullRecipeDataModel.recipe)
+		tagDao.deleteAllByRecipeId(recipeId)
+		tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
+		ingredientDao.deleteAllByRecipeId(recipeId)
+		ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())
+		instructionDao.deleteAllByRecipeId(recipeId)
+		instructionDao.insertOrReplace(*fullRecipeDataModel.instructions.toTypedArray())
+	}
 }

@@ -1,12 +1,13 @@
 package com.team23.domain.usecases
 
 import com.team23.domain.models.RecipeDomainModel
+import com.team23.domain.repositories.RecipeRepository
 import javax.inject.Inject
 
 class UpdateTempRecipeUseCase @Inject constructor(
-
+	private val recipeRepository: RecipeRepository,
 ) {
-	fun invoke(recipe: RecipeDomainModel.Full) {
-		println("HUGO - $recipe")
+	suspend fun invoke(recipe: RecipeDomainModel.Full) {
+		recipeRepository.updateRecipe(recipe)
 	}
 }

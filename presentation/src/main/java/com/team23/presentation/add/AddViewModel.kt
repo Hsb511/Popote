@@ -30,7 +30,11 @@ class AddViewModel @Inject constructor(
 ) : ViewModel() {
 	private val _recipe = MutableStateFlow(recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke()))
 	val recipe: StateFlow<AddRecipeUiModel> = _recipe
-		.onEach { recipeUiModel -> updateTempRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(recipeUiModel)) }
+		.onEach { recipeUiModel ->
+			viewModelScope.launch(Dispatchers.IO) {
+				updateTempRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(recipeUiModel))
+			}
+		}
 		.map(::createAddRecipe)
 		.stateIn(viewModelScope, SharingStarted.Eagerly, createAddRecipe(_recipe.value))
 

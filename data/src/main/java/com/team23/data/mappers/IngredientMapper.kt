@@ -8,6 +8,9 @@ class IngredientMapper @Inject constructor() {
 	fun toIngredientListDomainModel(ingredientsDataModel: List<IngredientDataModel>): List<IngredientDomainModel> =
 		ingredientsDataModel.map(::toIngredientDomainModel)
 
+	fun toIngredientListDataModel(recipeId: String, ingredients: List<IngredientDomainModel>): List<IngredientDataModel> =
+		ingredients.map { ingredient -> toIngredientDataModel(recipeId, ingredient)}
+
 	private fun toIngredientDomainModel(ingredientDataModel: IngredientDataModel) = when {
 		!ingredientDataModel.unit.isNullOrEmpty() && !ingredientDataModel.quantity.isNullOrEmpty() ->
 			IngredientDomainModel.WithQuantity.WithUnit(
@@ -21,6 +24,27 @@ class IngredientMapper @Inject constructor() {
 		)
 		else -> IngredientDomainModel.WithoutQuantity(
 			ingredientDataModel.label,
+		)
+	}
+
+	private fun toIngredientDataModel(recipeId: String, ingredient: IngredientDomainModel) = when(ingredient) {
+		is IngredientDomainModel.WithQuantity.WithUnit -> IngredientDataModel(
+			recipeId = recipeId,
+			label = ingredient.label,
+			quantity = ingredient.quantity.toString(),
+			unit = ingredient.unit,
+		)
+		is IngredientDomainModel.WithQuantity.WithoutUnit -> IngredientDataModel(
+			recipeId = recipeId,
+			label = ingredient.label,
+			quantity = ingredient.quantity.toString(),
+			unit = null,
+		)
+		is IngredientDomainModel.WithoutQuantity -> IngredientDataModel(
+			recipeId = recipeId,
+			label = ingredient.label,
+			quantity = null,
+			unit = null,
 		)
 	}
 }

@@ -8,11 +8,18 @@ class InstructionMapper @Inject constructor() {
 	fun toInstructionListDomainModel(instructionDataModels: List<InstructionDataModel>): List<InstructionDomainModel> =
 		instructionDataModels.map(::toInstructionDomainModel)
 
-	private fun toInstructionDomainModel(
-		instructionDataModel: InstructionDataModel
-	): InstructionDomainModel =
+	fun toInstructionListDataModel(recipeId: String, instructions: List<InstructionDomainModel>): List<InstructionDataModel> =
+		instructions.map { instruction -> toInstructionDataModel(recipeId, instruction) }
+
+	private fun toInstructionDomainModel(instructionDataModel: InstructionDataModel): InstructionDomainModel =
 		InstructionDomainModel(
 			order = instructionDataModel.order + 1,
 			label = instructionDataModel.label,
 		)
+
+	private fun toInstructionDataModel(recipeId: String, instruction: InstructionDomainModel) = InstructionDataModel(
+		recipeId = recipeId,
+		order = instruction.order - 1,
+		label = instruction.label,
+	)
 }

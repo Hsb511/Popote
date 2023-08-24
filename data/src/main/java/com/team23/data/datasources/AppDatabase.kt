@@ -34,7 +34,7 @@ import com.team23.data.models.TagDataModel
 )
 abstract class AppDatabase : RoomDatabase() {
 	companion object {
-		const val LATEST_VERSION = 2
+		const val LATEST_VERSION = 3
 	}
 
 	abstract fun summarizedRecipeDao(): SummarizedRecipeDao
@@ -50,5 +50,12 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 	override fun migrate(database: SupportSQLiteDatabase) {
 		database.execSQL("CREATE TABLE IF NOT EXISTS `FavoriteDataModel` (`id` INTEGER NOT NULL, `recipeId` TEXT NOT NULL, PRIMARY KEY(`id`))")
 		database.execSQL("CREATE TABLE IF NOT EXISTS `PreferenceDataModel` (`id` INTEGER NOT NULL, `label` TEXT NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+	}
+}
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+	override fun migrate(database: SupportSQLiteDatabase) {
+		database.execSQL("ALTER TABLE `BaseRecipeDataModel` ADD COLUMN `isSourceLocal` INTEGER DEFAULT 0 NOT NULL")
+		database.execSQL("ALTER TABLE `BaseRecipeDataModel` ADD COLUMN `isTemporary` INTEGER DEFAULT 0 NOT NULL")
 	}
 }

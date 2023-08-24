@@ -12,4 +12,6 @@ data class BaseRecipeDataModel(
 	val servingsAmount: Int,
 	val instructionTitle: String,
 	val lastTitle: String,
+	val isSourceLocal: Boolean,
+	val isTemporary: Boolean,
 )

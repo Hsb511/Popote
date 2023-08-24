@@ -28,5 +28,7 @@ class RecipeParser @Inject constructor(
 			.trim()
 			.replace("<h2>", "")
 			.replace("</h2>", ""),
+		isSourceLocal = false,
+		isTemporary = false,
 	)
 }
