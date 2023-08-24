@@ -9,6 +9,9 @@ interface TagDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertOrReplace(vararg tagDataModel: TagDataModel)
 
+	@Query("DELETE FROM TagDataModel WHERE recipeId = :recipeId")
+	suspend fun deleteAllByRecipeId(recipeId: String)
+
 	@Transaction
 	@Query("SELECT * FROM TagDataModel")
 	suspend fun loadAll(): List<TagDataModel>

@@ -5,7 +5,11 @@ import javax.inject.Inject
 
 class TagMapper @Inject constructor() {
 	fun toTagDomainModel(tags: List<TagDataModel>): List<String> = tags
-		.map { translateTagIfNeeded(it.label) }
+		.map { it.label }
+		.map(::translateTagIfNeeded)
+
+	fun toTagDataModel(recipeId: String, tags: List<String>): List<TagDataModel> = tags
+		.map { label -> TagDataModel(recipeId = recipeId, label = label) }
 
 	fun translateBackToEnglish(tag: String): List<String> = tagsTranslation
 		.filter { translation -> translation.value.containsValue(tag) }

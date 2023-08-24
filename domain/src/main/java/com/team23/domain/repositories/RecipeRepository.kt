@@ -10,4 +10,5 @@ interface RecipeRepository {
     suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String)
     suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full?
     fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>>
+    suspend fun updateRecipe(recipe: RecipeDomainModel.Full)
 }
