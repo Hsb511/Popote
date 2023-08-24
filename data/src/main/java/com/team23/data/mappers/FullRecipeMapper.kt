@@ -18,11 +18,7 @@ class FullRecipeMapper @Inject constructor(
 		id = fullRecipeDataModel.recipe.href,
 		title = fullRecipeDataModel.recipe.title,
 		imageUrl = "${NeuracrWebsiteDataSource.NEURACR_WEBSITE_HOME_URL}${fullRecipeDataModel.recipe.imgSrc}",
-		date = dateMapper.toLocalDate(dateStr = fullRecipeDataModel.recipe.href
-			.split("/recipes/")[1]
-			.split("/")
-			.let { splitData -> "${splitData[0]}/${splitData[1]}/${splitData[2]}" }
-		),
+		date = dateMapper.toLocalDateFromSubtitleDate(fullRecipeDataModel.recipe.subTitle.split(" - ")[0]),
 		language = languageMapper.toLanguageDomainModel(fullRecipeDataModel.recipe.href),
 		author = fullRecipeDataModel.recipe.subTitle.split(SUBTITLE_DELIMITER).last(),
 		tags = tagMapper.toTagDomainModel(fullRecipeDataModel.tags),

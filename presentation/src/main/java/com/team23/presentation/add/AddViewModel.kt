@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.CreateNewRecipeUseCase
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
+import com.team23.domain.usecases.LoadTemporaryRecipeUseCase
 import com.team23.domain.usecases.UpdateTempRecipeUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.recipe.mappers.RecipeMapper
@@ -25,8 +26,9 @@ import javax.inject.Inject
 class AddViewModel @Inject constructor(
 	createNewRecipeUseCase: CreateNewRecipeUseCase,
 	updateTempRecipeUseCase: UpdateTempRecipeUseCase,
-	recipeMapper: RecipeMapper,
+	private val recipeMapper: RecipeMapper,
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
+	private val loadTemporaryRecipeUseCase: LoadTemporaryRecipeUseCase,
 ) : ViewModel() {
 	private val _recipe = MutableStateFlow(recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke()))
 	val recipe: StateFlow<AddRecipeUiModel> = _recipe
@@ -63,6 +65,9 @@ class AddViewModel @Inject constructor(
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
 			_tags.value = getAndSortAllTagsUseCase.invoke()
+			loadTemporaryRecipeUseCase.invoke()?.let { temporaryRecipe ->
+				_recipe.value = recipeMapper.toRecipeUiModel(temporaryRecipe)
+			}
 		}
 	}
 

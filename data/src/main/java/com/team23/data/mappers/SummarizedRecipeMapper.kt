@@ -17,7 +17,7 @@ class SummarizedRecipeMapper @Inject constructor(
 			id = summarizedRecipeDataModel.href,
 			title = summarizedRecipeDataModel.title,
 			imageUrl = "$NEURACR_WEBSITE_HOME_URL${summarizedRecipeDataModel.imgSrc}",
-			date = dateMapper.toLocalDate(dateStr = summarizedRecipeDataModel.href
+			date = dateMapper.toLocalDateFromHrefDate(dateStr = summarizedRecipeDataModel.href
 				.split("/recipes/")[1]
 				.split("/")
 				.let { splitData -> "${splitData[0]}/${splitData[1]}/${splitData[2]}" }

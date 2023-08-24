@@ -5,9 +5,12 @@ import com.team23.domain.repositories.RecipeRepository
 import javax.inject.Inject
 
 class UpdateTempRecipeUseCase @Inject constructor(
+	private val createNewRecipeUseCase: CreateNewRecipeUseCase,
 	private val recipeRepository: RecipeRepository,
 ) {
 	suspend fun invoke(recipe: RecipeDomainModel.Full) {
-		recipeRepository.updateRecipe(recipe)
+		if (recipe != createNewRecipeUseCase.invoke()) {
+			recipeRepository.updateRecipe(recipe)
+		}
 	}
 }

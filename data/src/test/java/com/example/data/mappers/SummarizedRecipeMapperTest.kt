@@ -20,8 +20,8 @@ class SummarizedRecipeMapperTest {
 			getFirstSummarizedRecipeFromRawHtml(),
 			getSecondSummarizedRecipeFromRawHtml(),
 		)
-		every { dateMapper.toLocalDate("2022/12/19") } returns getFirstLocalDate()
-		every { dateMapper.toLocalDate("2022/12/04") } returns getSecondLocalDate()
+		every { dateMapper.toLocalDateFromHrefDate("2022/12/19") } returns getFirstLocalDate()
+		every { dateMapper.toLocalDateFromHrefDate("2022/12/04") } returns getSecondLocalDate()
 
 		// When
 		val actualDomainModels = summarizedRecipeMapper.toSummarizedRecipeDomainModels(validDataModels)
