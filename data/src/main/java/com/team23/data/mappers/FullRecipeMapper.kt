@@ -1,6 +1,5 @@
 package com.team23.data.mappers
 
-import com.team23.data.datasources.NeuracrWebsiteDataSource
 import com.team23.data.models.BaseRecipeDataModel
 import com.team23.data.models.FullRecipeDataModel
 import com.team23.domain.models.RecipeDomainModel
@@ -8,6 +7,7 @@ import com.team23.domain.models.RecipeDomainModel.Source
 import javax.inject.Inject
 
 class FullRecipeMapper @Inject constructor(
+	private val imageMapper: ImageMapper,
 	private val dateMapper: DateMapper,
 	private val languageMapper: LanguageMapper,
 	private val ingredientMapper: IngredientMapper,
@@ -17,7 +17,7 @@ class FullRecipeMapper @Inject constructor(
 	fun toFullRecipeDomainModel(fullRecipeDataModel: FullRecipeDataModel) = RecipeDomainModel.Full(
 		id = fullRecipeDataModel.recipe.href,
 		title = fullRecipeDataModel.recipe.title,
-		imageUrl = "${NeuracrWebsiteDataSource.NEURACR_WEBSITE_HOME_URL}${fullRecipeDataModel.recipe.imgSrc}",
+		imageUrl = imageMapper.toImageUrl(fullRecipeDataModel.recipe.imgSrc),
 		date = dateMapper.toLocalDateFromSubtitleDate(fullRecipeDataModel.recipe.subTitle.split(" - ")[0]),
 		language = languageMapper.toLanguageDomainModel(fullRecipeDataModel.recipe.href),
 		author = fullRecipeDataModel.recipe.subTitle.split(SUBTITLE_DELIMITER).last(),

@@ -1,6 +1,5 @@
 package com.team23.presentation.recipe.mappers
 
-import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.domain.models.LanguageDomainModel
 import com.team23.domain.models.RecipeDomainModel
 import com.team23.domain.models.RecipeDomainModel.Source
@@ -12,6 +11,7 @@ class RecipeMapper @Inject constructor(
 	private val dateMapper: DateMapper,
 	private val ingredientMapper: IngredientMapper,
 	private val instructionMapper: InstructionMapper,
+	private val imageMapper: ImageMapper,
 ) {
 	fun toRecipeUiModel(fullRecipe: RecipeDomainModel.Full) = with(fullRecipe) {
 		RecipeUiModel(
@@ -20,7 +20,7 @@ class RecipeMapper @Inject constructor(
 			date = dateMapper.toSubtitleDate(date, language),
 			author = author,
 			tags = tags,
-			image = NeuracrImageProperty.Remote(null, imageUrl),
+			image = imageMapper.toImageProperty(imageUrl, null),
 			ingredients = ingredientMapper.toIngredientUiModels(ingredients),
 			defaultServingsAmount = servingsNumber,
 			instructions = instructionMapper.toInstructionUiModels(instructions),
@@ -38,7 +38,7 @@ class RecipeMapper @Inject constructor(
 			date = dateMapper.toLocalDate(recipeUiModel.date),
 			author = author,
 			tags = tags,
-			imageUrl = (image as? NeuracrImageProperty.Remote)?.url ?: "",
+			imageUrl = imageMapper.toImageUri(image),
 			ingredients = ingredientMapper.toIngredientDomainModels(ingredients),
 			servingsNumber = defaultServingsAmount,
 			instructions = instructionMapper.toInstructionDomainModels(instructions),

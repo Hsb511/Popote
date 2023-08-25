@@ -1,11 +1,11 @@
 package com.team23.data.mappers
 
-import com.team23.data.datasources.NeuracrWebsiteDataSource.Companion.NEURACR_WEBSITE_HOME_URL
 import com.team23.data.models.SummarizedRecipeDataModel
 import com.team23.domain.models.RecipeDomainModel
 import javax.inject.Inject
 
 class SummarizedRecipeMapper @Inject constructor(
+	private val imageMapper: ImageMapper,
 	private val dateMapper: DateMapper,
 	private val languageMapper: LanguageMapper,
 ) {
@@ -16,7 +16,7 @@ class SummarizedRecipeMapper @Inject constructor(
 		RecipeDomainModel.Summarized(
 			id = summarizedRecipeDataModel.href,
 			title = summarizedRecipeDataModel.title,
-			imageUrl = "$NEURACR_WEBSITE_HOME_URL${summarizedRecipeDataModel.imgSrc}",
+			imageUrl = imageMapper.toImageUrl(summarizedRecipeDataModel.imgSrc),
 			date = dateMapper.toLocalDateFromHrefDate(dateStr = summarizedRecipeDataModel.href
 				.split("/recipes/")[1]
 				.split("/")
