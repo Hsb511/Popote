@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,15 +30,13 @@ import java.io.File
 
 @Composable
 fun AddImageButton(
+	neuracrImageProperty: NeuracrImageProperty,
 	onImageSelected: (NeuracrImageProperty) -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	val contentResolver = LocalContext.current.contentResolver
-	val result = remember { mutableStateOf<NeuracrImageProperty?>(null) }
-	val neuracrImageProperty = result.value
 	val imageLauncher = rememberLauncherForActivityResult(PickVisualMedia()) { imageUri ->
 		val imageProperty = getImagePropertyFromImageUri(imageUri, contentResolver)
-		result.value = imageProperty
 		onImageSelected(imageProperty)
 	}
 
@@ -52,7 +48,7 @@ fun AddImageButton(
 			.background(color = MaterialTheme.colorScheme.surface)
 			.clickable { imageLauncher.launch(PickVisualMediaRequest(mediaType = ImageOnly)) }
 	) {
-		if (neuracrImageProperty == null || neuracrImageProperty is NeuracrImageProperty.None) {
+		if (neuracrImageProperty is NeuracrImageProperty.None) {
 			Icon(
 				painter = painterResource(id = R.drawable.ic_upload_image),
 				contentDescription = null,
@@ -72,7 +68,7 @@ fun AddImageButton(
 @Preview(showBackground = true)
 fun AddImageButtonPreview() {
 	NeuracrTheme {
-		AddImageButton({})
+		AddImageButton(NeuracrImageProperty.None, {})
 	}
 }
 

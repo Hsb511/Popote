@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 class ImageMapper @Inject constructor() {
 	fun toImageProperty(imageUri: String, contentDescription: String?): NeuracrImageProperty = when {
+		imageUri.isEmpty() -> NeuracrImageProperty.None
 		imageUri.startsWith("http") -> NeuracrImageProperty.Remote(contentDescription, imageUri)
 		else -> NeuracrImageProperty.UserPick(contentDescription, Uri.fromFile(File(imageUri)))
 	}

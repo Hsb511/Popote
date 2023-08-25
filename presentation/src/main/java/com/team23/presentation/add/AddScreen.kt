@@ -119,6 +119,7 @@ fun AddScreen(
 		)
 
 		AddImageButton(
+			neuracrImageProperty = addRecipe.recipe.image,
 			onImageSelected = addRecipe.onAddImage,
 			modifier = Modifier
 				.padding(vertical = 8.dp)
