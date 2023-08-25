@@ -1,5 +1,7 @@
 package com.team23.presentation.add.views
 
+import android.content.ContentResolver
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,21 +28,18 @@ import com.team23.design_system.image.NeuracrImage
 import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.design_system.theming.NeuracrTheme
 import com.team23.presentation.R
+import java.io.File
 
 @Composable
 fun AddImageButton(
 	onImageSelected: (NeuracrImageProperty) -> Unit,
 	modifier: Modifier = Modifier,
 ) {
+	val contentResolver = LocalContext.current.contentResolver
 	val result = remember { mutableStateOf<NeuracrImageProperty?>(null) }
 	val neuracrImageProperty = result.value
 	val imageLauncher = rememberLauncherForActivityResult(PickVisualMedia()) { imageUri ->
-		val imageProperty = imageUri?.let {
-			NeuracrImageProperty.UserPick(
-				imageLocalUri = imageUri,
-				contentDescription = null,
-			)
-		} ?: NeuracrImageProperty.None
+		val imageProperty = getImagePropertyFromImageUri(imageUri, contentResolver)
 		result.value = imageProperty
 		onImageSelected(imageProperty)
 	}
@@ -75,3 +75,14 @@ fun AddImageButtonPreview() {
 		AddImageButton({})
 	}
 }
+
+private fun getImagePropertyFromImageUri(imageUri: Uri?, contentResolver: ContentResolver) = imageUri?.let {
+	contentResolver.query(imageUri, null, null, null, null)?.use { cursor ->
+		val nameIndex = cursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATA)
+		cursor.moveToFirst()
+		NeuracrImageProperty.UserPick(
+			imageLocalUri = Uri.fromFile(File(cursor.getString(nameIndex))),
+			contentDescription = null,
+		)
+	}
+} ?: NeuracrImageProperty.None

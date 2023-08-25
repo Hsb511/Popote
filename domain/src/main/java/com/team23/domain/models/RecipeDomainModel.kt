@@ -32,7 +32,6 @@ sealed class RecipeDomainModel(
     data class Full(
         override val id: String,
         override val title: String,
-        // TODO CHANGE THAT FOR LOCAL IMAGE
         override val imageUrl: String,
         override val date: LocalDate,
         override val language: LanguageDomainModel,
