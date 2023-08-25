@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,16 +43,17 @@ import com.team23.presentation.recipe.views.RecipeInstructionsWidget
 @Composable
 fun AddScreen(
 	scrollState: ScrollState,
+	onRecipeClick: (String) -> Unit,
 	heightToBeFaded: MutableState<Float>,
 	snackbarHostState: SnackbarHostState,
 	modifier: Modifier = Modifier,
 	addViewModel: AddViewModel = hiltViewModel(),
 ) {
-	val savedSnackbarMessage = stringResource(id = R.string.add_recipe_save_snackbar_message)
+	val context = LocalContext.current
 	Scaffold(
 		floatingActionButton = {
 			AddSaveButton {
-				addViewModel.onSaveButtonClick(snackbarHostState, savedSnackbarMessage)
+				addViewModel.onSaveButtonClick(onRecipeClick, snackbarHostState, context)
 			}
 		}
 	) { padding ->
@@ -195,6 +197,7 @@ fun AddScreen(
 fun AddScreenPreview() {
 	NeuracrTheme {
 		AddScreen(
+			onRecipeClick = {},
 			scrollState = rememberScrollState(),
 			heightToBeFaded = remember { mutableStateOf(120f) },
 			snackbarHostState = SnackbarHostState(),

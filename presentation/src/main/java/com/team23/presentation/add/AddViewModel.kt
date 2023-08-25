@@ -1,7 +1,8 @@
 package com.team23.presentation.add
 
-import androidx.compose.material3.SnackbarDuration
+import android.content.Context
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.design_system.image.NeuracrImageProperty
@@ -11,6 +12,7 @@ import com.team23.domain.usecases.LoadTemporaryRecipeUseCase
 import com.team23.domain.usecases.SaveRecipeUseCase
 import com.team23.domain.usecases.UpdateTempRecipeUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
+import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.recipe.mappers.RecipeMapper
 import com.team23.presentation.recipe.models.IngredientUiModel
 import com.team23.presentation.recipe.models.InstructionUiModel
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,14 +80,20 @@ class AddViewModel @Inject constructor(
 		}
 	}
 
-	fun onSaveButtonClick(snackbarHostState: SnackbarHostState, message: String) {
+	fun onSaveButtonClick(
+		onRecipeClick: (String) -> Unit,
+		snackbarHostState: SnackbarHostState,
+		context: Context,
+	) {
 		val recipeTitle = _recipe.value.title
 		viewModelScope.launch(Dispatchers.IO) {
-			saveRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(_recipe.value))
-			snackbarHostState.showSnackbar(
-				message = "$recipeTitle $message",
-				duration = SnackbarDuration.Short,
-			)
+			val savedRecipeId = saveRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(_recipe.value))
+			val result = SnackbarHandler(snackbarHostState, context).showRecipeHasBeenSaved(recipeTitle)
+			if (result == SnackbarResult.ActionPerformed) {
+				withContext(Dispatchers.Main) {
+					onRecipeClick(savedRecipeId)
+				}
+			}
 		}
 		_recipe.value = createNewRecipe()
 	}

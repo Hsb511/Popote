@@ -7,10 +7,12 @@ import javax.inject.Inject
 class SaveRecipeUseCase @Inject constructor(
 	private val recipeRepository: RecipeRepository,
 ) {
-	suspend fun invoke(recipe: RecipeDomainModel.Full) {
+	suspend fun invoke(recipe: RecipeDomainModel.Full): String {
 		with(recipe.date) {
 			val month = "$monthValue".padStart(2, '0')
-			recipeRepository.saveRecipe("/recipes/$year/$month/$dayOfMonth/${recipe.title.replace(" ", "_").lowercase()}")
+			val recipeId = "/recipes/$year/$month/$dayOfMonth/${recipe.title.replace(" ", "_").lowercase()}"
+			recipeRepository.saveRecipe(recipeId)
+			return recipeId
 		}
 	}
 }

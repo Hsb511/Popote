@@ -23,7 +23,7 @@ import com.team23.presentation.home.models.toNeuracrCellProperty
 @Composable
 fun HomeContentData(
 	summarizedRecipeUiModels: List<SummarizedRecipeUiModel>,
-	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	homeRecipeClick: (String) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {
@@ -52,7 +52,7 @@ fun HomeContentData(
 				modifier = Modifier
 					.fillMaxWidth()
 					.clickable {
-						homeRecipeClick(homeRecipeUiModel)
+						homeRecipeClick(homeRecipeUiModel.id)
 					}
 			)
 		}

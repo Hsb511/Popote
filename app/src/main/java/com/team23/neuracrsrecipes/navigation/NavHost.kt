@@ -74,7 +74,7 @@ internal fun NavHost(context: Context) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
 						snackbarHostState = snackbarHostState,
-						onRecipeClick = { homeRecipeUiModel -> navigationHandler.openRecipe(homeRecipeUiModel.id) },
+						onRecipeClick = { recipeId -> navigationHandler.openRecipe(recipeId) },
 					)
 					title.value = null
 				}
@@ -114,6 +114,7 @@ internal fun NavHost(context: Context) {
 				composable(route = AppPage.Upload.route) {
 					AddScreen(
 						scrollState = scrollState,
+						onRecipeClick = { recipeId -> navigationHandler.openRecipe(recipeId) },
 						heightToBeFaded = heightToBeFaded,
 						snackbarHostState = snackbarHostState,
 					)

@@ -51,4 +51,5 @@
     <string name="add_recipe_save_dialog_dismiss">dismiss</string>
     <string name="add_recipe_save_dialog_confirm">confirm</string>
     <string name="add_recipe_save_snackbar_message">has been saved in your phone</string>
+    <string name="add_recipe_save_snackbar_action">see</string>
 </resources>
