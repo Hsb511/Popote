@@ -22,7 +22,7 @@ import com.team23.presentation.home.views.HomeContentLoading
 @Composable
 fun HomeScreen(
 	snackbarHostState: SnackbarHostState,
-	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	onRecipeClick: (String) -> Unit,
 	modifier: Modifier = Modifier,
 	homeViewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -41,7 +41,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreen(
 	homeUiState: HomeUiState,
-	homeRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+	homeRecipeClick: (String) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	modifier: Modifier = Modifier
 ) {

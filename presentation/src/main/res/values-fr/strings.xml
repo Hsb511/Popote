@@ -49,4 +49,5 @@
     <string name="add_recipe_save_dialog_dismiss">ignorer</string>
     <string name="add_recipe_save_dialog_confirm">confirmer</string>
     <string name="add_recipe_save_snackbar_message">a été sauvegardée sur votre téléphone</string>
+    <string name="add_recipe_save_snackbar_action">voir</string>
 </resources>

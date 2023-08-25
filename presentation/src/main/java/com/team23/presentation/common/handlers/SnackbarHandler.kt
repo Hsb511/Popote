@@ -27,6 +27,7 @@ class SnackbarHandler(
 				message = context.getString(R.string.snackbar_loading_one),
 				duration = SnackbarDuration.Indefinite,
 			)
+
 			else -> snackbarHostState.showSnackbar(
 				message = context.getString(R.string.snackbar_loading_several, recipeCount),
 				duration = SnackbarDuration.Indefinite,
@@ -39,6 +40,16 @@ class SnackbarHandler(
 		return snackbarHostState.showSnackbar(
 			message = context.getString(R.string.snackbar_loading_done),
 			duration = SnackbarDuration.Short,
+		)
+	}
+
+	suspend fun showRecipeHasBeenSaved(recipeTitle: String): SnackbarResult {
+		snackbarHostState.currentSnackbarData?.dismiss()
+		val messageEnd = context.getString(R.string.add_recipe_save_snackbar_message)
+		return snackbarHostState.showSnackbar(
+			message = "$recipeTitle $messageEnd",
+			duration = SnackbarDuration.Short,
+			actionLabel = context.getString(R.string.add_recipe_save_snackbar_action).uppercase(),
 		)
 	}
 }
