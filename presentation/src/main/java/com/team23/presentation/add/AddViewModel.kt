@@ -4,6 +4,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.domain.usecases.CreateNewRecipeUseCase
 import com.team23.domain.usecases.GetAndSortAllTagsUseCase
 import com.team23.domain.usecases.LoadTemporaryRecipeUseCase
@@ -53,6 +54,7 @@ class AddViewModel @Inject constructor(
 		onAuthorChange = { newAuthor -> onAuthorChange(newAuthor) },
 		onAddTag = { newTag -> onAddTag(newTag) },
 		onRemoveTag = { tag -> onRemoveTag(tag) },
+		onAddImage = { image -> onAddImage(image) },
 		onAddIngredient = { onAddIngredient() },
 		onDeleteIngredient = { index -> onDeleteIngredient(index) },
 		onUpdateIngredient = { ingredient, index -> onUpdateIngredient(ingredient, index) },
@@ -109,6 +111,10 @@ class AddViewModel @Inject constructor(
 		currentTags.remove(tag)
 		_recipe.value = _recipe.value.copy(tags = currentTags)
 		_tags.value = _tags.value + tag
+	}
+
+	private fun onAddImage(image: NeuracrImageProperty) {
+		_recipe.value = _recipe.value.copy(image = image)
 	}
 
 	private fun onAddIngredient() {

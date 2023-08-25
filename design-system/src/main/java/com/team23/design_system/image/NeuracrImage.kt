@@ -57,6 +57,14 @@ fun NeuracrImage(
 				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
 			)
 		}
+		is NeuracrImageProperty.UserPick -> {
+			AsyncImage(
+				model = neuracrImageProperty.imageLocalUri,
+				contentDescription = neuracrImageProperty.contentDescription,
+				contentScale = contentScale,
+				modifier = imageModifier.heightIn(max = maxImageHeight),
+			)
+		}
 		is NeuracrImageProperty.None -> {}
 	}
 }

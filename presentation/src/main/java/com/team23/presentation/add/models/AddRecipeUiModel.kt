@@ -1,5 +1,6 @@
 package com.team23.presentation.add.models
 
+import com.team23.design_system.image.NeuracrImageProperty
 import com.team23.presentation.recipe.models.IngredientUiModel
 import com.team23.presentation.recipe.models.InstructionUiModel
 import com.team23.presentation.recipe.models.RecipeUiModel
@@ -10,6 +11,7 @@ data class AddRecipeUiModel(
 	val onAuthorChange: (String) -> Unit,
 	val onAddTag: (String) -> Unit,
 	val onRemoveTag: (String) -> Unit,
+	val onAddImage: (NeuracrImageProperty) -> Unit,
 	val onAddIngredient: () -> Unit,
 	val onDeleteIngredient: (Int) -> Unit,
 	val onUpdateIngredient: (IngredientUiModel, Int) -> Unit,
