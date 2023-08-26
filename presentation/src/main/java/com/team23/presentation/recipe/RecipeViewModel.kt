@@ -101,6 +101,12 @@ class RecipeViewModel @Inject constructor(
 		}
 	}
 
+	fun onLocalPhoneClick(snackbarHostState: SnackbarHostState, context: Context) {
+		viewModelScope.launch(Dispatchers.IO) {
+			SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
+		}
+	}
+
 	private fun recomputeState(recipe: RecipeUiModel) {
 		val currentState = _uiState.value
 		if (currentState is RecipeUiState.Data) {

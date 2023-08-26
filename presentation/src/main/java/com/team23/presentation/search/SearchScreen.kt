@@ -59,6 +59,7 @@ fun SearchScreen(
 			recipes = searchViewModel.recipes.collectAsState().value,
 			onRecipeClick = onRecipeClick,
 			onFavoriteClick = { recipe -> searchViewModel.favoriteClick(recipe, snackbarHostState, context) },
+			onLocalPhoneClick = { searchViewModel.onLocalPhoneClick(snackbarHostState, context) },
 		),
 		modifier = modifier,
 	)
@@ -94,6 +95,7 @@ private fun SearchScreen(
 						onFavoriteClick = {
 							searchUiModel.onFavoriteClick(recipe)
 						},
+						onLocalPhoneClick = searchUiModel.onLocalPhoneClick,
 					),
 					modifier = Modifier
 						.animateItemPlacement()
@@ -127,6 +129,7 @@ private fun SearchScreenPreview() {
 				recipes = List(6) { summarizedRecipeSample },
 				onRecipeClick = {},
 				onFavoriteClick = {},
+				onLocalPhoneClick = {},
 			),
 			modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
 		)

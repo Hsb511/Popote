@@ -27,6 +27,7 @@ fun FavoriteDataScreen(
 	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	onDisplayClick: () -> Unit,
+	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	val displayType = state.displayType
@@ -51,6 +52,7 @@ fun FavoriteDataScreen(
 				summarizedRecipe = summarizedRecipe,
 				onRecipeClick = onRecipeClick,
 				onFavoriteClick = onFavoriteClick,
+				onLocalPhoneClick = onLocalPhoneClick,
 			)
 		}
 	}
@@ -72,6 +74,7 @@ fun FavoriteDataScreenPreview(@PreviewParameter(SampleDisplayTypeProvider::class
 			onRecipeClick = {},
 			onFavoriteClick = {},
 			onDisplayClick = {},
+			onLocalPhoneClick = {},
 		)
 	}
 }

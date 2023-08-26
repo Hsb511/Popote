@@ -25,6 +25,7 @@ fun HomeContentData(
 	summarizedRecipeUiModels: List<SummarizedRecipeUiModel>,
 	homeRecipeClick: (String) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	LazyVerticalStaggeredGrid(
@@ -47,7 +48,8 @@ fun HomeContentData(
 					displayType = DisplayType.BigCard,
 					onFavoriteClick = {
 						onFavoriteClick(homeRecipeUiModel)
-					}
+					},
+					onLocalPhoneClick = onLocalPhoneClick,
 				),
 				modifier = Modifier
 					.fillMaxWidth()
@@ -64,7 +66,7 @@ fun HomeContentData(
 private fun HomeContentDataPreview() {
 	NeuracrTheme {
 		HomeContentData(
-			summarizedRecipeUiModels = List(6) { summarizedRecipeSample }, {}, {}
+			summarizedRecipeUiModels = List(6) { summarizedRecipeSample }, {}, {}, {}
 		)
 	}
 }

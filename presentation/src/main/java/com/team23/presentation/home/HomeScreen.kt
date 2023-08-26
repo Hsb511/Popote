@@ -34,6 +34,7 @@ fun HomeScreen(
 		homeUiState = state.value,
 		homeRecipeClick = onRecipeClick,
 		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe) },
+		onLocalPhoneClick = { homeViewModel.onLocalPhoneClick() },
 		modifier = modifier
 	)
 }
@@ -43,6 +44,7 @@ private fun HomeScreen(
 	homeUiState: HomeUiState,
 	homeRecipeClick: (String) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	when (homeUiState) {
@@ -52,6 +54,7 @@ private fun HomeScreen(
 			summarizedRecipeUiModels = homeUiState.recipes,
 			homeRecipeClick = homeRecipeClick,
 			onFavoriteClick = onFavoriteClick,
+			onLocalPhoneClick = onLocalPhoneClick,
 			modifier = modifier,
 		)
 	}
@@ -64,7 +67,7 @@ private fun HomeScreenPreview() {
 		HomeScreen(
 			homeUiState = Data(
 				recipes = List(6) { summarizedRecipeSample }
-			), {}, {}
+			), {}, {}, {}
 		)
 	}
 }

@@ -16,7 +16,8 @@ data class SummarizedRecipeUiModel(
 
 fun SummarizedRecipeUiModel.toNeuracrCellProperty(
     displayType: DisplayType,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
+    onLocalPhoneClick: () -> Unit,
 ) = NeuracrCellProperty(
     displayType = displayType,
     imageProperty = imageProperty,
@@ -25,4 +26,5 @@ fun SummarizedRecipeUiModel.toNeuracrCellProperty(
     isFavorite = isFavorite,
     isLocallySaved = isLocallySaved,
     onFavoriteClick = onFavoriteClick,
+    onLocalPhoneClick = onLocalPhoneClick,
 )

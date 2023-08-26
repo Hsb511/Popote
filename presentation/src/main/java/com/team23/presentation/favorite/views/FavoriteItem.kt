@@ -19,12 +19,14 @@ fun FavoriteItem(
 	summarizedRecipe: SummarizedRecipeUiModel,
 	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier
 ) {
 	NeuracrCell(
 		neuracrCellProperty = summarizedRecipe.toNeuracrCellProperty(
 			displayType = displayType,
 			onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
+			onLocalPhoneClick = onLocalPhoneClick,
 		),
 		modifier = modifier.clickable {
 			onRecipeClick(summarizedRecipe)
@@ -41,6 +43,7 @@ fun FavoriteItemPreview(@PreviewParameter(SampleDisplayTypeProvider::class) disp
 			summarizedRecipe = summarizedRecipeSample,
 			onFavoriteClick = {},
 			onRecipeClick = {},
+			onLocalPhoneClick = {},
 		)
 	}
 }
