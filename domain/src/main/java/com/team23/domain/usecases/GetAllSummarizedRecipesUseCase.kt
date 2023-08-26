@@ -11,6 +11,8 @@ class GetAllSummarizedRecipesUseCase @Inject constructor(
         val currentCount = recipeRepository.getCountSummarizedRecipes()
         recipeRepository.loadAllSummarizedRecipesIfNeeded()
         val recipes = recipeRepository.getAllSummarizedRecipes()
+            .sortedBy { recipe -> recipe.date }
+            .reversed()
         val newRecipesCount = recipes.size - currentCount
         Pair(recipes, newRecipesCount)
     }

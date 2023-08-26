@@ -1,6 +1,7 @@
 package com.team23.presentation.add.views
 
 import android.content.ContentResolver
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -73,6 +74,7 @@ fun AddImageButtonPreview() {
 }
 
 private fun getImagePropertyFromImageUri(imageUri: Uri?, contentResolver: ContentResolver) = imageUri?.let {
+	contentResolver.takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
 	contentResolver.query(imageUri, null, null, null, null)?.use { cursor ->
 		val nameIndex = cursor.getColumnIndex(android.provider.MediaStore.Images.ImageColumns.DATA)
 		cursor.moveToFirst()

@@ -8,6 +8,7 @@ import com.team23.data.daos.SummarizedRecipeDao
 import com.team23.data.daos.TagDao
 import com.team23.data.datasources.NeuracrWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
+import com.team23.data.mappers.SourceMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
 import com.team23.data.models.FullRecipeDataModel
 import com.team23.data.models.SummarizedRecipeDataModel
@@ -32,13 +33,17 @@ internal class RecipeRepositoryImpl @Inject constructor(
 	private val fullRecipeParser: FullRecipeParser,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
 	private val fullRecipeMapper: FullRecipeMapper,
+	private val sourceMapper: SourceMapper,
 ) : RecipeRepository {
-	override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
-		val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
-		return summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels).map { recipe ->
-			recipe.copy(isFavorite = favoriteDao.isStored(recipe.id))
+	override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> =
+		summarizedRecipeMapper.toSummarizedRecipeDomainModels(
+			summarizedRecipeDao.getAll()
+		).map { recipe ->
+			recipe.copy(
+				isFavorite = favoriteDao.isStored(recipe.id),
+				source = sourceMapper.toDomainSource(recipeDao.findFullRecipeById(recipe.id)?.recipe)
+			)
 		}
-	}
 
 	override suspend fun getCountSummarizedRecipes(): Int = summarizedRecipeDao.getCount()
 
