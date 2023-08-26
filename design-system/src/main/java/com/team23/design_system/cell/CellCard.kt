@@ -31,7 +31,10 @@ internal fun CellCard(
 				modifier = Modifier.fillMaxWidth()
 			)
 			if (neuracrCellProperty.isLocallySaved) {
-				CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
+				CellLocalPhone(
+					onIconClick = neuracrCellProperty.onLocalPhoneClick,
+					modifier = Modifier.align(Alignment.TopStart),
+				)
 			}
 			Text(
 				text = neuracrCellProperty.title,

@@ -15,4 +15,5 @@ fun getNeuracrCellPropertySample(displayType: DisplayType = DisplayType.BigCard)
 	isFavorite = true,
 	onFavoriteClick = {},
 	isLocallySaved = true,
+	onLocalPhoneClick = {},
 )

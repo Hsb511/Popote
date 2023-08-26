@@ -12,6 +12,7 @@ class FullRecipeMapper @Inject constructor(
 	private val languageMapper: LanguageMapper,
 	private val ingredientMapper: IngredientMapper,
 	private val instructionMapper: InstructionMapper,
+	private val sourceMapper: SourceMapper,
 	private val tagMapper: TagMapper,
 ) {
 	fun toFullRecipeDomainModel(fullRecipeDataModel: FullRecipeDataModel) = RecipeDomainModel.Full(
@@ -29,7 +30,7 @@ class FullRecipeMapper @Inject constructor(
 		endingText = fullRecipeDataModel.recipe.lastTitle,
 		sections = listOf(),
 		isFavorite = false,
-		source = Source.Remote,
+		source = sourceMapper.toDomainSource(fullRecipeDataModel.recipe),
 	)
 
 	fun toFullRecipeDataModel(fullRecipeDomainModel: RecipeDomainModel.Full) = with(fullRecipeDomainModel) {

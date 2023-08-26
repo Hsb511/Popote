@@ -1,5 +1,7 @@
 package com.team23.presentation.favorite
 
+import android.content.Context
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.domain.usecases.GetAllFavoritesUseCase
@@ -7,6 +9,7 @@ import com.team23.domain.usecases.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.usecases.UpdateFavoriteUseCase
 import com.team23.domain.usecases.UpdatePreferenceUseCase
 import com.team23.presentation.common.extensions.next
+import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.favorite.mappers.DisplayTypeMapper
 import com.team23.presentation.favorite.models.FavoriteUiState
 import com.team23.presentation.home.mappers.SummarizedRecipeMapper
@@ -66,6 +69,12 @@ class FavoriteViewModel @Inject constructor(
 					displayTypeMapper.toDisplayTypeDomainModel(newDisplayType)
 				)
 			}
+		}
+	}
+
+	fun onLocalPhoneClick(snackbarHostState: SnackbarHostState, context: Context) {
+		viewModelScope.launch(Dispatchers.IO) {
+			SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
 		}
 	}
 }

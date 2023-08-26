@@ -22,6 +22,7 @@
     <string name="recipe_number_of_servings">personnes</string>
     <string name="recipe_instructions_title">Instructions</string>
     <string name="recipe_copy_to_clipboard_a11y">Copier dans le presse-papier</string>
+    <string name="recipe_local_phone_info">Cette icône signifie que cette recette a été ajouté par vous et n\'est disponible que sur ce téléphone.</string>
 
     <!-- search -->
     <string name="search_textfield_placeholder">Ecrire pour rechercher…</string>

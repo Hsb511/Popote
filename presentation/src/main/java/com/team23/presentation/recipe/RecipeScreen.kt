@@ -38,6 +38,7 @@ fun RecipeScreen(
 		onSubtractOneServing = { recipeViewModel.subtractOneService() },
 		onTagClicked = onTagClicked,
 		onFavoriteClick = { recipe -> recipeViewModel.favoriteClick(recipe, snackbarHostState, context) },
+		onLocalPhoneClick = { recipeViewModel.onLocalPhoneClick(snackbarHostState, context) },
 		modifier = modifier,
 	)
 }
@@ -54,6 +55,7 @@ fun RecipeScreen(
 	onSubtractOneServing: () -> Unit,
 	onTagClicked: (String) -> Unit,
 	onFavoriteClick: (RecipeUiModel) -> Unit,
+	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier
 ) {
 	title.value = null
@@ -69,6 +71,7 @@ fun RecipeScreen(
 				onSubtractOneServing = onSubtractOneServing,
 				onTagClicked = onTagClicked,
 				onFavoriteClick = onFavoriteClick,
+				onLocalPhoneClick = onLocalPhoneClick,
 				modifier = modifier,
 			)
 			title.value = recipeUiState.recipe.title

@@ -65,6 +65,12 @@ class SearchViewModel @Inject constructor(
 		searchNewRecipes(tagsList = newTags)
 	}
 
+	fun onLocalPhoneClick(snackbarHostState: SnackbarHostState, context: Context) {
+		viewModelScope.launch(Dispatchers.IO) {
+			SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
+		}
+	}
+
 	private fun searchNewRecipes(
 		searchText: String = searchValue.value,
 		tagsList: List<TagUiModel> = tags.value,

@@ -14,9 +14,12 @@ import com.team23.design_system.R
 import com.team23.design_system.theming.NeuracrTheme
 
 @Composable
-fun CellLocalPhone(modifier: Modifier = Modifier) {
+fun CellLocalPhone(
+	onIconClick: () -> Unit,
+	modifier: Modifier = Modifier,
+) {
 	IconButton(
-		onClick = { /* TODO */ },
+		onClick = onIconClick,
 		modifier = modifier.offset(x = (-8).dp, y = (-8).dp),
 	) {
 		Icon(
@@ -31,6 +34,6 @@ fun CellLocalPhone(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 fun CellLocalPhonePreview() {
 	NeuracrTheme {
-		CellLocalPhone()
+		CellLocalPhone({})
 	}
 }

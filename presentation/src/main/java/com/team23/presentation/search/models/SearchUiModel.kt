@@ -13,6 +13,7 @@ data class SearchUiModel(
 	val recipes: List<SummarizedRecipeUiModel>,
 	val onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
 	val onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+	val onLocalPhoneClick: () -> Unit,
 )
 
 data class TextFieldUiModel(

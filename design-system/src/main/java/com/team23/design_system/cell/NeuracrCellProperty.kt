@@ -12,4 +12,5 @@ data class NeuracrCellProperty(
 	val isFavorite: Boolean,
 	val isLocallySaved: Boolean,
 	val onFavoriteClick: () -> Unit,
+	val onLocalPhoneClick: () -> Unit,
 )

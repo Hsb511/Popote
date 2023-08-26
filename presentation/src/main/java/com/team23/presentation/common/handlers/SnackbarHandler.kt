@@ -52,4 +52,11 @@ class SnackbarHandler(
 			actionLabel = context.getString(R.string.add_recipe_save_snackbar_action).uppercase(),
 		)
 	}
+
+	suspend fun showLocalPhoneClick() {
+		snackbarHostState.showSnackbar(
+			message = context.getString(R.string.recipe_local_phone_info),
+			duration = SnackbarDuration.Short,
+		)
+	}
 }

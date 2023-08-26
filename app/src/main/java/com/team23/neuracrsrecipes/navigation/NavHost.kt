@@ -123,6 +123,7 @@ internal fun NavHost(context: Context) {
 				composable(route = AppPage.Favorite.route) {
 					FavoriteScreen(
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
+						snackbarHostState = snackbarHostState,
 					)
 					title.value = null
 				}

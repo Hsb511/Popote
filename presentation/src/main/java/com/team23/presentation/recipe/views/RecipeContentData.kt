@@ -44,6 +44,7 @@ fun RecipeContentData(
 	onSubtractOneServing: () -> Unit,
 	onTagClicked: (String) -> Unit,
 	onFavoriteClick: (RecipeUiModel) -> Unit,
+	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	Column(
@@ -93,7 +94,10 @@ fun RecipeContentData(
 					maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
 				)
 				if (recipeUiModel.isLocallySaved) {
-					CellLocalPhone(modifier = Modifier.align(Alignment.TopStart))
+					CellLocalPhone(
+						onIconClick = onLocalPhoneClick,
+						modifier = Modifier.align(Alignment.TopStart),
+					)
 				}
 				NeuracrLike(
 					isFavorite = recipeUiModel.isFavorite,
@@ -170,6 +174,7 @@ fun RecipeContentDataPreview() {
 			onValueChanged = {},
 			onTagClicked = {},
 			onFavoriteClick = {},
+			onLocalPhoneClick = {},
 			modifier = Modifier.background(color = Color.White)
 		)
 	}
