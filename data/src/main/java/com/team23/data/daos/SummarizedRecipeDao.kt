@@ -20,4 +20,7 @@ interface SummarizedRecipeDao {
 
     @Query("SELECT * FROM SummarizedRecipeDataModel WHERE title LIKE '%' || :search || '%'")
     fun searchBaseRecipeByTitle(search: String): Flow<List<SummarizedRecipeDataModel>>
+
+    @Query("DELETE FROM SummarizedRecipeDataModel WHERE href = :recipeId")
+    suspend fun deleteByRecipeId(recipeId: String)
 }

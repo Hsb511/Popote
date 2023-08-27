@@ -12,6 +12,8 @@
     <string name="snackbar_loading_one">Loading 1 new recipe</string>
     <string name="snackbar_loading_several">Loading %d new recipe</string>
     <string name="snackbar_loading_done">Loading finished</string>
+    <string name="snackbar_recipe_deleted">%s has been deleted from your database</string>
+    <string name="snackbar_recipe_not_deleted">An error occurred. %s has not been deleted from your database</string>
 
     <!-- dialog -->
     <string name="dialog_dismiss">dismiss</string>

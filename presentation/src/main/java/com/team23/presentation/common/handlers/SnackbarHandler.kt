@@ -59,4 +59,18 @@ class SnackbarHandler(
 			duration = SnackbarDuration.Short,
 		)
 	}
+
+	suspend fun showRecipeHasBeenDeleted(recipeTitle: String) {
+		snackbarHostState.showSnackbar(
+			message = context.getString(R.string.snackbar_recipe_deleted, recipeTitle),
+			duration = SnackbarDuration.Short,
+		)
+	}
+
+	suspend fun showRecipeHasNotBeenDeleted(recipeTitle: String) {
+		snackbarHostState.showSnackbar(
+			message = context.getString(R.string.snackbar_recipe_not_deleted, recipeTitle),
+			duration = SnackbarDuration.Short,
+		)
+	}
 }

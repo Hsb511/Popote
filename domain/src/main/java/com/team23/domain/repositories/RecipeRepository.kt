@@ -12,4 +12,6 @@ interface RecipeRepository {
     fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>>
     suspend fun updateRecipe(recipe: RecipeDomainModel.Full)
     suspend fun saveRecipe(recipeId: String)
+    suspend fun setRecipeBackToTemp(recipeId: String)
+    suspend fun deleteRecipe(recipeId: String)
 }

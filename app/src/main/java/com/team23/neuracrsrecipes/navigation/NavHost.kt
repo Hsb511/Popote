@@ -25,7 +25,9 @@ import com.team23.design_system.scaffold.NeuracrScaffold
 import com.team23.neuracrsrecipes.BuildConfig
 import com.team23.presentation.add.AddScreen
 import com.team23.presentation.common.handlers.AppPage
+import com.team23.presentation.common.handlers.AppPage.WithArgument
 import com.team23.presentation.common.handlers.NavigationHandler
+import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.drawer.ModalMenuDrawer
 import com.team23.presentation.drawer.models.DrawerUiModel
 import com.team23.presentation.favorite.FavoriteScreen
@@ -34,6 +36,7 @@ import com.team23.presentation.recipe.RecipeScreen
 import com.team23.presentation.search.SearchScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +57,8 @@ internal fun NavHost(context: Context) {
 		scope,
 		drawerState
 	)
+	var job: Job? = null
+
 	NeuracrScaffold(
 		snackbarHostState = snackbarHostState,
 		scrollState = scrollState,
@@ -79,8 +84,30 @@ internal fun NavHost(context: Context) {
 					title.value = null
 				}
 				composable(
-					route = "${AppPage.WithArgument.Recipe.route}/{${AppPage.WithArgument.Recipe.argumentName}}",
-					arguments = listOf(navArgument(AppPage.WithArgument.Recipe.argumentName) {
+					route = with(WithArgument.HomeWithDeletedRecipe) { "$route/{$argumentName}" },
+					arguments = listOf(navArgument(WithArgument.HomeWithDeletedRecipe.argumentName) {
+						type = NavType.StringType
+					})
+				) { navBackStackEntry ->
+					HomeScreen(
+						snackbarHostState = snackbarHostState,
+						onRecipeClick = { recipeId -> navigationHandler.openRecipe(recipeId) },
+					)
+					navBackStackEntry.arguments?.getString(WithArgument.HomeWithDeletedRecipe.argumentName)
+						?.let { recipeTitle ->
+							job?.cancel()
+							job = scope.launch(Dispatchers.IO) {
+								SnackbarHandler(
+									snackbarHostState,
+									context
+								).showRecipeHasBeenDeleted(recipeTitle.replace("_", " "))
+							}
+						}
+					title.value = null
+				}
+				composable(
+					route = with(WithArgument.Recipe) { "$route/{$argumentName}" },
+					arguments = listOf(navArgument(WithArgument.Recipe.argumentName) {
 						type = NavType.StringType
 					})
 				) { navBackStackEntry ->
@@ -89,7 +116,8 @@ internal fun NavHost(context: Context) {
 						snackbarHostState = snackbarHostState,
 						heightToBeFaded = heightToBeFaded,
 						title = title,
-						cleanRecipeId = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Recipe.argumentName),
+						cleanRecipeId = navBackStackEntry.arguments?.getString(WithArgument.Recipe.argumentName),
+						navigationHandler = navigationHandler,
 						onTagClicked = { tag -> navigationHandler.openSearch(tag) }
 					)
 					LaunchedEffect(scrollState) {
@@ -103,11 +131,11 @@ internal fun NavHost(context: Context) {
 					)
 					title.value = null
 				}
-				composable(route = "${AppPage.Search.route}/{${AppPage.WithArgument.Search.argumentName}}") { navBackStackEntry ->
+				composable(route = "${WithArgument.Search.route}/{${WithArgument.Search.argumentName}}") { navBackStackEntry ->
 					SearchScreen(
 						snackbarHostState = snackbarHostState,
 						onRecipeClick = { recipeUiModel -> navigationHandler.openRecipe(recipeUiModel.id) },
-						selectedTag = navBackStackEntry.arguments?.getString(AppPage.WithArgument.Search.argumentName),
+						selectedTag = navBackStackEntry.arguments?.getString(WithArgument.Search.argumentName),
 					)
 					title.value = null
 				}

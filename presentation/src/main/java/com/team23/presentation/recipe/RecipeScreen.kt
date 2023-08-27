@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.team23.design_system.error.NeuracrError
+import com.team23.presentation.common.handlers.NavigationHandler
 import com.team23.presentation.recipe.models.RecipeUiModel
 import com.team23.presentation.recipe.models.RecipeUiState
 import com.team23.presentation.recipe.views.RecipeContentData
@@ -22,6 +23,7 @@ fun RecipeScreen(
 	snackbarHostState: SnackbarHostState,
 	cleanRecipeId: String?,
 	onTagClicked: (String) -> Unit,
+	navigationHandler: NavigationHandler,
 	modifier: Modifier = Modifier,
 	recipeViewModel: RecipeViewModel = hiltViewModel()
 ) {
@@ -39,6 +41,8 @@ fun RecipeScreen(
 		onTagClicked = onTagClicked,
 		onFavoriteClick = { recipe -> recipeViewModel.favoriteClick(recipe, snackbarHostState, context) },
 		onLocalPhoneClick = { recipeViewModel.onLocalPhoneClick(snackbarHostState, context) },
+		onUpdateLocalRecipe = { recipeViewModel.onUpdateLocalRecipe(navigationHandler) },
+		onDeleteLocalRecipe = { recipeViewModel.onDeleteLocalRecipe(snackbarHostState, context, navigationHandler) },
 		modifier = modifier,
 	)
 }
@@ -56,6 +60,8 @@ fun RecipeScreen(
 	onTagClicked: (String) -> Unit,
 	onFavoriteClick: (RecipeUiModel) -> Unit,
 	onLocalPhoneClick: () -> Unit,
+	onUpdateLocalRecipe: () -> Unit,
+	onDeleteLocalRecipe: () -> Unit,
 	modifier: Modifier
 ) {
 	title.value = null
@@ -72,6 +78,8 @@ fun RecipeScreen(
 				onTagClicked = onTagClicked,
 				onFavoriteClick = onFavoriteClick,
 				onLocalPhoneClick = onLocalPhoneClick,
+				onUpdateLocalRecipe = onUpdateLocalRecipe,
+				onDeleteLocalRecipe = onDeleteLocalRecipe,
 				modifier = modifier,
 			)
 			title.value = recipeUiState.recipe.title
