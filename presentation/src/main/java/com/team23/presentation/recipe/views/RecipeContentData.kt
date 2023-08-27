@@ -57,12 +57,14 @@ fun RecipeContentData(
 	onTagClicked: (String) -> Unit,
 	onFavoriteClick: (RecipeUiModel) -> Unit,
 	onLocalPhoneClick: () -> Unit,
+	onUpdateLocalRecipe: () -> Unit,
+	onDeleteLocalRecipe: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	Scaffold(
 		floatingActionButton = {
 			if (recipeUiModel.isLocallySaved) {
-				RecipeModifyButton({}, {})
+				RecipeModifyButton(onUpdateLocalRecipe, onDeleteLocalRecipe)
 			}
 		}
 	) { padding ->
@@ -196,6 +198,8 @@ fun RecipeContentDataPreview() {
 			onTagClicked = {},
 			onFavoriteClick = {},
 			onLocalPhoneClick = {},
+			onUpdateLocalRecipe = {},
+			onDeleteLocalRecipe = {},
 			modifier = Modifier.background(color = Color.White)
 		)
 	}

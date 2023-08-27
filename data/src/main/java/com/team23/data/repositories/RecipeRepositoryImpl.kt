@@ -86,21 +86,10 @@ internal class RecipeRepositoryImpl @Inject constructor(
 	}
 
 	override suspend fun saveRecipe(recipeId: String) {
-		val tempRecipeId = ""
-		val recipeToSave = recipeDao.findFullRecipeById(tempRecipeId)?.let { fullRecipe ->
-			fullRecipe.copy(
-				recipe = fullRecipe.recipe.copy(
-					href = recipeId,
-					isTemporary = false,
-				),
-				tags = fullRecipe.tags.map { it.copy(recipeId = recipeId) },
-				ingredients = fullRecipe.ingredients.map { it.copy(recipeId = recipeId) },
-				instructions = fullRecipe.instructions.map { it.copy(recipeId = recipeId) },
-			)
-		}
+		val recipeToSave = setRecipeIdAndIsTemp(recipeDao.findFullRecipeById(TEMP_RECIPE_ID), recipeId, false)
 
-		deleteDataByRecipeId(tempRecipeId)
-		recipeDao.deleteByRecipeId(tempRecipeId)
+		deleteDataByRecipeId(TEMP_RECIPE_ID)
+		recipeDao.deleteByRecipeId(TEMP_RECIPE_ID)
 
 		recipeToSave?.let { recipe ->
 			insertOrReplaceFullRecipe(recipe)
@@ -112,6 +101,20 @@ internal class RecipeRepositoryImpl @Inject constructor(
 				)
 			)
 		}
+	}
+
+	override suspend fun setRecipeBackToTemp(recipeId: String) {
+		val recipe = setRecipeIdAndIsTemp(recipeDao.findFullRecipeById(recipeId), TEMP_RECIPE_ID, true)
+		recipe?.let {
+			insertOrReplaceFullRecipe(recipe)
+			summarizedRecipeDao.deleteByRecipeId(recipeId)
+		}
+	}
+
+	override suspend fun deleteRecipe(recipeId: String) {
+		deleteDataByRecipeId(recipeId)
+		recipeDao.deleteByRecipeId(recipeId)
+		summarizedRecipeDao.deleteByRecipeId(recipeId)
 	}
 
 	private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
@@ -126,4 +129,17 @@ internal class RecipeRepositoryImpl @Inject constructor(
 		ingredientDao.deleteAllByRecipeId(recipeId)
 		instructionDao.deleteAllByRecipeId(recipeId)
 	}
+
+	private fun setRecipeIdAndIsTemp(fullRecipe: FullRecipeDataModel?, recipeId: String, isTemporary: Boolean) =
+		fullRecipe?.copy(
+			recipe = fullRecipe.recipe.copy(
+				href = recipeId,
+				isTemporary = isTemporary,
+			),
+			tags = fullRecipe.tags.map { it.copy(recipeId = recipeId) },
+			ingredients = fullRecipe.ingredients.map { it.copy(recipeId = recipeId) },
+			instructions = fullRecipe.instructions.map { it.copy(recipeId = recipeId) },
+		)
 }
+
+private const val TEMP_RECIPE_ID = ""

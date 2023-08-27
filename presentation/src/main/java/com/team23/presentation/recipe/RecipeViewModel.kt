@@ -6,8 +6,11 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.team23.domain.usecases.DeleteRecipeUseCase
 import com.team23.domain.usecases.GetFullRecipeByIdUseCase
+import com.team23.domain.usecases.SetRecipeBackToTempUseCase
 import com.team23.domain.usecases.UpdateFavoriteUseCase
+import com.team23.presentation.common.handlers.NavigationHandler
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.recipe.extensions.toUrlRecipeId
 import com.team23.presentation.recipe.mappers.QuantityMapper
@@ -20,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -27,6 +31,8 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(
 	private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
 	private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+	private val setRecipeBackToTempUseCase: SetRecipeBackToTempUseCase,
+	private val deleteRecipeUseCase: DeleteRecipeUseCase,
 	private val recipeMapper: RecipeMapper,
 	private val quantityMapper: QuantityMapper,
 ) : ViewModel() {
@@ -104,6 +110,35 @@ class RecipeViewModel @Inject constructor(
 	fun onLocalPhoneClick(snackbarHostState: SnackbarHostState, context: Context) {
 		viewModelScope.launch(Dispatchers.IO) {
 			SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
+		}
+	}
+
+	fun onUpdateLocalRecipe(navigationHandler: NavigationHandler) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val recipe: RecipeUiModel = (_uiState.value as? RecipeUiState.Data)?.recipe ?: return@launch
+			setRecipeBackToTempUseCase.invoke(recipeId = recipe.id)
+			withContext(Dispatchers.Main) {
+				navigationHandler.openAdd()
+			}
+		}
+	}
+
+	fun onDeleteLocalRecipe(
+		snackbarHostState: SnackbarHostState,
+		context: Context,
+		navigationHandler: NavigationHandler
+	) {
+		viewModelScope.launch(Dispatchers.IO) {
+			val recipe: RecipeUiModel = (_uiState.value as? RecipeUiState.Data)?.recipe ?: return@launch
+			val hasRecipeBeenDeleted = deleteRecipeUseCase.invoke(recipe.id)
+
+			if (hasRecipeBeenDeleted) {
+				withContext(Dispatchers.Main) {
+					navigationHandler.navigateHomeWithRecipeDeleted(recipe.title)
+				}
+			} else {
+				SnackbarHandler(snackbarHostState, context).showRecipeHasNotBeenDeleted(recipe.title)
+			}
 		}
 	}
 
