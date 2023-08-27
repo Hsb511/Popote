@@ -2,12 +2,24 @@ package com.team23.presentation.recipe.views
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedSuggestionChip
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SuggestionChipDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -47,95 +59,104 @@ fun RecipeContentData(
 	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
-	Column(
-		modifier = modifier
-			.fillMaxSize()
-			.verticalScroll(scrollState)
-			.padding(horizontal = 32.dp, vertical = 16.dp)
-			.background(color = MaterialTheme.colorScheme.background)
-	) {
-		Text(
-			text = recipeUiModel.title,
-			style = MaterialTheme.typography.displaySmall,
-		)
-		Divider(modifier = Modifier
-			.padding(top = 8.dp)
-			.onGloballyPositioned { layoutCoordinates ->
-				heightToBeFaded.value = layoutCoordinates.positionInRoot().y
-			}
-		)
-		Text(
-			text = with(recipeUiModel) { "$date - ${stringResource(id = R.string.recipe_written_by)} $author" },
-			style = MaterialTheme.typography.labelLarge,
-		)
-		LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-			items(recipeUiModel.tags) { tag ->
-				ElevatedSuggestionChip(
-					colors = SuggestionChipDefaults.elevatedSuggestionChipColors(
-						containerColor = MaterialTheme.colorScheme.tertiary,
-						labelColor = MaterialTheme.colorScheme.onTertiary,
-					),
-					onClick = { onTagClicked(tag) },
-					label = {
-						Text(text = tag)
-					}
-				)
+	Scaffold(
+		floatingActionButton = {
+			if (recipeUiModel.isLocallySaved) {
+				RecipeModifyButton({}, {})
 			}
 		}
-		Card(
-			elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-			modifier = Modifier
-				.padding(vertical = 8.dp)
-				.fillMaxWidth(),
+	) { padding ->
+		Column(
+			modifier = modifier
+				.fillMaxSize()
+				.verticalScroll(scrollState)
+				.padding(padding)
+				.padding(horizontal = 32.dp, vertical = 16.dp)
+				.background(color = MaterialTheme.colorScheme.background)
 		) {
-			Box {
-				NeuracrImage(
-					neuracrImageProperty = recipeUiModel.image,
-					maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
-				)
-				if (recipeUiModel.isLocallySaved) {
-					CellLocalPhone(
-						onIconClick = onLocalPhoneClick,
-						modifier = Modifier.align(Alignment.TopStart),
+			Text(
+				text = recipeUiModel.title,
+				style = MaterialTheme.typography.displaySmall,
+			)
+			Divider(modifier = Modifier
+				.padding(top = 8.dp)
+				.onGloballyPositioned { layoutCoordinates ->
+					heightToBeFaded.value = layoutCoordinates.positionInRoot().y
+				}
+			)
+			Text(
+				text = with(recipeUiModel) { "$date - ${stringResource(id = R.string.recipe_written_by)} $author" },
+				style = MaterialTheme.typography.labelLarge,
+			)
+			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+				items(recipeUiModel.tags) { tag ->
+					ElevatedSuggestionChip(
+						colors = SuggestionChipDefaults.elevatedSuggestionChipColors(
+							containerColor = MaterialTheme.colorScheme.tertiary,
+							labelColor = MaterialTheme.colorScheme.onTertiary,
+						),
+						onClick = { onTagClicked(tag) },
+						label = {
+							Text(text = tag)
+						}
 					)
 				}
-				NeuracrLike(
-					isFavorite = recipeUiModel.isFavorite,
-					onFavoriteClick = { onFavoriteClick(recipeUiModel) },
-					modifier = Modifier.align(Alignment.BottomEnd)
-				)
 			}
+			Card(
+				elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+				modifier = Modifier
+					.padding(vertical = 8.dp)
+					.fillMaxWidth(),
+			) {
+				Box {
+					NeuracrImage(
+						neuracrImageProperty = recipeUiModel.image,
+						maxImageHeight = (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
+					)
+					if (recipeUiModel.isLocallySaved) {
+						CellLocalPhone(
+							onIconClick = onLocalPhoneClick,
+							modifier = Modifier.align(Alignment.TopStart),
+						)
+					}
+					NeuracrLike(
+						isFavorite = recipeUiModel.isFavorite,
+						onFavoriteClick = { onFavoriteClick(recipeUiModel) },
+						modifier = Modifier.align(Alignment.BottomEnd)
+					)
+				}
+			}
+			Text(
+				text = stringResource(id = R.string.recipe_ingredients_title),
+				style = MaterialTheme.typography.headlineSmall,
+				modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
+			)
+			RecipeIngredientsWidget(
+				IngredientsUiModel.FromRecipeScreen(
+					ingredients = recipeUiModel.ingredients,
+					currentServingsAmount = currentServingsAmount,
+					onValueChanged = onValueChanged,
+					onAddOneServing = onAddOneServing,
+					onSubtractOneServing = onSubtractOneServing,
+				),
+			)
+			Divider(modifier = Modifier.padding(top = 8.dp))
+			Text(
+				text = recipeUiModel.description,
+				style = MaterialTheme.typography.bodyMedium,
+			)
+			Text(
+				text = stringResource(id = R.string.recipe_instructions_title),
+				style = MaterialTheme.typography.headlineSmall,
+				modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
+			)
+			RecipeInstructionsWidget(InstructionsUiModel.FromRecipeScreen(recipeUiModel.instructions))
+			Text(
+				text = recipeUiModel.conclusion,
+				style = MaterialTheme.typography.bodyMedium,
+				modifier = Modifier.padding(top = 16.dp),
+			)
 		}
-		Text(
-			text = stringResource(id = R.string.recipe_ingredients_title),
-			style = MaterialTheme.typography.headlineSmall,
-			modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
-		)
-		RecipeIngredientsWidget(
-			IngredientsUiModel.FromRecipeScreen(
-				ingredients = recipeUiModel.ingredients,
-				currentServingsAmount = currentServingsAmount,
-				onValueChanged = onValueChanged,
-				onAddOneServing = onAddOneServing,
-				onSubtractOneServing = onSubtractOneServing,
-			),
-		)
-		Divider(modifier = Modifier.padding(top = 8.dp))
-		Text(
-			text = recipeUiModel.description,
-			style = MaterialTheme.typography.bodyMedium,
-		)
-		Text(
-			text = stringResource(id = R.string.recipe_instructions_title),
-			style = MaterialTheme.typography.headlineSmall,
-			modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
-		)
-		RecipeInstructionsWidget(InstructionsUiModel.FromRecipeScreen(recipeUiModel.instructions))
-		Text(
-			text = recipeUiModel.conclusion,
-			style = MaterialTheme.typography.bodyMedium,
-			modifier = Modifier.padding(top = 16.dp),
-		)
 	}
 }
 

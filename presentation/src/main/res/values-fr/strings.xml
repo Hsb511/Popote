@@ -13,6 +13,10 @@
     <string name="snackbar_loading_several">Chargement de %d nouvelles recettes</string>
     <string name="snackbar_loading_done">Chargement terminé</string>
 
+    <!-- dialog -->
+    <string name="dialog_dismiss">ignorer</string>
+    <string name="dialog_confirm">confirmer</string>
+
     <!-- home -->
     <string name="home_title">Dernières recettes</string>
 
@@ -23,6 +27,11 @@
     <string name="recipe_instructions_title">Instructions</string>
     <string name="recipe_copy_to_clipboard_a11y">Copier dans le presse-papier</string>
     <string name="recipe_local_phone_info">Cette icône signifie que cette recette a été ajouté par vous et n\'est disponible que sur ce téléphone.</string>
+    <string name="recipe_update_label">Modifier</string>
+    <string name="recipe_delete_label">Supprimer</string>
+    <string name="recipe_delete_dialog_title">Confirmation de suppression</string>
+    <string name="recipe_delete_dialog_text">Si vous êtes sûr de vouloir supprimer cette recette cliquez sur confirmer. Sinon cliquez sur ignorer.</string>
+
 
     <!-- search -->
     <string name="search_textfield_placeholder">Ecrire pour rechercher…</string>
@@ -47,8 +56,6 @@
     <string name="add_recipe_instruction_placeholder">Ecrivez votre étape de la recette</string>
     <string name="add_recipe_save_dialog_title">Confirmation de sauvegarde</string>
     <string name="add_recipe_save_dialog_text">Si vous êtes sûr d\'avoir terminé et d\'avoir rempli tous les champs, cliquez sur confirmer. Sinon pour continuer de modifier votre recette, cliquez sur ignorer.</string>
-    <string name="add_recipe_save_dialog_dismiss">ignorer</string>
-    <string name="add_recipe_save_dialog_confirm">confirmer</string>
     <string name="add_recipe_save_snackbar_message">a été sauvegardée sur votre téléphone</string>
     <string name="add_recipe_save_snackbar_action">voir</string>
 </resources>
