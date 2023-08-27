@@ -45,12 +45,12 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
 						openDialog.value = false
 						onSaveButtonClick()
 					}
-				) { Text(stringResource(id = R.string.add_recipe_save_dialog_confirm)) }
+				) { Text(stringResource(id = R.string.dialog_confirm)) }
 			},
 			dismissButton = {
 				TextButton(
 					onClick = { openDialog.value = false }
-				) { Text(stringResource(id = R.string.add_recipe_save_dialog_dismiss)) }
+				) { Text(stringResource(id = R.string.dialog_dismiss)) }
 			}
 		)
 	}
