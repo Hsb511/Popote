@@ -30,9 +30,9 @@ fun AddTagChip(
 
 	OutlinedButton(
 		colors = ButtonDefaults.outlinedButtonColors(
-			contentColor = MaterialTheme.colorScheme.tertiary,
+			contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
 		),
-		border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primary),
+		border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.onSecondaryContainer),
 		shape = MaterialTheme.shapes.medium,
 		onClick = {
 			expanded.value = true

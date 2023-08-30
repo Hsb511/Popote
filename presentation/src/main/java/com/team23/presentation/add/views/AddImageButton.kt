@@ -44,7 +44,7 @@ fun AddImageButton(
 	Box(
 		modifier = modifier
 			.aspectRatio(ratio = 4 / 3f, matchHeightConstraintsFirst = true)
-			.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = MaterialTheme.shapes.medium)
+			.border(width = 2.dp, color = MaterialTheme.colorScheme.onSecondaryContainer, shape = MaterialTheme.shapes.medium)
 			.clip(shape = MaterialTheme.shapes.medium)
 			.background(color = MaterialTheme.colorScheme.surface)
 			.clickable { imageLauncher.launch(PickVisualMediaRequest(mediaType = ImageOnly)) }
@@ -53,7 +53,7 @@ fun AddImageButton(
 			Icon(
 				painter = painterResource(id = R.drawable.ic_upload_image),
 				contentDescription = null,
-				tint = MaterialTheme.colorScheme.tertiary,
+				tint = MaterialTheme.colorScheme.onSecondaryContainer,
 				modifier = Modifier.align(Alignment.Center)
 			)
 		} else {
