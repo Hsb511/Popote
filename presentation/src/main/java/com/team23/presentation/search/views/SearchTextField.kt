@@ -44,13 +44,13 @@ fun SearchTextField(
 				is TextFieldUiModel.IconUiModel.Painter -> Icon(
 					painter = painterResource(id = icon.resId),
 					contentDescription = null,
-					tint = MaterialTheme.colorScheme.primary,
+					tint = MaterialTheme.colorScheme.onSecondaryContainer,
 				)
 
 				is TextFieldUiModel.IconUiModel.Vector -> Icon(
 					imageVector = icon.image,
 					contentDescription = null,
-					tint = MaterialTheme.colorScheme.primary,
+					tint = MaterialTheme.colorScheme.onSecondaryContainer,
 				)
 			}
 		},
@@ -59,7 +59,7 @@ fun SearchTextField(
 				Icon(
 					imageVector = Icons.Filled.Delete,
 					contentDescription = null,
-					tint = MaterialTheme.colorScheme.primary,
+					tint = MaterialTheme.colorScheme.onSecondaryContainer,
 					modifier = Modifier.clickable {
 						textFieldUiModel.onValueChange("")
 					}

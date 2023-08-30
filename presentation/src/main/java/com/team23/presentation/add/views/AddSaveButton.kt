@@ -22,8 +22,6 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
 	val openDialog = remember { mutableStateOf(false) }
 
 	FloatingActionButton(
-		containerColor = MaterialTheme.colorScheme.secondary,
-		contentColor = MaterialTheme.colorScheme.onSurface,
 		onClick = { openDialog.value = true },
 		modifier = Modifier.size(56.dp),
 	) {

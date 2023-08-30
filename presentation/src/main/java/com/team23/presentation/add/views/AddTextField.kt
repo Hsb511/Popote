@@ -30,13 +30,14 @@ fun AddTextField(
 	keyboardType: KeyboardType = KeyboardType.Text,
 ) {
 	val textHorizontalPadding = 4.dp
+	val textFieldColor = MaterialTheme.colorScheme.onSecondaryContainer
 	BasicTextField(
 		value = text ?: "",
 		onValueChange = { value ->
 			onTextChange(value)
 		},
-		textStyle = style,
-		cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+		textStyle = style.copy(color = textFieldColor),
+		cursorBrush = SolidColor(textFieldColor),
 		singleLine = singleLine,
 		keyboardOptions = if (singleLine) {
 			KeyboardOptions(imeAction = ImeAction.Next)
@@ -49,7 +50,7 @@ fun AddTextField(
 					Text(
 						text = placeholder,
 						style = style,
-						color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.5f),
+						color = textFieldColor.copy(alpha = 0.5f),
 					)
 				}
 				innerTextField()
@@ -59,9 +60,9 @@ fun AddTextField(
 			.clip(shape = MaterialTheme.shapes.medium)
 			.border(
 				border = if (text.isNullOrBlank()) {
-					BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primary)
+					BorderStroke(width = 2.dp, color = textFieldColor)
 				} else {
-					BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+					BorderStroke(width = 1.dp, color = textFieldColor.copy(alpha = 0.5f))
 				},
 				shape = MaterialTheme.shapes.medium,
 			)
