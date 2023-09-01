@@ -30,7 +30,6 @@ fun ModalMenuDrawer(drawerUiModel: DrawerUiModel, modifier: Modifier = Modifier,
 	)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(showSystemUi = true)
 fun ModalMenuDrawerPreview() {

@@ -13,6 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.presentation.R
@@ -35,21 +37,44 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
 	if (openDialog.value) {
 		AlertDialog(
 			onDismissRequest = { openDialog.value = false },
-			title = { Text(stringResource(id = R.string.add_recipe_save_dialog_title))},
+			title = {
+				Text(
+					text = stringResource(id = R.string.add_recipe_save_dialog_title),
+					textAlign = TextAlign.Center
+				)
+			},
 			text = { Text(stringResource(id = R.string.add_recipe_save_dialog_text)) },
 			confirmButton = {
-				TextButton(
+				DialogTextButton(
+					text = stringResource(id = R.string.dialog_confirm),
 					onClick = {
 						openDialog.value = false
 						onSaveButtonClick()
-					}
-				) { Text(stringResource(id = R.string.dialog_confirm)) }
+					},
+				)
 			},
 			dismissButton = {
-				TextButton(
-					onClick = { openDialog.value = false }
-				) { Text(stringResource(id = R.string.dialog_dismiss)) }
+				DialogTextButton(
+					text = stringResource(id = R.string.dialog_dismiss),
+					onClick = {
+						openDialog.value = false
+					},
+				)
 			}
+		)
+	}
+}
+
+@Composable
+private fun DialogTextButton(text: String, onClick: () -> Unit) {
+	TextButton(
+		onClick = onClick
+	) {
+		Text(
+			text = text,
+			color = MaterialTheme.colorScheme.onSecondaryContainer,
+			style = MaterialTheme.typography.labelLarge,
+			fontWeight = FontWeight.Normal,
 		)
 	}
 }

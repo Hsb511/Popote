@@ -17,7 +17,6 @@ import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
@@ -74,8 +74,6 @@ fun RecipeModifyButton(
 			)
 		}
 		FloatingActionButton(
-			containerColor = MaterialTheme.colorScheme.secondary,
-			contentColor = MaterialTheme.colorScheme.onSurface,
 			onClick = { isExpanded = !isExpanded },
 			modifier = modifier.size(56.dp),
 		) {
@@ -92,7 +90,7 @@ fun RecipeModifyButton(
 	if (openDialog) {
 		AlertDialog(
 			onDismissRequest = { openDialog = false },
-			title = { Text(stringResource(id = R.string.recipe_delete_dialog_title)) },
+			title = { Text(stringResource(id = R.string.recipe_delete_dialog_title), textAlign = TextAlign.Center) },
 			text = { Text(stringResource(id = R.string.recipe_delete_dialog_text)) },
 			confirmButton = {
 				TextButton(
@@ -124,8 +122,6 @@ private fun RecipeFabRowButton(
 	) {
 		Text(text = text)
 		FloatingActionButton(
-			containerColor = MaterialTheme.colorScheme.secondary,
-			contentColor = MaterialTheme.colorScheme.onSurface,
 			onClick = onIconClick,
 			modifier = Modifier
 				.padding(horizontal = 12.dp)
