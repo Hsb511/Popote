@@ -41,5 +41,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:1.4.1")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 	implementation("androidx.compose.ui:ui-text-google-fonts:1.4.1")
+	implementation("androidx.core:core:1.10.1")
 	debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
 }

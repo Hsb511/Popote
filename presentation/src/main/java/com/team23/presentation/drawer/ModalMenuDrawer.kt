@@ -10,7 +10,6 @@ import com.team23.presentation.drawer.models.DrawerUiModel
 import com.team23.presentation.drawer.views.DrawerFooter
 import com.team23.presentation.drawer.views.DrawerHeader
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalMenuDrawer(drawerUiModel: DrawerUiModel, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
 	ModalNavigationDrawer(

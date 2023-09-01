@@ -74,7 +74,18 @@ internal fun NavHost(context: Context) {
 		openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
 		closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
 	) { padding ->
-		ModalMenuDrawer(DrawerUiModel(drawerState, BuildConfig.VERSION_NAME), Modifier.padding(padding)) {
+		val topPadding = padding.calculateTopPadding() * computeDefaultTitleAlpha(
+			scrollState.value,
+			heightToBeFaded.value,
+			title.value
+		)
+		ModalMenuDrawer(
+			drawerUiModel = DrawerUiModel(drawerState, BuildConfig.VERSION_NAME),
+			modifier = Modifier.padding(
+				top = topPadding,
+				bottom = padding.calculateBottomPadding()
+			),
+		) {
 			NavHost(navController = navController, startDestination = AppPage.Home.route) {
 				composable(route = AppPage.Home.route) {
 					HomeScreen(
@@ -191,3 +202,13 @@ internal fun toNavItemProperties(
 			},
 		)
 	}
+
+private fun computeDefaultTitleAlpha(
+	scroll: Int,
+	heightToBeFaded: Float,
+	title: String?,
+): Float = when {
+	title == null -> 1f
+	heightToBeFaded > 0 -> (1 - 2 / heightToBeFaded * scroll).coerceIn(0f, 1f)
+	else -> 0f
+}
