@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,14 +32,24 @@ class HomeViewModel @Inject constructor(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
+			viewModelScope.launch(Dispatchers.IO) {
+				snackbarHandler?.showStartLoading()
+			}
 			getAllSummarizedRecipesUseCase.invoke()
 				.onFailure {
-					_uiState.value = HomeUiState.Error(message = "${it.javaClass.simpleName} ${it.localizedMessage}")
+					withContext(Dispatchers.Main) {
+						_uiState.value = HomeUiState.Error(message = "${it.javaClass.simpleName} ${it.localizedMessage}")
+					}
 				}.onSuccess { data ->
 					val recipes = data.first
 					val newRecipesCount = data.second
-					snackbarHandler?.showLoadingRecipe(newRecipesCount)
-					_uiState.value = HomeUiState.Data(recipes = recipes.map { summarizedRecipeMapper.toUiModel(it) })
+					viewModelScope.launch(Dispatchers.IO) {
+						snackbarHandler?.showLoadingRecipe(newRecipesCount)
+					}
+
+					withContext(Dispatchers.Main) {
+						_uiState.value = HomeUiState.Data(recipes = recipes.map { summarizedRecipeMapper.toUiModel(it) })
+					}
 					recipes.forEach { recipe ->
 						getFullRecipeByIdUseCase.invoke(recipe.id)
 					}
@@ -78,6 +89,7 @@ class HomeViewModel @Inject constructor(
 			newRecipes.remove(recipe)
 			newRecipes.add(recipeIndex, recipe.copy(isFavorite = !recipe.isFavorite))
 			_uiState.value = HomeUiState.Data(newRecipes)
+			println("HUGO - recomputeState ${_uiState.value}")
 		}
 	}
 }
