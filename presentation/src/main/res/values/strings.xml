@@ -9,6 +9,7 @@
     <!-- snackbar -->
     <string name="snackbar_favorite">has been added to your favorites</string>
     <string name="snackbar_favorite_action">undo</string>
+    <string name="snackbar_start_loading">Start loading recipes</string>
     <string name="snackbar_loading_one">Loading 1 new recipe</string>
     <string name="snackbar_loading_several">Loading %d new recipe</string>
     <string name="snackbar_loading_done">Loading finished</string>

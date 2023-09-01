@@ -19,6 +19,14 @@ class SnackbarHandler(
 		)
 	}
 
+	suspend fun showStartLoading() {
+		snackbarHostState.currentSnackbarData?.dismiss()
+		snackbarHostState.showSnackbar(
+			message = context.getString(R.string.snackbar_start_loading),
+			duration = SnackbarDuration.Indefinite,
+		)
+	}
+
 	suspend fun showLoadingRecipe(recipeCount: Int): SnackbarResult {
 		snackbarHostState.currentSnackbarData?.dismiss()
 		return when (recipeCount) {
