@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,8 +6,8 @@ plugins {
 }
 
 val majorVersion = 1
-val minorVersion = 2
-val fixVersion = 2
+val minorVersion = 3
+val fixVersion = 0
 
 android {
     namespace = "com.team23.neuracrsrecipes"
