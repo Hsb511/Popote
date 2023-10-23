@@ -77,6 +77,7 @@ private fun SearchScreen(
 			.padding(start = 16.dp, top = 8.dp, end = 16.dp)
 			.fillMaxSize()
 	) {
+		Spacer(modifier = Modifier.height(64.dp + 16.dp))
 		SearchTextField(searchUiModel.textField)
 
 		SearchTagsRow(searchUiModel.tagsRow)

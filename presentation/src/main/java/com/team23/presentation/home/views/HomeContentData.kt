@@ -26,15 +26,17 @@ fun HomeContentData(
 	homeRecipeClick: (String) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	onLocalPhoneClick: () -> Unit,
-	modifier: Modifier = Modifier
 ) {
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(300.dp),
 		contentPadding = PaddingValues(32.dp),
 		verticalItemSpacing = 16.dp,
 		horizontalArrangement = Arrangement.spacedBy(16.dp),
-		modifier = modifier.fillMaxSize()
+		modifier = Modifier.fillMaxSize()
 	) {
+		item(span = StaggeredGridItemSpan.FullLine) {
+			Spacer(modifier = Modifier.height(48.dp))
+		}
 		item(span = StaggeredGridItemSpan.FullLine) {
 			Text(
 				text = stringResource(id = R.string.home_title),
