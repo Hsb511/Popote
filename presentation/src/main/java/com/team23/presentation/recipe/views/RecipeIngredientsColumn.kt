@@ -48,7 +48,7 @@ fun RecipeIngredientsColumn(
 						when (ingredientsUiModel) {
 							is IngredientsUiModel.FromRecipeScreen -> Text(
 								text = ingredient.quantity
-									?.let { quantity -> "$quantity ${ingredient.label}" }
+									?.let { quantity -> "$quantity ${ingredient.unit?.let { "$it " } ?: ""}- ${ingredient.label}" }
 									?: ingredient.label,
 								modifier = Modifier.fillMaxWidth()
 							)
