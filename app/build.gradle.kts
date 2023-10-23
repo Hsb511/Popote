@@ -7,7 +7,7 @@ plugins {
 
 val majorVersion = 1
 val minorVersion = 3
-val fixVersion = 0
+val fixVersion = 1
 
 android {
     namespace = "com.team23.neuracrsrecipes"
