@@ -3,7 +3,6 @@ package com.team23.presentation.home
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,7 +22,6 @@ import com.team23.presentation.home.views.HomeContentLoading
 fun HomeScreen(
 	snackbarHostState: SnackbarHostState,
 	onRecipeClick: (String) -> Unit,
-	modifier: Modifier = Modifier,
 	homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 	val context = LocalContext.current
@@ -35,7 +33,6 @@ fun HomeScreen(
 		homeRecipeClick = onRecipeClick,
 		onFavoriteClick = { recipe -> homeViewModel.favoriteClick(recipe) },
 		onLocalPhoneClick = { homeViewModel.onLocalPhoneClick() },
-		modifier = modifier
 	)
 }
 
@@ -45,17 +42,15 @@ private fun HomeScreen(
 	homeRecipeClick: (String) -> Unit,
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	onLocalPhoneClick: () -> Unit,
-	modifier: Modifier = Modifier
 ) {
 	when (homeUiState) {
-		is Loading -> HomeContentLoading(modifier)
-		is Error -> NeuracrError(homeUiState.message, modifier)
+		is Loading -> HomeContentLoading()
+		is Error -> NeuracrError(homeUiState.message)
 		is Data -> HomeContentData(
 			summarizedRecipeUiModels = homeUiState.recipes,
 			homeRecipeClick = homeRecipeClick,
 			onFavoriteClick = onFavoriteClick,
 			onLocalPhoneClick = onLocalPhoneClick,
-			modifier = modifier,
 		)
 	}
 }

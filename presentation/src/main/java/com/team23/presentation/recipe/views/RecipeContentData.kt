@@ -1,13 +1,18 @@
 package com.team23.presentation.recipe.views
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -73,6 +78,7 @@ fun RecipeContentData(
 			}
 		}
 	) { padding ->
+		val density = LocalDensity.current
 		val horizontalPadding = 32f
 		var yPosition by remember { mutableStateOf(0f) }
 		val coeff = (1 - yPosition / (4 * horizontalPadding)).coerceIn(0f, 1f)
@@ -86,6 +92,7 @@ fun RecipeContentData(
 					.padding(horizontal = horizontalPadding.dp, vertical = 16.dp)
 					.background(color = MaterialTheme.colorScheme.background)
 			) {
+				Spacer(modifier = Modifier.height(64.dp + 8.dp))
 				Text(
 					text = recipeUiModel.title,
 					style = MaterialTheme.typography.displaySmall,
@@ -125,8 +132,8 @@ fun RecipeContentData(
 						.graphicsLayer {
 							scaleX = (size.width + spaceToAddInPx * coeff) / size.width
 							scaleY = (size.height + spaceToAddInPx * coeff) / size.height
+							translationY = -with(density) { horizontalPadding.dp.toPx() } * coeff
 						}
-						.offset(y = -horizontalPadding.dp * coeff)
 				)
 
 				Text(
@@ -160,7 +167,11 @@ fun RecipeContentData(
 					modifier = Modifier.padding(top = 16.dp),
 				)
 			}
-			if (yPosition <= 0f) {
+			AnimatedVisibility(
+				visible = yPosition <= 0f,
+				enter = fadeIn() + slideInVertically(),
+				exit = ExitTransition.None,
+			) {
 				RecipeImage(
 					recipeUiModel, onFavoriteClick, onLocalPhoneClick,
 					modifier = Modifier
@@ -169,8 +180,8 @@ fun RecipeContentData(
 						.graphicsLayer {
 							scaleX = (size.width + spaceToAddInPx) / size.width
 							scaleY = (size.height + spaceToAddInPx) / size.height
+							translationY = -with(density) { horizontalPadding.dp.toPx() } * coeff
 						}
-						.offset(y = -horizontalPadding.dp),
 				)
 			}
 		}

@@ -165,7 +165,7 @@ private fun Actions(
 	openMenu: () -> Unit,
 	closeMenu: () -> Unit,
 ) {
-	Crossfade(targetState = drawerState.currentValue == DrawerValue.Open) { isDrawerOpen ->
+	Crossfade(targetState = drawerState.currentValue == DrawerValue.Open, label = "settings") { isDrawerOpen ->
 		if (isDrawerOpen) {
 			IconButton(onClick = closeMenu) {
 				Icon(
