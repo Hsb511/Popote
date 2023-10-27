@@ -2,8 +2,8 @@ package com.team23.data.mappers
 
 import com.team23.data.models.BaseRecipeDataModel
 import com.team23.data.models.FullRecipeDataModel
-import com.team23.domain.models.RecipeDomainModel
-import com.team23.domain.models.RecipeDomainModel.Source
+import com.team23.domain.recipe.model.RecipeDomainModel
+import com.team23.domain.recipe.model.RecipeDomainModel.Source
 import javax.inject.Inject
 
 class FullRecipeMapper @Inject constructor(

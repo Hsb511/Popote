@@ -2,7 +2,7 @@ package com.team23.data.mappers
 
 import com.team23.data.fixtures.*
 import com.team23.data.models.SummarizedRecipeDataModel
-import com.team23.domain.models.RecipeDomainModel
+import com.team23.domain.recipe.model.RecipeDomainModel
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals

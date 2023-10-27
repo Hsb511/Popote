@@ -1,7 +1,7 @@
 package com.team23.data.mappers
 
 import com.team23.data.models.InstructionDataModel
-import com.team23.domain.models.InstructionDomainModel
+import com.team23.domain.recipe.model.InstructionDomainModel
 import javax.inject.Inject
 
 class InstructionMapper @Inject constructor() {

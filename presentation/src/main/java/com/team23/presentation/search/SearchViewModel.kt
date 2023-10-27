@@ -6,9 +6,9 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.team23.domain.usecases.GetAndSortAllTagsUseCase
-import com.team23.domain.usecases.SearchSummarizedRecipesUseCase
-import com.team23.domain.usecases.UpdateFavoriteUseCase
+import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
+import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
+import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.home.mappers.SummarizedRecipeMapper
 import com.team23.presentation.home.models.SummarizedRecipeUiModel

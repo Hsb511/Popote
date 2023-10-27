@@ -1,6 +1,6 @@
 package com.team23.domain.user.usecase
 
-import com.team23.domain.repositories.RecipeRepository
+import com.team23.domain.recipe.repository.RecipeRepository
 import javax.inject.Inject
 
 class GetExistingNicknamesUseCase @Inject constructor(

@@ -6,10 +6,10 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.team23.domain.usecases.DeleteRecipeUseCase
-import com.team23.domain.usecases.GetFullRecipeByIdUseCase
-import com.team23.domain.usecases.SetRecipeBackToTempUseCase
-import com.team23.domain.usecases.UpdateFavoriteUseCase
+import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
+import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
+import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
+import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.presentation.common.handlers.NavigationHandler
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.recipe.extensions.toUrlRecipeId

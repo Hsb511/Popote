@@ -1,8 +1,8 @@
 package com.team23.presentation.recipe.mappers
 
-import com.team23.domain.models.LanguageDomainModel
-import com.team23.domain.models.RecipeDomainModel
-import com.team23.domain.models.RecipeDomainModel.Source
+import com.team23.domain.recipe.model.LanguageDomainModel
+import com.team23.domain.recipe.model.RecipeDomainModel
+import com.team23.domain.recipe.model.RecipeDomainModel.Source
 import com.team23.presentation.recipe.models.RecipeUiModel
 import java.util.Locale
 import javax.inject.Inject

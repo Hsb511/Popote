@@ -1,6 +1,6 @@
 package com.team23.data.mappers
 
-import com.team23.domain.models.LanguageDomainModel
+import com.team23.domain.recipe.model.LanguageDomainModel
 import javax.inject.Inject
 
 class LanguageMapper @Inject constructor() {

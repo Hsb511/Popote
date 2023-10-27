@@ -1,6 +1,6 @@
 package com.team23.domain.fixtures
 
-import com.team23.domain.models.RecipeDomainModel
+import com.team23.domain.recipe.model.RecipeDomainModel
 import java.time.LocalDate
 
 fun getEmptySummarizedRecipe(id: String = "") = RecipeDomainModel.Summarized(

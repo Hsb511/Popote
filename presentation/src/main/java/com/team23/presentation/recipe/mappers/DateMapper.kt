@@ -2,7 +2,7 @@ package com.team23.presentation.recipe.mappers
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.team23.domain.models.LanguageDomainModel
+import com.team23.domain.recipe.model.LanguageDomainModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject

@@ -1,8 +1,8 @@
 package com.team23.domain.usecases
 
 import com.team23.domain.fixtures.getEmptyFullRecipe
-import com.team23.domain.fixtures.getEmptySummarizedRecipe
-import com.team23.domain.repositories.RecipeRepository
+import com.team23.domain.recipe.repository.RecipeRepository
+import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
