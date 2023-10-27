@@ -14,4 +14,5 @@ interface RecipeRepository {
     suspend fun saveRecipe(recipeId: String)
     suspend fun setRecipeBackToTemp(recipeId: String)
     suspend fun deleteRecipe(recipeId: String)
+    suspend fun getAllAuthorsName(): List<String>
 }

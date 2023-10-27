@@ -15,4 +15,7 @@ interface RecipeDao {
 
 	@Query("DELETE FROM BaseRecipeDataModel WHERE href = :recipeId")
 	suspend fun deleteByRecipeId(recipeId: String)
+
+	@Query("SELECT subtitle FROM BaseRecipeDataModel")
+	suspend fun getAllSubtitles(): List<String>
 }

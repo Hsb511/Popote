@@ -4,10 +4,12 @@ import com.team23.data.repositories.FavoriteRepositoryImpl
 import com.team23.data.repositories.PreferenceRepositoryImpl
 import com.team23.data.repositories.RecipeRepositoryImpl
 import com.team23.data.repositories.TagRepositoryImpl
+import com.team23.data.repositories.UserRepositoryImpl
 import com.team23.domain.repositories.FavoriteRepository
 import com.team23.domain.repositories.PreferenceRepository
 import com.team23.domain.repositories.RecipeRepository
 import com.team23.domain.repositories.TagRepository
+import com.team23.domain.user.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,5 +28,8 @@ abstract class DataBindingsModule {
     internal abstract fun bindFavoriteRepository(impl: FavoriteRepositoryImpl): FavoriteRepository
 
     @Binds
-    internal abstract fun bindPreferenceRepositoryImpl(impl: PreferenceRepositoryImpl): PreferenceRepository
+    internal abstract fun bindPreferenceRepository(impl: PreferenceRepositoryImpl): PreferenceRepository
+
+    @Binds
+    internal abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 }
