@@ -1,6 +1,6 @@
 package com.team23.presentation.recipe.mappers
 
-import com.team23.domain.models.InstructionDomainModel
+import com.team23.domain.recipe.model.InstructionDomainModel
 import com.team23.presentation.recipe.models.InstructionUiModel
 import javax.inject.Inject
 

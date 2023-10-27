@@ -1,6 +1,6 @@
 package com.team23.presentation.favorite.mappers
 
-import com.team23.domain.models.PreferenceDomainModel
+import com.team23.domain.preference.model.PreferenceDomainModel
 import com.team23.design_system.display.DisplayType
 import javax.inject.Inject
 

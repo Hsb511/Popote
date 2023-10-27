@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.team23.domain.usecases.GetAllFavoritesUseCase
-import com.team23.domain.usecases.GetPreferenceDisplayTypeUseCase
-import com.team23.domain.usecases.UpdateFavoriteUseCase
-import com.team23.domain.usecases.UpdatePreferenceUseCase
+import com.team23.domain.favorite.usecase.GetAllFavoritesUseCase
+import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
+import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
+import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.presentation.common.extensions.next
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.favorite.mappers.DisplayTypeMapper

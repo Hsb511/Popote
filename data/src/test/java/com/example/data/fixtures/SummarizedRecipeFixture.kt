@@ -1,8 +1,8 @@
 package com.team23.data.fixtures
 
 import com.team23.data.models.SummarizedRecipeDataModel
-import com.team23.domain.models.LanguageDomainModel
-import com.team23.domain.models.RecipeDomainModel
+import com.team23.domain.recipe.model.LanguageDomainModel
+import com.team23.domain.recipe.model.RecipeDomainModel
 import java.time.LocalDate
 
 internal fun getDefaultSummarizedRecipe(

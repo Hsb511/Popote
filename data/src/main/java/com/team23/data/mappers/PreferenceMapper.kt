@@ -2,7 +2,7 @@ package com.team23.data.mappers
 
 import com.team23.data.models.PreferenceDataModel
 import com.team23.data.models.PreferenceLabel.DISPLAY_TYPE
-import com.team23.domain.models.PreferenceDomainModel
+import com.team23.domain.preference.model.PreferenceDomainModel
 import javax.inject.Inject
 
 class PreferenceMapper @Inject constructor() {

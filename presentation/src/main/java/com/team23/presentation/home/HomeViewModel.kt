@@ -3,9 +3,9 @@ package com.team23.presentation.home
 import androidx.compose.material3.SnackbarResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.team23.domain.usecases.GetAllSummarizedRecipesUseCase
-import com.team23.domain.usecases.GetFullRecipeByIdUseCase
-import com.team23.domain.usecases.UpdateFavoriteUseCase
+import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
+import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
+import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.home.mappers.SummarizedRecipeMapper
 import com.team23.presentation.home.models.HomeUiState

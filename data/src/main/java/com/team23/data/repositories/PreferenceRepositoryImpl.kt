@@ -3,8 +3,8 @@ package com.team23.data.repositories
 import com.team23.data.daos.PreferenceDao
 import com.team23.data.mappers.PreferenceMapper
 import com.team23.data.models.PreferenceLabel.DISPLAY_TYPE
-import com.team23.domain.models.PreferenceDomainModel
-import com.team23.domain.repositories.PreferenceRepository
+import com.team23.domain.preference.model.PreferenceDomainModel
+import com.team23.domain.preference.repository.PreferenceRepository
 import javax.inject.Inject
 
 class PreferenceRepositoryImpl @Inject constructor(

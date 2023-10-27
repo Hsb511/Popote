@@ -6,11 +6,11 @@ import androidx.compose.material3.SnackbarResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.team23.design_system.image.NeuracrImageProperty
-import com.team23.domain.usecases.CreateNewRecipeUseCase
-import com.team23.domain.usecases.GetAndSortAllTagsUseCase
-import com.team23.domain.usecases.LoadTemporaryRecipeUseCase
-import com.team23.domain.usecases.SaveRecipeUseCase
-import com.team23.domain.usecases.UpdateTempRecipeUseCase
+import com.team23.domain.recipe.usecase.CreateNewRecipeUseCase
+import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
+import com.team23.domain.recipe.usecase.LoadTemporaryRecipeUseCase
+import com.team23.domain.recipe.usecase.SaveRecipeUseCase
+import com.team23.domain.recipe.usecase.UpdateTempRecipeUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.recipe.mappers.RecipeMapper

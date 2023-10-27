@@ -2,7 +2,7 @@ package com.team23.data.repositories
 
 import com.team23.data.daos.TagDao
 import com.team23.data.mappers.TagMapper
-import com.team23.domain.repositories.TagRepository
+import com.team23.domain.tag.repository.TagRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

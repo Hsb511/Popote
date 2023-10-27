@@ -6,8 +6,8 @@ import com.team23.data.daos.SummarizedRecipeDao
 import com.team23.data.mappers.SourceMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
 import com.team23.data.models.FavoriteDataModel
-import com.team23.domain.models.RecipeDomainModel
-import com.team23.domain.repositories.FavoriteRepository
+import com.team23.domain.recipe.model.RecipeDomainModel
+import com.team23.domain.favorite.repository.FavoriteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

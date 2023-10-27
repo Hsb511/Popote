@@ -15,8 +15,8 @@ import com.team23.data.models.FullRecipeDataModel
 import com.team23.data.models.SummarizedRecipeDataModel
 import com.team23.data.parsers.FullRecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
-import com.team23.domain.models.RecipeDomainModel
-import com.team23.domain.repositories.RecipeRepository
+import com.team23.domain.recipe.model.RecipeDomainModel
+import com.team23.domain.recipe.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.jsoup.select.Elements
