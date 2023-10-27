@@ -14,6 +14,7 @@ class FullRecipeMapper @Inject constructor(
 	private val instructionMapper: InstructionMapper,
 	private val sourceMapper: SourceMapper,
 	private val tagMapper: TagMapper,
+	private val subtitleMapper: SubtitleMapper,
 ) {
 	fun toFullRecipeDomainModel(fullRecipeDataModel: FullRecipeDataModel) = RecipeDomainModel.Full(
 		id = fullRecipeDataModel.recipe.href,
@@ -21,7 +22,7 @@ class FullRecipeMapper @Inject constructor(
 		imageUrl = imageMapper.toImageUrl(fullRecipeDataModel.recipe.imgSrc),
 		date = dateMapper.toLocalDateFromSubtitleDate(fullRecipeDataModel.recipe.subTitle.split(" - ")[0]),
 		language = languageMapper.toLanguageDomainModel(fullRecipeDataModel.recipe.href),
-		author = fullRecipeDataModel.recipe.subTitle.split(SUBTITLE_DELIMITER).last(),
+		author = subtitleMapper.toAuthorDomainModel(fullRecipeDataModel.recipe.subTitle),
 		tags = tagMapper.toTagDomainModel(fullRecipeDataModel.tags),
 		servingsNumber = fullRecipeDataModel.recipe.servingsAmount,
 		ingredients = ingredientMapper.toIngredientListDomainModel(fullRecipeDataModel.ingredients),
@@ -39,7 +40,7 @@ class FullRecipeMapper @Inject constructor(
 				href = id,
 				imgSrc = imageUrl,
 				title = title,
-				subTitle = dateMapper.toDateString(fullRecipeDomainModel.date) + SUBTITLE_DELIMITER + fullRecipeDomainModel.author,
+				subTitle = subtitleMapper.toSubtitleDataModel(date, author),
 				servingsAmount = servingsNumber,
 				instructionTitle = startingText,
 				lastTitle = endingText,
@@ -52,5 +53,3 @@ class FullRecipeMapper @Inject constructor(
 		)
 	}
 }
-
-private const val SUBTITLE_DELIMITER = " - Written by "

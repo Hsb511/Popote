@@ -9,6 +9,7 @@ import com.team23.data.daos.TagDao
 import com.team23.data.datasources.NeuracrWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.SourceMapper
+import com.team23.data.mappers.SubtitleMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
 import com.team23.data.models.FullRecipeDataModel
 import com.team23.data.models.SummarizedRecipeDataModel
@@ -34,6 +35,7 @@ internal class RecipeRepositoryImpl @Inject constructor(
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
 	private val fullRecipeMapper: FullRecipeMapper,
 	private val sourceMapper: SourceMapper,
+	private val subtitleMapper: SubtitleMapper,
 ) : RecipeRepository {
 	override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> =
 		summarizedRecipeMapper.toSummarizedRecipeDomainModels(
@@ -116,6 +118,11 @@ internal class RecipeRepositoryImpl @Inject constructor(
 		recipeDao.deleteByRecipeId(recipeId)
 		summarizedRecipeDao.deleteByRecipeId(recipeId)
 	}
+
+	override suspend fun getAllAuthorsName(): List<String> =
+		recipeDao.getAllSubtitles()
+			.map { subtitle -> subtitleMapper.toAuthorDomainModel(subtitle) }
+			.distinct()
 
 	private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
 		recipeDao.insertOrReplace(fullRecipeDataModel.recipe)
