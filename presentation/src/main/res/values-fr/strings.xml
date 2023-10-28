@@ -61,4 +61,8 @@
     <string name="add_recipe_save_dialog_text">Si vous êtes sûr d\'avoir terminé et d\'avoir rempli tous les champs, cliquez sur confirmer. Sinon pour continuer de modifier votre recette, cliquez sur ignorer.</string>
     <string name="add_recipe_save_snackbar_message">a été sauvegardée sur votre téléphone</string>
     <string name="add_recipe_save_snackbar_action">voir</string>
+
+    <!-- Modal drawer -->
+    <string name="drawer_empty_name">Ajouter un pseudo</string>
+    <string name="drawer_name_set">Votre pseudo est %s</string>
 </resources>

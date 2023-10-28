@@ -51,7 +51,7 @@ fun DrawerFooter(modifier: Modifier = Modifier) {
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 fun DrawerFooterPreview() {
     NeuracrTheme {
 	    DrawerFooter()

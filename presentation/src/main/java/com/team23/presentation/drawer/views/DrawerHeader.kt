@@ -34,6 +34,7 @@ fun DrawerHeader(
 				.height(60.dp)
 				.padding(vertical = 6.dp)
 		)
+		Spacer(modifier = Modifier.weight(1f))
 		Text(
 			text = stringResource(R.string.scaffold_title),
 			style = MaterialTheme.typography.headlineSmall,
@@ -46,7 +47,7 @@ fun DrawerHeader(
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 fun DrawerHeaderPreview() {
 	NeuracrTheme {
 		DrawerHeader(versionName = "23.23.0")
