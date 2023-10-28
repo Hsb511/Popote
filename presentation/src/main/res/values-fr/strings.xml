@@ -64,5 +64,8 @@
 
     <!-- Modal drawer -->
     <string name="drawer_empty_name">Ajouter un pseudo</string>
+    <string name="drawer_name_change">Changer votre pseudo</string>
     <string name="drawer_name_set">Votre pseudo est %s</string>
+    <string name="drawer_dialog_text">Il sera utilisé comme nom d\'auteur sur les recettes que vous ajouterez sur votre téléphone et que vous pourrez partager plus tard.</string>
+    <string name="drawer_dialog_placeholder">Pseudo</string>
 </resources>

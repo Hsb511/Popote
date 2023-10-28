@@ -1,6 +1,8 @@
 package com.team23.domain.user.repository
 
+import kotlinx.coroutines.flow.Flow
+
 interface UserRepository {
-	suspend fun getNickname(): String?
+	fun getNickname(): Flow<String?>
 	suspend fun setNickname(nickname: String)
 }
