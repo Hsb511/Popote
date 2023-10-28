@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.team23.design_system.theming.NeuracrTheme
 
 @Composable
-fun DrawerFooter(modifier: Modifier = Modifier) {
+fun DrawerFooter(
+	versionName: String,
+	modifier: Modifier = Modifier,
+	) {
 	val context = LocalContext.current
 	Row(modifier = modifier.padding(all = 4.dp)) {
 		Text(
@@ -47,6 +51,10 @@ fun DrawerFooter(modifier: Modifier = Modifier) {
 				launchNewGithubIntent(context,"Hsb511")
 			}
 		)
+		Spacer(modifier = Modifier.weight(1f))
+		Text(
+			text = "v$versionName",
+		)
 	}
 }
 
@@ -54,7 +62,7 @@ fun DrawerFooter(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 fun DrawerFooterPreview() {
     NeuracrTheme {
-	    DrawerFooter()
+	    DrawerFooter("2.3.23")
     }
 }
 

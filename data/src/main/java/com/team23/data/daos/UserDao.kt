@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.team23.data.models.UserDataModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -13,6 +14,6 @@ interface UserDao {
 	suspend fun insertOrReplace(vararg user: UserDataModel)
 
 	@Transaction
-	@Query("SELECT * FROM UserDataModel")
-	suspend fun loadAll(): List<UserDataModel>
+	@Query("SELECT * FROM UserDataModel LIMIT 1")
+	fun getFirst(): Flow<UserDataModel?>
 }

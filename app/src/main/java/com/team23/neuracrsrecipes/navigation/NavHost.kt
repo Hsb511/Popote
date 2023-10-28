@@ -75,7 +75,7 @@ internal fun NavHost(context: Context) {
 		closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
 	) { padding ->
 		ModalMenuDrawer(
-			drawerUiModel = DrawerUiModel(drawerState, BuildConfig.VERSION_NAME, null),
+			drawerUiModel = DrawerUiModel(drawerState, BuildConfig.VERSION_NAME),
 			modifier = Modifier.padding(bottom = padding.calculateBottomPadding()),
 		) {
 			NavHost(navController = navController, startDestination = AppPage.Home.route) {

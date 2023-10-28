@@ -65,5 +65,8 @@
 
     <!-- Modal drawer -->
     <string name="drawer_empty_name">Set up your nickname</string>
+    <string name="drawer_name_change">Change your nickname</string>
     <string name="drawer_name_set">Your nickname is %s</string>
+    <string name="drawer_dialog_text">It will be used as an author name on the recipe you will add on your phone and that you can share later.</string>
+    <string name="drawer_dialog_placeholder">Nickname</string>
 </resources>
