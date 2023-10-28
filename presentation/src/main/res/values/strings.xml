@@ -62,4 +62,8 @@
     <string name="add_recipe_save_dialog_text">If you are certain that you have finished and filled out all the fields, click on "confirm". Otherwise, to continue editing your recipe, click on "dismiss".</string>
     <string name="add_recipe_save_snackbar_message">has been saved in your phone</string>
     <string name="add_recipe_save_snackbar_action">see</string>
+
+    <!-- Modal drawer -->
+    <string name="drawer_empty_name">Set up your nickname</string>
+    <string name="drawer_name_set">Your nickname is %s</string>
 </resources>
