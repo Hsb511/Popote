@@ -11,12 +11,12 @@ val fixVersion = 1
 
 android {
     namespace = "com.team23.neuracrsrecipes"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.team23.neuracrsrecipes"
         minSdk = 23
-        targetSdk = 33
+        targetSdk = 34
         versionCode = majorVersion * 10000 + minorVersion * 100 + fixVersion
         versionName = "$majorVersion.$minorVersion.$fixVersion"
 
@@ -55,7 +55,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.1")
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.7.4")
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

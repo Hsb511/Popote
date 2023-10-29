@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.team23.data"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 23
