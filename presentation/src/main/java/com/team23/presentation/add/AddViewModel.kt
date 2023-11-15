@@ -11,6 +11,7 @@ import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.domain.recipe.usecase.LoadTemporaryRecipeUseCase
 import com.team23.domain.recipe.usecase.SaveRecipeUseCase
 import com.team23.domain.recipe.usecase.UpdateTempRecipeUseCase
+import com.team23.domain.user.usecase.GetUserNicknameUseCase
 import com.team23.presentation.add.models.AddRecipeUiModel
 import com.team23.presentation.common.handlers.SnackbarHandler
 import com.team23.presentation.recipe.mappers.RecipeMapper
@@ -22,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -37,6 +39,7 @@ class AddViewModel @Inject constructor(
 	private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
 	private val loadTemporaryRecipeUseCase: LoadTemporaryRecipeUseCase,
 	private val saveRecipeUseCase: SaveRecipeUseCase,
+	private val getUserNicknameUseCase: GetUserNicknameUseCase,
 ) : ViewModel() {
 	private val _recipe = MutableStateFlow(createNewRecipe())
 	val recipe: StateFlow<AddRecipeUiModel> = _recipe
@@ -73,6 +76,8 @@ class AddViewModel @Inject constructor(
 
 	init {
 		viewModelScope.launch(Dispatchers.IO) {
+			val nickname = getUserNicknameUseCase.invoke().firstOrNull() ?: ""
+			_recipe.value = _recipe.value.copy(author = nickname)
 			_tags.value = getAndSortAllTagsUseCase.invoke()
 			loadTemporaryRecipeUseCase.invoke()?.let { temporaryRecipe ->
 				_recipe.value = recipeMapper.toRecipeUiModel(temporaryRecipe)
