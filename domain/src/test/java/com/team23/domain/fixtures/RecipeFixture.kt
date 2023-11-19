@@ -6,22 +6,30 @@ import com.team23.domain.recipe.model.LanguageDomainModel
 import com.team23.domain.recipe.model.RecipeDomainModel
 import java.time.LocalDate
 
-fun getEmptySummarizedRecipe(id: String = "") = RecipeDomainModel.Summarized(
+fun getEmptySummarizedRecipe(
+    id: String = "",
+    title: String = "",
+)= RecipeDomainModel.Summarized(
     id = id,
     imageUrl = "",
-    title = "",
+    title = title,
     date = LocalDate.MIN,
     language = LanguageDomainModel.FRENCH,
     isFavorite = false,
     source = RecipeDomainModel.Source.Local.Temporary,
 )
 
-fun getEmptyFullRecipe(id: String = "") = RecipeDomainModel.Full(
+fun getEmptyFullRecipe(
+    id: String = "",
+    title: String = "",
+    date: LocalDate = LocalDate.now(),
+    language: LanguageDomainModel = LanguageDomainModel.FRENCH,
+) = RecipeDomainModel.Full(
     id = id,
-    title = "",
+    title = title,
     imageUrl = "",
-    date = LocalDate.now(),
-    language = LanguageDomainModel.FRENCH,
+    date = date,
+    language = language,
     isFavorite = false,
     author = "",
     tags = listOf(),
