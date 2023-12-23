@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.team23.neuracrsrecipes.android.androidApp-mergeDebugResources-37:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/hugo.selle/.gradle/caches/transforms-3/fe16edd8f2bd655b37fe6f3c6e64b1ff/transformed/core-1.10.0/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}
