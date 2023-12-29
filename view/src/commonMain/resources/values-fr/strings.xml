@@ -56,6 +56,8 @@
     <string name="add_recipe_description">Description de la recette, conseils pour la préparation, temps de cuisson, …</string>
     <string name="add_recipe_conclusion">Conclusion à la recette, accompagnements pour le service ou idées de présentation</string>
     <string name="add_recipe_ingredient_label">Nom de l\'ingrédient</string>
+    <string name="add_recipe_ingredient_quantity">10</string>
+    <string name="add_recipe_ingredient_unit">mL</string>
     <string name="add_recipe_instruction_placeholder">Ecrivez votre étape de la recette</string>
     <string name="add_recipe_save_dialog_title">Confirmation de sauvegarde</string>
     <string name="add_recipe_save_dialog_text">Si vous êtes sûr d\'avoir terminé et d\'avoir rempli tous les champs, cliquez sur confirmer. Sinon pour continuer de modifier votre recette, cliquez sur ignorer.</string>
@@ -70,6 +72,7 @@
     <string name="drawer_dialog_placeholder">Pseudo</string>
 
     <!-- scaffold -->
+    <string name="scaffold_title" >Popote</string>
     <string name="scaffold_open_menu_a11y">Ouvrir le menu latéral</string>
     <string name="scaffold_close_menu_a11y">Fermer le menu latéral</string>
     <string name="scaffold_navigate_up_a11y">retour en arrière</string>

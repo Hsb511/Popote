@@ -1,12 +1,6 @@
 package com.team23.neuracrsrecipes.model.uimodel
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.team23.neuracrsrecipes.model.property.CellProperty
-import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.FlagProperty
-import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 
 data class SummarizedRecipeUiModel(

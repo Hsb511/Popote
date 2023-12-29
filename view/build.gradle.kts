@@ -31,6 +31,12 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.runtime)
             implementation(compose.ui)
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
+            implementation(libs.kamel)
+        }
+        androidMain.dependencies {
+            implementation(compose.uiTooling)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -44,4 +50,6 @@ android {
     defaultConfig {
         minSdk = 23
     }
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["main"].res.srcDirs("src/commonMain/resources")
 }
