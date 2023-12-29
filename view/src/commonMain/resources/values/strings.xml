@@ -54,8 +54,8 @@
     <string name="add_recipe_author_name">Author\'s name</string>
     <string name="add_recipe_description">Description of your recipe, advice for the cooking or cooking time, …</string>
     <string name="add_recipe_conclusion">A conclusion to your recipe, sides you can cook it with or preparation ideas</string>
-    <string name="add_recipe_ingredient_quantity" translatable="false">10</string>
-    <string name="add_recipe_ingredient_unit" translatable="false">mL</string>
+    <string name="add_recipe_ingredient_quantity" >10</string>
+    <string name="add_recipe_ingredient_unit" >mL</string>
     <string name="add_recipe_ingredient_label">Ingredient\'s name</string>
     <string name="add_recipe_instruction_placeholder">Type your recipe step here</string>
     <string name="add_recipe_save_dialog_title">Confirm saving</string>
@@ -71,7 +71,7 @@
     <string name="drawer_dialog_placeholder">Nickname</string>
 
     <!-- scaffold -->
-    <string name="scaffold_title" translatable="false">Popote</string>
+    <string name="scaffold_title" >Popote</string>
     <string name="scaffold_open_menu_a11y">open lateral menu</string>
     <string name="scaffold_close_menu_a11y">close lateral menu</string>
     <string name="scaffold_navigate_up_a11y">navigate up</string>

@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -17,17 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
-import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
+import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.stringResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.resource
 
 @Composable
 internal fun CellCard(
