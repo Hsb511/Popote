@@ -2,23 +2,23 @@ package com.team23.view.preview.ds
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.team23.neuracrsrecipes.model.uimodel.ErrorPageUiModel
-import com.team23.view.ErrorPage
-import com.team23.view.InProgressPage
+import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
+import com.team23.view.ErrorScreen
+import com.team23.view.InProgressScreen
 import com.team23.view.theme.PopoteTheme
 
 @Composable
 @Preview(showSystemUi = true)
-fun PageInProgressPreview() {
+fun InProgressScreenPreview() {
     PopoteTheme {
-        InProgressPage()
+        InProgressScreen()
     }
 }
 
 @Composable
 @Preview(showSystemUi = true)
-fun NeuracrErrorPreview() {
+fun ErrorScreenPreview() {
     PopoteTheme {
-        ErrorPage(errorPageUiModel = ErrorPageUiModel("An error occured") {})
+        ErrorScreen(errorUiModel = ErrorUiModel("An error occured") {})
     }
 }

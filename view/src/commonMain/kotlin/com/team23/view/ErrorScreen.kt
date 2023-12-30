@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
-import com.team23.neuracrsrecipes.model.uimodel.ErrorPageUiModel
+import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.stringResource
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
 @Composable
-fun ErrorPage(errorPageUiModel: ErrorPageUiModel, modifier: Modifier = Modifier) {
+fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
 	var isErrorShown by remember { mutableStateOf(false) }
 	val scrollState = rememberScrollState()
 	val scope = rememberCoroutineScope()
@@ -71,7 +71,7 @@ fun ErrorPage(errorPageUiModel: ErrorPageUiModel, modifier: Modifier = Modifier)
 				containerColor = MaterialTheme.colorScheme.secondary,
 				contentColor = MaterialTheme.colorScheme.onSecondary,
 			),
-			onClick = errorPageUiModel.redirectToWebsite,
+			onClick = errorUiModel.redirectToWebsite,
 		) {
 			Text(
 				text = stringResource(id = "error_website_button"),
@@ -106,7 +106,7 @@ fun ErrorPage(errorPageUiModel: ErrorPageUiModel, modifier: Modifier = Modifier)
 		}
 		if (isErrorShown) {
 			Text(
-				text = errorPageUiModel.message,
+				text = errorUiModel.message,
 				style = MaterialTheme.typography.bodySmall
 			)
 		}

@@ -10,17 +10,17 @@ import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.view.ds.cell.CellCard
 import com.team23.view.ds.cell.CellFlag
 import com.team23.view.ds.cell.CellList
-import com.team23.view.ds.cell.NeuracrCell
+import com.team23.view.ds.cell.Cell
 import com.team23.view.sample.SampleDisplayTypeProvider
-import com.team23.view.sample.getNeuracrCellPropertySample
+import com.team23.view.sample.getCellPropertySample
 import com.team23.view.theme.PopoteTheme
 
 
 @Composable
 @Preview(showBackground = true)
-private fun NeuracrFlagPropertyCellPreview(@PreviewParameter(SampleDisplayTypeProvider::class) displayType: DisplayType) {
+private fun FlagPropertyCellPreview(@PreviewParameter(SampleDisplayTypeProvider::class) displayType: DisplayType) {
     PopoteTheme {
-        NeuracrCell(neuracrCellProperty = getNeuracrCellPropertySample(displayType))
+        Cell(CellProperty = getCellPropertySample(displayType))
     }
 }
 
@@ -28,7 +28,7 @@ private fun NeuracrFlagPropertyCellPreview(@PreviewParameter(SampleDisplayTypePr
 @Preview(showBackground = true)
 private fun CellCardPreview() {
     PopoteTheme {
-        CellCard(neuracrCellProperty = getNeuracrCellPropertySample())
+        CellCard(neuracrCellProperty = getCellPropertySample())
     }
 }
 
@@ -46,6 +46,6 @@ private fun CellFlagPreview() {
 @Preview(showBackground = true)
 private fun CellListPreview() {
     MaterialTheme {
-        CellList(getNeuracrCellPropertySample())
+        CellList(getCellPropertySample())
     }
 }

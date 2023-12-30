@@ -17,7 +17,7 @@ import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.stringResource
 
 @Composable
-fun InProgressPage(modifier: Modifier = Modifier) {
+fun InProgressScreen(modifier: Modifier = Modifier) {
 	Column(
 		verticalArrangement = Arrangement.Center,
 		horizontalAlignment = Alignment.CenterHorizontally,

@@ -4,12 +4,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import com.team23.view.theme.PopoteTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.team23.neuracrsrecipes.model.uimodel.ErrorPageUiModel
+import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.view.ds.scaffold.PopoteScaffold
 
 @Composable
@@ -28,8 +27,8 @@ fun MainContainer() {
             isNavigationEmpty = false
 
         ) {
-            ErrorPage(
-                errorPageUiModel = ErrorPageUiModel(
+            ErrorScreen(
+                errorUiModel = ErrorUiModel(
                     message = "volumus",
                     redirectToWebsite = {}
                 ),
