@@ -24,18 +24,18 @@ import com.team23.view.extension.stringResource
 
 @Composable
 internal fun CellCard(
-	neuracrCellProperty: CellProperty,
+	cellProperty: CellProperty,
 	modifier: Modifier = Modifier,
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
 			NeuracrImage(
-				neuracrImageProperty = neuracrCellProperty.imageProperty,
+				neuracrImageProperty = cellProperty.imageProperty,
 				// TODO EXPECT / ACTUAL ON EACH PLATFORM
 				maxImageHeight = (420.dp - 64.dp) * 3 / 4,
 				modifier = Modifier.fillMaxWidth()
 			)
-			if (neuracrCellProperty.isLocallySaved) {
+			if (cellProperty.isLocallySaved) {
 				ButtonLocalPhone(
 					localPhone = CellProperty.LocalPhone(
 						iconProperty = 	IconProperty.Resource(
@@ -43,13 +43,13 @@ internal fun CellCard(
 							contentDescription = stringResource(id = "locally_saved_button_content_description"),
 							tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
 						),
-						onLocalPhoneClick = neuracrCellProperty.localPhone.onLocalPhoneClick,
+						onLocalPhoneClick = cellProperty.localPhone.onLocalPhoneClick,
 					),
 					modifier = Modifier.align(Alignment.TopStart).offset(x = (-8).dp, y = (-8).dp),
 				)
 			}
 			Text(
-				text = neuracrCellProperty.title,
+				text = cellProperty.title,
 				color = MaterialTheme.colorScheme.onTertiary,
 				style = MaterialTheme.typography.titleSmall,
 				modifier = Modifier
@@ -63,10 +63,10 @@ internal fun CellCard(
 					.background(color = MaterialTheme.colorScheme.tertiary)
 					.padding(start = 12.dp, bottom = 2.dp, end = 12.dp)
 			)
-			CellFlag(neuracrCellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
+			CellFlag(cellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
 			ButtonLike(
-				iconProperty = neuracrCellProperty.favorite.iconProperty,
-				onFavoriteClick = neuracrCellProperty.favorite.onFavoriteClick,
+				iconProperty = cellProperty.favorite.iconProperty,
+				onFavoriteClick = cellProperty.favorite.onFavoriteClick,
 				modifier = Modifier.align(Alignment.BottomEnd).offset(x = 8.dp, y = 8.dp)
 			)
 		}
