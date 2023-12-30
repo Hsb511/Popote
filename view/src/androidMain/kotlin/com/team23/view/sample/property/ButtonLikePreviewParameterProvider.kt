@@ -1,4 +1,4 @@
-package com.team23.view.sample
+package com.team23.view.sample.property
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite

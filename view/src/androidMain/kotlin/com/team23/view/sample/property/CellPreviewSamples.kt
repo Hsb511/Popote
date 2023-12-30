@@ -1,4 +1,4 @@
-package com.team23.view.sample
+package com.team23.view.sample.property
 
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.CellProperty

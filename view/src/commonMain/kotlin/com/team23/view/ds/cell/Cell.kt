@@ -7,13 +7,13 @@ import com.team23.neuracrsrecipes.model.property.CellProperty
 
 @Composable
 fun Cell(
-    CellProperty: CellProperty,
+    cellProperty: CellProperty,
     modifier: Modifier = Modifier,
 ) {
-    when (CellProperty.displayType) {
+    when (cellProperty.displayType) {
         DisplayType.BigCard,
-        DisplayType.SmallCard -> CellCard(CellProperty, modifier)
+        DisplayType.SmallCard -> CellCard(cellProperty, modifier)
 
-        DisplayType.List -> CellList(CellProperty, modifier)
+        DisplayType.List -> CellList(cellProperty, modifier)
     }
 }

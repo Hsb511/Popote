@@ -10,7 +10,7 @@ import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.view.ds.flag.FrenchFlag
 import com.team23.view.ds.flag.NeuracrFlag
 import com.team23.view.ds.flag.UkUsFlag
-import com.team23.view.sample.FlagPreviewParameterProvider
+import com.team23.view.sample.property.FlagPreviewParameterProvider
 
 @Composable
 @Preview(showBackground = true)

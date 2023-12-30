@@ -1,4 +1,4 @@
-package com.team23.view.sample
+package com.team23.view.sample.uimodel
 
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel

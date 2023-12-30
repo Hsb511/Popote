@@ -1,10 +1,10 @@
-package com.team23.view.sample
+package com.team23.view.sample.property
 
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 
 internal val resourceImagePreviewSample = ImageProperty.Resource(
     contentDescription = null,
-    imageRes = "bretzel.jpg"
+    imageRes = "drawable/bretzel.jpg"
 )
 
 internal val remoteImagePreviewSample = ImageProperty.Remote(
