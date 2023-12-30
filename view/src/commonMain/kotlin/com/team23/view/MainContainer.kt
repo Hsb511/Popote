@@ -1,15 +1,23 @@
 package com.team23.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import com.team23.neuracrsrecipes.model.property.DisplayType
+import androidx.compose.ui.Modifier
 import com.team23.neuracrsrecipes.model.property.FlagProperty
+import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.property.ImageProperty
+import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
-import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.view.ds.scaffold.PopoteScaffold
 import com.team23.view.theme.PopoteTheme
 
@@ -40,11 +48,33 @@ fun MainContainer() {
                 isFavorite = true,
                 isLocallySaved = true,
             )
-            FavoriteScreen(
-                FavoriteUiState.Data.WithFavorites(
-                    displayType = DisplayType.SmallCard,
-                    favorites = listOf(s, s, s)
-                ), {}, {}, {}, {}
+            val previewTextFieldSample = TextFieldUiModel(
+                searchValue = "Bretzels",
+                onValueChange = { },
+                label = "Label",
+                placeholder = "Placeholder",
+                leadingIcon = IconProperty.Vector(Icons.Filled.Search, ""),
+            )
+            SearchScreen(
+                searchUiModel = SearchUiModel(
+                    textField = previewTextFieldSample,
+                    tagsRow = TagsRowUiModel(
+                        tags = listOf(
+                            TagUiModel("soup", true),
+                            TagUiModel("veggie", true),
+                            TagUiModel("cocktail", false),
+                            TagUiModel("drink", false),
+                            TagUiModel("main", false),
+                            TagUiModel("italian", true)
+                        ),
+                        onTagSelected = { },
+                    ),
+                    recipes = List(6) { s },
+                    onRecipeClick = {},
+                    onFavoriteClick = {},
+                    onLocalPhoneClick = {},
+                ),
+                modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
             )
         }
     }

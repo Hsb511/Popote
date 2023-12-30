@@ -21,7 +21,7 @@ class RecipeUiMapper {
         displayType: DisplayType,
         onFavoriteClick: () -> Unit,
         onLocalPhoneClick: () -> Unit,
-        ): CellProperty = CellProperty(
+    ): CellProperty = CellProperty(
         displayType = displayType,
         imageProperty = recipe.imageProperty,
         title = recipe.title,
@@ -36,19 +36,8 @@ class RecipeUiMapper {
             onLocalPhoneClick = onLocalPhoneClick,
         ),
         favorite = CellProperty.Favorite(
-            iconProperty = IconProperty.Vector(
-                imageVector = recipe.isFavorite.favoriteImageVector(),
-                contentDescription = stringResource("favorite_button_content_description"),
-                tint = recipe.isFavorite.favoriteTint(),
-            ),
+            iconProperty = FavoriteUiMapper().toFavoriteIconProperty(recipe.isFavorite),
             onFavoriteClick = onFavoriteClick
         ),
     )
-
-    private fun Boolean.favoriteImageVector(): ImageVector =
-        if (this) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
-
-    @Composable
-    private fun Boolean.favoriteTint(): Color =
-        if (this) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f)
 }
