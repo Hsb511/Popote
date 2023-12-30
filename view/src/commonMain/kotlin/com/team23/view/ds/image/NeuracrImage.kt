@@ -12,7 +12,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
-import com.team23.view.ds.shimmer.NeuracrShimmer
+import com.team23.view.ds.shimmer.Shimmer
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -50,7 +50,7 @@ fun NeuracrImage(
 				contentScale = contentScale,
 				onLoading = {
 					dynamicMaxImageHeight = 1.dp
-					NeuracrShimmer(modifier.height(maxImageHeight))
+					Shimmer(modifier.height(maxImageHeight))
 				},
 				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
 			)

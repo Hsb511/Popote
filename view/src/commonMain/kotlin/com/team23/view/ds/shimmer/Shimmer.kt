@@ -21,7 +21,7 @@ import com.team23.view.theme.black90
 import com.team23.view.theme.black95
 
 @Composable
-fun NeuracrShimmer(modifier: Modifier = Modifier) {
+fun Shimmer(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.medium)
@@ -30,15 +30,15 @@ fun NeuracrShimmer(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NeuracrShimmer(
+fun Shimmer(
     textStyle: TextStyle,
     modifier: Modifier = Modifier
 ) {
-    NeuracrShimmer(textStyle.fontSize, modifier)
+    Shimmer(textStyle.fontSize, modifier)
 }
 
 @Composable
-fun NeuracrShimmer(
+fun Shimmer(
     fontSize: TextUnit,
     modifier: Modifier = Modifier
 ) {
