@@ -9,7 +9,7 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.ds.button.ButtonTextDialog
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
-import com.team23.view.sample.ButtonLikePreviewParameterProvider
+import com.team23.view.sample.property.ButtonLikePreviewParameterProvider
 import com.team23.view.theme.PopoteTheme
 
 

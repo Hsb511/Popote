@@ -11,8 +11,8 @@ import com.team23.view.ds.cell.CellCard
 import com.team23.view.ds.cell.CellFlag
 import com.team23.view.ds.cell.CellList
 import com.team23.view.ds.cell.Cell
-import com.team23.view.sample.SampleDisplayTypeProvider
-import com.team23.view.sample.getCellPropertySample
+import com.team23.view.sample.property.SampleDisplayTypeProvider
+import com.team23.view.sample.property.getCellPropertySample
 import com.team23.view.theme.PopoteTheme
 
 
@@ -20,7 +20,7 @@ import com.team23.view.theme.PopoteTheme
 @Preview(showBackground = true)
 private fun FlagPropertyCellPreview(@PreviewParameter(SampleDisplayTypeProvider::class) displayType: DisplayType) {
     PopoteTheme {
-        Cell(CellProperty = getCellPropertySample(displayType))
+        Cell(cellProperty = getCellPropertySample(displayType))
     }
 }
 

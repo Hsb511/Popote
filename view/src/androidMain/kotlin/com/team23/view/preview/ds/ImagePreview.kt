@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team23.view.ds.image.NeuracrImage
-import com.team23.view.sample.remoteImagePreviewSample
-import com.team23.view.sample.resourceImagePreviewSample
+import com.team23.view.sample.property.remoteImagePreviewSample
+import com.team23.view.sample.property.resourceImagePreviewSample
 import com.team23.view.theme.PopoteTheme
 
 
