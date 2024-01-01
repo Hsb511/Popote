@@ -39,3 +39,11 @@ internal fun stringResource(id: String): String {
         throw IllegalArgumentException("No strings found for id $id")
     }
 }
+
+@Composable
+internal fun stringResource(id: String, vararg stringValues: String): String =
+    stringResource(id)
+        .split("%s")
+        .mapIndexed { index, c ->
+            c + stringValues.getOrNull(index)?.let { "" }
+    }.joinToString(separator = "")
