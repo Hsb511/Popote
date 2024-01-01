@@ -1,17 +1,9 @@
 package com.team23.view.mapper
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
-import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
-import com.team23.view.extension.stringResource
 
 class RecipeUiMapper {
 

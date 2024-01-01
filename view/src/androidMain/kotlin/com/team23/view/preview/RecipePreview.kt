@@ -15,14 +15,13 @@ import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 import com.team23.view.sample.property.resourceImagePreviewSample
 import com.team23.view.sample.uimodel.ingredientsPreviewSamples
-import com.team23.view.widget.recipe.RecipeIngredientsCopyButton
 import com.team23.view.sample.uimodel.ingredientsUiModelPreviewSamples
-import com.team23.view.sample.uimodel.summarizedRecipeSample
 import com.team23.view.theme.PopoteTheme
 import com.team23.view.widget.recipe.RecipeAddButton
 import com.team23.view.widget.recipe.RecipeContentData
 import com.team23.view.widget.recipe.RecipeContentLoading
 import com.team23.view.widget.recipe.RecipeIngredientsColumn
+import com.team23.view.widget.recipe.RecipeIngredientsCopyButton
 import com.team23.view.widget.recipe.RecipeIngredientsWidget
 import com.team23.view.widget.recipe.RecipeInstructionsWidget
 import com.team23.view.widget.recipe.RecipeModifyButton
