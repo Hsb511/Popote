@@ -27,14 +27,7 @@ class RecipeUiMapper {
         title = recipe.title,
         flagProperty = recipe.flagProperty,
         isLocallySaved = recipe.isLocallySaved,
-        localPhone = CellProperty.LocalPhone(
-            iconProperty = IconProperty.Resource(
-                fileName = "drawable/ic_local_smartphone.xml",
-                contentDescription = "locally_saved_button_content_description",
-                tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
-            ),
-            onLocalPhoneClick = onLocalPhoneClick,
-        ),
+        localPhone = LocalPhoneUiMapper().toLocalPhoneProperty(onLocalPhoneClick),
         favorite = CellProperty.Favorite(
             iconProperty = FavoriteUiMapper().toFavoriteIconProperty(recipe.isFavorite),
             onFavoriteClick = onFavoriteClick
