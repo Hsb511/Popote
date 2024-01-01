@@ -18,3 +18,4 @@ rootProject.name = "PopoteV2"
 include(":androidApp")
 include(":presentation")
 include(":view")
+include(":domain")
