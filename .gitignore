@@ -11,3 +11,4 @@ local.properties
 /view/build
 /presentation/build
 /androidApp/build
+/domain/build
