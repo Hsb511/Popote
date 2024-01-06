@@ -28,9 +28,11 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.ui)
             implementation(projects.domain)
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.koin.test)
         }
     }
 }

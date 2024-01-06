@@ -38,7 +38,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.domain)
     implementation(projects.presentation)
     implementation(projects.view)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.koin.android)
 }

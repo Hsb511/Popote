@@ -26,7 +26,6 @@ fun ModalMenuDrawerPreview() {
     PopoteTheme {
         ModalMenuDrawer(
             drawerUiModel = DrawerUiModel(
-                // rememberDrawerState(initialValue = DrawerValue.Open),
                 versionName = "23.23.0",
             ),
             drawerState = rememberDrawerState(DrawerValue.Open),

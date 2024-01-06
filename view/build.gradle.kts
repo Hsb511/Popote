@@ -34,6 +34,7 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.kamel)
+            implementation(libs.koin.compose)
         }
         androidMain.dependencies {
             implementation(compose.uiTooling)
