@@ -23,74 +23,77 @@ import com.team23.view.widget.recipe.RecipeContentData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import org.koin.compose.KoinContext
 
 @Composable
 fun MainContainer() {
-    PopoteTheme {
-        val drawerState = rememberDrawerState(DrawerValue.Closed)
-        val scope = rememberCoroutineScope()
+    KoinContext {
+        PopoteTheme {
+            val drawerState = rememberDrawerState(DrawerValue.Closed)
+            val scope = rememberCoroutineScope()
 
-        PopoteScaffold(
-            snackbarHostState = SnackbarHostState(),
-            scrollState = rememberScrollState(),
-            heightToBeFaded = 8.9f,
-            title = null,
-            navItemProperties = listOf(),
-            navigateUp = {},
-            drawerState = drawerState,
-            openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
-            closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
-            isNavigationEmpty = false
-
-        ) {
-            ModalMenuDrawer(
-                drawerUiModel = DrawerUiModel("2.0.0"),
+            PopoteScaffold(
+                snackbarHostState = SnackbarHostState(),
+                scrollState = rememberScrollState(),
+                heightToBeFaded = 8.9f,
+                title = null,
+                navItemProperties = listOf(),
+                navigateUp = {},
                 drawerState = drawerState,
+                openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
+                closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
+                isNavigationEmpty = false
+
             ) {
-                RecipeContentData(
-                    recipeUiModel = RecipeUiModel(
-                        id = "",
-                        title = "Bretzels ! Bretzels !",
-                        date = "23 Octobre 2023",
-                        author = "Guiiiii",
-                        tags = listOf("swiss", "bread"),
-                        image = ImageProperty.Resource(
-                            contentDescription = null,
-                            imageRes = "drawable/bretzel.jpg",
+                ModalMenuDrawer(
+                    drawerUiModel = DrawerUiModel("2.0.0"),
+                    drawerState = drawerState,
+                ) {
+                    RecipeContentData(
+                        recipeUiModel = RecipeUiModel(
+                            id = "",
+                            title = "Bretzels ! Bretzels !",
+                            date = "23 Octobre 2023",
+                            author = "Guiiiii",
+                            tags = listOf("swiss", "bread"),
+                            image = ImageProperty.Resource(
+                                contentDescription = null,
+                                imageRes = "drawable/bretzel.jpg",
+                            ),
+                            defaultServingsAmount = 4,
+                            description = "description",
+                            conclusion = "conclusion",
+                            ingredients = listOf(
+                                IngredientUiModel("0.5", "", "lime"),
+                                IngredientUiModel("15", "", "sugar syrup"),
+                                IngredientUiModel("12", "", "raspberry (frozen)"),
+                                IngredientUiModel("12", "", "mint leaf"),
+                            ),
+                            instructions = listOf(
+                                InstructionUiModel(1, "Boil some water in a pot"),
+                                InstructionUiModel(2, "Chop the shallots finely"),
+                                InstructionUiModel(
+                                    3,
+                                    "Put your salmon in a gratin dish. Season with salt, pepper and some of the shallots. Cover the dish with Cellophane"
+                                )
+                            ),
+                            isFavorite = true,
+                            isLocallySaved = true,
                         ),
-                        defaultServingsAmount = 4,
-                        description = "description",
-                        conclusion = "conclusion",
-                        ingredients = listOf(
-                            IngredientUiModel("0.5", "", "lime"),
-                            IngredientUiModel("15", "", "sugar syrup"),
-                            IngredientUiModel("12", "", "raspberry (frozen)"),
-                            IngredientUiModel("12", "", "mint leaf"),
-                        ),
-                        instructions = listOf(
-                            InstructionUiModel(1, "Boil some water in a pot"),
-                            InstructionUiModel(2, "Chop the shallots finely"),
-                            InstructionUiModel(
-                                3,
-                                "Put your salmon in a gratin dish. Season with salt, pepper and some of the shallots. Cover the dish with Cellophane"
-                            )
-                        ),
-                        isFavorite = true,
-                        isLocallySaved = true,
-                    ),
-                    scrollState = rememberScrollState(),
-                    heightToBeFaded = remember { mutableStateOf(0f) },
-                    onAddOneServing = {},
-                    onSubtractOneServing = {},
-                    currentServingsAmount = "4",
-                    onValueChanged = {},
-                    onTagClicked = {},
-                    onFavoriteClick = {},
-                    onLocalPhoneClick = {},
-                    onUpdateLocalRecipe = {},
-                    onDeleteLocalRecipe = {},
-                    modifier = Modifier.background(color = Color.White)
-                )
+                        scrollState = rememberScrollState(),
+                        heightToBeFaded = remember { mutableStateOf(0f) },
+                        onAddOneServing = {},
+                        onSubtractOneServing = {},
+                        currentServingsAmount = "4",
+                        onValueChanged = {},
+                        onTagClicked = {},
+                        onFavoriteClick = {},
+                        onLocalPhoneClick = {},
+                        onUpdateLocalRecipe = {},
+                        onDeleteLocalRecipe = {},
+                        modifier = Modifier.background(color = Color.White)
+                    )
+                }
             }
         }
     }
