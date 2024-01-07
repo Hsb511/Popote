@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,41 +27,41 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
-import com.team23.view.widget.recipe.RecipeIngredientsWidget
-import com.team23.view.widget.recipe.RecipeInstructionsWidget
+import com.team23.neuracrsrecipes.viewmodel.AddViewModel
 import com.team23.view.extension.stringResource
 import com.team23.view.widget.add.AddImageButton
+import com.team23.view.widget.add.AddSaveButton
 import com.team23.view.widget.add.AddTagSection
 import com.team23.view.widget.add.AddTextField
+import com.team23.view.widget.recipe.RecipeIngredientsWidget
+import com.team23.view.widget.recipe.RecipeInstructionsWidget
+import org.koin.compose.koinInject
 
-/*
 @Composable
 fun AddScreen(
-	scrollState: ScrollState,
-	onRecipeClick: (String) -> Unit,
-	heightToBeFaded: MutableState<Float>,
-	snackbarHostState: SnackbarHostState,
-	modifier: Modifier = Modifier,
-	addViewModel: AddViewModel = hiltViewModel(),
+    scrollState: ScrollState,
+    onRecipeClick: (String) -> Unit,
+    heightToBeFaded: MutableState<Float>,
+    modifier: Modifier = Modifier,
 ) {
-	val context = LocalContext.current
-	Scaffold(
-		floatingActionButton = {
-			AddSaveButton {
-				addViewModel.onSaveButtonClick(onRecipeClick, snackbarHostState, context)
-			}
-		}
-	) { padding ->
-		AddScreen(
-			addRecipe = addViewModel.recipe.collectAsState().value,
-			allTags = addViewModel.tags.collectAsState().value,
-			scrollState = scrollState,
-			heightToBeFaded = heightToBeFaded,
-			modifier = modifier.padding(padding),
-		)
-	}
+    val addViewModel = koinInject<AddViewModel>()
+
+    Scaffold(
+        floatingActionButton = {
+            AddSaveButton {
+                addViewModel.onSaveButtonClick(onRecipeClick)
+            }
+        }
+    ) { padding ->
+        AddScreen(
+            addRecipe = addViewModel.recipe.collectAsState().value,
+            allTags = addViewModel.tags.collectAsState().value,
+            scrollState = scrollState,
+            heightToBeFaded = heightToBeFaded,
+            modifier = modifier.padding(padding),
+        )
+    }
 }
-*/
 
 @Composable
 fun AddScreen(

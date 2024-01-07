@@ -44,12 +44,10 @@ fun MainContainer() {
                     drawerUiModel = DrawerUiModel("2.0.0"),
                     drawerState = drawerState,
                 ) {
-                    RecipeScreen(
-                        cleanRecipeId = "wow23",
+                    AddScreen(
                         scrollState = rememberScrollState(),
+                        onRecipeClick = {},
                         heightToBeFaded = remember { mutableStateOf(0f) },
-                        onTagClicked = {},
-                        title = remember { mutableStateOf("23") },
                         modifier = Modifier.background(color = Color.White)
                     )
                 }
