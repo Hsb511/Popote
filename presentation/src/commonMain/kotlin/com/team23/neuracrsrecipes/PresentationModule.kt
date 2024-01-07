@@ -7,10 +7,12 @@ import com.team23.neuracrsrecipes.mapper.IngredientMapper
 import com.team23.neuracrsrecipes.mapper.InstructionMapper
 import com.team23.neuracrsrecipes.mapper.RecipeMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
+import com.team23.neuracrsrecipes.mapper.TagMapper
 import com.team23.neuracrsrecipes.viewmodel.AddViewModel
 import com.team23.neuracrsrecipes.viewmodel.FavoriteViewModel
 import com.team23.neuracrsrecipes.viewmodel.HomeViewModel
 import com.team23.neuracrsrecipes.viewmodel.RecipeViewModel
+import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
 import com.team23.neuracrsrecipes.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.MainScope
@@ -30,11 +32,13 @@ val presentationModule = module {
     factoryOf(::InstructionMapper)
     factoryOf(::RecipeMapper)
     factoryOf(::SummarizedRecipeMapper)
+    factoryOf(::TagMapper)
 
     // View model
     factoryOf(::AddViewModel)
     factoryOf(::FavoriteViewModel)
     factoryOf(::HomeViewModel)
     factoryOf(::RecipeViewModel)
+    factoryOf(::SearchViewModel)
     factoryOf(::UserViewModel)
 }

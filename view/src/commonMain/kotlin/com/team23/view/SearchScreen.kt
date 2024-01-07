@@ -12,36 +12,42 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
+import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
+import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
+import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
 import com.team23.view.ds.cell.Cell
+import com.team23.view.extension.stringResource
 import com.team23.view.mapper.RecipeUiMapper
 import com.team23.view.widget.search.SearchTagsRow
 import com.team23.view.widget.search.SearchTextField
+import org.koin.compose.koinInject
 
-/*
 @Composable
 fun SearchScreen(
-	snackbarHostState: SnackbarHostState,
-	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
-	modifier: Modifier = Modifier,
-	selectedTag: String? = null,
-	searchViewModel: SearchViewModel = hiltViewModel()
+    onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
+    modifier: Modifier = Modifier,
+    selectedTag: String? = null,
 ) {
-	val context = LocalContext.current
+    val searchViewModel = koinInject<SearchViewModel>()
 	searchViewModel.selectedTag = selectedTag
 	SearchScreen(
 		searchUiModel = SearchUiModel(
 			textField = TextFieldUiModel(
 				searchValue = searchViewModel.searchValue.value,
 				onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
-				interactionSource = remember { MutableInteractionSource() },
-				label = R.string.search_textfield_label,
-				placeholder = R.string.search_textfield_placeholder,
-				leadingIcon = TextFieldUiModel.IconUiModel.Vector(Icons.Filled.Search),
+				label = stringResource("search_textfield_label"),
+				placeholder = stringResource("search_textfield_placeholder"),
+				leadingIcon = IconProperty.Vector(Icons.Filled.Search),
 			),
 			tagsRow = TagsRowUiModel(
 				tags = searchViewModel.tags.collectAsState().value,
@@ -49,12 +55,12 @@ fun SearchScreen(
 			),
 			recipes = searchViewModel.recipes.collectAsState().value,
 			onRecipeClick = onRecipeClick,
-			onFavoriteClick = { recipe -> searchViewModel.favoriteClick(recipe, snackbarHostState, context) },
-			onLocalPhoneClick = { searchViewModel.onLocalPhoneClick(snackbarHostState, context) },
+			onFavoriteClick = searchViewModel::favoriteClick,
+			onLocalPhoneClick = searchViewModel::onLocalPhoneClick,
 		),
 		modifier = modifier,
 	)
-} */
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
