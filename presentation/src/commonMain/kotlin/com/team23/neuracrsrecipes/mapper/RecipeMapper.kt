@@ -17,7 +17,7 @@ class RecipeMapper(
 		RecipeUiModel(
 			id = id,
 			title = title,
-			date = dateMapper.toSubtitleDate(date, language),
+			date = dateMapper.toSubtitleDate(date),
 			author = author,
 			tags = tags,
 			image = imageMapper.toImageProperty(imageUrl, null),
