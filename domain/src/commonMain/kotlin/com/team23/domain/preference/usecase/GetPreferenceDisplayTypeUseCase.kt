@@ -4,7 +4,7 @@ import com.team23.domain.preference.model.PreferenceDomainModel
 import com.team23.domain.preference.repository.PreferenceRepository
 
 class GetPreferenceDisplayTypeUseCase(
-    private val preferenceRepository: PreferenceRepository,
+    // private val preferenceRepository: PreferenceRepository,
 ) {
-    suspend fun invoke(): PreferenceDomainModel.DisplayType = preferenceRepository.getDisplayType()
+    suspend fun invoke(): PreferenceDomainModel.DisplayType = PreferenceDomainModel.DisplayType.BigCard // preferenceRepository.getDisplayType()
 }
