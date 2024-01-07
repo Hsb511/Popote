@@ -44,10 +44,8 @@ fun MainContainer() {
                     drawerUiModel = DrawerUiModel("2.0.0"),
                     drawerState = drawerState,
                 ) {
-                    AddScreen(
-                        scrollState = rememberScrollState(),
+                    FavoriteScreen(
                         onRecipeClick = {},
-                        heightToBeFaded = remember { mutableStateOf(0f) },
                         modifier = Modifier.background(color = Color.White)
                     )
                 }

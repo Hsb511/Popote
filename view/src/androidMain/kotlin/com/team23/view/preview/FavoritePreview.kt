@@ -63,11 +63,7 @@ fun FavoriteDataEmptyScreenPreview() {
 fun FavoriteScreenPreview(@PreviewParameter(FavoritePreviewParameterProvider::class) favoriteUiState: FavoriteUiState) {
     PopoteTheme {
         FavoriteScreen(
-            favoriteUiState = favoriteUiState,
             onRecipeClick = {},
-            onFavoriteClick = {},
-            onDisplayClick = {},
-            onLocalPhoneClick = {},
         )
     }
 }
