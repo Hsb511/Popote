@@ -10,6 +10,7 @@ import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.LoadTemporaryRecipeUseCase
 import com.team23.domain.recipe.usecase.SaveRecipeUseCase
+import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
 import com.team23.domain.recipe.usecase.UpdateTempRecipeUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
@@ -37,6 +38,9 @@ val domainModule = module {
     factoryOf(::SaveRecipeUseCase)
     factoryOf(::SetRecipeBackToTempUseCase)
     factoryOf(::UpdateTempRecipeUseCase)
+
+    // Search
+    factoryOf(::SearchSummarizedRecipesUseCase)
 
     // Tag
     factoryOf(::GetAndSortAllTagsUseCase)

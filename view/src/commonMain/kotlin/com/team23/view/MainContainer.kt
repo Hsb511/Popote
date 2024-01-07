@@ -39,8 +39,8 @@ fun MainContainer() {
                     drawerUiModel = DrawerUiModel("2.0.0"),
                     drawerState = drawerState,
                 ) {
-                    HomeScreen(
-                        homeRecipeClick = {},
+                    SearchScreen(
+                        onRecipeClick = {},
                     )
                 }
             }
