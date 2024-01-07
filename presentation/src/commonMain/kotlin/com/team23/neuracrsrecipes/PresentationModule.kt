@@ -5,6 +5,7 @@ import com.team23.neuracrsrecipes.mapper.ImageMapper
 import com.team23.neuracrsrecipes.mapper.IngredientMapper
 import com.team23.neuracrsrecipes.mapper.InstructionMapper
 import com.team23.neuracrsrecipes.mapper.RecipeMapper
+import com.team23.neuracrsrecipes.viewmodel.AddViewModel
 import com.team23.neuracrsrecipes.viewmodel.RecipeViewModel
 import com.team23.neuracrsrecipes.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineName
@@ -25,6 +26,7 @@ val presentationModule = module {
     factoryOf(::RecipeMapper)
 
     // View model
+    factoryOf(::AddViewModel)
     factoryOf(::RecipeViewModel)
     factoryOf(::UserViewModel)
 }

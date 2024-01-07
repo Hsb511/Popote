@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.RecipeUiState
 import com.team23.neuracrsrecipes.viewmodel.RecipeViewModel
 import com.team23.view.widget.recipe.RecipeContentData
