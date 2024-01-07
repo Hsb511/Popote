@@ -6,6 +6,7 @@ import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.domain.recipe.usecase.CreateNewRecipeUseCase
 import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
+import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.LoadTemporaryRecipeUseCase
 import com.team23.domain.recipe.usecase.SaveRecipeUseCase
@@ -30,12 +31,15 @@ val domainModule = module {
     // Recipe
     factoryOf(::CreateNewRecipeUseCase)
     factoryOf(::DeleteRecipeUseCase)
-    factoryOf(::GetAndSortAllTagsUseCase)
+    factoryOf(::GetAllSummarizedRecipesUseCase)
     factoryOf(::GetFullRecipeByIdUseCase)
     factoryOf(::LoadTemporaryRecipeUseCase)
     factoryOf(::SaveRecipeUseCase)
     factoryOf(::SetRecipeBackToTempUseCase)
     factoryOf(::UpdateTempRecipeUseCase)
+
+    // Tag
+    factoryOf(::GetAndSortAllTagsUseCase)
 
     // User
     factoryOf(::GetUserNicknameUseCase)
