@@ -1,4 +1,4 @@
-package com.team23.view
+package com.team23.view.screen
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.runtime.Composable

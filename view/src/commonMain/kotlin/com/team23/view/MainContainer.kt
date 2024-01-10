@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import com.team23.neuracrsrecipes.model.uimodel.DrawerUiModel
 import com.team23.view.ds.scaffold.PopoteScaffold
+import com.team23.view.screen.HomeScreen
 import com.team23.view.theme.PopoteTheme
 import com.team23.view.widget.drawer.ModalMenuDrawer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
+import org.koin.compose.koinInject
 
 @Composable
 fun MainContainer() {
@@ -21,9 +23,10 @@ fun MainContainer() {
         PopoteTheme {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
             val scope = rememberCoroutineScope()
+            val snackbarHostState = koinInject<SnackbarHostState>()
 
             PopoteScaffold(
-                snackbarHostState = SnackbarHostState(),
+                snackbarHostState = snackbarHostState,
                 scrollState = rememberScrollState(),
                 heightToBeFaded = 8.9f,
                 title = null,
@@ -39,9 +42,7 @@ fun MainContainer() {
                     drawerUiModel = DrawerUiModel("2.0.0"),
                     drawerState = drawerState,
                 ) {
-                    SearchScreen(
-                        onRecipeClick = {},
-                    )
+                    HomeScreen { }
                 }
             }
         }

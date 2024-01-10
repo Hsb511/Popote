@@ -10,19 +10,33 @@ import androidx.compose.ui.text.intl.Locale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.resource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun stringResource(id: String): String {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
     LaunchedEffect(Unit) {
-        bytes = when(Locale.current.language) {
-            "fr" -> resource("values-fr/strings.xml")
-            else -> resource("values/strings.xml")
-        }.readBytes()
+        bytes = readStringsResourceBytes()
     }
+    return bytes.decodeXML(id)
+}
+
+@Composable
+internal fun stringResource(id: String, vararg stringValues: String): String =
+    stringResource(id).fillPlaceholdersWithValues(stringValues.toList())
+
+suspend fun getStringResource(id: String): String = readStringsResourceBytes().decodeXML(id)
+
+suspend fun getStringResource(id: String, vararg stringValues: String): String =
+    getStringResource(id).fillPlaceholdersWithValues(stringValues.toList())
+
+@OptIn(ExperimentalResourceApi::class)
+private suspend fun readStringsResourceBytes(): ByteArray = when (Locale.current.language) {
+    "fr" -> resource("values-fr/strings.xml")
+    else -> resource("values/strings.xml")
+}.readBytes()
+
+private fun ByteArray.decodeXML(id: String): String {
     try {
-        return bytes.decodeToString()
-            .also { println("HUGO - decodeToString $it") }
+        return decodeToString()
             .ifEmpty { return "" }
             .split("<string")
             .also { println("HUGO - split $it") }
@@ -30,8 +44,6 @@ internal fun stringResource(id: String): String {
                 val splitString = it.split("\"")
                 splitString[1] to splitString[2]
             }[id]!!
-
-            .also { println("HUGO - associate get $it") }
             .split(">")[1]
             .split("<")[0]
             .replace("\\'", "'")
@@ -40,10 +52,8 @@ internal fun stringResource(id: String): String {
     }
 }
 
-@Composable
-internal fun stringResource(id: String, vararg stringValues: String): String =
-    stringResource(id)
-        .split("%s")
-        .mapIndexed { index, c ->
-            c + stringValues.getOrNull(index)?.let { "" }
+private fun String.fillPlaceholdersWithValues(stringValues: List<String>) =
+    split("%s")
+    .mapIndexed { index, c ->
+        c + stringValues.getOrNull(index)?.let { "" }
     }.joinToString(separator = "")

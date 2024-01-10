@@ -3,8 +3,10 @@ package com.team23.neuracrsrecipes.viewmodel
 import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
+import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
+import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +24,7 @@ class HomeViewModel(
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
     private val viewModelScope: CoroutineScope,
+    private val snackbarHandler: SnackbarHandler,
 ) {
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
@@ -29,7 +32,7 @@ class HomeViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             viewModelScope.launch(Dispatchers.IO) {
-                // snackbarHandler?.showStartLoading()
+                snackbarHandler.showStartLoading()
             }
             getAllSummarizedRecipesUseCase.invoke()
                 .onFailure {
@@ -45,7 +48,7 @@ class HomeViewModel(
                     val recipes = data.first
                     val newRecipesCount = data.second
                     viewModelScope.launch(Dispatchers.IO) {
-                        // snackbarHandler?.showLoadingRecipe(newRecipesCount)
+                        snackbarHandler.showLoadingRecipe(newRecipesCount)
                     }
 
                     withContext(Dispatchers.Main) {
@@ -57,7 +60,7 @@ class HomeViewModel(
                         getFullRecipeByIdUseCase.invoke(recipe.id)
                     }
                     if (newRecipesCount != 0) {
-                        // snackbarHandler?.showLoadingEnded()
+                        snackbarHandler.showLoadingEnded()
                     }
                 }
         }
@@ -68,18 +71,18 @@ class HomeViewModel(
             updateFavoriteUseCase.invoke(recipe.id)
             recomputeState(recipe.id)
             if (!recipe.isFavorite) {
-                /* val result = snackbarHandler?.showFavoriteSnackbar(recipe.title)
-                if (result == SnackbarResult.ActionPerformed) {
+                val result = snackbarHandler.showFavoriteMessage(recipe.title)
+                if (result == SnackbarResultUiModel.ActionPerformed) {
                     updateFavoriteUseCase.invoke(recipe.id)
                     recomputeState(recipe.id)
-                } */
+                }
             }
         }
     }
 
     fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
-            // snackbarHandler?.showLocalPhoneClick()
+            snackbarHandler.showLocalPhoneMessage()
         }
     }
 
@@ -92,7 +95,6 @@ class HomeViewModel(
             newRecipes.remove(recipe)
             newRecipes.add(recipeIndex, recipe.copy(isFavorite = !recipe.isFavorite))
             _uiState.value = HomeUiState.Data(newRecipes)
-            println("HUGO - recomputeState ${_uiState.value}")
         }
     }
 }

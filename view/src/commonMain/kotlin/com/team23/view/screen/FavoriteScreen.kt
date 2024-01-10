@@ -1,4 +1,4 @@
-package com.team23.view
+package com.team23.view.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

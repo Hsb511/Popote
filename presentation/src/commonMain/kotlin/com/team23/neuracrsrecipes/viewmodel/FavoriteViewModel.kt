@@ -5,6 +5,7 @@ import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.neuracrsrecipes.extension.next
+import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.DisplayTypeMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
@@ -24,6 +25,7 @@ class FavoriteViewModel(
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val displayTypeMapper: DisplayTypeMapper,
     private val viewModelScope: CoroutineScope,
+    private val snackbarHandler: SnackbarHandler,
 ) {
     private val _uiState = MutableStateFlow<FavoriteUiState>(FavoriteUiState.Loading)
     val uiState: StateFlow<FavoriteUiState> = _uiState
@@ -70,7 +72,7 @@ class FavoriteViewModel(
 
     fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
-            // SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
+            snackbarHandler.showLocalPhoneMessage()
         }
     }
 }
