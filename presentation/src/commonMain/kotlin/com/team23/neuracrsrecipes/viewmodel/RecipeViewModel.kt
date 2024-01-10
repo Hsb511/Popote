@@ -8,10 +8,12 @@ import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
 import com.team23.neuracrsrecipes.extension.toReadableQuantity
 import com.team23.neuracrsrecipes.extension.toUrlRecipeId
+import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.RecipeMapper
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uistate.RecipeUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +31,7 @@ class RecipeViewModel(
 	private val deleteRecipeUseCase: DeleteRecipeUseCase,
 	private val recipeMapper: RecipeMapper,
 	private val viewModelScope: CoroutineScope,
+	private val snackbarHandler: SnackbarHandler,
 ) {
 	private val _uiState = MutableStateFlow<RecipeUiState>(RecipeUiState.Loading)
 	val uiState: StateFlow<RecipeUiState> = _uiState
@@ -92,18 +95,18 @@ class RecipeViewModel(
 			updateFavoriteUseCase.invoke(recipe.id)
 			recomputeState(recipe)
 			if (!recipe.isFavorite) {
-				/* val result = SnackbarHandler(snackbarHostState, context).showFavoriteSnackbar(recipe.title)
-				if (result == SnackbarResult.ActionPerformed) {
+				val result = snackbarHandler.showFavoriteMessage(recipe.title)
+				if (result == SnackbarResultUiModel.ActionPerformed) {
 					updateFavoriteUseCase.invoke(recipe.id)
 					recomputeState(recipe)
-				} */
+				}
 			}
 		}
 	}
 
 	fun onLocalPhoneClick() {
 		viewModelScope.launch(Dispatchers.IO) {
-			// SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
+			snackbarHandler.showLocalPhoneMessage()
 		}
 	}
 
@@ -127,7 +130,7 @@ class RecipeViewModel(
 					// navigationHandler.navigateHomeWithRecipeDeleted(recipe.title)
 				}
 			} else {
-				// SnackbarHandler(snackbarHostState, context).showRecipeHasNotBeenDeleted(recipe.title)
+				snackbarHandler.showRecipeHasNotBeenDeleted(recipe.title)
 			}
 		}
 	}

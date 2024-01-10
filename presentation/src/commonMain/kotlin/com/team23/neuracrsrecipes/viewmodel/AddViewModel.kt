@@ -6,12 +6,14 @@ import com.team23.domain.recipe.usecase.SaveRecipeUseCase
 import com.team23.domain.recipe.usecase.UpdateTempRecipeUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.domain.user.usecase.GetUserNicknameUseCase
+import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.RecipeMapper
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddViewModel(
     updateTempRecipeUseCase: UpdateTempRecipeUseCase,
@@ -33,6 +36,7 @@ class AddViewModel(
     private val saveRecipeUseCase: SaveRecipeUseCase,
     private val getUserNicknameUseCase: GetUserNicknameUseCase,
     private val viewModelScope: CoroutineScope,
+    private val snackbarHandler: SnackbarHandler,
 ) {
 
     private val _recipe = MutableStateFlow(createNewRecipe())
@@ -84,12 +88,12 @@ class AddViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val savedRecipeId =
                 saveRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(_recipe.value))
-            /* val result = SnackbarHandler(snackbarHostState, context).showRecipeHasBeenSaved(recipeTitle)
-            if (result == SnackbarResult.ActionPerformed) {
+            val result = snackbarHandler.showRecipeHasBeenSaved(recipeTitle)
+            if (result == SnackbarResultUiModel.ActionPerformed) {
                 withContext(Dispatchers.Main) {
                     onRecipeClick(savedRecipeId)
                 }
-            } */
+            }
         }
         _recipe.value = createNewRecipe()
     }

@@ -4,8 +4,10 @@ import androidx.compose.runtime.mutableStateOf
 import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
+import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
 import com.team23.neuracrsrecipes.mapper.TagMapper
+import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +25,7 @@ class SearchViewModel(
     private val tagMapper: TagMapper,
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val viewModelScope: CoroutineScope,
+    private val snackbarHandler: SnackbarHandler,
 ) {
     val searchValue = mutableStateOf("")
 
@@ -61,7 +64,7 @@ class SearchViewModel(
 
     fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
-            // SnackbarHandler(snackbarHostState, context).showLocalPhoneClick()
+            snackbarHandler.showLocalPhoneMessage()
         }
     }
 
@@ -86,13 +89,11 @@ class SearchViewModel(
             updateFavoriteUseCase.invoke(recipe.id)
             recomputeState(recipe.id)
             if (!recipe.isFavorite) {
-                /*
-                val result = SnackbarHandler(snackbarHostState, context).showFavoriteSnackbar(recipe.title)
-                if (result == SnackbarResult.ActionPerformed) {
+                val result = snackbarHandler.showFavoriteMessage(recipe.title)
+                if (result == SnackbarResultUiModel.ActionPerformed) {
                     updateFavoriteUseCase.invoke(recipe.id)
                     recomputeState(recipe.id)
                 }
-                 */
             }
         }
     }

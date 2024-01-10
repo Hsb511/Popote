@@ -18,7 +18,7 @@ class GetAllSummarizedRecipesUseCase(
                 date = LocalDate(2023, 3, 2),
                 language = LanguageDomainModel.ENGLISH,
                 isFavorite = false,
-                source = RecipeDomainModel.Source.Remote,
+                source = RecipeDomainModel.Source.Local.Saved,
             )
         }
         /* recipeRepository.getAllSummarizedRecipes()

@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
-import com.team23.view.FavoriteScreen
+import com.team23.view.screen.FavoriteScreen
 import com.team23.view.sample.property.SampleDisplayTypeProvider
 import com.team23.view.sample.uimodel.FavoritePreviewParameterProvider
 import com.team23.view.sample.uimodel.summarizedRecipeSample
