@@ -14,10 +14,10 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.team23.view.ds.icon.FillSearchIcon
+import com.team23.view.navigation.NavItemProperty
 
 @Composable
 internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -> Unit) {
@@ -62,10 +62,3 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -
 		}
 	}
 }
-
-data class NavItemProperty(
-	val title: String,
-	val icon: ImageVector,
-	val isSelected: Boolean,
-	val onNavigate: () -> Unit
-)

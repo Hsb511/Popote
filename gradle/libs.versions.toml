@@ -1,11 +1,11 @@
 [versions]
-agp = "8.2.0"
+agp = "8.2.1"
 androidx-activityCompose = "1.8.2"
 jetbrainsCompose = "1.5.11"
 kamel = "0.8.3"
 koin = "3.5.3"
 koinCompose = "1.1.2"
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 kotlinxCoroutines = "1.7.3"
 kotlinxDatetime = "0.4.1"
 voyager = "1.0.0-rc10"

@@ -18,10 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.team23.view.ds.scaffold.BottomBar
-import com.team23.view.ds.scaffold.NavItemProperty
 import com.team23.view.ds.scaffold.PopoteScaffold
 import com.team23.view.ds.scaffold.Snackbar
 import com.team23.view.ds.scaffold.TopBar
+import com.team23.view.navigation.NavItemProperty
 import com.team23.view.theme.PopoteTheme
 
 @Composable

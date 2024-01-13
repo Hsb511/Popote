@@ -39,7 +39,6 @@ private fun ByteArray.decodeXML(id: String): String {
         return decodeToString()
             .ifEmpty { return "" }
             .split("<string")
-            .also { println("HUGO - split $it") }
             .associate {
                 val splitString = it.split("\"")
                 splitString[1] to splitString[2]
