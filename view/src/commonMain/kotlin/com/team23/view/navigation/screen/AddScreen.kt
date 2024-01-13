@@ -1,4 +1,4 @@
-package com.team23.view.screen
+package com.team23.view.navigation.screen
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
@@ -37,29 +38,31 @@ import com.team23.view.widget.recipe.RecipeIngredientsWidget
 import com.team23.view.widget.recipe.RecipeInstructionsWidget
 import org.koin.compose.koinInject
 
-@Composable
-fun AddScreen(
-    scrollState: ScrollState,
-    onRecipeClick: (String) -> Unit,
-    heightToBeFaded: MutableState<Float>,
-    modifier: Modifier = Modifier,
-) {
-    val addViewModel = koinInject<AddViewModel>()
+data class AddScreen(
+    val scrollState: ScrollState,
+    val onRecipeClick: (String) -> Unit,
+    val heightToBeFaded: MutableState<Float>,
+    val modifier: Modifier = Modifier,
+) : Screen {
+    @Composable
+    override fun Content() {
+        val addViewModel = koinInject<AddViewModel>()
 
-    Scaffold(
-        floatingActionButton = {
-            AddSaveButton {
-                addViewModel.onSaveButtonClick(onRecipeClick)
+        Scaffold(
+            floatingActionButton = {
+                AddSaveButton {
+                    addViewModel.onSaveButtonClick(onRecipeClick)
+                }
             }
+        ) { padding ->
+            AddScreen(
+                addRecipe = addViewModel.recipe.collectAsState().value,
+                allTags = addViewModel.tags.collectAsState().value,
+                scrollState = scrollState,
+                heightToBeFaded = heightToBeFaded,
+                modifier = modifier.padding(padding),
+            )
         }
-    ) { padding ->
-        AddScreen(
-            addRecipe = addViewModel.recipe.collectAsState().value,
-            allTags = addViewModel.tags.collectAsState().value,
-            scrollState = scrollState,
-            heightToBeFaded = heightToBeFaded,
-            modifier = modifier.padding(padding),
-        )
     }
 }
 

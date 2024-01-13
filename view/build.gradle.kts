@@ -35,6 +35,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.kamel)
             implementation(libs.koin.compose)
+            api(libs.voyager)
+            implementation(libs.voyager.transitions)
         }
         androidMain.dependencies {
             implementation(compose.uiTooling)

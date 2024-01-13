@@ -1,4 +1,4 @@
-package com.team23.view.screen
+package com.team23.view.navigation.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable

@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
-import com.team23.view.screen.SearchScreen
+import com.team23.view.navigation.screen.SearchScreen
 import com.team23.view.sample.uimodel.previewTextFieldSample
 import com.team23.view.widget.search.SearchRecipeCard
 import com.team23.view.sample.uimodel.summarizedRecipeSample

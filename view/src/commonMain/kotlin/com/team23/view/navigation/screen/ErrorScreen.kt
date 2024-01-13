@@ -1,4 +1,4 @@
-package com.team23.view.screen
+package com.team23.view.navigation.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +35,8 @@ import com.team23.view.extension.stringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+
+
 
 @Composable
 fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
