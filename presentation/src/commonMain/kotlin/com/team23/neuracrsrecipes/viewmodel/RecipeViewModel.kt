@@ -32,6 +32,7 @@ class RecipeViewModel(
 	private val recipeMapper: RecipeMapper,
 	private val viewModelScope: CoroutineScope,
 	private val snackbarHandler: SnackbarHandler,
+
 ) {
 	private val _uiState = MutableStateFlow<RecipeUiState>(RecipeUiState.Loading)
 	val uiState: StateFlow<RecipeUiState> = _uiState
@@ -110,24 +111,25 @@ class RecipeViewModel(
 		}
 	}
 
-	fun onUpdateLocalRecipe() {
+	fun onUpdateLocalRecipe(navigateAdd: () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val recipe: RecipeUiModel = (_uiState.value as? RecipeUiState.Data)?.recipe ?: return@launch
 			setRecipeBackToTempUseCase.invoke(recipeId = recipe.id)
 			withContext(Dispatchers.Main) {
-				// navigationHandler.openAdd()
+				navigateAdd()
 			}
 		}
 	}
 
-	fun onDeleteLocalRecipe() {
+	fun onDeleteLocalRecipe(navigateHome: () -> Unit) {
 		viewModelScope.launch(Dispatchers.IO) {
 			val recipe: RecipeUiModel = (_uiState.value as? RecipeUiState.Data)?.recipe ?: return@launch
 			val hasRecipeBeenDeleted = deleteRecipeUseCase.invoke(recipe.id)
 
 			if (hasRecipeBeenDeleted) {
 				withContext(Dispatchers.Main) {
-					// navigationHandler.navigateHomeWithRecipeDeleted(recipe.title)
+					snackbarHandler.showRecipeHasBeenDeleted(recipe.title)
+					navigateHome()
 				}
 			} else {
 				snackbarHandler.showRecipeHasNotBeenDeleted(recipe.title)

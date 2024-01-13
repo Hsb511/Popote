@@ -25,11 +25,14 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.viewmodel.AddViewModel
 import com.team23.view.extension.stringResource
+import com.team23.view.navigation.AppNavigator
 import com.team23.view.widget.add.AddImageButton
 import com.team23.view.widget.add.AddSaveButton
 import com.team23.view.widget.add.AddTagSection
@@ -40,13 +43,15 @@ import org.koin.compose.koinInject
 
 data class AddScreen(
     val scrollState: ScrollState,
-    val onRecipeClick: (String) -> Unit,
     val heightToBeFaded: MutableState<Float>,
     val modifier: Modifier = Modifier,
 ) : Screen {
     @Composable
     override fun Content() {
         val addViewModel = koinInject<AddViewModel>()
+        val appNavigator = koinInject<AppNavigator>()
+        val navigator = LocalNavigator.currentOrThrow
+        val onRecipeClick = { recipeId: String -> appNavigator.navigateToRecipe(navigator, recipeId) }
 
         Scaffold(
             floatingActionButton = {
