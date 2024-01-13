@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
-import com.team23.view.screen.AddScreen
+import com.team23.view.navigation.screen.AddScreen
 import com.team23.view.sample.property.resourceImagePreviewSample
 import com.team23.view.theme.PopoteTheme
 import com.team23.view.widget.add.AddImageButton
