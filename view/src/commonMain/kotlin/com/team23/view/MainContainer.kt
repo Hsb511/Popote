@@ -5,6 +5,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,30 +26,33 @@ import org.koin.compose.koinInject
 fun MainContainer() {
     KoinContext {
         PopoteTheme {
-            PopoteNavigator { navigator ->
+            val scrollState = rememberScrollState()
+            val heightToBeFaded = remember { mutableStateOf(0f) }
+            val title: MutableState<String?>  = remember { mutableStateOf(null) }
+
+            PopoteNavigator(scrollState, heightToBeFaded, title) { navigator ->
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
                 val snackbarHostState = koinInject<SnackbarHostState>()
-                val scrollState = rememberScrollState()
-                val heightToBeFaded = remember { mutableStateOf(0f) }
+
                 val closeDrawer: () -> Unit = {
                     scope.launch(Dispatchers.IO) { drawerState.close() }
                 }
                 val navItemProperties = createBottomNavItems(
-                    navigator, scrollState, heightToBeFaded, closeDrawer,
+                    navigator, scrollState, heightToBeFaded, title, closeDrawer,
                 )
 
                 PopoteScaffold(
                     snackbarHostState = snackbarHostState,
                     scrollState = scrollState,
                     heightToBeFaded = heightToBeFaded.value,
-                    title = null,
+                    title = title.value,
                     navItemProperties = navItemProperties,
-                    navigateUp = {},
+                    navigateUp = navigator::pop,
                     drawerState = drawerState,
                     openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
                     closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
-                    isNavigationEmpty = false
+                    isNavigationEmpty = navigator.isEmpty
 
                 ) {
                     ModalMenuDrawer(

@@ -62,6 +62,6 @@ fun FavoriteDataEmptyScreenPreview() {
 @Preview(showSystemUi = true)
 fun FavoriteScreenPreview(@PreviewParameter(FavoritePreviewParameterProvider::class) favoriteUiState: FavoriteUiState) {
     PopoteTheme {
-        FavoriteScreen.Content()
+        FavoriteScreen(favoriteUiState, {}, {}, {}, {})
     }
 }

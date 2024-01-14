@@ -10,19 +10,40 @@ import com.team23.view.navigation.screen.SearchScreen
 
 class AppNavigator {
 
-    fun navigateToHome(navigator: Navigator) {
-        navigator.push(HomeScreen)
+    fun navigateToHome(
+        navigator: Navigator,
+        scrollState: ScrollState,
+        heightToBeFaded: MutableState<Float>,
+        title: MutableState<String?>,
+    ) {
+        navigator.push(HomeScreen(scrollState, heightToBeFaded, title))
     }
 
-    fun navigateToRecipe(navigator: Navigator, recipeId: String) {
-        navigator.push(RecipeScreen(recipeId))
+    fun navigateToRecipe(
+        navigator: Navigator,
+        recipeId: String,
+        scrollState: ScrollState,
+        heightToBeFaded: MutableState<Float>,
+        title: MutableState<String?>,
+    ) {
+        navigator.push(RecipeScreen(recipeId, scrollState, heightToBeFaded, title))
     }
 
-    fun navigateToSearch(navigator: Navigator, tagId: String? = null) {
-        navigator.push(SearchScreen(selectedTag = tagId))
+    fun navigateToSearch(
+        navigator: Navigator, tagId: String? = null,
+        scrollState: ScrollState,
+        heightToBeFaded: MutableState<Float>,
+        title: MutableState<String?>,
+    ) {
+        navigator.push(SearchScreen(scrollState, heightToBeFaded, title, tagId))
     }
 
-    fun navigateToAdd(navigator: Navigator, scrollState: ScrollState, heightToBeFaded: MutableState<Float>) {
-        navigator.push(AddScreen(scrollState, heightToBeFaded))
+    fun navigateToAdd(
+        navigator: Navigator,
+        scrollState: ScrollState,
+        heightToBeFaded: MutableState<Float>,
+        title: MutableState<String?>,
+    ) {
+        navigator.push(AddScreen(scrollState, heightToBeFaded, title))
     }
 }

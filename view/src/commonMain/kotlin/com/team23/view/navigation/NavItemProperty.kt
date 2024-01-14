@@ -35,6 +35,7 @@ internal fun createBottomNavItems(
     navigator: Navigator,
     scrollState: ScrollState,
     heightToBeFaded: MutableState<Float>,
+    title: MutableState<String?>,
     closeDrawer: () -> Unit,
 ): List<NavItemProperty> = listOf(
     with(isLastSelectedBottomScreen<HomeScreen>()) {
@@ -42,7 +43,7 @@ internal fun createBottomNavItems(
             title = stringResource("navigation_home_display_name"),
             icon = if (this) Icons.Filled.Home else Icons.Outlined.Home,
             isSelected = this,
-            screen = HomeScreen,
+            screen = HomeScreen(scrollState, heightToBeFaded, title),
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -52,7 +53,7 @@ internal fun createBottomNavItems(
             title = stringResource("navigation_search_display_name"),
             icon = if (this) Icons.Filled.Search else Icons.Outlined.Search,
             isSelected = this,
-            screen = SearchScreen(),
+            screen = SearchScreen(scrollState, heightToBeFaded, title),
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -62,7 +63,7 @@ internal fun createBottomNavItems(
             title = stringResource("navigation_upload_display_name"),
             icon = if (this) Icons.Filled.AddCircle else Icons.Outlined.Add,
             isSelected = this,
-            screen = AddScreen(scrollState, heightToBeFaded),
+            screen = AddScreen(scrollState, heightToBeFaded, title),
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -72,7 +73,7 @@ internal fun createBottomNavItems(
             title = stringResource("navigation_favorite_display_name"),
             icon = if (this) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
             isSelected = this,
-            screen = FavoriteScreen,
+            screen = FavoriteScreen(scrollState, heightToBeFaded, title),
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
