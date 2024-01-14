@@ -44,6 +44,7 @@ import org.koin.compose.koinInject
 data class AddScreen(
     val scrollState: ScrollState,
     val heightToBeFaded: MutableState<Float>,
+    val title: MutableState<String?>,
     val modifier: Modifier = Modifier,
 ) : Screen {
     @Composable
@@ -51,7 +52,7 @@ data class AddScreen(
         val addViewModel = koinInject<AddViewModel>()
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
-        val onRecipeClick = { recipeId: String -> appNavigator.navigateToRecipe(navigator, recipeId) }
+        val onRecipeClick = { recipeId: String -> appNavigator.navigateToRecipe(navigator, recipeId, scrollState, heightToBeFaded, title) }
 
         Scaffold(
             floatingActionButton = {

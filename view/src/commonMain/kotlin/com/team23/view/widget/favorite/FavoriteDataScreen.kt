@@ -23,7 +23,7 @@ fun FavoriteDataScreen(
 	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
 	onDisplayClick: () -> Unit,
 	onLocalPhoneClick: () -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
 ) {
 	val displayType = state.displayType
 	val summarizedRecipes = state.favorites
