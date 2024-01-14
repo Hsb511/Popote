@@ -1,4 +1,4 @@
-package com.team23.neuracrsrecipes.android
+package com.team23.neuracrsrecipes
 
 import android.app.Application
 import com.team23.domain.domainModule

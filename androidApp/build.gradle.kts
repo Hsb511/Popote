@@ -9,10 +9,10 @@ val minorVersion = 0
 val fixVersion = 0
 
 android {
-    namespace = "com.team23.neuracrsrecipes.android"
+    namespace = "com.team23.neuracrsrecipes"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.team23.neuracrsrecipes.android"
+        applicationId = "com.team23.neuracrsrecipes"
         minSdk = 23
         targetSdk = 34
         versionCode = majorVersion * 10000 + minorVersion * 100 + fixVersion

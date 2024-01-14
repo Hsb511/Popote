@@ -1,4 +1,4 @@
-package com.team23.neuracrsrecipes.android
+package com.team23.neuracrsrecipes
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
