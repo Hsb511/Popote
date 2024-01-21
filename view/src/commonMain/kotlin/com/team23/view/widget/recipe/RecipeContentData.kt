@@ -45,6 +45,7 @@ import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.getImageMaxHeight
+import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.stringResource
 import com.team23.view.mapper.FavoriteUiMapper
 import com.team23.view.mapper.LocalPhoneUiMapper
@@ -73,7 +74,7 @@ fun RecipeContentData(
         }
     ) { padding ->
         val density = LocalDensity.current
-        val horizontalPadding = 32f
+        val horizontalPadding = horizontalGutterPadding.value
         var yPosition by remember { mutableStateOf(0f) }
         val coeff = (1 - yPosition / (4 * horizontalPadding)).coerceIn(0f, 1f)
         val spaceToAddInPx = with(LocalDensity.current) { horizontalPadding.dp.toPx() } * 2

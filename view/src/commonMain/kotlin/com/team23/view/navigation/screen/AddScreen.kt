@@ -31,6 +31,7 @@ import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.viewmodel.AddViewModel
+import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.stringResource
 import com.team23.view.navigation.AppNavigator
 import com.team23.view.widget.add.AddImageButton
@@ -86,7 +87,7 @@ fun AddScreen(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
-            .padding(horizontal = 32.dp, vertical = 16.dp)
+            .padding(horizontal = horizontalGutterPadding, vertical = 16.dp)
             .background(color = MaterialTheme.colorScheme.background)
     ) {
         Spacer(modifier = Modifier.height(64.dp + 8.dp))

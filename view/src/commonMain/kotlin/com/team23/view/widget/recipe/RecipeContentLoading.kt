@@ -14,10 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.team23.view.ds.shimmer.Shimmer
+import com.team23.view.extension.horizontalGutterPadding
 
 @Composable
 fun RecipeContentLoading(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(horizontal = 32.dp, vertical = 16.dp)) {
+    Column(modifier = modifier.padding(horizontal = horizontalGutterPadding, vertical = 16.dp)) {
         Shimmer(
             textStyle = MaterialTheme.typography.displaySmall,
             modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)

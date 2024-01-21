@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.view.ds.cell.Cell
+import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.stringResource
 import com.team23.view.mapper.RecipeUiMapper
 
@@ -33,7 +34,7 @@ fun HomeContentData(
 
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(300.dp),
-		contentPadding = PaddingValues(32.dp),
+		contentPadding = PaddingValues(horizontalGutterPadding),
 		verticalItemSpacing = 16.dp,
 		horizontalArrangement = Arrangement.spacedBy(16.dp),
 		modifier = Modifier.fillMaxSize()

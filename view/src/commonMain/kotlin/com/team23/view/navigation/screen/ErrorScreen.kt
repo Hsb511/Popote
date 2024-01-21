@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.stringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -49,7 +50,7 @@ fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
 		modifier = modifier
 			.fillMaxSize()
 			.verticalScroll(scrollState)
-			.padding(all = 32.dp)
+			.padding(all = horizontalGutterPadding)
 	) {
 		NeuracrImage(
 			neuracrImageProperty = ImageProperty.Resource(null, "drawable/neuracr_error.png"),
