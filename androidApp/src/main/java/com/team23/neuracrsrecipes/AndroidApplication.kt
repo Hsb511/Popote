@@ -1,6 +1,7 @@
 package com.team23.neuracrsrecipes
 
 import android.app.Application
+import com.team23.data.dataModule
 import com.team23.domain.domainModule
 import com.team23.neuracrsrecipes.presentationModule
 import com.team23.view.viewModule
@@ -17,6 +18,7 @@ class AndroidApplication : Application() {
         startKoin {
             modules(
                 listOf(
+                    dataModule,
                     domainModule,
                     presentationModule,
                     viewModule,

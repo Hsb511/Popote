@@ -14,7 +14,7 @@ class GetAllSummarizedRecipesUseCase(
             RecipeDomainModel.Summarized(
                 id = "hac",
                 title = "elementum",
-                imageUrl = "https://search.yahoo.com/search?p=dico",
+                imageUrl = "https://neuracr.github.io/assets/images/bretzel.jpg",
                 date = LocalDate(2023, 3, 2),
                 language = LanguageDomainModel.ENGLISH,
                 isFavorite = false,
