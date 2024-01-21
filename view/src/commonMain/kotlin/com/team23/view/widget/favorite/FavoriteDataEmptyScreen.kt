@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.stringResource
 
 @Composable
@@ -32,7 +33,7 @@ fun FavoriteDataEmptyScreen(modifier: Modifier = Modifier) {
 		horizontalAlignment = Alignment.CenterHorizontally,
 		modifier = modifier
 			.fillMaxSize()
-			.padding(all = 32.dp),
+			.padding(all = horizontalGutterPadding),
 	) {
 		Text(
 			text = stringResource(id = "favorite_empty_title"),

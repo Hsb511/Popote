@@ -5,7 +5,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun getImageMaxHeight(): Dp = (getCurrentScreenWidth() - 64.dp) * 3 / 4
+fun getImageMaxHeight(): Dp = (getCurrentScreenWidth() - horizontalGutterPadding * 2) * 3 / 4
 
 @Composable
 expect fun getCurrentScreenWidth(): Dp
+
+internal val horizontalGutterPadding = 32.dp
