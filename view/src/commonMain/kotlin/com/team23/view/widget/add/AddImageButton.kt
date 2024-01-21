@@ -15,6 +15,7 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.ds.icon.NeuracrIcon
 import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.extension.getImageMaxHeight
 
 @Composable
 fun AddImageButton(
@@ -55,8 +56,7 @@ fun AddImageButton(
         } else {
             NeuracrImage(
                 neuracrImageProperty = neuracrImageProperty,
-                // TODO EXPECT ACTUAL
-                maxImageHeight = 480.dp //(LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
+                maxImageHeight = getImageMaxHeight(),
             )
         }
     }

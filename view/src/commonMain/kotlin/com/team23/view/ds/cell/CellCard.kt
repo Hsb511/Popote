@@ -20,6 +20,7 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.extension.stringResource
 
 @Composable
@@ -31,8 +32,7 @@ internal fun CellCard(
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
 			NeuracrImage(
 				neuracrImageProperty = cellProperty.imageProperty,
-				// TODO EXPECT / ACTUAL ON EACH PLATFORM
-				maxImageHeight = (420.dp - 64.dp) * 3 / 4,
+				maxImageHeight = getImageMaxHeight(),
 				modifier = Modifier.fillMaxWidth()
 			)
 			if (cellProperty.isLocallySaved) {

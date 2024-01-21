@@ -44,6 +44,7 @@ import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.extension.stringResource
 import com.team23.view.mapper.FavoriteUiMapper
 import com.team23.view.mapper.LocalPhoneUiMapper
@@ -195,8 +196,7 @@ private fun RecipeImage(
         Box {
             NeuracrImage(
                 neuracrImageProperty = recipeUiModel.image,
-                // TODO
-                maxImageHeight = 480.dp,// (LocalConfiguration.current.screenWidthDp.dp - 64.dp) * 3 / 4,
+                maxImageHeight = getImageMaxHeight(),
             )
             if (recipeUiModel.isLocallySaved) {
                 ButtonLocalPhone(
