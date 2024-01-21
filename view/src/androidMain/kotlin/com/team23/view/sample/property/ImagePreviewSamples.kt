@@ -9,5 +9,5 @@ internal val resourceImagePreviewSample = ImageProperty.Resource(
 
 internal val remoteImagePreviewSample = ImageProperty.Remote(
     contentDescription = null,
-    url = "https://neuracr.github.io/recipes/2022/03/06/bretzels.html"
+    url = "https://neuracr.github.io/assets/images/bretzel.jpg"
 )

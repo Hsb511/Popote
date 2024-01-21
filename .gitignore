@@ -12,3 +12,4 @@ local.properties
 /presentation/build
 /androidApp/build
 /domain/build
+/data/build
