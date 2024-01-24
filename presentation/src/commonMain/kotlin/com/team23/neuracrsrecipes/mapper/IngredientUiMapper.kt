@@ -4,7 +4,7 @@ import com.team23.domain.recipe.model.IngredientDomainModel
 import com.team23.neuracrsrecipes.extension.toReadableQuantity
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 
-class IngredientMapper {
+class IngredientUiMapper {
 
 	fun toIngredientUiModels(ingredients: List<IngredientDomainModel>): List<IngredientUiModel> =
 		ingredients.map(::toIngredientUiModel)

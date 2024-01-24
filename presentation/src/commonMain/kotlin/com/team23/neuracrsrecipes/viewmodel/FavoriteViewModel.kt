@@ -6,8 +6,8 @@ import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.neuracrsrecipes.extension.next
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
-import com.team23.neuracrsrecipes.mapper.DisplayTypeMapper
-import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
+import com.team23.neuracrsrecipes.mapper.DisplayTypeUiMapper
+import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +22,8 @@ class FavoriteViewModel(
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
     private val getPreferenceDisplayTypeUseCase: GetPreferenceDisplayTypeUseCase,
     private val updatePreferenceUseCase: UpdatePreferenceUseCase,
-    private val summarizedRecipeMapper: SummarizedRecipeMapper,
-    private val displayTypeMapper: DisplayTypeMapper,
+    private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
+    private val displayTypeUiMapper: DisplayTypeUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
 ) {
@@ -33,9 +33,9 @@ class FavoriteViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val displayType =
-                displayTypeMapper.toDisplayTypeUiModel(getPreferenceDisplayTypeUseCase.invoke())
+                displayTypeUiMapper.toDisplayTypeUiModel(getPreferenceDisplayTypeUseCase.invoke())
             getAllFavoritesUseCase.invoke().map { recipes ->
-                recipes.map { summarizedRecipeMapper.toUiModel(it) }
+                recipes.map { summarizedRecipeUiMapper.toUiModel(it) }
             }.collect { favorites ->
                 _uiState.value = if (favorites.isEmpty()) {
                     FavoriteUiState.Data.Empty
@@ -64,7 +64,7 @@ class FavoriteViewModel(
             )
             viewModelScope.launch(Dispatchers.IO) {
                 updatePreferenceUseCase.invoke(
-                    displayTypeMapper.toDisplayTypeDomainModel(newDisplayType)
+                    displayTypeUiMapper.toDisplayTypeDomainModel(newDisplayType)
                 )
             }
         }

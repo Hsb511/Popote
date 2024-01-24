@@ -3,7 +3,7 @@ package com.team23.neuracrsrecipes.mapper
 import com.team23.domain.preference.model.PreferenceDomainModel
 import com.team23.neuracrsrecipes.model.property.DisplayType
 
-class DisplayTypeMapper {
+class DisplayTypeUiMapper {
 
     fun toDisplayTypeUiModel(displayType: PreferenceDomainModel.DisplayType) = when (displayType) {
         PreferenceDomainModel.DisplayType.BigCard -> DisplayType.BigCard

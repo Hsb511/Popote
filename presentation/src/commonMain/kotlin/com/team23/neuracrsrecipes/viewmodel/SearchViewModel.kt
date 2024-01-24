@@ -5,8 +5,8 @@ import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
-import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
-import com.team23.neuracrsrecipes.mapper.TagMapper
+import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
+import com.team23.neuracrsrecipes.mapper.TagUiMapper
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
@@ -22,8 +22,8 @@ class SearchViewModel(
     private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
     private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
-    private val tagMapper: TagMapper,
-    private val summarizedRecipeMapper: SummarizedRecipeMapper,
+    private val tagUiMapper: TagUiMapper,
+    private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
 ) {
@@ -39,7 +39,7 @@ class SearchViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val tags = tagMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
+            val tags = tagUiMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
             withContext(Dispatchers.Main) { _tags.value = tags }
             selectedTag?.let { tag ->
                 onTagSelected(TagUiModel(label = tag, isSelected = false))
@@ -78,7 +78,7 @@ class SearchViewModel(
                 tagsList = tagsList.filter { it.isSelected }.map { it.label },
             ).collect { recipes ->
                 val recipeUiModels =
-                    recipes.map { recipe -> summarizedRecipeMapper.toUiModel(recipe) }
+                    recipes.map { recipe -> summarizedRecipeUiMapper.toUiModel(recipe) }
                 withContext(Dispatchers.Main) { _recipes.value = recipeUiModels }
             }
         }

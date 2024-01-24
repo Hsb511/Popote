@@ -6,15 +6,15 @@ import com.team23.domain.recipe.model.RecipeDomainModel.Source
 import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 
-class SummarizedRecipeMapper(
-    private val imageMapper: ImageMapper,
+class SummarizedRecipeUiMapper(
+    private val imageUiMapper: ImageUiMapper,
 ) {
 
     fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized) = with(summarizedRecipe) {
         SummarizedRecipeUiModel(
             id = id,
             title = title,
-            imageProperty = imageMapper.toImageProperty(imageUrl, title),
+            imageProperty = imageUiMapper.toImageProperty(imageUrl, title),
             flagProperty = when (language) {
                 LanguageDomainModel.ENGLISH -> FlagProperty.UK_US
                 LanguageDomainModel.FRENCH -> FlagProperty.FRENCH

@@ -9,7 +9,7 @@ import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
 import com.team23.neuracrsrecipes.extension.toReadableQuantity
 import com.team23.neuracrsrecipes.extension.toUrlRecipeId
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
-import com.team23.neuracrsrecipes.mapper.RecipeMapper
+import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
@@ -25,15 +25,15 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.getScopeName
 
 class RecipeViewModel(
-	private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
-	private val updateFavoriteUseCase: UpdateFavoriteUseCase,
-	private val setRecipeBackToTempUseCase: SetRecipeBackToTempUseCase,
-	private val deleteRecipeUseCase: DeleteRecipeUseCase,
-	private val recipeMapper: RecipeMapper,
-	private val viewModelScope: CoroutineScope,
-	private val snackbarHandler: SnackbarHandler,
+    private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val setRecipeBackToTempUseCase: SetRecipeBackToTempUseCase,
+    private val deleteRecipeUseCase: DeleteRecipeUseCase,
+    private val recipeUiMapper: RecipeUiMapper,
+    private val viewModelScope: CoroutineScope,
+    private val snackbarHandler: SnackbarHandler,
 
-) {
+    ) {
 	private val _uiState = MutableStateFlow<RecipeUiState>(RecipeUiState.Loading)
 	val uiState: StateFlow<RecipeUiState> = _uiState
 	val currentServingsAmount = mutableStateOf(0)
@@ -46,7 +46,7 @@ class RecipeViewModel(
 			viewModelScope.launch(Dispatchers.Main) {
 				getFullRecipeByIdUseCase.invoke(sanitizedRecipeId.toUrlRecipeId())
 					.onSuccess { fullRecipe ->
-						val recipeUiModel = recipeMapper.toRecipeUiModel(fullRecipe)
+						val recipeUiModel = recipeUiMapper.toRecipeUiModel(fullRecipe)
 						if (currentServingsAmount.value == 0) {
 							currentServingsAmount.value = recipeUiModel.defaultServingsAmount
 						}
