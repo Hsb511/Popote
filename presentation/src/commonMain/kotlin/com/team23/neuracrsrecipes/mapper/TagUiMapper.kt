@@ -2,7 +2,7 @@ package com.team23.neuracrsrecipes.mapper
 
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 
-class TagMapper {
+class TagUiMapper {
 
     fun toTagUiModels(tags: List<String>): List<TagUiModel> = tags.map { tagString ->
         TagUiModel(

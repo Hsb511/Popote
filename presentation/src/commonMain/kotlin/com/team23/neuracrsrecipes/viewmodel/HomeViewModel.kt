@@ -4,7 +4,7 @@ import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
-import com.team23.neuracrsrecipes.mapper.SummarizedRecipeMapper
+import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
@@ -21,7 +21,7 @@ import org.koin.core.component.getScopeName
 class HomeViewModel(
     private val getAllSummarizedRecipesUseCase: GetAllSummarizedRecipesUseCase,
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
-    private val summarizedRecipeMapper: SummarizedRecipeMapper,
+    private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
@@ -53,7 +53,7 @@ class HomeViewModel(
 
                     withContext(Dispatchers.Main) {
                         _uiState.value = HomeUiState.Data(recipes = recipes.map {
-                            summarizedRecipeMapper.toUiModel(it)
+                            summarizedRecipeUiMapper.toUiModel(it)
                         })
                     }
                     recipes.forEach { recipe ->

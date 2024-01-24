@@ -7,7 +7,7 @@ import com.team23.domain.recipe.usecase.UpdateTempRecipeUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.domain.user.usecase.GetUserNicknameUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
-import com.team23.neuracrsrecipes.mapper.RecipeMapper
+import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
@@ -30,7 +30,7 @@ import kotlinx.coroutines.withContext
 class AddViewModel(
     updateTempRecipeUseCase: UpdateTempRecipeUseCase,
     private val createNewRecipeUseCase: CreateNewRecipeUseCase,
-    private val recipeMapper: RecipeMapper,
+    private val recipeUiMapper: RecipeUiMapper,
     private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
     private val loadTemporaryRecipeUseCase: LoadTemporaryRecipeUseCase,
     private val saveRecipeUseCase: SaveRecipeUseCase,
@@ -43,7 +43,7 @@ class AddViewModel(
     val recipe: StateFlow<AddRecipeUiModel> = _recipe
         .onEach { recipeUiModel ->
             viewModelScope.launch(Dispatchers.IO) {
-                updateTempRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(recipeUiModel))
+                updateTempRecipeUseCase.invoke(recipeUiMapper.toRecipeDomainModel(recipeUiModel))
             }
         }
         .map(::createAddRecipe)
@@ -78,7 +78,7 @@ class AddViewModel(
             _recipe.value = _recipe.value.copy(author = nickname)
             _tags.value = getAndSortAllTagsUseCase.invoke()
             loadTemporaryRecipeUseCase.invoke()?.let { temporaryRecipe ->
-                _recipe.value = recipeMapper.toRecipeUiModel(temporaryRecipe)
+                _recipe.value = recipeUiMapper.toRecipeUiModel(temporaryRecipe)
             }
         }
     }
@@ -87,7 +87,7 @@ class AddViewModel(
         val recipeTitle = _recipe.value.title
         viewModelScope.launch(Dispatchers.IO) {
             val savedRecipeId =
-                saveRecipeUseCase.invoke(recipeMapper.toRecipeDomainModel(_recipe.value))
+                saveRecipeUseCase.invoke(recipeUiMapper.toRecipeDomainModel(_recipe.value))
             val result = snackbarHandler.showRecipeHasBeenSaved(recipeTitle)
             if (result == SnackbarResultUiModel.ActionPerformed) {
                 withContext(Dispatchers.Main) {
@@ -98,7 +98,7 @@ class AddViewModel(
         _recipe.value = createNewRecipe()
     }
 
-    private fun createNewRecipe() = recipeMapper.toRecipeUiModel(createNewRecipeUseCase.invoke())
+    private fun createNewRecipe() = recipeUiMapper.toRecipeUiModel(createNewRecipeUseCase.invoke())
 
     private fun onTitleChange(newTitle: String) {
         _recipe.value = _recipe.value.copy(title = newTitle)

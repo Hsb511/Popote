@@ -3,7 +3,7 @@ package com.team23.neuracrsrecipes.mapper
 import com.team23.domain.recipe.model.InstructionDomainModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionUiModel
 
-class InstructionMapper {
+class InstructionUiMapper {
 	fun toInstructionUiModels(instructions: List<InstructionDomainModel>): List<InstructionUiModel> =
 		instructions.map {
 			with(it) {

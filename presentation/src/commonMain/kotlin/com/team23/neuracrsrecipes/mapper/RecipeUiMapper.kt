@@ -6,24 +6,24 @@ import com.team23.domain.recipe.model.RecipeDomainModel.Source
 import com.team23.neuracrsrecipes.extension.getLocalLanguage
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 
-class RecipeMapper(
-	private val dateMapper: DateMapper,
-	private val ingredientMapper: IngredientMapper,
-	private val instructionMapper: InstructionMapper,
-	private val imageMapper: ImageMapper,
+class RecipeUiMapper(
+	private val dateUiMapper: DateUiMapper,
+	private val ingredientUiMapper: IngredientUiMapper,
+	private val instructionUiMapper: InstructionUiMapper,
+	private val imageUiMapper: ImageUiMapper,
 ) {
 
 	fun toRecipeUiModel(fullRecipe: RecipeDomainModel.Full) = with(fullRecipe) {
 		RecipeUiModel(
 			id = id,
 			title = title,
-			date = dateMapper.toSubtitleDate(date),
+			date = dateUiMapper.toSubtitleDate(date),
 			author = author,
 			tags = tags,
-			image = imageMapper.toImageProperty(imageUrl, null),
-			ingredients = ingredientMapper.toIngredientUiModels(ingredients),
+			image = imageUiMapper.toImageProperty(imageUrl, null),
+			ingredients = ingredientUiMapper.toIngredientUiModels(ingredients),
 			defaultServingsAmount = servingsNumber,
-			instructions = instructionMapper.toInstructionUiModels(instructions),
+			instructions = instructionUiMapper.toInstructionUiModels(instructions),
 			description = startingText,
 			conclusion = endingText,
 			isFavorite = isFavorite,
@@ -35,13 +35,13 @@ class RecipeMapper(
 		RecipeDomainModel.Full(
 			id = id,
 			title = title,
-			date = dateMapper.toLocalDate(recipeUiModel.date),
+			date = dateUiMapper.toLocalDate(recipeUiModel.date),
 			author = author,
 			tags = tags,
-			imageUrl = imageMapper.toImageUri(image),
-			ingredients = ingredientMapper.toIngredientDomainModels(ingredients),
+			imageUrl = imageUiMapper.toImageUri(image),
+			ingredients = ingredientUiMapper.toIngredientDomainModels(ingredients),
 			servingsNumber = defaultServingsAmount,
-			instructions = instructionMapper.toInstructionDomainModels(instructions),
+			instructions = instructionUiMapper.toInstructionDomainModels(instructions),
 			startingText = description,
 			endingText = conclusion,
 			isFavorite = isFavorite,

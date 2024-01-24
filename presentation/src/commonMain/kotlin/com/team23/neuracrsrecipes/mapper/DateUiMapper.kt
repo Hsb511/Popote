@@ -7,7 +7,7 @@ import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-class DateMapper {
+class DateUiMapper {
 
     fun toSubtitleDate(localDate: LocalDate): String =
         with(localDate) {
