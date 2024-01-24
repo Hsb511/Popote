@@ -28,9 +28,11 @@ kotlin {
             api(libs.bundles.ktor.client)
             api(libs.kotlinx.serializer)
 
+            implementation(projects.domain)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.ksoup)
         }
         commonTest.dependencies {
             implementation(libs.koin.test)
