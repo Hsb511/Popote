@@ -1,24 +1,32 @@
 package com.team23.data.mappers
 
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
 
 class DateMapper {
 
-    fun toLocalDateFromHrefDate(dateStr: String): LocalDate =
-        // TODO
-        // LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(RAW_DATE_FORMAT))
-        LocalDate.fromEpochDays(23)
+    fun toLocalDateFromHrefDate(dateStr: String): LocalDate {
+        val (year, month, day) = dateStr
+            .split("/")
+            .map { it.toInt() }
+        return LocalDate(year = year, monthNumber = month, dayOfMonth = day)
+    }
 
-    fun toLocalDateFromSubtitleDate(dateStr: String): LocalDate =
-        // TODO
-        // LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(SUBTITLE_DATE_FORMAT, Locale.ENGLISH))
-        LocalDate.fromEpochDays(23)
+    fun toLocalDateFromSubtitleDate(dateStr: String): LocalDate {
+        val (month, day, year) = dateStr
+            .replace(",", "")
+            .split(" ")
+        return LocalDate(
+            year = year.toInt(),
+            month = Month.valueOf(month.uppercase()),
+            dayOfMonth = day.toInt(),
+        )
+    }
 
-    fun toDateString(localDate: LocalDate): String =
-        // TODO
-        // localDate.format(DateTimeFormatter.ofPattern(SUBTITLE_DATE_FORMAT, Locale.ENGLISH))
-        "23"
+    fun toDateString(localDate: LocalDate): String = with(localDate) {
+        "${translateEnglishMonth(month)} $dayOfMonth, $year"
+    }
+
+    private fun translateEnglishMonth(month: Month) =
+        month.name.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else "$it" }
 }
-
-private const val RAW_DATE_FORMAT = "yyyy/MM/dd"
-private const val SUBTITLE_DATE_FORMAT = "MMMM dd, yyyy"

@@ -16,10 +16,10 @@ class SummarizedRecipeMapper(
 			id = summarizedRecipeDataModel.href,
 			title = summarizedRecipeDataModel.title,
 			imageUrl = imageMapper.toImageUrl(summarizedRecipeDataModel.imgSrc),
-			date = dateMapper.toLocalDateFromHrefDate(dateStr = ""/*summarizedRecipeDataModel.href
+			date = dateMapper.toLocalDateFromHrefDate(dateStr = summarizedRecipeDataModel.href
 				.split("/recipes/")[1]
 				.split("/")
-				.let { splitData -> "${splitData[0]}/${splitData[1]}/${splitData[2]}" } */
+				.let { splitData -> "${splitData[0]}/${splitData[1]}/${splitData[2]}" }
 			),
 			language = languageMapper.toLanguageDomainModel(summarizedRecipeDataModel.href),
 			isFavorite = false,
