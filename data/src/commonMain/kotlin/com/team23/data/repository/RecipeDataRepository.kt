@@ -1,7 +1,10 @@
 package com.team23.data.repository
 
 import com.team23.data.datasource.NeuracrWebsiteDataSource
+import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
+import com.team23.data.models.FullRecipeDataModel
+import com.team23.data.parsers.FullRecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.repository.RecipeRepository
@@ -11,6 +14,8 @@ internal class RecipeDataRepository(
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
     private val summarizedRecipeParser: SummarizedRecipeParser,
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
+    private val fullRecipeMapper: FullRecipeMapper,
+    private val fullRecipeParser: FullRecipeParser,
 ): RecipeRepository {
     override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
         val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
@@ -27,11 +32,13 @@ internal class RecipeDataRepository(
     }
 
     override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
-        TODO("Not yet implemented")
+        // TODO "Not yet implemented"
     }
 
     override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? {
-        TODO("Not yet implemented")
+        val rawRecipe = neuracrWebsiteDataSource.getRecipeById(recipeId)
+        val fullRecipeDataModel = fullRecipeParser.toFullRecipeDataModel(recipeId, rawRecipe)
+        return fullRecipeMapper.toFullRecipeDomainModel(fullRecipeDataModel)
     }
 
     override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> {
@@ -39,7 +46,11 @@ internal class RecipeDataRepository(
     }
 
     override suspend fun updateRecipe(recipe: RecipeDomainModel.Full) {
-        TODO("Not yet implemented")
+        val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
+        val recipeId = fullRecipeDataModel.recipe.href
+
+        deleteDataByRecipeId(recipeId)
+        insertOrReplaceFullRecipe(fullRecipeDataModel)
     }
 
     override suspend fun saveRecipe(recipeId: String) {
@@ -56,5 +67,13 @@ internal class RecipeDataRepository(
 
     override suspend fun getAllAuthorsName(): List<String> {
         TODO("Not yet implemented")
+    }
+
+    private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
+
+    }
+
+    private suspend fun deleteDataByRecipeId(recipeId: String) {
+
     }
 }

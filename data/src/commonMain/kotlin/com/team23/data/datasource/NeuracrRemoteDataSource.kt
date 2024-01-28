@@ -12,13 +12,10 @@ internal class NeuracrWebsiteDataSource(
 
     suspend fun getLatestPostsFromHome(): Elements = Ksoup
         .parse(html = httpClient.get("").bodyAsText())
-        .select("ul")
+        .select("ul.latest-recipes")
         .select("li")
 
     suspend fun getRecipeById(recipeId: String): Elements = Ksoup
-        .parse(html = getHtmlBody(url = httpClient.get("/$recipeId").bodyAsText()))
+        .parse(html = httpClient.get(recipeId).bodyAsText())
         .select("div.main__content")
-
-    private suspend fun getHtmlBody(url: String = ""): String =
-        httpClient.get(url).bodyAsText()
 }
