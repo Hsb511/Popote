@@ -12,3 +12,9 @@ SELECT COUNT(*) FROM SummarizedRecipeDataModel;
 
 insertSummarizedRecipe:
 INSERT INTO SummarizedRecipeDataModel(href, imgSrc, title) VALUES(?, ?, ?);
+
+selectByTitle:
+SELECT * FROM SummarizedRecipeDataModel WHERE title LIKE '%' || :search || '%';
+
+deleteSummarizeRecipe:
+DELETE FROM SummarizedRecipeDataModel WHERE href = :recipeId;
