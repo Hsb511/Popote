@@ -10,6 +10,7 @@ import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 internal class RecipeDataRepository(
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
@@ -18,17 +19,22 @@ internal class RecipeDataRepository(
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val fullRecipeMapper: FullRecipeMapper,
     private val fullRecipeParser: FullRecipeParser,
-): RecipeRepository {
-    override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> =
-        summarizedRecipeMapper.toSummarizedRecipeDomainModels(neuracrLocalDataSource.getAllSummarizedRecipes())
+) : RecipeRepository {
+    private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
 
-    override suspend fun getCountSummarizedRecipes(): Int = neuracrLocalDataSource.getCount().toInt()
+    override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
+        val summarizedRecipeDataModels = summarizedRecipeDao.getAllSummarizedRecipes()
+        return summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels)
+    }
+
+    override suspend fun getCountSummarizedRecipes(): Int = summarizedRecipeDao.getCount().toInt()
 
     override suspend fun loadAllSummarizedRecipesIfNeeded() {
         if (getCountSummarizedRecipes() == 0) {
             val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
-            val recipeDataModels = summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
-            neuracrLocalDataSource.insertAll(*recipeDataModels.toTypedArray())
+            val recipeDataModels =
+                summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
+            summarizedRecipeDao.insertAll(*recipeDataModels.toTypedArray())
         }
     }
 
@@ -42,9 +48,9 @@ internal class RecipeDataRepository(
         return fullRecipeMapper.toFullRecipeDomainModel(fullRecipeDataModel)
     }
 
-    override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> {
-        TODO("Not yet implemented")
-    }
+    override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
+        summarizedRecipeDao.searchBaseRecipeByTitle(searchText)
+            .map(summarizedRecipeMapper::toSummarizedRecipeDomainModels)
 
     override suspend fun updateRecipe(recipe: RecipeDomainModel.Full) {
         val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
@@ -75,6 +81,6 @@ internal class RecipeDataRepository(
     }
 
     private suspend fun deleteDataByRecipeId(recipeId: String) {
-
+        summarizedRecipeDao.deleteByRecipeId(recipeId)
     }
 }
