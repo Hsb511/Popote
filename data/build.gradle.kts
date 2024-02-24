@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.sql.delight)
 }
 
 kotlin {
@@ -33,6 +34,15 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.ksoup)
+            implementation(libs.sql.delight)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+            implementation(libs.sql.delight.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+            implementation(libs.sql.delight.darwin)
         }
         commonTest.dependencies {
             implementation(libs.koin.test)
@@ -45,5 +55,12 @@ android {
     compileSdk = 34
     defaultConfig {
         minSdk = 23
+    }
+}
+
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "data"
     }
 }
