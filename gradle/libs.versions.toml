@@ -2,16 +2,17 @@
 agp = "8.2.1"
 androidx-activityCompose = "1.8.2"
 jetbrainsCompose = "1.5.11"
-kamel = "0.8.3"
+kamel = "0.9.1"
 koin = "3.5.3"
 koinCompose = "1.1.2"
 kotlin = "1.9.21"
 kotlinxCoroutines = "1.7.3"
-kotlinxDatetime = "0.4.1"
+kotlinxDatetime = "0.5.0"
 kotlinxSerializer = "1.6.2"
 ksoup = "0.1.2"
 ktor = "2.3.7"
-voyager = "1.0.0-rc10"
+sqlDelight = "1.5.5"
+voyager = "1.0.0"
 org-jetbrains-kotlin-jvm = "1.9.21"
 
 [libraries]
@@ -27,6 +28,8 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serializer = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializer" }
 ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-encoding = { module = "io.ktor:ktor-client-encoding", version.ref = "ktor" }
@@ -34,6 +37,9 @@ ktor-client-jsonSerialization = { module = "io.ktor:ktor-client-serialization", 
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+sql-delight = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelight" }
+sql-delight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelight" }
+sql-delight-darwin = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelight" }
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
@@ -45,6 +51,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+sql-delight = { id = "com.squareup.sqldelight", version.ref = "sqlDelight" }
 
 [bundles]
 ktor-client = [

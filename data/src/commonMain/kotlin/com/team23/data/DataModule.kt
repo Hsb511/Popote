@@ -1,5 +1,6 @@
 package com.team23.data
 
+import com.team23.data.datasource.NeuracrLocalDataSource
 import com.team23.data.datasource.NeuracrWebsiteDataSource
 import com.team23.data.mappers.DateMapper
 import com.team23.data.mappers.FullRecipeMapper
@@ -25,15 +26,18 @@ import com.team23.domain.recipe.repository.RecipeRepository
 import com.team23.domain.tag.repository.TagRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
+    includes(platformModule())
     factory { CIO.create() }
     factory { HttpClientFactory(get()) }
     single { provideHttpClient(get()) }
+    singleOf(::NeuracrLocalDataSource)
     factory { NeuracrWebsiteDataSource(get()) }
 
     // Repositories
@@ -69,5 +73,5 @@ private fun provideHttpClient(
     baseUrl = NEURACR_WEBSITE_HOME_URL,
     isDebug = true,
 )
-
+internal expect fun platformModule(): Module
 internal const val NEURACR_WEBSITE_HOME_URL = "https://neuracr.github.io"

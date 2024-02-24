@@ -1,5 +1,6 @@
 package com.team23.data.repository
 
+import com.team23.data.datasource.NeuracrLocalDataSource
 import com.team23.data.datasource.NeuracrWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
@@ -12,15 +13,16 @@ import kotlinx.coroutines.flow.Flow
 
 internal class RecipeDataRepository(
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
+    private val neuracrLocalDataSource: NeuracrLocalDataSource,
     private val summarizedRecipeParser: SummarizedRecipeParser,
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val fullRecipeMapper: FullRecipeMapper,
     private val fullRecipeParser: FullRecipeParser,
 ): RecipeRepository {
     override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
-        val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
-        val recipeDataModels = summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
-        return summarizedRecipeMapper.toSummarizedRecipeDomainModels(recipeDataModels)
+        //val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
+        //val recipeDataModels = summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
+        return summarizedRecipeMapper.toSummarizedRecipeDomainModels(neuracrLocalDataSource.getAllSummarizedRecipes())
     }
 
     override suspend fun getCountSummarizedRecipes(): Int {

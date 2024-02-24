@@ -5,6 +5,7 @@ import com.team23.data.dataModule
 import com.team23.domain.domainModule
 import com.team23.neuracrsrecipes.presentationModule
 import com.team23.view.viewModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class AndroidApplication : Application() {
@@ -16,6 +17,7 @@ class AndroidApplication : Application() {
 
     private fun androidAppInit() {
         startKoin {
+            androidContext(this@AndroidApplication)
             modules(
                 listOf(
                     dataModule,
