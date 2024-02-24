@@ -19,18 +19,17 @@ internal class RecipeDataRepository(
     private val fullRecipeMapper: FullRecipeMapper,
     private val fullRecipeParser: FullRecipeParser,
 ): RecipeRepository {
-    override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
-        //val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
-        //val recipeDataModels = summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
-        return summarizedRecipeMapper.toSummarizedRecipeDomainModels(neuracrLocalDataSource.getAllSummarizedRecipes())
-    }
+    override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> =
+        summarizedRecipeMapper.toSummarizedRecipeDomainModels(neuracrLocalDataSource.getAllSummarizedRecipes())
 
-    override suspend fun getCountSummarizedRecipes(): Int {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getCountSummarizedRecipes(): Int = neuracrLocalDataSource.getCount().toInt()
 
     override suspend fun loadAllSummarizedRecipesIfNeeded() {
-        TODO("Not yet implemented")
+        if (getCountSummarizedRecipes() == 0) {
+            val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
+            val recipeDataModels = summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
+            neuracrLocalDataSource.insertAll(*recipeDataModels.toTypedArray())
+        }
     }
 
     override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {

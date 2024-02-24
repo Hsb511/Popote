@@ -6,3 +6,9 @@ CREATE TABLE SummarizedRecipeDataModel(
 
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
+
+countAllSummarizedRecipes:
+SELECT COUNT(*) FROM SummarizedRecipeDataModel;
+
+insertSummarizedRecipe:
+INSERT INTO SummarizedRecipeDataModel(href, imgSrc, title) VALUES(?, ?, ?);
