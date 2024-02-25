@@ -4,6 +4,12 @@ CREATE TABLE SummarizedRecipeDataModel(
     title TEXT NOT NULL
 );
 
+CREATE TABLE FavoriteDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL
+);
+
+
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
 
@@ -18,3 +24,16 @@ SELECT * FROM SummarizedRecipeDataModel WHERE title LIKE '%' || :search || '%';
 
 deleteSummarizeRecipe:
 DELETE FROM SummarizedRecipeDataModel WHERE href = :recipeId;
+
+
+selectAllFavorites:
+SELECT FavoriteDataModel.* FROM FavoriteDataModel;
+
+isFavoriteStored:
+SELECT EXISTS(SELECT * FROM FavoriteDataModel WHERE recipeId = :recipeId);
+
+insertFavorite:
+INSERT INTO FavoriteDataModel(recipeId) VALUES(?);
+
+deleteFavorite:
+DELETE FROM FavoriteDataModel WHERE recipeId = :recipeId;

@@ -13,18 +13,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class RecipeDataRepository(
+    neuracrLocalDataSource: NeuracrLocalDataSource,
     private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
-    private val neuracrLocalDataSource: NeuracrLocalDataSource,
     private val summarizedRecipeParser: SummarizedRecipeParser,
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val fullRecipeMapper: FullRecipeMapper,
     private val fullRecipeParser: FullRecipeParser,
 ) : RecipeRepository {
     private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
+    private val favoriteDao = neuracrLocalDataSource.favoriteDao
 
     override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
-        val summarizedRecipeDataModels = summarizedRecipeDao.getAllSummarizedRecipes()
-        return summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels)
+        val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
+        val summarizedRecipeDomainModels =
+            summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels)
+        return summarizedRecipeDomainModels.map(::enrichWithFavorite)
     }
 
     override suspend fun getCountSummarizedRecipes(): Int = summarizedRecipeDao.getCount().toInt()
@@ -51,6 +54,8 @@ internal class RecipeDataRepository(
     override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
         summarizedRecipeDao.searchBaseRecipeByTitle(searchText)
             .map(summarizedRecipeMapper::toSummarizedRecipeDomainModels)
+            .map { it.map(::enrichWithFavorite) }
+
 
     override suspend fun updateRecipe(recipe: RecipeDomainModel.Full) {
         val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
@@ -83,4 +88,7 @@ internal class RecipeDataRepository(
     private suspend fun deleteDataByRecipeId(recipeId: String) {
         summarizedRecipeDao.deleteByRecipeId(recipeId)
     }
+
+    private fun enrichWithFavorite(recipe: RecipeDomainModel.Summarized) =
+        recipe.copy(isFavorite = favoriteDao.isStored(recipe.id))
 }

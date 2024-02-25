@@ -20,8 +20,10 @@ import com.team23.data.parsers.InstructionTitleParser
 import com.team23.data.parsers.RecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.data.parsers.TagParser
+import com.team23.data.repository.FavoriteDataRepository
 import com.team23.data.repository.RecipeDataRepository
 import com.team23.data.repository.TagDataRepository
+import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.repository.RecipeRepository
 import com.team23.domain.tag.repository.TagRepository
 import io.ktor.client.HttpClient
@@ -41,6 +43,7 @@ val dataModule = module {
     factory { NeuracrWebsiteDataSource(get()) }
 
     // Repositories
+    singleOf(::FavoriteDataRepository) { bind<FavoriteRepository>() }
     singleOf(::RecipeDataRepository) { bind<RecipeRepository>() }
     singleOf(::TagDataRepository) { bind<TagRepository>() }
 

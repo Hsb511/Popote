@@ -1,15 +1,18 @@
 package com.team23.data.dao
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.team23.data.models.SummarizedRecipeDataModel
 import data.AppDatabaseQueries
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 internal class SummarizedRecipeDao(
     private val dbQueries: AppDatabaseQueries,
 ) {
 
-    internal fun getAllSummarizedRecipes(): List<SummarizedRecipeDataModel> =
+    internal fun getAll(): List<SummarizedRecipeDataModel> =
         dbQueries.selectAllSummarizedRecipes(toDataModel()).executeAsList()
 
     internal fun getCount(): Long = dbQueries.countAllSummarizedRecipes().executeAsOne()
@@ -24,9 +27,10 @@ internal class SummarizedRecipeDao(
         }
     }
 
-    internal fun searchBaseRecipeByTitle(search: String): Flow<List<SummarizedRecipeDataModel>> = flow {
-        emit(dbQueries.selectByTitle(search, toDataModel()).executeAsList())
-    }
+    internal fun searchBaseRecipeByTitle(search: String): Flow<List<SummarizedRecipeDataModel>> =
+        dbQueries.selectByTitle(search, toDataModel())
+            .asFlow()
+            .mapToList(Dispatchers.IO)
 
     internal fun deleteByRecipeId(recipeId: String) {
         dbQueries.deleteSummarizeRecipe(recipeId)
