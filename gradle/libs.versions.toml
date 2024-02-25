@@ -11,7 +11,7 @@ kotlinxDatetime = "0.5.0"
 kotlinxSerializer = "1.6.2"
 ksoup = "0.1.2"
 ktor = "2.3.7"
-sqlDelight = "1.5.5"
+sqlDelight = "2.0.1"
 voyager = "1.0.0"
 org-jetbrains-kotlin-jvm = "1.9.21"
 
@@ -37,9 +37,10 @@ ktor-client-jsonSerialization = { module = "io.ktor:ktor-client-serialization", 
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-sql-delight = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelight" }
-sql-delight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelight" }
-sql-delight-darwin = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelight" }
+sql-delight = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
+sql-delight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sql-delight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sql-delight-darwin = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
@@ -51,7 +52,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
-sql-delight = { id = "com.squareup.sqldelight", version.ref = "sqlDelight" }
+sql-delight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 
 [bundles]
 ktor-client = [

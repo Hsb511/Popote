@@ -1,6 +1,6 @@
 package com.team23.data.datasource
 
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlDriver
 
 expect class DatabaseDriverFactory {
     fun createDriver(): SqlDriver

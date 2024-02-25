@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.ksoup)
             implementation(libs.sql.delight)
+            implementation(libs.sql.delight.coroutines)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
@@ -60,7 +61,9 @@ android {
 
 
 sqldelight {
-    database("AppDatabase") {
-        packageName = "data"
+    databases {
+        create("AppDatabase") {
+            packageName.set("data")
+        }
     }
 }
