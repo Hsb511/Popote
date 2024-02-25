@@ -23,9 +23,11 @@ import com.team23.data.parsers.TagParser
 import com.team23.data.repository.FavoriteDataRepository
 import com.team23.data.repository.RecipeDataRepository
 import com.team23.data.repository.TagDataRepository
+import com.team23.data.repository.UserDataRepository
 import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.repository.RecipeRepository
 import com.team23.domain.tag.repository.TagRepository
+import com.team23.domain.user.repository.UserRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import org.koin.core.module.Module
@@ -46,6 +48,7 @@ val dataModule = module {
     singleOf(::FavoriteDataRepository) { bind<FavoriteRepository>() }
     singleOf(::RecipeDataRepository) { bind<RecipeRepository>() }
     singleOf(::TagDataRepository) { bind<TagRepository>() }
+    singleOf(::UserDataRepository) { bind<UserRepository>() }
 
     // Parsers
     factoryOf(::DateMapper)

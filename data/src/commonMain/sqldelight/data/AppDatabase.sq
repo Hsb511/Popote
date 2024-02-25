@@ -9,6 +9,10 @@ CREATE TABLE FavoriteDataModel(
     recipeId TEXT NOT NULL
 );
 
+CREATE TABLE UserDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	name TEXT NOT NULL
+);
 
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
@@ -37,3 +41,15 @@ INSERT INTO FavoriteDataModel(recipeId) VALUES(?);
 
 deleteFavorite:
 DELETE FROM FavoriteDataModel WHERE recipeId = :recipeId;
+
+selectUser:
+SELECT * FROM UserDataModel LIMIT 1;
+
+insertUserName:
+INSERT INTO UserDataModel(name) VALUES(?);
+
+insertUser:
+INSERT INTO UserDataModel VALUES ?;
+
+deleteUser:
+DELETE FROM UserDataModel WHERE id = :id;
