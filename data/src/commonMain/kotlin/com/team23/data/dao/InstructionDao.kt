@@ -14,7 +14,7 @@ internal class InstructionDao(
             .forEach { dbQueries.insertInstruction(it) }
     }
 
-    suspend fun deleteAllByRecipeId(recipeId: String) {
+    fun deleteAllByRecipeId(recipeId: String) {
         dbQueries.deleteTagByRecipeId(recipeId)
     }
 
