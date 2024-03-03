@@ -114,6 +114,9 @@ DELETE FROM TagDataModel WHERE recipeId = :recipeId;
 selectAllTags:
 SELECT TagDataModel.* FROM TagDataModel;
 
+selectTagsByRecipeId:
+SELECT TagDataModel.* FROM TagDataModel WHERE recipeId = :recipeId;
+
 selectTagRecipeIdByLabel:
 SELECT recipeId FROM TagDataModel WHERE label IN ?;
 
@@ -124,12 +127,18 @@ INSERT INTO IngredientDataModel VALUES ?;
 deleteIngredientByRecipeId:
 DELETE FROM IngredientDataModel WHERE recipeId = :recipeId;
 
+selectIngredientsByRecipeId:
+SELECT IngredientDataModel.* FROM IngredientDataModel WHERE recipeId = :recipeId;
+
 
 insertInstruction:
 INSERT INTO InstructionDataModel VALUES ?;
 
 deleteInstructionByRecipeId:
 DELETE FROM InstructionDataModel WHERE recipeId = :recipeId;
+
+selectInstructionsByRecipeId:
+SELECT InstructionDataModel.* FROM InstructionDataModel WHERE recipeId = :recipeId;
 
 
 selectBaseRecipeByHref:

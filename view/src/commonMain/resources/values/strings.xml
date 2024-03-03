@@ -78,7 +78,7 @@
 
     <!-- error -->
     <string name="error_title">Sorry an error occurred !</string>
-    <string name="error_description">You should check if your connexion is correct. If you have access to the internet you should can visit our website by clicking below.</string>
+    <string name="error_description">You should check your network. If you have access to the internet you can visit our website by clicking below.</string>
     <string name="error_website_button">Go to website</string>
     <string name="error_expand">Expand to see the error</string>
 
