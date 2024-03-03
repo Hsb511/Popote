@@ -1,15 +1,19 @@
 package com.team23.data.repository
 
+import com.team23.data.datasource.NeuracrLocalDataSource
+import com.team23.data.mappers.TagMapper
 import com.team23.domain.tag.repository.TagRepository
 import kotlinx.coroutines.flow.Flow
 
-internal class TagDataRepository : TagRepository {
+internal class TagDataRepository(
+    neuracrLocalDataSource: NeuracrLocalDataSource,
+    private val tagMapper: TagMapper,
+) : TagRepository {
 
-    override suspend fun getAllTags(): List<String> {
-        return listOf("indian", "chicken")
-    }
+    private val tagDao = neuracrLocalDataSource.tagDao
 
-    override fun getRecipeIdByTags(tagsList: List<String>): Flow<List<String>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAllTags(): List<String> = tagMapper.toTagDomainModel(tagDao.loadAll())
+
+    override fun getRecipeIdByTags(tagsList: List<String>): Flow<List<String>> =
+        tagDao.getRecipeIdByLabel(tagsList.flatMap { tagMapper.translateBackToEnglish(it) })
 }
