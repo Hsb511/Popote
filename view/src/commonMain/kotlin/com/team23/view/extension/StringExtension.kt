@@ -51,8 +51,12 @@ private fun ByteArray.decodeXML(id: String): String {
     }
 }
 
-private fun String.fillPlaceholdersWithValues(stringValues: List<String>) =
-    split("%s")
+private fun String.fillPlaceholdersWithValues(stringValues: List<String>) = this
+    .split("%s")
     .mapIndexed { index, c ->
-        c + stringValues.getOrNull(index)?.let { "" }
+        if (index % 2 == 0) {
+            c
+        } else {
+            stringValues.getOrNull((index - 1) / 2) ?: ""
+        }
     }.joinToString(separator = "")

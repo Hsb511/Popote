@@ -1,5 +1,7 @@
 package com.team23.view
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.SnackbarHostState
@@ -9,6 +11,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.CurrentScreen
 import com.team23.neuracrsrecipes.model.uimodel.DrawerUiModel
 import com.team23.view.ds.scaffold.PopoteScaffold
@@ -53,13 +56,14 @@ fun MainContainer() {
                     openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
                     closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
                     isNavigationEmpty = navigator.isEmpty
-
-                ) {
+                ) { padding ->
                     ModalMenuDrawer(
                         drawerUiModel = DrawerUiModel("2.0.0"),
                         drawerState = drawerState,
                     ) {
-                        CurrentScreen()
+                        Box(modifier = Modifier.padding(bottom = padding.calculateBottomPadding())) {
+                            CurrentScreen()
+                        }
                     }
                 }
             }

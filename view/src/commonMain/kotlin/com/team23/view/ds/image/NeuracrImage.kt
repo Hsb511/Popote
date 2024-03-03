@@ -9,16 +9,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.ds.shimmer.Shimmer
+import io.kamel.core.ExperimentalKamelApi
 import io.kamel.image.KamelImage
+import io.kamel.image.KamelImageBox
 import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalKamelApi::class)
 @Composable
 fun NeuracrImage(
 	neuracrImageProperty: ImageProperty,
@@ -44,13 +48,24 @@ fun NeuracrImage(
 		is ImageProperty.Remote -> {
 			var dynamicMaxImageHeight = maxImageHeight
 
-			KamelImage(
+			KamelImageBox(
 				resource = asyncPainterResource(neuracrImageProperty.url),
-				contentDescription = neuracrImageProperty.contentDescription,
-				contentScale = contentScale,
 				onLoading = {
 					dynamicMaxImageHeight = 1.dp
 					Shimmer(modifier.height(maxImageHeight))
+				},
+				onSuccess = { painter ->
+					val imageRatio = painter.intrinsicSize.width / painter.intrinsicSize.height
+					val remoteContentScale = when {
+						contentScale == ContentScale.FillBounds -> ContentScale.FillBounds
+						imageRatio > 9f / 16 -> ContentScale.FillWidth
+						else -> ContentScale.FillHeight
+					}
+					Image(
+						painter = painter,
+						contentDescription = neuracrImageProperty.contentDescription,
+						contentScale = remoteContentScale,
+					)
 				},
 				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
 			)
