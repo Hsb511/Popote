@@ -26,6 +26,22 @@ CREATE TABLE TagDataModel(
 	label TEXT NOT NULL
 );
 
+CREATE TABLE IngredientDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL,
+	label TEXT NOT NULL,
+	quantity TEXT,
+	unit TEXT
+);
+
+CREATE TABLE InstructionDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL,
+    label TEXT NOT NULL,
+    order_ INTEGER NOT NULL
+);
+
+
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
 
@@ -88,3 +104,17 @@ SELECT TagDataModel.* FROM TagDataModel;
 
 selectTagRecipeIdByLabel:
 SELECT recipeId FROM TagDataModel WHERE label IN ?;
+
+
+insertIngredient:
+INSERT INTO IngredientDataModel VALUES ?;
+
+deleteIngredientByRecipeId:
+DELETE FROM IngredientDataModel WHERE recipeId = :recipeId;
+
+
+insertInstruction:
+INSERT INTO InstructionDataModel VALUES ?;
+
+deleteInstructionByRecipeId:
+DELETE FROM InstructionDataModel WHERE recipeId = :recipeId;
