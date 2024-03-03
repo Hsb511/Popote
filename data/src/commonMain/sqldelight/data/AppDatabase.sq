@@ -14,6 +14,12 @@ CREATE TABLE UserDataModel(
 	name TEXT NOT NULL
 );
 
+CREATE TABLE PreferenceDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    label TEXT NOT NULL,
+    value INTEGER NOT NULL
+);
+
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
 
@@ -53,3 +59,13 @@ INSERT INTO UserDataModel VALUES ?;
 
 deleteUser:
 DELETE FROM UserDataModel WHERE id = :id;
+
+
+insertPreference:
+INSERT INTO PreferenceDataModel VALUES ?;
+
+deletePreferenceByLabel:
+DELETE FROM PreferenceDataModel WHERE label = :label;
+
+getPreferenceByLabel:
+SELECT value FROM PreferenceDataModel WHERE label = :label;

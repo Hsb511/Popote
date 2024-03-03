@@ -21,10 +21,12 @@ import com.team23.data.parsers.RecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.data.parsers.TagParser
 import com.team23.data.repository.FavoriteDataRepository
+import com.team23.data.repository.PreferenceDataRepository
 import com.team23.data.repository.RecipeDataRepository
 import com.team23.data.repository.TagDataRepository
 import com.team23.data.repository.UserDataRepository
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.preference.repository.PreferenceRepository
 import com.team23.domain.recipe.repository.RecipeRepository
 import com.team23.domain.tag.repository.TagRepository
 import com.team23.domain.user.repository.UserRepository
@@ -46,6 +48,7 @@ val dataModule = module {
 
     // Repositories
     singleOf(::FavoriteDataRepository) { bind<FavoriteRepository>() }
+    singleOf(::PreferenceDataRepository) { bind<PreferenceRepository>() }
     singleOf(::RecipeDataRepository) { bind<RecipeRepository>() }
     singleOf(::TagDataRepository) { bind<TagRepository>() }
     singleOf(::UserDataRepository) { bind<UserRepository>() }
@@ -79,5 +82,6 @@ private fun provideHttpClient(
     baseUrl = NEURACR_WEBSITE_HOME_URL,
     isDebug = true,
 )
+
 internal expect fun platformModule(): Module
 internal const val NEURACR_WEBSITE_HOME_URL = "https://neuracr.github.io"
