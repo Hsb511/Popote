@@ -20,6 +20,12 @@ CREATE TABLE PreferenceDataModel(
     value INTEGER NOT NULL
 );
 
+CREATE TABLE TagDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL,
+	label TEXT NOT NULL
+);
+
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
 
@@ -69,3 +75,16 @@ DELETE FROM PreferenceDataModel WHERE label = :label;
 
 getPreferenceByLabel:
 SELECT value FROM PreferenceDataModel WHERE label = :label;
+
+
+insertTag:
+INSERT INTO TagDataModel VALUES ?;
+
+deleteTagByRecipeId:
+DELETE FROM TagDataModel WHERE recipeId = :recipeId;
+
+selectAllTags:
+SELECT TagDataModel.* FROM TagDataModel;
+
+selectTagRecipeIdByLabel:
+SELECT recipeId FROM TagDataModel WHERE label IN ?;
