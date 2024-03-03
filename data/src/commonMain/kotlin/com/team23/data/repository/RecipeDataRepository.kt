@@ -1,10 +1,14 @@
 package com.team23.data.repository
 
+import com.fleeksoft.ksoup.select.Elements
 import com.team23.data.datasource.NeuracrLocalDataSource
 import com.team23.data.datasource.NeuracrWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
+import com.team23.data.mappers.SourceMapper
+import com.team23.data.mappers.SubtitleMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
 import com.team23.data.models.FullRecipeDataModel
+import com.team23.data.models.SummarizedRecipeDataModel
 import com.team23.data.parsers.FullRecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.recipe.model.RecipeDomainModel
@@ -19,9 +23,15 @@ internal class RecipeDataRepository(
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val fullRecipeMapper: FullRecipeMapper,
     private val fullRecipeParser: FullRecipeParser,
+    private val sourceMapper: SourceMapper,
+    private val subtitleMapper: SubtitleMapper,
 ) : RecipeRepository {
-    private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
+    private val baseRecipeDao = neuracrLocalDataSource.baseRecipeDao
     private val favoriteDao = neuracrLocalDataSource.favoriteDao
+    private val ingredientDao = neuracrLocalDataSource.ingredientDao
+    private val instructionDao = neuracrLocalDataSource.instructionDao
+    private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
+    private val tagDao = neuracrLocalDataSource.tagDao
 
     override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
         val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
@@ -42,20 +52,24 @@ internal class RecipeDataRepository(
     }
 
     override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
-        // TODO "Not yet implemented"
+        if (baseRecipeDao.findBaseRecipeById(recipeId) == null) {
+            val rawRecipe: Elements = neuracrWebsiteDataSource.getRecipeById(recipeId)
+            val fullRecipeDataModel = fullRecipeParser.toFullRecipeDataModel(recipeId, rawRecipe)
+            insertOrReplaceFullRecipe(fullRecipeDataModel)
+        }
     }
 
-    override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? {
-        val rawRecipe = neuracrWebsiteDataSource.getRecipeById(recipeId)
-        val fullRecipeDataModel = fullRecipeParser.toFullRecipeDataModel(recipeId, rawRecipe)
-        return fullRecipeMapper.toFullRecipeDomainModel(fullRecipeDataModel)
-    }
+    override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? =
+        getFullDataRecipeById(recipeId)?.let { fullRecipe ->
+            fullRecipeMapper.toFullRecipeDomainModel(fullRecipe).copy(
+                isFavorite = favoriteDao.isStored(recipeId)
+            )
+        }
 
     override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
         summarizedRecipeDao.searchBaseRecipeByTitle(searchText)
             .map(summarizedRecipeMapper::toSummarizedRecipeDomainModels)
             .map { it.map(::enrichWithFavorite) }
-
 
     override suspend fun updateRecipe(recipe: RecipeDomainModel.Full) {
         val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
@@ -66,29 +80,89 @@ internal class RecipeDataRepository(
     }
 
     override suspend fun saveRecipe(recipeId: String) {
-        TODO("Not yet implemented")
+        val recipeToSave =
+            setRecipeIdAndIsTemp(getFullDataRecipeById(TEMP_RECIPE_ID), recipeId, false)
+
+        deleteDataByRecipeId(TEMP_RECIPE_ID)
+        baseRecipeDao.deleteByRecipeId(TEMP_RECIPE_ID)
+
+        recipeToSave?.let { recipe ->
+            insertOrReplaceFullRecipe(recipe)
+            summarizedRecipeDao.insertAll(
+                SummarizedRecipeDataModel(
+                    href = recipe.recipe.href,
+                    imgSrc = recipe.recipe.imgSrc,
+                    title = recipe.recipe.title,
+                )
+            )
+        }
     }
 
     override suspend fun setRecipeBackToTemp(recipeId: String) {
-        TODO("Not yet implemented")
+        val recipe = setRecipeIdAndIsTemp(getFullDataRecipeById(recipeId), TEMP_RECIPE_ID, true)
+        recipe?.let {
+            insertOrReplaceFullRecipe(recipe)
+            summarizedRecipeDao.deleteByRecipeId(recipeId)
+        }
     }
 
     override suspend fun deleteRecipe(recipeId: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getAllAuthorsName(): List<String> {
-        TODO("Not yet implemented")
-    }
-
-    private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
-
-    }
-
-    private suspend fun deleteDataByRecipeId(recipeId: String) {
+        deleteDataByRecipeId(recipeId)
+        baseRecipeDao.deleteByRecipeId(recipeId)
         summarizedRecipeDao.deleteByRecipeId(recipeId)
     }
 
+    override suspend fun getAllAuthorsName(): List<String> = baseRecipeDao.getAllSubtitles()
+        .map { subtitle -> subtitleMapper.toAuthorDomainModel(subtitle) }
+        .distinct()
+
+    private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
+        baseRecipeDao.insertOrReplace(fullRecipeDataModel.recipe)
+        tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
+        ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())
+        instructionDao.insertOrReplace(*fullRecipeDataModel.instructions.toTypedArray())
+    }
+
+    private suspend fun deleteDataByRecipeId(recipeId: String) {
+        tagDao.deleteAllByRecipeId(recipeId)
+        ingredientDao.deleteAllByRecipeId(recipeId)
+        instructionDao.deleteAllByRecipeId(recipeId)
+    }
+
+    private fun getFullDataRecipeById(recipeId: String): FullRecipeDataModel? =
+        baseRecipeDao.findBaseRecipeById(recipeId)?.let { baseRecipe ->
+            FullRecipeDataModel(
+                recipe = baseRecipe,
+                tags = tagDao.getTagsByRecipeId(recipeId),
+                ingredients = ingredientDao.getAllByRecipeId(recipeId),
+                instructions = instructionDao.getAllByRecipeId(recipeId),
+            )
+        }
+
     private fun enrichWithFavorite(recipe: RecipeDomainModel.Summarized) =
-        recipe.copy(isFavorite = favoriteDao.isStored(recipe.id))
+        recipe.copy(
+            isFavorite = favoriteDao.isStored(recipe.id),
+            source = sourceMapper.toDomainSource(
+                baseRecipe = baseRecipeDao.findBaseRecipeById(
+                    recipe.id
+                )
+            ),
+        )
+
+    private fun setRecipeIdAndIsTemp(
+        fullRecipe: FullRecipeDataModel?,
+        recipeId: String,
+        isTemporary: Boolean
+    ) =
+        fullRecipe?.copy(
+            recipe = fullRecipe.recipe.copy(
+                href = recipeId,
+                isTemporary = isTemporary,
+            ),
+            tags = fullRecipe.tags.map { it.copy(recipeId = recipeId) },
+            ingredients = fullRecipe.ingredients.map { it.copy(recipeId = recipeId) },
+            instructions = fullRecipe.instructions.map { it.copy(recipeId = recipeId) },
+        )
 }
+
+private const val TEMP_RECIPE_ID = ""

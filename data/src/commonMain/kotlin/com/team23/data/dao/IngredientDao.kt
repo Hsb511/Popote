@@ -18,7 +18,14 @@ internal class IngredientDao(
         dbQueries.deleteTagByRecipeId(recipeId)
     }
 
+    fun getAllByRecipeId(recipeId: String): List<IngredientDataModel> =
+        dbQueries.selectIngredientsByRecipeId(recipeId).executeAsList().map { it.toDataModel() }
+
     private fun IngredientDataModel.toDbModel() = data.IngredientDataModel(
+        id = id, recipeId = recipeId, label = label, quantity = quantity, unit = unit,
+    )
+
+    private fun data.IngredientDataModel.toDataModel() = IngredientDataModel(
         id = id, recipeId = recipeId, label = label, quantity = quantity, unit = unit,
     )
 }

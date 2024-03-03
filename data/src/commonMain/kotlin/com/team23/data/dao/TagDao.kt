@@ -23,8 +23,10 @@ internal class TagDao(
         dbQueries.deleteTagByRecipeId(recipeId)
     }
 
-    fun loadAll(): List<TagDataModel> = dbQueries.selectAllTags().executeAsList()
-        .map { it.toDataModel() }
+    fun loadAll(): List<TagDataModel> = dbQueries.selectAllTags().executeAsList().map(::toDataModel)
+
+    fun getTagsByRecipeId(recipeId: String): List<TagDataModel> =
+        dbQueries.selectTagsByRecipeId(recipeId).executeAsList().map(::toDataModel)
 
     fun getRecipeIdByLabel(tagLabels: List<String>): Flow<List<String>> =
         dbQueries.selectTagRecipeIdByLabel(tagLabels).asFlow().mapToList(Dispatchers.IO)
@@ -33,7 +35,7 @@ internal class TagDao(
         id = id, recipeId = recipeId, label = label,
     )
 
-    private fun data.TagDataModel.toDataModel() = TagDataModel(
-        id = id, recipeId = recipeId, label = label,
+    private fun toDataModel(tagDataModel: data.TagDataModel) = TagDataModel(
+        id = tagDataModel.id, recipeId = tagDataModel.recipeId, label = tagDataModel.label,
     )
 }
