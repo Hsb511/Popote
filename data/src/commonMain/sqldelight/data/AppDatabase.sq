@@ -41,6 +41,18 @@ CREATE TABLE InstructionDataModel(
     order_ INTEGER NOT NULL
 );
 
+CREATE TABLE BaseRecipeDataModel(
+    href TEXT NOT NULL PRIMARY KEY,
+    imgSrc TEXT NOT NULL,
+    title TEXT NOT NULL,
+    subTitle TEXT NOT NULL,
+    servingsAmount INTEGER NOT NULL,
+    instructionTitle TEXT NOT NULL,
+    lastTitle TEXT NOT NULL,
+    isSourceLocal INTEGER NOT NULL,
+    isTemporary INTEGER NOT NULL
+);
+
 
 selectAllSummarizedRecipes:
 SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
@@ -118,3 +130,16 @@ INSERT INTO InstructionDataModel VALUES ?;
 
 deleteInstructionByRecipeId:
 DELETE FROM InstructionDataModel WHERE recipeId = :recipeId;
+
+
+selectBaseRecipeByHref:
+SELECT BaseRecipeDataModel.* FROM BaseRecipeDataModel WHERE href = ?;
+
+insertBaseRecipe:
+INSERT INTO BaseRecipeDataModel VALUES ?;
+
+deleteBaseRecipeByHref:
+DELETE FROM BaseRecipeDataModel WHERE href = ?;
+
+selectAllBaseRecipeSubtitles:
+SELECT subTitle FROM BaseRecipeDataModel;
