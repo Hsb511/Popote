@@ -7,7 +7,9 @@ import com.team23.domain.recipe.usecase.UpdateTempRecipeUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.domain.user.usecase.GetUserNicknameUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
+import com.team23.neuracrsrecipes.handler.UiActionHandler
 import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
+import com.team23.neuracrsrecipes.model.action.UiAction
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
@@ -37,6 +39,7 @@ class AddViewModel(
     private val getUserNicknameUseCase: GetUserNicknameUseCase,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
+    private val uiActionHandler: UiActionHandler,
 ) {
 
     private val _recipe = MutableStateFlow(createNewRecipe())
@@ -70,6 +73,7 @@ class AddViewModel(
         onDeleteInstruction = { instruction -> onDeleteInstruction(instruction) },
         onUpdateInstruction = { instruction -> onUpdateInstruction(instruction) },
         onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) },
+        onLaunchSettings = { uiActionHandler.handle(UiAction.LaunchSettings) }
     )
 
     init {

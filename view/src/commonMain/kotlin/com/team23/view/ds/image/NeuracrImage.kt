@@ -5,13 +5,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.ds.shimmer.Shimmer
@@ -70,12 +68,12 @@ fun NeuracrImage(
 				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
 			)
 		}
-		is ImageProperty.UserPick -> KamelImage(
-				resource = asyncPainterResource(neuracrImageProperty.imageLocalUri),
-				contentDescription = neuracrImageProperty.contentDescription,
-				contentScale = contentScale,
-				modifier = imageModifier.heightIn(max = maxImageHeight),
-			)
+		is ImageProperty.UserPick -> Image(
+			bitmap = neuracrImageProperty.imageBitmap,
+			contentDescription = neuracrImageProperty.contentDescription,
+			contentScale = contentScale,
+			modifier = imageModifier.heightIn(max = maxImageHeight),
+		)
 		is ImageProperty.None -> Unit
 	}
 }

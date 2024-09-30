@@ -35,6 +35,11 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.koin.test)
         }
+        androidMain.dependencies {
+            implementation(libs.accompanist.permissions)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.activity.ktx)
+        }
     }
 }
 

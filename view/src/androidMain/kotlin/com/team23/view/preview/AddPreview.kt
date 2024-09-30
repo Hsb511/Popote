@@ -23,7 +23,7 @@ import com.team23.view.widget.add.AddTextField
 @Preview(showBackground = true)
 fun AddImageButtonPreview() {
     PopoteTheme {
-        AddImageButton(ImageProperty.None, {})
+        AddImageButton(ImageProperty.None)
     }
 }
 
@@ -92,7 +92,6 @@ fun AddScreenPreview() {
                     isFavorite = true,
                     isLocallySaved = true
                 ),
-                {}, {}, {}, {}, {}, {}, {}, { _, _ -> }, {}, {}, {}, {}, {}, {}, {}, {},
             ),
             scrollState = rememberScrollState(),
             heightToBeFaded = remember { mutableFloatStateOf(120f) },
