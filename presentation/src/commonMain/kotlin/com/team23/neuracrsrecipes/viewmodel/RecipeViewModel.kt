@@ -9,7 +9,9 @@ import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
 import com.team23.neuracrsrecipes.extension.toReadableQuantity
 import com.team23.neuracrsrecipes.extension.toUrlRecipeId
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
+import com.team23.neuracrsrecipes.handler.UiActionHandler
 import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
+import com.team23.neuracrsrecipes.model.action.UiAction
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
@@ -32,6 +34,7 @@ class RecipeViewModel(
     private val recipeUiMapper: RecipeUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
+    private val uiActionHandler: UiActionHandler,
 ) {
 
     private val _uiState = MutableStateFlow<RecipeUiState>(RecipeUiState.Loading)
@@ -170,6 +173,6 @@ class RecipeViewModel(
 
     private fun createErrorUiModel(message: String): ErrorUiModel = ErrorUiModel(
         message = message,
-        // TODO HANDLE WEBSITE REDIRECTION
-    ) {}
+        redirectToWebsite = { uiActionHandler.handle(UiAction.RedirectToWebsite) },
+    )
 }

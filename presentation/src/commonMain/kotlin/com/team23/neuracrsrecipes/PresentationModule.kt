@@ -17,10 +17,13 @@ import com.team23.neuracrsrecipes.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.plus
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val presentationModule = module {
+    includes(platformModule())
+
     // Coroutine scope
     factory { MainScope() + CoroutineName("user") }
 
@@ -42,3 +45,5 @@ val presentationModule = module {
     factoryOf(::SearchViewModel)
     factoryOf(::UserViewModel)
 }
+
+internal expect fun platformModule(): Module
