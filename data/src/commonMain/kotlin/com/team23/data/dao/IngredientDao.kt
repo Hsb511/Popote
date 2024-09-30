@@ -7,11 +7,17 @@ internal class IngredientDao(
     private val dbQueries: AppDatabaseQueries,
 ) {
 
-    fun insertOrReplace(vararg ingredientDataModel: IngredientDataModel) {
-        ingredientDataModel
-            .toList()
+    fun insertOrReplace(ingredientDataModels: List<IngredientDataModel>) {
+        ingredientDataModels
             .map { it.toDbModel() }
-            .forEach { dbQueries.insertIngredient(it) }
+            .forEach { ingredient ->
+                dbQueries.insertIngredient(
+                    recipeId = ingredient.recipeId,
+                    label = ingredient.label,
+                    quantity = ingredient.quantity,
+                    unit = ingredient.unit,
+                )
+            }
     }
 
     fun deleteAllByRecipeId(recipeId: String) {

@@ -7,11 +7,16 @@ internal class InstructionDao(
     private val dbQueries: AppDatabaseQueries,
 ) {
 
-    fun insertOrReplace(vararg instructionDataModel: InstructionDataModel) {
-        instructionDataModel
-            .toList()
-            .map { it.toDbModel() }
-            .forEach { dbQueries.insertInstruction(it) }
+    fun insertOrReplace(instructionDataModels: List<InstructionDataModel>) {
+        instructionDataModels
+            .map { it.toDbModel().also { a -> println("HUGO - $it -> $a") } }
+            .forEach { instruction ->
+                dbQueries.insertInstruction(
+                    recipeId = instruction.recipeId,
+                    label = instruction.label,
+                    order_ = instruction.order_,
+                )
+            }
     }
 
     fun deleteAllByRecipeId(recipeId: String) {

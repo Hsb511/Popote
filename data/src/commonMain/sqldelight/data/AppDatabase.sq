@@ -106,7 +106,7 @@ SELECT value FROM PreferenceDataModel WHERE label = :label;
 
 
 insertTag:
-INSERT INTO TagDataModel VALUES ?;
+INSERT INTO TagDataModel(recipeId, label) VALUES (?, ?);
 
 deleteTagByRecipeId:
 DELETE FROM TagDataModel WHERE recipeId = :recipeId;
@@ -122,7 +122,7 @@ SELECT recipeId FROM TagDataModel WHERE label IN ?;
 
 
 insertIngredient:
-INSERT INTO IngredientDataModel VALUES ?;
+INSERT INTO IngredientDataModel(recipeId, label, quantity, unit) VALUES (?, ?, ?, ?);
 
 deleteIngredientByRecipeId:
 DELETE FROM IngredientDataModel WHERE recipeId = :recipeId;
@@ -132,7 +132,7 @@ SELECT IngredientDataModel.* FROM IngredientDataModel WHERE recipeId = :recipeId
 
 
 insertInstruction:
-INSERT INTO InstructionDataModel VALUES ?;
+INSERT INTO InstructionDataModel(recipeId, label, order_) VALUES (?, ?, ?);
 
 deleteInstructionByRecipeId:
 DELETE FROM InstructionDataModel WHERE recipeId = :recipeId;

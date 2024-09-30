@@ -116,14 +116,14 @@ internal class RecipeDataRepository(
         .map { subtitle -> subtitleMapper.toAuthorDomainModel(subtitle) }
         .distinct()
 
-    private suspend fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
+    private fun insertOrReplaceFullRecipe(fullRecipeDataModel: FullRecipeDataModel) {
         baseRecipeDao.insertOrReplace(fullRecipeDataModel.recipe)
-        tagDao.insertOrReplace(*fullRecipeDataModel.tags.toTypedArray())
-        ingredientDao.insertOrReplace(*fullRecipeDataModel.ingredients.toTypedArray())
-        instructionDao.insertOrReplace(*fullRecipeDataModel.instructions.toTypedArray())
+        tagDao.insertOrReplace(fullRecipeDataModel.tags)
+        ingredientDao.insertOrReplace(fullRecipeDataModel.ingredients)
+        instructionDao.insertOrReplace(fullRecipeDataModel.instructions)
     }
 
-    private suspend fun deleteDataByRecipeId(recipeId: String) {
+    private fun deleteDataByRecipeId(recipeId: String) {
         tagDao.deleteAllByRecipeId(recipeId)
         ingredientDao.deleteAllByRecipeId(recipeId)
         instructionDao.deleteAllByRecipeId(recipeId)
