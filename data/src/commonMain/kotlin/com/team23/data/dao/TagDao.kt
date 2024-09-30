@@ -12,11 +12,15 @@ internal class TagDao(
     private val dbQueries: AppDatabaseQueries,
 ) {
 
-    fun insertOrReplace(vararg tagDataModel: TagDataModel) {
-        tagDataModel
-            .toList()
+    fun insertOrReplace(tagDataModels: List<TagDataModel>) {
+        tagDataModels
             .map { it.toDbModel() }
-            .forEach { dbQueries.insertTag(it) }
+            .forEach { tag ->
+                dbQueries.insertTag(
+                    recipeId = tag.recipeId,
+                    label = tag.label,
+                )
+            }
     }
 
     fun deleteAllByRecipeId(recipeId: String) {
