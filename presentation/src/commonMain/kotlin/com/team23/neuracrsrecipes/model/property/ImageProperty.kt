@@ -1,5 +1,7 @@
 package com.team23.neuracrsrecipes.model.property
 
+import androidx.compose.ui.graphics.ImageBitmap
+
 sealed class ImageProperty(open val contentDescription: String?) {
 	data object None : ImageProperty(null)
 
@@ -15,6 +17,6 @@ sealed class ImageProperty(open val contentDescription: String?) {
 
 	data class UserPick(
 		override val contentDescription: String?,
-		val imageLocalUri: String,
+		val imageBitmap: ImageBitmap,
 	) : ImageProperty(contentDescription)
 }
