@@ -145,7 +145,7 @@ selectBaseRecipeByHref:
 SELECT BaseRecipeDataModel.* FROM BaseRecipeDataModel WHERE href = ?;
 
 insertBaseRecipe:
-INSERT INTO BaseRecipeDataModel VALUES ?;
+INSERT OR REPLACE INTO BaseRecipeDataModel VALUES ?;
 
 deleteBaseRecipeByHref:
 DELETE FROM BaseRecipeDataModel WHERE href = ?;
