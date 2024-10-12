@@ -51,6 +51,6 @@ class RecipeUiMapper(
 				else -> LanguageDomainModel.ENGLISH
 			},
 			sections = emptyList(),
-		)
+		).also { println("HUGO - $recipeUiModel -> $it") }
 	}
 }

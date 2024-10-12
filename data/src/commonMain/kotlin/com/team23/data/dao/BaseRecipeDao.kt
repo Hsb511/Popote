@@ -14,7 +14,6 @@ internal class BaseRecipeDao(
 
     fun insertOrReplace(vararg baseRecipeDataModel: BaseRecipeDataModel) {
         baseRecipeDataModel
-            .toList()
             .map { it.toDbModel() }
             .forEach { dbQueries.insertBaseRecipe(it) }
     }

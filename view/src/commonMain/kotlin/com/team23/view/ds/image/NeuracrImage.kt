@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.extension.getImageBitmapFromUri
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.ds.shimmer.Shimmer
 import io.kamel.core.ExperimentalKamelApi
@@ -69,7 +70,7 @@ fun NeuracrImage(
 			)
 		}
 		is ImageProperty.UserPick -> Image(
-			bitmap = neuracrImageProperty.imageBitmap,
+			bitmap = getImageBitmapFromUri(neuracrImageProperty.uri),
 			contentDescription = neuracrImageProperty.contentDescription,
 			contentScale = contentScale,
 			modifier = imageModifier.heightIn(max = maxImageHeight),
