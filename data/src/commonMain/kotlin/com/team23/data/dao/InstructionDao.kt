@@ -9,7 +9,7 @@ internal class InstructionDao(
 
     fun insertOrReplace(instructionDataModels: List<InstructionDataModel>) {
         instructionDataModels
-            .map { it.toDbModel().also { a -> println("HUGO - $it -> $a") } }
+            .map { it.toDbModel() }
             .forEach { instruction ->
                 dbQueries.insertInstruction(
                     recipeId = instruction.recipeId,

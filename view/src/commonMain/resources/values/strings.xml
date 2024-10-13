@@ -11,7 +11,7 @@
     <string name="snackbar_favorite_action">undo</string>
     <string name="snackbar_start_loading">Start loading recipes</string>
     <string name="snackbar_loading_one">Loading 1 new recipe</string>
-    <string name="snackbar_loading_several">Loading %d new recipe</string>
+    <string name="snackbar_loading_several">Loading %s new recipes</string>
     <string name="snackbar_loading_done">Loading finished</string>
     <string name="snackbar_recipe_deleted">%s has been deleted from your database</string>
     <string name="snackbar_recipe_not_deleted">An error occurred. %s has not been deleted from your database</string>
