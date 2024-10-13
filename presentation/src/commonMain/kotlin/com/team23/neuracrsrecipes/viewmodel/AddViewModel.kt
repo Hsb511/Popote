@@ -57,22 +57,22 @@ class AddViewModel(
 
     private fun createAddRecipe(recipe: RecipeUiModel) = AddRecipeUiModel(
         recipe = recipe,
-        onTitleChange = { newTitle -> onTitleChange(newTitle) },
-        onAuthorChange = { newAuthor -> onAuthorChange(newAuthor) },
-        onAddTag = { newTag -> onAddTag(newTag) },
-        onRemoveTag = { tag -> onRemoveTag(tag) },
-        onAddImage = { image -> onAddImage(image) },
-        onAddIngredient = { onAddIngredient() },
-        onDeleteIngredient = { index -> onDeleteIngredient(index) },
-        onUpdateIngredient = { ingredient, index -> onUpdateIngredient(ingredient, index) },
-        onServingsAmountChange = { newServingsAmount -> onServingsAmountChange(newServingsAmount) },
-        onAddOneServing = { onAddOneServing() },
-        onSubtractOneServing = { onSubtractOneServing() },
-        onDescriptionChange = { newDescription -> onDescriptionChange(newDescription) },
-        onAddInstruction = { onAddInstruction() },
-        onDeleteInstruction = { instruction -> onDeleteInstruction(instruction) },
-        onUpdateInstruction = { instruction -> onUpdateInstruction(instruction) },
-        onConclusionChange = { newConclusion -> onConclusionChange(newConclusion) },
+        onTitleChange = ::onTitleChange,
+        onAuthorChange = ::onAuthorChange,
+        onAddTag = ::onAddTag,
+        onRemoveTag = ::onRemoveTag,
+        onAddImage = ::onAddImage,
+        onAddIngredient = ::onAddIngredient,
+        onDeleteIngredient = ::onDeleteIngredient,
+        onUpdateIngredient = ::onUpdateIngredient,
+        onServingsAmountChange = ::onServingsAmountChange,
+        onAddOneServing = ::onAddOneServing,
+        onSubtractOneServing = ::onSubtractOneServing,
+        onDescriptionChange = ::onDescriptionChange,
+        onAddInstruction = ::onAddInstruction,
+        onDeleteInstruction = ::onDeleteInstruction,
+        onUpdateInstruction = ::onUpdateInstruction,
+        onConclusionChange = ::onConclusionChange,
         onLaunchSettings = { uiActionHandler.handle(UiAction.LaunchSettings) }
     )
 
@@ -123,7 +123,7 @@ class AddViewModel(
         val currentTags = _recipe.value.tags.toMutableList()
         currentTags.remove(tag)
         _recipe.value = _recipe.value.copy(tags = currentTags)
-        _tags.value = _tags.value + tag
+        _tags.value += tag
     }
 
     private fun onAddImage(image: ImageProperty) {

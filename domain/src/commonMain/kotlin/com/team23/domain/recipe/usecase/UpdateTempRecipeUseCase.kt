@@ -4,12 +4,17 @@ import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.repository.RecipeRepository
 
 class UpdateTempRecipeUseCase(
-    private val createNewRecipeUseCase: CreateNewRecipeUseCase,
+    createNewRecipeUseCase: CreateNewRecipeUseCase,
     private val recipeRepository: RecipeRepository,
 ) {
+
+    private val initialRecipe = createNewRecipeUseCase.invoke()
+
     suspend fun invoke(recipe: RecipeDomainModel.Full) {
-        if (recipe != createNewRecipeUseCase.invoke()) {
+        if (recipe != initialRecipe) {
             recipeRepository.updateRecipe(recipe)
         }
     }
 }
+
+const val TEMP_RECIPE_ID = "TEMP"

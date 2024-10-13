@@ -21,7 +21,7 @@ internal class IngredientDao(
     }
 
     fun deleteAllByRecipeId(recipeId: String) {
-        dbQueries.deleteTagByRecipeId(recipeId)
+        dbQueries.deleteIngredientByRecipeId(recipeId)
     }
 
     fun getAllByRecipeId(recipeId: String): List<IngredientDataModel> =

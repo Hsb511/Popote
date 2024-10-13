@@ -20,7 +20,7 @@ internal class InstructionDao(
     }
 
     fun deleteAllByRecipeId(recipeId: String) {
-        dbQueries.deleteTagByRecipeId(recipeId)
+        dbQueries.deleteInstructionByRecipeId(recipeId)
     }
 
     fun getAllByRecipeId(recipeId: String): List<InstructionDataModel> =
