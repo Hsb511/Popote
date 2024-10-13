@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.CellProperty
+import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
@@ -26,6 +27,7 @@ import com.team23.view.extension.stringResource
 @Composable
 internal fun CellCard(
 	cellProperty: CellProperty,
+	displayType: DisplayType,
 	modifier: Modifier = Modifier,
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
@@ -33,6 +35,7 @@ internal fun CellCard(
 			NeuracrImage(
 				neuracrImageProperty = cellProperty.imageProperty,
 				maxImageHeight = getImageMaxHeight(),
+				displayType = displayType,
 				modifier = Modifier.fillMaxWidth()
 			)
 			if (cellProperty.isLocallySaved) {
@@ -54,6 +57,7 @@ internal fun CellCard(
 				style = MaterialTheme.typography.titleSmall,
 				modifier = Modifier
 					.align(Alignment.BottomStart)
+					.padding(end = 32.dp)
 					.clip(
 						shape = MaterialTheme.shapes.medium.copy(
 							topStart = CornerSize(0.dp),
