@@ -10,7 +10,7 @@ import kotlinx.datetime.toLocalDateTime
 
 class CreateNewRecipeUseCase {
 	fun invoke(): RecipeDomainModel.Full = RecipeDomainModel.Full(
-		id = "",
+		id = TEMP_RECIPE_ID,
 		title = "",
 		imageUrl = "",
 		date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,

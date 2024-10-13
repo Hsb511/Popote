@@ -13,6 +13,7 @@ import com.team23.data.parsers.FullRecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.repository.RecipeRepository
+import com.team23.domain.recipe.usecase.TEMP_RECIPE_ID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -164,5 +165,3 @@ internal class RecipeDataRepository(
             instructions = fullRecipe.instructions.map { it.copy(recipeId = recipeId) },
         )
 }
-
-private const val TEMP_RECIPE_ID = ""
