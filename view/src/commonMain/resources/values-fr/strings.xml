@@ -11,7 +11,7 @@
     <string name="snackbar_favorite_action">annuler</string>
     <string name="snackbar_start_loading">Début du chargement des recettes</string>
     <string name="snackbar_loading_one">Chargement d\'une nouvelle recette</string>
-    <string name="snackbar_loading_several">Chargement de %d nouvelles recettes</string>
+    <string name="snackbar_loading_several">Chargement de %s nouvelles recettes</string>
     <string name="snackbar_loading_done">Chargement terminé</string>
     <string name="snackbar_recipe_deleted">%s a été supprimée de votre base de données</string>
     <string name="snackbar_recipe_not_deleted">Une erreur est survenue. %s n\' a pas été supprimée de votre base de données</string>

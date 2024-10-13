@@ -56,10 +56,9 @@ class HomeViewModel(
                             summarizedRecipeUiMapper.toUiModel(it)
                         })
                     }
-                    /*
                     recipes.forEach { recipe ->
                         getFullRecipeByIdUseCase.invoke(recipe.id)
-                    } */
+                    }
                     if (newRecipesCount != 0) {
                         snackbarHandler.showLoadingEnded()
                     }
