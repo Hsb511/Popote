@@ -1,6 +1,8 @@
 package com.team23.view.ds.image
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CornerSize
@@ -12,10 +14,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.extension.getImageBitmapFromUri
+import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.ds.shimmer.Shimmer
 import io.kamel.core.ExperimentalKamelApi
-import io.kamel.image.KamelImage
 import io.kamel.image.KamelImageBox
 import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -27,6 +29,7 @@ fun NeuracrImage(
 	neuracrImageProperty: ImageProperty,
 	maxImageHeight: Dp,
 	modifier: Modifier = Modifier,
+	displayType: DisplayType = DisplayType.BigCard,
 	contentScale: ContentScale = ContentScale.FillWidth,
 	hasNoCornerEnd: Boolean = false,
 ) {
@@ -57,13 +60,18 @@ fun NeuracrImage(
 					val imageRatio = painter.intrinsicSize.width / painter.intrinsicSize.height
 					val remoteContentScale = when {
 						contentScale == ContentScale.FillBounds -> ContentScale.FillBounds
-						imageRatio > 9f / 16 -> ContentScale.FillWidth
+						imageRatio < 4 / 3f  -> ContentScale.FillWidth
 						else -> ContentScale.FillHeight
 					}
 					Image(
 						painter = painter,
 						contentDescription = neuracrImageProperty.contentDescription,
 						contentScale = remoteContentScale,
+						modifier = when(displayType) {
+							DisplayType.BigCard -> Modifier.fillMaxSize()
+							DisplayType.SmallCard -> Modifier.fillMaxWidth()
+							DisplayType.List -> Modifier
+						}
 					)
 				},
 				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),

@@ -28,7 +28,7 @@ private fun FlagPropertyCellPreview(@PreviewParameter(SampleDisplayTypeProvider:
 @Preview(showBackground = true)
 private fun CellCardPreview() {
     PopoteTheme {
-        CellCard(cellProperty = getCellPropertySample())
+        CellCard(cellProperty = getCellPropertySample(), displayType = DisplayType.BigCard)
     }
 }
 
