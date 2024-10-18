@@ -28,19 +28,33 @@ fun ModalMenuDrawer(
         drawerState = drawerState,
         gesturesEnabled = false,
         drawerContent = {
-            ModalDrawerSheet {
-                Spacer(modifier = Modifier.height(64.dp)) // TopAppBar height
-                NicknameDrawerItem(
-                    nickname = userViewModel.nickname.collectAsState().value,
-                    onChangeNickname = { nickname -> userViewModel.onChangeLocalNickname(nickname) },
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .padding(top = 8.dp)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                DrawerFooter(versionName = drawerUiModel.versionName)
-            }
+            ModalMenuDrawerContent(
+                nickname = userViewModel.nickname.collectAsState().value,
+                versionName = drawerUiModel.versionName,
+                onChangeNickname = userViewModel::onChangeLocalNickname,
+            )
         },
         content = content,
     )
+}
+
+@Composable
+private fun ModalMenuDrawerContent(
+    nickname: String?,
+    versionName: String,
+    onChangeNickname: (String) -> Unit = {},
+) {
+    ModalDrawerSheet {
+        Spacer(modifier = Modifier.height(64.dp)) // TopAppBar height
+        NicknameDrawerItem(
+            nickname = nickname,
+            onChangeNickname = onChangeNickname,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .padding(top = 8.dp)
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        DrawerFooter(versionName = versionName)
+        Spacer(modifier = Modifier.height(56.dp)) // BottomBar height
+    }
 }

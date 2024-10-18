@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -17,7 +18,8 @@ fun DrawerFooter(
     versionName: String,
     modifier: Modifier = Modifier,
 ) {
-    // val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
+
     Row(modifier = modifier.padding(all = 4.dp)) {
         Text(
             text = "© ",
@@ -29,7 +31,7 @@ fun DrawerFooter(
                 textDecoration = TextDecoration.Underline,
             ),
             onClick = {
-                // launchNewGithubIntent(context,"neuracr")
+                uriHandler.openUri("https://github.com/neuracr")
             },
         )
         Text(
@@ -42,7 +44,7 @@ fun DrawerFooter(
                 textDecoration = TextDecoration.Underline,
             ),
             onClick = {
-                // launchNewGithubIntent(context,"Hsb511")
+                uriHandler.openUri("https://github.com/Hsb511")
             }
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -51,14 +53,3 @@ fun DrawerFooter(
         )
     }
 }
-
-/*
-private fun launchNewGithubIntent(context: Context, nickname: String) {
-	Intent().apply {
-		action = Intent.ACTION_VIEW
-		data = Uri.parse("https://github.com/$nickname")
-	}.also { intent ->
-		context.startActivity(intent)
-	}
-}
-*/

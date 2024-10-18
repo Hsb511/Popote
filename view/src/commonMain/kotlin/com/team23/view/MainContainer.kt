@@ -7,6 +7,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,7 +56,7 @@ fun MainContainer() {
                     drawerState = drawerState,
                     openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
                     closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
-                    isNavigationEmpty = navigator.isEmpty
+                    isNavigationEmpty = !navigator.canPop
                 ) { padding ->
                     ModalMenuDrawer(
                         drawerUiModel = DrawerUiModel("2.0.0"),
