@@ -133,8 +133,8 @@ class RecipeViewModel(
 
             if (hasRecipeBeenDeleted) {
                 withContext(Dispatchers.Main) {
-                    snackbarHandler.showRecipeHasBeenDeleted(recipe.title)
                     navigateHome()
+                    snackbarHandler.showRecipeHasBeenDeleted(recipe.title)
                 }
             } else {
                 snackbarHandler.showRecipeHasNotBeenDeleted(recipe.title)
