@@ -72,14 +72,14 @@ class ComposeSnackbarHandler(
 
     override suspend fun showRecipeHasBeenDeleted(recipeTitle: String) {
         snackbarHostState.showSnackbar(
-            message = getStringResource("snackbar_recipe_deleted, recipeTitle"),
+            message = getStringResource("snackbar_recipe_deleted", recipeTitle),
             duration = SnackbarDuration.Short,
         )
     }
 
     override suspend fun showRecipeHasNotBeenDeleted(recipeTitle: String) {
         snackbarHostState.showSnackbar(
-            message = getStringResource("snackbar_recipe_not_deleted, recipeTitle"),
+            message = getStringResource("snackbar_recipe_not_deleted", recipeTitle),
             duration = SnackbarDuration.Short,
         )
     }
