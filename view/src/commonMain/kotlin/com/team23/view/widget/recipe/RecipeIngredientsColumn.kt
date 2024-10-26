@@ -19,8 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
+import com.team23.view.add_recipe_ingredient_label
+import com.team23.view.add_recipe_ingredient_quantity
+import com.team23.view.add_recipe_ingredient_unit
 import com.team23.view.widget.add.AddTextField
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeIngredientsColumn(
@@ -61,7 +65,7 @@ fun RecipeIngredientsColumn(
                                         )
                                     },
                                     style = MaterialTheme.typography.bodyLarge,
-                                    placeholder = stringResource(id = "add_recipe_ingredient_quantity"),
+                                    placeholder = stringResource(Res.string.add_recipe_ingredient_quantity),
                                     singleLine = true,
                                     keyboardType = KeyboardType.Decimal,
                                     modifier = Modifier.width(50.dp)
@@ -75,7 +79,7 @@ fun RecipeIngredientsColumn(
                                         )
                                     },
                                     style = MaterialTheme.typography.bodyLarge,
-                                    placeholder = stringResource(id = "add_recipe_ingredient_unit"),
+                                    placeholder = stringResource(Res.string.add_recipe_ingredient_unit),
                                     singleLine = true,
                                     modifier = Modifier.width(50.dp)
                                 )
@@ -89,7 +93,7 @@ fun RecipeIngredientsColumn(
                                         )
                                     },
                                     style = MaterialTheme.typography.bodyLarge,
-                                    placeholder = stringResource(id = "add_recipe_ingredient_label"),
+                                    placeholder = stringResource(Res.string.add_recipe_ingredient_label),
                                     singleLine = true,
                                     modifier = Modifier.weight(6f)
                                 )

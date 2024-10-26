@@ -20,10 +20,9 @@ import com.team23.view.ds.shimmer.Shimmer
 import io.kamel.core.ExperimentalKamelApi
 import io.kamel.image.KamelImageBox
 import io.kamel.image.asyncPainterResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalKamelApi::class)
+@OptIn(ExperimentalKamelApi::class)
 @Composable
 fun NeuracrImage(
 	neuracrImageProperty: ImageProperty,
@@ -42,7 +41,7 @@ fun NeuracrImage(
 		)
 	when (neuracrImageProperty) {
 		is ImageProperty.Resource -> Image(
-			painter = painterResource(neuracrImageProperty.imageRes),
+			painter = painterResource(neuracrImageProperty.drawableResource),
 			contentDescription = neuracrImageProperty.contentDescription,
 			contentScale = contentScale,
 			modifier = imageModifier.heightIn(max = maxImageHeight),

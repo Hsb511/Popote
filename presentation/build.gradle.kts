@@ -27,6 +27,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(compose.ui)
+            implementation(compose.components.resources)
             implementation(projects.domain)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.datetime)

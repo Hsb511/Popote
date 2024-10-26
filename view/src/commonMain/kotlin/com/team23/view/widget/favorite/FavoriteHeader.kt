@@ -14,11 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
+import com.team23.view.Res
 import com.team23.view.ds.display.DisplayBigCard
 import com.team23.view.ds.display.DisplayList
 import com.team23.view.ds.display.DisplaySmallCard
 import com.team23.view.extension.next
-import com.team23.view.extension.stringResource
+import com.team23.view.favorite_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FavoriteHeader(
@@ -34,7 +36,7 @@ fun FavoriteHeader(
             .padding(top = headerPadding, start = headerPadding, end = headerPadding)
     ) {
         Text(
-            text = stringResource(id = "favorite_title"),
+            text = stringResource(Res.string.favorite_title),
             style = MaterialTheme.typography.displaySmall,
             color = MaterialTheme.colorScheme.onBackground,
         )
@@ -52,7 +54,6 @@ fun FavoriteHeader(
                     DisplayType.List -> DisplayList(tint = tint, modifier = iconModifier)
                 }
             }
-
         }
     }
 }

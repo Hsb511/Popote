@@ -30,7 +30,14 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
+import com.team23.view.dialog_confirm
+import com.team23.view.dialog_dismiss
+import com.team23.view.recipe_delete_dialog_text
+import com.team23.view.recipe_delete_dialog_title
+import com.team23.view.recipe_delete_label
+import com.team23.view.recipe_update_label
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeModifyButton(
@@ -52,7 +59,7 @@ fun RecipeModifyButton(
             exit = fadeOut(getTween()) + shrinkVertically(getTween()),
         ) {
             RecipeFabRowButton(
-                text = stringResource(id = "recipe_update_label"),
+                text = stringResource(Res.string.recipe_update_label),
                 icon = Icons.Outlined.Refresh,
                 onIconClick = onUpdateRecipe,
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -64,7 +71,7 @@ fun RecipeModifyButton(
             exit = fadeOut(getTween()) + shrinkVertically(getTween()),
         ) {
             RecipeFabRowButton(
-                text = stringResource(id = "recipe_delete_label"),
+                text = stringResource(Res.string.recipe_delete_label),
                 icon = Icons.Outlined.Delete,
                 onIconClick = { openDialog = true },
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -89,23 +96,23 @@ fun RecipeModifyButton(
             onDismissRequest = { openDialog = false },
             title = {
                 Text(
-                    stringResource(id = "recipe_delete_dialog_title"),
+                    stringResource(Res.string.recipe_delete_dialog_title),
                     textAlign = TextAlign.Center
                 )
             },
-            text = { Text(stringResource(id = "recipe_delete_dialog_text")) },
+            text = { Text(stringResource(Res.string.recipe_delete_dialog_text)) },
             confirmButton = {
                 TextButton(
                     onClick = {
                         openDialog = false
                         onDeleteRecipe()
                     }
-                ) { Text(stringResource(id = "dialog_confirm")) }
+                ) { Text(stringResource(Res.string.dialog_confirm)) }
             },
             dismissButton = {
                 TextButton(
                     onClick = { openDialog = false }
-                ) { Text(stringResource(id = "dialog_dismiss")) }
+                ) { Text(stringResource(Res.string.dialog_dismiss)) }
             }
         )
     }

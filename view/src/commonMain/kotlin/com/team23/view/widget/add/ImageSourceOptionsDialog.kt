@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -32,10 +29,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.team23.view.Res
+import com.team23.view.ic_camera
+import com.team23.view.ic_gallery
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ImageSourceOptionDialog(
     onDismissRequest: () -> Unit,
@@ -66,7 +66,7 @@ fun ImageSourceOptionDialog(
                 Icon(
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource("drawable/ic_camera.xml"),
+                    painter = painterResource(Res.drawable.ic_camera),
                     contentDescription = null
                 )
                 Text(text = "Camera", color = MaterialTheme.colorScheme.onSurface)
@@ -81,7 +81,7 @@ fun ImageSourceOptionDialog(
                 Icon(
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource("drawable/ic_gallery.xml"),
+                    painter = painterResource(Res.drawable.ic_gallery),
                     contentDescription = null
                 )
                 Text(text = "Gallery", color = MaterialTheme.colorScheme.onSurface)
@@ -90,12 +90,11 @@ fun ImageSourceOptionDialog(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun AlertMessageDialog(
     title: String,
     message: String? = null,
-    resource: String? = "ic_error_dialog.xml",
+    resource: DrawableResource? = null,
     positiveButtonText: String? = null,
     negativeButtonText: String? = null,
     onPositiveClick: () -> Unit = {},
@@ -177,8 +176,6 @@ fun AlertMessageDialog(
                     }
                 }
             }
-
         }
-
     }
 }

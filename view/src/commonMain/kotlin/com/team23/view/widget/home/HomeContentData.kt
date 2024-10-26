@@ -15,14 +15,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
+import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.horizontalGutterPadding
-import com.team23.view.extension.stringResource
+import com.team23.view.home_title
 import com.team23.view.mapper.RecipeUiMapper
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeContentData(
@@ -45,7 +46,7 @@ fun HomeContentData(
 		}
 		item(span = StaggeredGridItemSpan.FullLine) {
 			Text(
-				text = stringResource(id = "home_title"),
+				text = stringResource(Res.string.home_title),
 				style = MaterialTheme.typography.displaySmall,
 				color = MaterialTheme.colorScheme.onBackground,
 			)

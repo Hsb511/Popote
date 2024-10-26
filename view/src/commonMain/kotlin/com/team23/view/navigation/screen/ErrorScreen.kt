@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
@@ -30,14 +30,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
+import com.team23.view.Res
 import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.error_description
+import com.team23.view.error_expand
+import com.team23.view.error_title
+import com.team23.view.error_website_button
 import com.team23.view.extension.horizontalGutterPadding
-import com.team23.view.extension.stringResource
+import com.team23.view.neuracr_error
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-
-
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
@@ -53,18 +57,21 @@ fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
 			.padding(all = horizontalGutterPadding)
 	) {
 		NeuracrImage(
-			neuracrImageProperty = ImageProperty.Resource(null, "drawable/neuracr_error.png"),
+			neuracrImageProperty = ImageProperty.Resource(
+				contentDescription = null,
+				drawableResource = Res.drawable.neuracr_error,
+			),
 			maxImageHeight = 230.dp,
 			modifier = Modifier.padding(top = 32.dp)
 		)
 		Text(
-			text = stringResource(id = "error_title"),
+			text = stringResource(Res.string.error_title),
 			style = MaterialTheme.typography.headlineSmall,
 			textAlign = TextAlign.Center,
 			modifier = Modifier.fillMaxWidth()
 		)
 		Text(
-			text = stringResource(id = "error_description"),
+			text = stringResource(Res.string.error_description),
 			style = MaterialTheme.typography.bodyLarge,
 			textAlign = TextAlign.Center,
 			modifier = Modifier.fillMaxWidth()
@@ -77,11 +84,11 @@ fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
 			onClick = errorUiModel.redirectToWebsite,
 		) {
 			Text(
-				text = stringResource(id = "error_website_button"),
+				text = stringResource(Res.string.error_website_button),
 				style = MaterialTheme.typography.labelLarge,
 			)
 			Icon(
-				imageVector = Icons.Filled.Send,
+				imageVector = Icons.AutoMirrored.Filled.Send,
 				contentDescription = null,
 				modifier = Modifier.padding(start = 8.dp)
 			)
@@ -96,7 +103,7 @@ fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
 			},
 		) {
 			Text(
-				text = stringResource(id = "error_expand"),
+				text = stringResource(Res.string.error_expand),
 				style = MaterialTheme.typography.labelLarge,
 				color = MaterialTheme.colorScheme.onBackground,
 			)

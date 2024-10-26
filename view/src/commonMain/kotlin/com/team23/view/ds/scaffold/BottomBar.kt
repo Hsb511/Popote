@@ -46,8 +46,8 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -
 				label = {
 					Text(
 						text = navItemProperty.title,
-						fontWeight = if (navItemProperty.isSelected) FontWeight.ExtraBold else null,
-						modifier = Modifier.offset(y = 22.dp)
+						fontWeight = FontWeight.ExtraBold.takeIf { navItemProperty.isSelected },
+						modifier = Modifier.offset(y = (-2).dp),
 					)
 				},
 				colors = NavigationBarItemDefaults.colors(
@@ -57,7 +57,7 @@ internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -
 					unselectedIconColor = MaterialTheme.colorScheme.scrim,
 					unselectedTextColor = MaterialTheme.colorScheme.scrim,
 				),
-				modifier = Modifier.offset(y = (-8).dp)
+				modifier = Modifier.offset(y = 4.dp)
 			)
 		}
 	}

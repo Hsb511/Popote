@@ -24,9 +24,11 @@ import com.team23.neuracrsrecipes.permission.PermissionType
 import com.team23.neuracrsrecipes.permission.createPermissionsManager
 import com.team23.neuracrsrecipes.permission.rememberCameraManager
 import com.team23.neuracrsrecipes.permission.rememberGalleryManager
+import com.team23.view.Res
 import com.team23.view.ds.icon.NeuracrIcon
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.getImageMaxHeight
+import com.team23.view.ic_upload_image
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -132,7 +134,7 @@ fun AddImageButton(
         if (neuracrImageProperty is ImageProperty.None) {
             NeuracrIcon(
                 iconProperty = IconProperty.Resource(
-                    fileName = "drawable/ic_upload_image.xml",
+                    drawableResource = Res.drawable.ic_upload_image,
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 ),
                 modifier = Modifier.align(Alignment.Center)

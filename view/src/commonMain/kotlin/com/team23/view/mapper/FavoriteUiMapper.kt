@@ -8,17 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.team23.neuracrsrecipes.model.property.IconProperty
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
+import com.team23.view.favorite_button_content_description
+import org.jetbrains.compose.resources.stringResource
 
 class FavoriteUiMapper {
 
     @Composable
     fun toFavoriteIconProperty(isFavorite: Boolean): IconProperty.Vector = IconProperty.Vector(
         imageVector = isFavorite.favoriteImageVector(),
-        contentDescription = stringResource("favorite_button_content_description"),
+        contentDescription = stringResource(Res.string.favorite_button_content_description),
         tint = isFavorite.favoriteTint(),
     )
-
 
     private fun Boolean.favoriteImageVector(): ImageVector =
         if (this) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
