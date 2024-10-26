@@ -11,9 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
+import com.team23.view.Res
+import com.team23.view.add_recipe_save_dialog_text
+import com.team23.view.add_recipe_save_dialog_title
+import com.team23.view.dialog_confirm
+import com.team23.view.dialog_dismiss
 import com.team23.view.ds.button.ButtonTextDialog
 import com.team23.view.ds.icon.NeuracrIcon
-import com.team23.view.extension.stringResource
+import com.team23.view.ic_save
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AddSaveButton(onSaveButtonClick: () -> Unit) {
@@ -25,7 +31,7 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
     ) {
         NeuracrIcon(
             iconProperty = IconProperty.Resource(
-                fileName = "drawable/ic_save.xml",
+                drawableResource = Res.drawable.ic_save,
             ),
             modifier = Modifier.size(24.dp),
         )
@@ -36,14 +42,14 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
             onDismissRequest = { openDialog.value = false },
             title = {
                 Text(
-                    text = stringResource(id = "add_recipe_save_dialog_title"),
+                    text = stringResource(Res.string.add_recipe_save_dialog_title),
                     textAlign = TextAlign.Center
                 )
             },
-            text = { Text(stringResource(id = "add_recipe_save_dialog_text")) },
+            text = { Text(stringResource(Res.string.add_recipe_save_dialog_text)) },
             confirmButton = {
                 ButtonTextDialog(
-                    text = stringResource(id = "dialog_confirm"),
+                    text = stringResource(Res.string.dialog_confirm),
                     onClick = {
                         openDialog.value = false
                         onSaveButtonClick()
@@ -52,7 +58,7 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
             },
             dismissButton = {
                 ButtonTextDialog(
-                    text = stringResource(id = "dialog_dismiss"),
+                    text = stringResource(Res.string.dialog_dismiss),
                     onClick = {
                         openDialog.value = false
                     },

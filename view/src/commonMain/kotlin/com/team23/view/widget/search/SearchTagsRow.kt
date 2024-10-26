@@ -17,30 +17,36 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
+import com.team23.view.extension.BackHandler
+import com.team23.view.ic_tag
+import com.team23.view.search_tags_row_label
+import com.team23.view.search_textfield_placeholder
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier) {
 	var searchTagValue by remember { mutableStateOf("") }
 	var isMenuExpanded by remember { mutableStateOf(false) }
+	val focusManager = LocalFocusManager.current
 
-	/* TODO
 	BackHandler(enabled = isMenuExpanded) {
 		focusManager.clearFocus()
-	}*/
+	}
 
 	SearchTextField(
 		textFieldUiModel = TextFieldUiModel(
 			searchValue = searchTagValue,
 			onValueChange = { newValue -> searchTagValue = newValue },
-			label = stringResource("search_tags_row_label"),
-			placeholder = stringResource("search_textfield_placeholder"),
+			label = stringResource(Res.string.search_tags_row_label),
+			placeholder = stringResource(Res.string.search_textfield_placeholder),
 			leadingIcon = IconProperty.Resource(
-				fileName = "drawable/ic_tag.xml",
+				drawableResource = Res.drawable.ic_tag,
 				contentDescription = "",
 				tint = MaterialTheme.colorScheme.onSecondaryContainer,
 			),

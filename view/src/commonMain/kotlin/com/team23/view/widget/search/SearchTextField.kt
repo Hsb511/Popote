@@ -10,14 +10,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.view.ds.icon.NeuracrIcon
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTextField(
 	textFieldUiModel: TextFieldUiModel,

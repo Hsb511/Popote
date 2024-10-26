@@ -1,5 +1,7 @@
 package com.team23.neuracrsrecipes.model.property
 
+import org.jetbrains.compose.resources.DrawableResource
+
 sealed class ImageProperty(open val contentDescription: String?) {
 	data object None : ImageProperty(null)
 
@@ -10,7 +12,7 @@ sealed class ImageProperty(open val contentDescription: String?) {
 
 	data class Resource(
 		override val contentDescription: String?,
-		val imageRes: String,
+		val drawableResource: DrawableResource,
 	) : ImageProperty(contentDescription)
 
 	data class UserPick(

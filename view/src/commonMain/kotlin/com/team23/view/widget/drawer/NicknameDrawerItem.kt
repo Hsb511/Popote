@@ -19,8 +19,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.team23.view.Res
+import com.team23.view.dialog_confirm
+import com.team23.view.dialog_dismiss
+import com.team23.view.drawer_dialog_placeholder
+import com.team23.view.drawer_dialog_text
+import com.team23.view.drawer_empty_name
+import com.team23.view.drawer_name_change
+import com.team23.view.drawer_name_set
 import com.team23.view.ds.button.ButtonTextDialog
-import com.team23.view.extension.stringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun NicknameDrawerItem(
@@ -32,9 +40,9 @@ fun NicknameDrawerItem(
     NavigationDrawerItem(
         label = {
             val text = if (nickname == null) {
-                stringResource(id = "drawer_empty_name")
+                stringResource(Res.string.drawer_empty_name)
             } else {
-                stringResource(id = "drawer_name_set", nickname)
+                stringResource(Res.string.drawer_name_set, nickname)
             }
             Text(text = text)
         },
@@ -66,19 +74,19 @@ private fun NicknameDialog(
     onChangeNickname: (String) -> Unit,
 ) {
     val newNickname = remember { mutableStateOf(nickname ?: "") }
-    val dialogText = stringResource(id = "drawer_dialog_text")
+    val dialogText = stringResource(Res.string.drawer_dialog_text)
     val dialogDescription = if (nickname == null) {
         dialogText
     } else {
-        stringResource(id = "drawer_name_set", nickname) + ". " + dialogText
+        stringResource(Res.string.drawer_name_set, nickname) + ". " + dialogText
     }
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
-            val drawerTitleResId =
-                if (nickname == null) "drawer_empty_name" else "drawer_name_change"
+            val drawerTitleResource =
+                if (nickname == null) Res.string.drawer_empty_name else Res.string.drawer_name_change
             Text(
-                text = stringResource(id = drawerTitleResId),
+                text = stringResource(resource = drawerTitleResource),
                 textAlign = TextAlign.Center
             )
         },
@@ -89,7 +97,7 @@ private fun NicknameDialog(
                     value = newNickname.value,
                     singleLine = true,
                     label = {
-                        Text(text = stringResource(id = "drawer_dialog_placeholder"))
+                        Text(text = stringResource(Res.string.drawer_dialog_placeholder))
                     },
                     onValueChange = { newValue ->
                         newNickname.value = newValue
@@ -100,7 +108,7 @@ private fun NicknameDialog(
         },
         confirmButton = {
             ButtonTextDialog(
-                text = stringResource(id = "dialog_confirm"),
+                text = stringResource(Res.string.dialog_confirm),
                 onClick = {
                     onChangeNickname(newNickname.value)
                     onDismissRequest()
@@ -109,7 +117,7 @@ private fun NicknameDialog(
         },
         dismissButton = {
             ButtonTextDialog(
-                text = stringResource(id = "dialog_dismiss"),
+                text = stringResource(Res.string.dialog_dismiss),
                 onClick = onDismissRequest,
             )
         }

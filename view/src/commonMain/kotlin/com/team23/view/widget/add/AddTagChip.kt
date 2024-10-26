@@ -15,7 +15,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
+import com.team23.view.Res
 import com.team23.view.ds.icon.NeuracrIcon
+import com.team23.view.ic_tag
 
 @Composable
 fun AddTagChip(
@@ -38,7 +40,7 @@ fun AddTagChip(
     ) {
         NeuracrIcon(
             iconProperty = IconProperty.Resource(
-                fileName = "drawable/ic_tag.xml",
+                drawableResource = Res.drawable.ic_tag,
                 contentDescription = "Add",
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
             ),
@@ -48,7 +50,7 @@ fun AddTagChip(
         allTags = allTags,
         onAddTag = { newTag ->
             onAddTag(newTag)
-            tags.value = tags.value + newTag
+            tags.value += newTag
         },
         expanded = expanded,
     )

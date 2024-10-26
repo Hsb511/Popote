@@ -10,3 +10,7 @@ import androidx.compose.ui.unit.Dp
 @Composable
 actual fun getCurrentScreenWidth(): Dp =
     with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+
+@Composable
+actual fun BackHandler(enabled: Boolean, onBackPressed: () -> Unit) {
+}

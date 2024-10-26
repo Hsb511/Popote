@@ -30,12 +30,15 @@ import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
+import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
-import com.team23.view.extension.stringResource
 import com.team23.view.mapper.RecipeUiMapper
 import com.team23.view.navigation.AppNavigator
+import com.team23.view.search_textfield_label
+import com.team23.view.search_textfield_placeholder
 import com.team23.view.widget.search.SearchTagsRow
 import com.team23.view.widget.search.SearchTextField
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 internal data class SearchScreen(
@@ -62,8 +65,8 @@ internal data class SearchScreen(
                 textField = TextFieldUiModel(
                     searchValue = searchViewModel.searchValue.value,
                     onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
-                    label = stringResource("search_textfield_label"),
-                    placeholder = stringResource("search_textfield_placeholder"),
+                    label = stringResource(Res.string.search_textfield_label),
+                    placeholder = stringResource(Res.string.search_textfield_placeholder),
                     leadingIcon = IconProperty.Vector(Icons.Filled.Search),
                 ),
                 tagsRow = TagsRowUiModel(

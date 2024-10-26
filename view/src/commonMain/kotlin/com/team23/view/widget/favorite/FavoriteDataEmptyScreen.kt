@@ -22,34 +22,42 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
+import com.team23.view.Res
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.horizontalGutterPadding
-import com.team23.view.extension.stringResource
+import com.team23.view.favorite_empty_description_part1
+import com.team23.view.favorite_empty_description_part2
+import com.team23.view.favorite_empty_title
+import com.team23.view.neuracr_wip
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FavoriteDataEmptyScreen(modifier: Modifier = Modifier) {
-	Column(
-		verticalArrangement = Arrangement.Center,
-		horizontalAlignment = Alignment.CenterHorizontally,
-		modifier = modifier
-			.fillMaxSize()
-			.padding(all = horizontalGutterPadding),
-	) {
-		Text(
-			text = stringResource(id = "favorite_empty_title"),
-			style = MaterialTheme.typography.headlineSmall,
-			textAlign = TextAlign.Center,
-		)
-		NeuracrImage(
-			neuracrImageProperty = ImageProperty.Resource(null, "drawable/neuracr_wip.png"),
-			maxImageHeight = 230.dp,
-			modifier = Modifier.padding(vertical = 32.dp)
-		)
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxSize()
+            .padding(all = horizontalGutterPadding),
+    ) {
+        Text(
+            text = stringResource(Res.string.favorite_empty_title),
+            style = MaterialTheme.typography.headlineSmall,
+            textAlign = TextAlign.Center,
+        )
+        NeuracrImage(
+            neuracrImageProperty = ImageProperty.Resource(
+                contentDescription = null,
+                drawableResource = Res.drawable.neuracr_wip,
+            ),
+            maxImageHeight = 230.dp,
+            modifier = Modifier.padding(vertical = 32.dp)
+        )
 
 		val description = buildAnnotatedString {
-			append(stringResource(id = "favorite_empty_description_part1") + " ")
+			append(stringResource(Res.string.favorite_empty_description_part1) + " ")
 			appendInlineContent(id = "heart")
-			append(" " + stringResource(id = "favorite_empty_description_part2"))
+			append(" " + stringResource(Res.string.favorite_empty_description_part2))
 		}
 		val inlineContentMap = mapOf(
 			"heart" to InlineTextContent(
@@ -58,9 +66,10 @@ fun FavoriteDataEmptyScreen(modifier: Modifier = Modifier) {
 				Icon(
 					imageVector = Icons.Outlined.FavoriteBorder,
 					contentDescription = null,
-					tint = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.tertiary.copy(
-						alpha = 0.69f
-					),
+					tint = if (isSystemInDarkTheme())
+                        MaterialTheme.colorScheme.onBackground
+                    else
+                        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
 					modifier = Modifier.fillMaxSize(),
 				)
 			}

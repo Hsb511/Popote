@@ -18,11 +18,14 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.IconProperty
+import com.team23.view.Res
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.getImageMaxHeight
-import com.team23.view.extension.stringResource
+import com.team23.view.ic_local_smartphone
+import com.team23.view.locally_saved_button_content_description
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CellCard(
@@ -41,9 +44,9 @@ internal fun CellCard(
 			if (cellProperty.isLocallySaved) {
 				ButtonLocalPhone(
 					localPhone = CellProperty.LocalPhone(
-						iconProperty = 	IconProperty.Resource(
-							fileName = "drawable/ic_local_smartphone.xml",
-							contentDescription = stringResource(id = "locally_saved_button_content_description"),
+						iconProperty = IconProperty.Resource(
+							drawableResource = Res.drawable.ic_local_smartphone,
+							contentDescription = stringResource(Res.string.locally_saved_button_content_description),
 							tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
 						),
 						onLocalPhoneClick = cellProperty.localPhone.onLocalPhoneClick,

@@ -17,11 +17,16 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
 import com.team23.view.navigation.screen.AddScreen
 import com.team23.view.navigation.screen.FavoriteScreen
 import com.team23.view.navigation.screen.HomeScreen
 import com.team23.view.navigation.screen.SearchScreen
+import com.team23.view.navigation_favorite_display_name
+import com.team23.view.navigation_home_display_name
+import com.team23.view.navigation_search_display_name
+import com.team23.view.navigation_upload_display_name
+import org.jetbrains.compose.resources.stringResource
 
 data class NavItemProperty(
     val title: String,
@@ -40,7 +45,7 @@ internal fun createBottomNavItems(
 ): List<NavItemProperty> = listOf(
     with(isLastSelectedBottomScreen<HomeScreen>()) {
         createBottomNavItem(
-            title = stringResource("navigation_home_display_name"),
+            title = stringResource(Res.string.navigation_home_display_name),
             icon = if (this) Icons.Filled.Home else Icons.Outlined.Home,
             isSelected = this,
             screen = HomeScreen(scrollState, heightToBeFaded, title),
@@ -50,7 +55,7 @@ internal fun createBottomNavItems(
     },
     with(isLastSelectedBottomScreen<SearchScreen>()) {
         createBottomNavItem(
-            title = stringResource("navigation_search_display_name"),
+            title = stringResource(Res.string.navigation_search_display_name),
             icon = if (this) Icons.Filled.Search else Icons.Outlined.Search,
             isSelected = this,
             screen = SearchScreen(scrollState, heightToBeFaded, title),
@@ -60,7 +65,7 @@ internal fun createBottomNavItems(
     },
     with(isLastSelectedBottomScreen<AddScreen>()) {
         createBottomNavItem(
-            title = stringResource("navigation_upload_display_name"),
+            title = stringResource(Res.string.navigation_upload_display_name),
             icon = if (this) Icons.Filled.AddCircle else Icons.Outlined.Add,
             isSelected = this,
             screen = AddScreen(scrollState, heightToBeFaded, title),
@@ -70,7 +75,7 @@ internal fun createBottomNavItems(
     },
     with(isLastSelectedBottomScreen<FavoriteScreen>()) {
         createBottomNavItem(
-            title = stringResource("navigation_favorite_display_name"),
+            title = stringResource(Res.string.navigation_favorite_display_name),
             icon = if (this) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
             isSelected = this,
             screen = FavoriteScreen(scrollState, heightToBeFaded, title),

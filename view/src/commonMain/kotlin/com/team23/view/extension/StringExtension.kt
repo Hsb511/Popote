@@ -1,27 +1,10 @@
 package com.team23.view.extension
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.intl.Locale
+import com.team23.view.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.resource
-
-@Composable
-internal fun stringResource(id: String): String {
-    var bytes by remember { mutableStateOf(ByteArray(0)) }
-    LaunchedEffect(Unit) {
-        bytes = readStringsResourceBytes()
-    }
-    return bytes.decodeXML(id)
-}
-
-@Composable
-internal fun stringResource(id: String, vararg stringValues: String): String =
-    stringResource(id).fillPlaceholdersWithValues(stringValues.toList())
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 suspend fun getStringResource(id: String): String = readStringsResourceBytes().decodeXML(id)
 
@@ -30,22 +13,20 @@ suspend fun getStringResource(id: String, vararg stringValues: String): String =
 
 @OptIn(ExperimentalResourceApi::class)
 private suspend fun readStringsResourceBytes(): ByteArray = when (Locale.current.language) {
-    "fr" -> resource("values-fr/strings.xml")
-    else -> resource("values/strings.xml")
-}.readBytes()
+    "fr" -> Res.readBytes("values-fr/strings.commonMain.cvr")
+    else -> Res.readBytes("values/strings.commonMain.cvr")
+}
 
+@OptIn(ExperimentalEncodingApi::class)
 private fun ByteArray.decodeXML(id: String): String {
     try {
         return decodeToString()
-            .ifEmpty { return "" }
-            .split("<string")
-            .associate {
-                val splitString = it.split("\"")
-                splitString[1] to splitString[2]
-            }[id]!!
-            .split(">")[1]
-            .split("<")[0]
-            .replace("\\'", "'")
+            .split("\n")
+            .firstOrNull { it.contains(id) }
+            ?.split("|")
+            ?.last()
+            ?.let { Base64.decode(it).decodeToString() }
+            .let { requireNotNull(it) }
     } catch (e: Exception) {
         throw IllegalArgumentException("No strings found for id $id")
     }

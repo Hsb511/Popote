@@ -31,7 +31,6 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.runtime)
             implementation(compose.ui)
-            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.kamel)
             implementation(libs.koin.compose)
@@ -40,6 +39,7 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(compose.uiTooling)
+            implementation(libs.androidx.activity.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -55,4 +55,10 @@ android {
     }
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
     sourceSets["main"].res.srcDirs("src/commonMain/resources")
+}
+
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "com.team23.view"
+    generateResClass = auto
 }

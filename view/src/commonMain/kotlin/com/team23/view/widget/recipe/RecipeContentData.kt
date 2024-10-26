@@ -19,8 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedSuggestionChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SuggestionChipDefaults
@@ -41,14 +41,18 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
+import com.team23.view.Res
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.extension.horizontalGutterPadding
-import com.team23.view.extension.stringResource
 import com.team23.view.mapper.FavoriteUiMapper
 import com.team23.view.mapper.LocalPhoneUiMapper
+import com.team23.view.recipe_ingredients_title
+import com.team23.view.recipe_instructions_title
+import com.team23.view.recipe_written_by
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeContentData(
@@ -92,14 +96,14 @@ fun RecipeContentData(
                     text = recipeUiModel.title,
                     style = MaterialTheme.typography.displaySmall,
                 )
-                Divider(modifier = Modifier
+                HorizontalDivider(modifier = Modifier
                     .padding(top = 8.dp)
                     .onGloballyPositioned { layoutCoordinates ->
                         heightToBeFaded.value = layoutCoordinates.positionInRoot().y
                     }
                 )
                 Text(
-                    text = with(recipeUiModel) { "$date - ${stringResource(id = "recipe_written_by")} $author" },
+                    text = with(recipeUiModel) { "$date - ${stringResource(Res.string.recipe_written_by)} $author" },
                     style = MaterialTheme.typography.labelLarge,
                 )
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -132,7 +136,7 @@ fun RecipeContentData(
                 )
 
                 Text(
-                    text = stringResource(id = "recipe_ingredients_title"),
+                    text = stringResource(Res.string.recipe_ingredients_title),
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
                 )
@@ -145,13 +149,13 @@ fun RecipeContentData(
                         onSubtractOneServing = onSubtractOneServing,
                     ),
                 )
-                Divider(modifier = Modifier.padding(top = 8.dp))
+                HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
                 Text(
                     text = recipeUiModel.description,
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = stringResource(id = "recipe_instructions_title"),
+                    text = stringResource(Res.string.recipe_instructions_title),
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
                 )

@@ -25,7 +25,9 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
+import com.team23.view.recipe_number_of_servings
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeServingsWidget(
@@ -95,7 +97,7 @@ fun RecipeServingsWidget(
                 }
         )
         Text(
-            text = stringResource(id = "recipe_number_of_servings"),
+            text = stringResource(Res.string.recipe_number_of_servings),
             modifier = Modifier.padding(horizontal = 8.dp)
         )
         IconButton(

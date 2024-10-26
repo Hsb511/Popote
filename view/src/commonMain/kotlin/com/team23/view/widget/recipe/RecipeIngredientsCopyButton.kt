@@ -9,8 +9,11 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
+import com.team23.view.Res
 import com.team23.view.ds.icon.NeuracrIcon
-import com.team23.view.extension.stringResource
+import com.team23.view.ic_content_copy
+import com.team23.view.recipe_copy_to_clipboard_a11y
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeIngredientsCopyButton(
@@ -34,8 +37,8 @@ fun RecipeIngredientsCopyButton(
     ) {
         NeuracrIcon(
             iconProperty = IconProperty.Resource(
-                fileName = "drawable/ic_content_copy.xml",
-                contentDescription = stringResource(id = "recipe_copy_to_clipboard_a11y"),
+                drawableResource = Res.drawable.ic_content_copy,
+                contentDescription = stringResource(Res.string.recipe_copy_to_clipboard_a11y),
                 tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
             )
         )

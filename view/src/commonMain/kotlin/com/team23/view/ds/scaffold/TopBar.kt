@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -30,9 +30,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.team23.view.extension.stringResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import com.team23.view.Res
+import com.team23.view.neuracr_logo
+import com.team23.view.scaffold_close_menu_a11y
+import com.team23.view.scaffold_navigate_up_a11y
+import com.team23.view.scaffold_open_menu_a11y
+import com.team23.view.scaffold_title
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +82,6 @@ internal fun TopBar(
 	)
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun NavigationIcon(
 	isNavigationEmpty: Boolean,
@@ -86,7 +90,7 @@ private fun NavigationIcon(
 ) {
 	if (isNavigationEmpty) {
 		Image(
-			painter = painterResource(res = "drawable/neuracr_logo.png"),
+			painter = painterResource(Res.drawable.neuracr_logo),
 			contentScale = ContentScale.FillHeight,
 			contentDescription = null,
 			modifier = Modifier
@@ -99,8 +103,8 @@ private fun NavigationIcon(
 			closeMenu()
 		}) {
 			Icon(
-				imageVector = Icons.Filled.ArrowBack,
-				contentDescription = stringResource(id = "scaffold_navigate_up_a11y")
+				imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+				contentDescription = stringResource(Res.string.scaffold_navigate_up_a11y)
 			)
 		}
 	}
@@ -111,7 +115,7 @@ private fun Title(scrollState: ScrollState, heightToBeFaded: Float, title: Strin
 	Box(contentAlignment = Alignment.Center) {
 
 		Text(
-			text = stringResource("scaffold_title"),
+			text = stringResource(Res.string.scaffold_title),
 			style = MaterialTheme.typography.headlineSmall,
 			modifier = Modifier.graphicsLayer {
 				alpha = computeDefaultTitleAlpha(scrollState.value, heightToBeFaded, title)
@@ -162,7 +166,7 @@ private fun Actions(
 			IconButton(onClick = closeMenu) {
 				Icon(
 					imageVector = Icons.Filled.Close,
-					contentDescription = stringResource(id = "scaffold_close_menu_a11y"),
+					contentDescription = stringResource(Res.string.scaffold_close_menu_a11y),
 					tint = MaterialTheme.colorScheme.onPrimary,
 				)
 			}
@@ -170,7 +174,7 @@ private fun Actions(
 			IconButton(onClick = openMenu) {
 				Icon(
 					imageVector = Icons.Filled.Menu,
-					contentDescription = stringResource(id = "scaffold_open_menu_a11y"),
+					contentDescription = stringResource(Res.string.scaffold_open_menu_a11y),
 					tint = MaterialTheme.colorScheme.onPrimary,
 				)
 			}

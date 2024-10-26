@@ -23,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
-import com.team23.view.extension.stringResource
+import com.team23.view.Res
+import com.team23.view.add_recipe_instruction_placeholder
 import com.team23.view.widget.add.AddTextField
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RecipeInstructionsWidget(
@@ -67,7 +69,7 @@ fun RecipeInstructionsWidget(
                                     )
                                 },
                                 style = MaterialTheme.typography.bodyLarge,
-                                placeholder = stringResource(id = "add_recipe_instruction_placeholder"),
+                                placeholder = stringResource(Res.string.add_recipe_instruction_placeholder),
                                 singleLine = false,
                                 modifier = Modifier.weight(9f)
                             )

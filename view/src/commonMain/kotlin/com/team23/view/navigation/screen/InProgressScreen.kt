@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
+import com.team23.view.Res
 import com.team23.view.ds.image.NeuracrImage
 import com.team23.view.extension.horizontalGutterPadding
-import com.team23.view.extension.stringResource
+import com.team23.view.neuracr_wip
+import com.team23.view.wip_page_message
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun InProgressScreen(modifier: Modifier = Modifier) {
@@ -27,12 +30,15 @@ fun InProgressScreen(modifier: Modifier = Modifier) {
 			.padding(all = horizontalGutterPadding)
 	) {
 		NeuracrImage(
-			neuracrImageProperty = ImageProperty.Resource(null, "drawable/neuracr_wip.png"),
+			neuracrImageProperty = ImageProperty.Resource(
+				contentDescription = null,
+				drawableResource = Res.drawable.neuracr_wip,
+			),
 			maxImageHeight = 230.dp,
 			modifier = Modifier.padding(bottom = 16.dp)
 		)
 		Text(
-			text = stringResource(id = "wip_page_message"),
+			text = stringResource(Res.string.wip_page_message),
 			style = MaterialTheme.typography.headlineSmall,
 			textAlign = TextAlign.Center,
 			modifier = Modifier.fillMaxWidth()
