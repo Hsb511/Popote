@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.team23.neuracrsrecipes"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 35
         versionCode = majorVersion * 10000 + minorVersion * 100 + fixVersion
         versionName = "$majorVersion.$minorVersion.$fixVersion"
     }
