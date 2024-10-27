@@ -58,6 +58,7 @@ data class AddScreen(
 ) : Screen {
     @Composable
     override fun Content() {
+        title.value = null
         val addViewModel = koinInject<AddViewModel>()
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
