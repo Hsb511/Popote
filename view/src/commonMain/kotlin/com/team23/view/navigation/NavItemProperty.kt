@@ -1,6 +1,5 @@
 package com.team23.view.navigation
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
@@ -11,7 +10,6 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.vector.ImageVector
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -38,9 +36,6 @@ data class NavItemProperty(
 @Composable
 internal fun createBottomNavItems(
     navigator: Navigator,
-    scrollState: ScrollState,
-    heightToBeFaded: MutableState<Float>,
-    title: MutableState<String?>,
     closeDrawer: () -> Unit,
 ): List<NavItemProperty> = listOf(
     with(isLastSelectedBottomScreen<HomeScreen>()) {
@@ -48,7 +43,7 @@ internal fun createBottomNavItems(
             title = stringResource(Res.string.navigation_home_display_name),
             icon = if (this) Icons.Filled.Home else Icons.Outlined.Home,
             isSelected = this,
-            screen = HomeScreen(scrollState, heightToBeFaded, title),
+            screen = HomeScreen,
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -58,7 +53,7 @@ internal fun createBottomNavItems(
             title = stringResource(Res.string.navigation_search_display_name),
             icon = if (this) Icons.Filled.Search else Icons.Outlined.Search,
             isSelected = this,
-            screen = SearchScreen(scrollState, heightToBeFaded, title),
+            screen = SearchScreen(null),
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -68,7 +63,7 @@ internal fun createBottomNavItems(
             title = stringResource(Res.string.navigation_upload_display_name),
             icon = if (this) Icons.Filled.AddCircle else Icons.Outlined.Add,
             isSelected = this,
-            screen = AddScreen(scrollState, heightToBeFaded, title),
+            screen = AddScreen,
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -78,7 +73,7 @@ internal fun createBottomNavItems(
             title = stringResource(Res.string.navigation_favorite_display_name),
             icon = if (this) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
             isSelected = this,
-            screen = FavoriteScreen(scrollState, heightToBeFaded, title),
+            screen = FavoriteScreen,
             navigator = navigator,
             closeDrawer = closeDrawer,
         )

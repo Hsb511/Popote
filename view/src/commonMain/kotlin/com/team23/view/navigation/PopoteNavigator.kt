@@ -13,7 +13,7 @@ fun PopoteNavigator(
     title: MutableState<String?>,
     content: @Composable (Navigator) -> Unit,
 ) {
-    Navigator(screen = HomeScreen(scrollState, heightToBeFaded, title)) { navigator ->
+    Navigator(screen = HomeScreen) { navigator ->
         content(navigator)
     }
 }

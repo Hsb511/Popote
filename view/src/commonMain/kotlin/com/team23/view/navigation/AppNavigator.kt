@@ -1,7 +1,5 @@
 package com.team23.view.navigation
 
-import androidx.compose.foundation.ScrollState
-import androidx.compose.runtime.MutableState
 import cafe.adriel.voyager.navigator.Navigator
 import com.team23.view.navigation.screen.AddScreen
 import com.team23.view.navigation.screen.HomeScreen
@@ -10,40 +8,19 @@ import com.team23.view.navigation.screen.SearchScreen
 
 class AppNavigator {
 
-    fun navigateToHome(
-        navigator: Navigator,
-        scrollState: ScrollState,
-        heightToBeFaded: MutableState<Float>,
-        title: MutableState<String?>,
-    ) {
-        navigator.push(HomeScreen(scrollState, heightToBeFaded, title))
+    fun navigateToHome(navigator: Navigator) {
+        navigator.push(HomeScreen)
     }
 
-    fun navigateToRecipe(
-        navigator: Navigator,
-        recipeId: String,
-        scrollState: ScrollState,
-        heightToBeFaded: MutableState<Float>,
-        title: MutableState<String?>,
-    ) {
-        navigator.push(RecipeScreen(recipeId, scrollState, heightToBeFaded, title))
+    fun navigateToRecipe(navigator: Navigator, recipeId: String) {
+        navigator.push(RecipeScreen(recipeId))
     }
 
-    fun navigateToSearch(
-        navigator: Navigator, tagId: String? = null,
-        scrollState: ScrollState,
-        heightToBeFaded: MutableState<Float>,
-        title: MutableState<String?>,
-    ) {
-        navigator.push(SearchScreen(scrollState, heightToBeFaded, title, tagId))
+    fun navigateToSearch(navigator: Navigator, selectedTag: String?) {
+        navigator.push(SearchScreen(selectedTag))
     }
 
-    fun navigateToAdd(
-        navigator: Navigator,
-        scrollState: ScrollState,
-        heightToBeFaded: MutableState<Float>,
-        title: MutableState<String?>,
-    ) {
-        navigator.push(AddScreen(scrollState, heightToBeFaded, title))
+    fun navigateToAdd(navigator: Navigator) {
+        navigator.push(AddScreen)
     }
 }
