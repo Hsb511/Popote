@@ -7,11 +7,15 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.uimodel.DrawerUiModel
 import com.team23.neuracrsrecipes.viewmodel.UserViewModel
+import com.team23.view.extension.BackHandler
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -22,6 +26,13 @@ fun ModalMenuDrawer(
     content: @Composable () -> Unit,
 ) {
     val userViewModel = koinInject<UserViewModel>()
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(enabled = drawerState.isOpen) {
+        coroutineScope.launch {
+            drawerState.close()
+        }
+    }
 
     ModalNavigationDrawer(
         modifier = modifier,
