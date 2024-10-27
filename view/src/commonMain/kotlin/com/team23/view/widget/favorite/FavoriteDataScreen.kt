@@ -19,8 +19,8 @@ import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 @Composable
 fun FavoriteDataScreen(
 	state: FavoriteUiState.Data.WithFavorites,
-	onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
-	onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+	onRecipeClick: (String) -> Unit,
+	onFavoriteClick: (String) -> Unit,
 	onDisplayClick: () -> Unit,
 	onLocalPhoneClick: () -> Unit,
 	modifier: Modifier = Modifier,

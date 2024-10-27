@@ -1,7 +1,6 @@
 package com.team23.view.navigation.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,6 +28,7 @@ import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
+import com.team23.view.LocalTitle
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
 import com.team23.view.mapper.RecipeUiMapper
@@ -42,11 +41,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 internal data class SearchScreen(
-    val scrollState: ScrollState,
-    val heightToBeFaded: MutableState<Float>,
-    val title: MutableState<String?>,
-    val selectedTag: String? = null,
-    val modifier: Modifier = Modifier,
+    val selectedTag: String?,
 ) : Screen {
 
     @Composable
@@ -55,9 +50,10 @@ internal data class SearchScreen(
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
         val onRecipeClick = { recipe: SummarizedRecipeUiModel ->
-            appNavigator.navigateToRecipe(navigator, recipe.id, scrollState, heightToBeFaded, title)
+            appNavigator.navigateToRecipe(navigator, recipe.id)
         }
 
+        LocalTitle.current.value = null
         searchViewModel.selectedTag = selectedTag
 
         SearchScreen(
@@ -78,7 +74,6 @@ internal data class SearchScreen(
                 onFavoriteClick = searchViewModel::favoriteClick,
                 onLocalPhoneClick = searchViewModel::onLocalPhoneClick,
             ),
-            modifier = modifier,
         )
     }
 }

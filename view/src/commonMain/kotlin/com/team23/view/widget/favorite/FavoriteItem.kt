@@ -12,8 +12,8 @@ import com.team23.view.mapper.RecipeUiMapper
 fun FavoriteItem(
     displayType: DisplayType,
     summarizedRecipe: SummarizedRecipeUiModel,
-    onRecipeClick: (SummarizedRecipeUiModel) -> Unit,
-    onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
+    onRecipeClick: (String) -> Unit,
+    onFavoriteClick: (String) -> Unit,
     onLocalPhoneClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -23,11 +23,11 @@ fun FavoriteItem(
         cellProperty = recipeUiMapper.toCellProperty(
             recipe = summarizedRecipe,
             displayType = displayType,
-            onFavoriteClick = { onFavoriteClick(summarizedRecipe) },
+            onFavoriteClick = { onFavoriteClick(summarizedRecipe.id) },
             onLocalPhoneClick = onLocalPhoneClick,
         ),
         modifier = modifier.clickable {
-            onRecipeClick(summarizedRecipe)
+            onRecipeClick(summarizedRecipe.id)
         }
     )
 }

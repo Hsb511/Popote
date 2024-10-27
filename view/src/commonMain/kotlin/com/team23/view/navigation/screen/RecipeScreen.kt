@@ -10,20 +10,22 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.team23.neuracrsrecipes.model.uistate.RecipeUiState
 import com.team23.neuracrsrecipes.viewmodel.RecipeViewModel
+import com.team23.view.LocalHeightToBeFaded
+import com.team23.view.LocalScrollState
+import com.team23.view.LocalTitle
 import com.team23.view.navigation.AppNavigator
 import com.team23.view.widget.recipe.RecipeContentData
 import com.team23.view.widget.recipe.RecipeContentLoading
 import org.koin.compose.koinInject
 
-internal data class RecipeScreen(
-    val cleanRecipeId: String?,
-    val scrollState: ScrollState,
-    val heightToBeFaded: MutableState<Float>,
-    val title: MutableState<String?>,
-) : Screen {
+internal data class RecipeScreen(val cleanRecipeId: String) : Screen {
 
     @Composable
     override fun Content() {
+        val scrollState: ScrollState = LocalScrollState.current
+        val heightToBeFaded: MutableState<Float> = LocalHeightToBeFaded.current
+        val title: MutableState<String?> = LocalTitle.current
+
         RecipeComposeScreen(
             cleanRecipeId = cleanRecipeId,
             scrollState = scrollState,
@@ -35,7 +37,7 @@ internal data class RecipeScreen(
 
 @Composable
 private fun RecipeComposeScreen(
-    cleanRecipeId: String?,
+    cleanRecipeId: String,
     scrollState: ScrollState,
     heightToBeFaded: MutableState<Float>,
     title: MutableState<String?>,
@@ -59,24 +61,18 @@ private fun RecipeComposeScreen(
                 onAddOneServing = recipeViewModel::addOneService,
                 onSubtractOneServing = recipeViewModel::subtractOneService,
                 onTagClicked = { tagId ->
-                    appNavigator.navigateToSearch(
-                        navigator,
-                        tagId,
-                        scrollState,
-                        heightToBeFaded,
-                        title
-                    )
+                    appNavigator.navigateToSearch(navigator, tagId)
                 },
                 onFavoriteClick = recipeViewModel::favoriteClick,
                 onLocalPhoneClick = recipeViewModel::onLocalPhoneClick,
                 onUpdateLocalRecipe = {
                     recipeViewModel.onUpdateLocalRecipe {
-                        appNavigator.navigateToAdd(navigator, scrollState, heightToBeFaded, title)
+                        appNavigator.navigateToAdd(navigator)
                     }
                 },
                 onDeleteLocalRecipe = {
                     recipeViewModel.onDeleteLocalRecipe {
-                        appNavigator.navigateToHome(navigator, scrollState, heightToBeFaded, title)
+                        appNavigator.navigateToHome(navigator)
                     }
                 },
                 modifier = modifier,

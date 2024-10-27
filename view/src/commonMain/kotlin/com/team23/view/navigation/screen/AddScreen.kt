@@ -31,6 +31,9 @@ import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.viewmodel.AddViewModel
+import com.team23.view.LocalHeightToBeFaded
+import com.team23.view.LocalScrollState
+import com.team23.view.LocalTitle
 import com.team23.view.Res
 import com.team23.view.add_recipe_author_name
 import com.team23.view.add_recipe_conclusion
@@ -50,19 +53,18 @@ import com.team23.view.widget.recipe.RecipeInstructionsWidget
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
-data class AddScreen(
-    val scrollState: ScrollState,
-    val heightToBeFaded: MutableState<Float>,
-    val title: MutableState<String?>,
-    val modifier: Modifier = Modifier,
-) : Screen {
+internal data object AddScreen : Screen {
+
     @Composable
     override fun Content() {
-        title.value = null
+        val scrollState: ScrollState = LocalScrollState.current
+        val heightToBeFaded: MutableState<Float> = LocalHeightToBeFaded.current
         val addViewModel = koinInject<AddViewModel>()
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
-        val onRecipeClick = { recipeId: String -> appNavigator.navigateToRecipe(navigator, recipeId, scrollState, heightToBeFaded, title) }
+        val onRecipeClick = { recipeId: String -> appNavigator.navigateToRecipe(navigator, recipeId) }
+
+        LocalTitle.current.value = null
 
         Scaffold(
             floatingActionButton = {
@@ -76,7 +78,7 @@ data class AddScreen(
                 allTags = addViewModel.tags.collectAsState().value,
                 scrollState = scrollState,
                 heightToBeFaded = heightToBeFaded,
-                modifier = modifier.padding(padding),
+                modifier = Modifier.padding(padding),
             )
         }
     }

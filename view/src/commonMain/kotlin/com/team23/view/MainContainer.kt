@@ -7,6 +7,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,36 +34,40 @@ fun MainContainer() {
             val heightToBeFaded = remember { mutableStateOf(0f) }
             val title: MutableState<String?>  = remember { mutableStateOf(null) }
 
-            PopoteNavigator(scrollState, heightToBeFaded, title) { navigator ->
-                val drawerState = rememberDrawerState(DrawerValue.Closed)
-                val scope = rememberCoroutineScope()
-                val snackbarHostState = koinInject<SnackbarHostState>()
+            CompositionLocalProvider(
+                LocalScrollState provides scrollState,
+                LocalHeightToBeFaded provides heightToBeFaded,
+                LocalTitle provides title,
+            ) {
+                PopoteNavigator(scrollState, heightToBeFaded, title) { navigator ->
+                    val drawerState = rememberDrawerState(DrawerValue.Closed)
+                    val scope = rememberCoroutineScope()
+                    val snackbarHostState = koinInject<SnackbarHostState>()
 
-                val closeDrawer: () -> Unit = {
-                    scope.launch(Dispatchers.IO) { drawerState.close() }
-                }
-                val navItemProperties = createBottomNavItems(
-                    navigator, scrollState, heightToBeFaded, title, closeDrawer,
-                )
+                    val closeDrawer: () -> Unit = {
+                        scope.launch(Dispatchers.IO) { drawerState.close() }
+                    }
+                    val navItemProperties = createBottomNavItems(navigator, closeDrawer)
 
-                PopoteScaffold(
-                    snackbarHostState = snackbarHostState,
-                    scrollState = scrollState,
-                    heightToBeFaded = heightToBeFaded.value,
-                    title = title.value,
-                    navItemProperties = navItemProperties,
-                    navigateUp = navigator::pop,
-                    drawerState = drawerState,
-                    openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
-                    closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
-                    isNavigationEmpty = !navigator.canPop
-                ) { padding ->
-                    ModalMenuDrawer(
-                        drawerUiModel = DrawerUiModel("2.0.0"),
+                    PopoteScaffold(
+                        snackbarHostState = snackbarHostState,
+                        scrollState = scrollState,
+                        heightToBeFaded = heightToBeFaded.value,
+                        title = title.value,
+                        navItemProperties = navItemProperties,
+                        navigateUp = navigator::pop,
                         drawerState = drawerState,
-                    ) {
-                        Box(modifier = Modifier.padding(bottom = padding.calculateBottomPadding())) {
-                            CurrentScreen()
+                        openMenu = { scope.launch(Dispatchers.IO) { drawerState.open() } },
+                        closeMenu = { scope.launch(Dispatchers.IO) { drawerState.close() } },
+                        isNavigationEmpty = !navigator.canPop
+                    ) { padding ->
+                        ModalMenuDrawer(
+                            drawerUiModel = DrawerUiModel("2.0.0"),
+                            drawerState = drawerState,
+                        ) {
+                            Box(modifier = Modifier.padding(bottom = padding.calculateBottomPadding())) {
+                                CurrentScreen()
+                            }
                         }
                     }
                 }
