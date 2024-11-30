@@ -1,0 +1,154 @@
+CREATE TABLE SummarizedRecipeDataModel(
+    href TEXT NOT NULL PRIMARY KEY,
+    imgSrc TEXT NOT NULL,
+    title TEXT NOT NULL
+);
+
+CREATE TABLE FavoriteDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL
+);
+
+CREATE TABLE UserDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	name TEXT NOT NULL
+);
+
+CREATE TABLE PreferenceDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    label TEXT NOT NULL,
+    value INTEGER NOT NULL
+);
+
+CREATE TABLE TagDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL,
+	label TEXT NOT NULL
+);
+
+CREATE TABLE IngredientDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL,
+	label TEXT NOT NULL,
+	quantity TEXT,
+	unit TEXT
+);
+
+CREATE TABLE InstructionDataModel(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    recipeId TEXT NOT NULL,
+    label TEXT NOT NULL,
+    order_ INTEGER NOT NULL
+);
+
+CREATE TABLE BaseRecipeDataModel(
+    href TEXT NOT NULL PRIMARY KEY,
+    imgSrc TEXT NOT NULL,
+    title TEXT NOT NULL,
+    subTitle TEXT NOT NULL,
+    servingsAmount INTEGER NOT NULL,
+    instructionTitle TEXT NOT NULL,
+    lastTitle TEXT NOT NULL,
+    isSourceLocal INTEGER NOT NULL,
+    isTemporary INTEGER NOT NULL
+);
+
+
+selectAllSummarizedRecipes:
+SELECT SummarizedRecipeDataModel.* FROM SummarizedRecipeDataModel;
+
+countAllSummarizedRecipes:
+SELECT COUNT(*) FROM SummarizedRecipeDataModel;
+
+insertSummarizedRecipe:
+INSERT INTO SummarizedRecipeDataModel(href, imgSrc, title) VALUES(?, ?, ?);
+
+selectByTitle:
+SELECT * FROM SummarizedRecipeDataModel WHERE title LIKE '%' || :search || '%';
+
+deleteSummarizeRecipe:
+DELETE FROM SummarizedRecipeDataModel WHERE href = :recipeId;
+
+
+selectAllFavorites:
+SELECT FavoriteDataModel.* FROM FavoriteDataModel;
+
+isFavoriteStored:
+SELECT EXISTS(SELECT * FROM FavoriteDataModel WHERE recipeId = :recipeId);
+
+insertFavorite:
+INSERT INTO FavoriteDataModel(recipeId) VALUES(?);
+
+deleteFavorite:
+DELETE FROM FavoriteDataModel WHERE recipeId = :recipeId;
+
+selectUser:
+SELECT * FROM UserDataModel LIMIT 1;
+
+insertUserName:
+INSERT INTO UserDataModel(name) VALUES(?);
+
+insertUser:
+INSERT INTO UserDataModel VALUES ?;
+
+deleteUser:
+DELETE FROM UserDataModel WHERE id = :id;
+
+
+insertPreference:
+INSERT INTO PreferenceDataModel VALUES ?;
+
+deletePreferenceByLabel:
+DELETE FROM PreferenceDataModel WHERE label = :label;
+
+getPreferenceByLabel:
+SELECT value FROM PreferenceDataModel WHERE label = :label;
+
+
+insertTag:
+INSERT INTO TagDataModel(recipeId, label) VALUES (?, ?);
+
+deleteTagByRecipeId:
+DELETE FROM TagDataModel WHERE recipeId = :recipeId;
+
+selectAllTags:
+SELECT TagDataModel.* FROM TagDataModel;
+
+selectTagsByRecipeId:
+SELECT TagDataModel.* FROM TagDataModel WHERE recipeId = :recipeId;
+
+selectTagRecipeIdByLabel:
+SELECT recipeId FROM TagDataModel WHERE label IN ?;
+
+
+insertIngredient:
+INSERT INTO IngredientDataModel(recipeId, label, quantity, unit) VALUES (?, ?, ?, ?);
+
+deleteIngredientByRecipeId:
+DELETE FROM IngredientDataModel WHERE recipeId = :recipeId;
+
+selectIngredientsByRecipeId:
+SELECT IngredientDataModel.* FROM IngredientDataModel WHERE recipeId = :recipeId;
+
+
+insertInstruction:
+INSERT INTO InstructionDataModel(recipeId, label, order_) VALUES (?, ?, ?);
+
+deleteInstructionByRecipeId:
+DELETE FROM InstructionDataModel WHERE recipeId = :recipeId;
+
+selectInstructionsByRecipeId:
+SELECT InstructionDataModel.* FROM InstructionDataModel WHERE recipeId = :recipeId;
+
+
+selectBaseRecipeByHref:
+SELECT BaseRecipeDataModel.* FROM BaseRecipeDataModel WHERE href = ?;
+
+insertBaseRecipe:
+INSERT OR REPLACE INTO BaseRecipeDataModel VALUES ?;
+
+deleteBaseRecipeByHref:
+DELETE FROM BaseRecipeDataModel WHERE href = ?;
+
+selectAllBaseRecipeSubtitles:
+SELECT subTitle FROM BaseRecipeDataModel;
