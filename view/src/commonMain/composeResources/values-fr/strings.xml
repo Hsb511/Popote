@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- navigation -->
+    <string name="navigation_home_display_name">Accueil</string>
+    <string name="navigation_search_display_name">Recherche</string>
+    <string name="navigation_upload_display_name">Ajouter</string>
+    <string name="navigation_favorite_display_name">Favoris</string>
+
+    <!-- snackbar -->
+    <string name="snackbar_favorite">a été ajouté à vos favoris</string>
+    <string name="snackbar_favorite_action">annuler</string>
+    <string name="snackbar_start_loading">Début du chargement des recettes</string>
+    <string name="snackbar_loading_one">Chargement d\'une nouvelle recette</string>
+    <string name="snackbar_loading_several">Chargement de %s nouvelles recettes</string>
+    <string name="snackbar_loading_done">Chargement terminé</string>
+    <string name="snackbar_recipe_deleted">%s a été supprimée de votre base de données</string>
+    <string name="snackbar_recipe_not_deleted">Une erreur est survenue. %s n\' a pas été supprimée de votre base de données</string>
+
+    <!-- dialog -->
+    <string name="dialog_dismiss">ignorer</string>
+    <string name="dialog_confirm">confirmer</string>
+
+    <!-- home -->
+    <string name="home_title">Dernières recettes</string>
+
+    <!-- recipe -->
+    <string name="recipe_written_by">Écrit par</string>
+    <string name="recipe_ingredients_title">Ingrédients</string>
+    <string name="recipe_number_of_servings">personnes</string>
+    <string name="recipe_instructions_title">Instructions</string>
+    <string name="recipe_copy_to_clipboard_a11y">Copier dans le presse-papier</string>
+    <string name="recipe_local_phone_info">Cette icône signifie que cette recette a été ajouté par vous et n\'est disponible que sur ce téléphone.</string>
+    <string name="recipe_update_label">Modifier</string>
+    <string name="recipe_delete_label">Supprimer</string>
+    <string name="recipe_delete_dialog_title">Confirmation de suppression</string>
+    <string name="recipe_delete_dialog_text">Si vous êtes sûr de vouloir supprimer cette recette cliquez sur confirmer. Sinon cliquez sur ignorer.</string>
+
+
+    <!-- search -->
+    <string name="search_textfield_placeholder">Ecrire pour rechercher…</string>
+    <string name="search_textfield_label">Recherche par texte</string>
+    <string name="search_tags_row_label">Recherche par mots clés</string>
+    <string name="search_tags_row_expand_indication">Cliquer pour voir les tags</string>
+    <string name="search_tags_select_tag_indication">Cliquer sur un tag pour filtrer</string>
+
+    <!-- favorite -->
+    <string name="favorite_title">Mes favoris</string>
+    <string name="favorite_display_button_a11y">Changer l\'affichage de vos favoris</string>
+    <string name="favorite_empty_title">Wow c\'est vide par ici !</string>
+    <string name="favorite_empty_description_part1">Vous pouvez épingler vos favoris ici en cliquant sur le</string>
+    <string name="favorite_empty_description_part2">en bas à droite des images des recettes.</string>
+
+    <!-- Add recipe screen -->
+    <string name="add_recipe_title">Titre de la recette</string>
+    <string name="add_recipe_author_name">Nom de l\'auteur</string>
+    <string name="add_recipe_description">Description de la recette, conseils pour la préparation, temps de cuisson, …</string>
+    <string name="add_recipe_conclusion">Conclusion à la recette, accompagnements pour le service ou idées de présentation</string>
+    <string name="add_recipe_ingredient_label">Nom de l\'ingrédient</string>
+    <string name="add_recipe_ingredient_quantity">10</string>
+    <string name="add_recipe_ingredient_unit">mL</string>
+    <string name="add_recipe_instruction_placeholder">Ecrivez votre étape de la recette</string>
+    <string name="add_recipe_save_dialog_title">Confirmation de sauvegarde</string>
+    <string name="add_recipe_save_dialog_text">Si vous êtes sûr d\'avoir terminé et d\'avoir rempli tous les champs, cliquez sur confirmer. Sinon pour continuer de modifier votre recette, cliquez sur ignorer.</string>
+    <string name="add_recipe_save_snackbar_message">a été sauvegardée sur votre téléphone</string>
+    <string name="add_recipe_save_snackbar_action">voir</string>
+
+    <!-- Modal drawer -->
+    <string name="drawer_empty_name">Ajouter un pseudo</string>
+    <string name="drawer_name_change">Changer votre pseudo</string>
+    <string name="drawer_name_set">Votre pseudo est %s</string>
+    <string name="drawer_dialog_text">Il sera utilisé comme nom d\'auteur sur les recettes que vous ajouterez sur votre téléphone et que vous pourrez partager plus tard.</string>
+    <string name="drawer_dialog_placeholder">Pseudo</string>
+
+    <!-- scaffold -->
+    <string name="scaffold_title" >Popote</string>
+    <string name="scaffold_open_menu_a11y">Ouvrir le menu latéral</string>
+    <string name="scaffold_close_menu_a11y">Fermer le menu latéral</string>
+    <string name="scaffold_navigate_up_a11y">retour en arrière</string>
+
+    <!-- error -->
+    <string name="error_title">Désolé une erreur s\'est produite !</string>
+    <string name="error_description">Veuillez vérifier si vous avez accès à internet. Le cas échéant vous pouvez visiter notre site web directement en cliquant ci-dessous.</string>
+    <string name="error_website_button">Aller sur le site</string>
+    <string name="error_expand">Etendre pour voir l\'erreur</string>
+
+    <string name="wip_page_message">Cette page est en cours de développement et sera bientôt disponible</string>
+
+    <!-- favorite -->
+    <string name="favorite_button_content_description">Aimer pour sauvegarder dans vos favoris</string>
+
+    <!-- locally saved -->
+    <string name="locally_saved_button_content_description">Indique que cette recette a été créée par vous et est disponible seulement sur ce téléphone</string>
+</resources>

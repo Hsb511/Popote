@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- navigation -->
+    <string name="navigation_home_display_name">Home</string>
+    <string name="navigation_search_display_name">Search</string>
+    <string name="navigation_upload_display_name">Add</string>
+    <string name="navigation_favorite_display_name">Favorites</string>
+
+    <!-- snackbar -->
+    <string name="snackbar_favorite">has been added to your favorites</string>
+    <string name="snackbar_favorite_action">undo</string>
+    <string name="snackbar_start_loading">Start loading recipes</string>
+    <string name="snackbar_loading_one">Loading 1 new recipe</string>
+    <string name="snackbar_loading_several">Loading %s new recipes</string>
+    <string name="snackbar_loading_done">Loading finished</string>
+    <string name="snackbar_recipe_deleted">%s has been deleted from your database</string>
+    <string name="snackbar_recipe_not_deleted">An error occurred. %s has not been deleted from your database</string>
+
+    <!-- dialog -->
+    <string name="dialog_dismiss">dismiss</string>
+    <string name="dialog_confirm">confirm</string>
+
+    <!-- home -->
+    <string name="home_title">Latest posts</string>
+
+    <!-- recipe -->
+    <string name="recipe_written_by">Written by</string>
+    <string name="recipe_ingredients_title">Ingredients</string>
+    <string name="recipe_number_of_servings">servings</string>
+    <string name="recipe_instructions_title">Instructions</string>
+    <string name="recipe_copy_to_clipboard_a11y">Copy to clipboard</string>
+    <string name="recipe_local_phone_info">This icon means that this recipe has been added by you and is only available on this phone.</string>
+    <string name="recipe_update_label">Update</string>
+    <string name="recipe_delete_label">Delete</string>
+    <string name="recipe_delete_dialog_title">Confirm deleting</string>
+    <string name="recipe_delete_dialog_text">If you\'re sure you want to delete this recipe, click on "confirm." Otherwise, click on "dismiss."</string>
+
+    <!-- search -->
+    <string name="search_textfield_placeholder">Type to search…</string>
+    <string name="search_textfield_label">Search by text</string>
+    <string name="search_tags_row_label">Search by tags</string>
+    <string name="search_tags_row_expand_indication">Click to expand tags</string>
+    <string name="search_tags_select_tag_indication">Click a tag to select it</string>
+
+    <!-- favorite -->
+    <string name="favorite_title">My favorites</string>
+    <string name="favorite_display_button_a11y">Change your favorites display</string>
+    <string name="favorite_empty_title">Wow this is empty here !</string>
+    <string name="favorite_empty_description_part1">You can save your favorite recipes by clicking on the</string>
+    <string name="favorite_empty_description_part2">at the bottom right of the recipe picture.</string>
+
+    <!-- Add recipe screen -->
+    <string name="add_recipe_title">Recipe title</string>
+    <string name="add_recipe_author_name">Author\'s name</string>
+    <string name="add_recipe_description">Description of your recipe, advice for the cooking or cooking time, …</string>
+    <string name="add_recipe_conclusion">A conclusion to your recipe, sides you can cook it with or preparation ideas</string>
+    <string name="add_recipe_ingredient_quantity" >10</string>
+    <string name="add_recipe_ingredient_unit" >mL</string>
+    <string name="add_recipe_ingredient_label">Ingredient\'s name</string>
+    <string name="add_recipe_instruction_placeholder">Type your recipe step here</string>
+    <string name="add_recipe_save_dialog_title">Confirm saving</string>
+    <string name="add_recipe_save_dialog_text">If you are certain that you have finished and filled out all the fields, click on "confirm". Otherwise, to continue editing your recipe, click on "dismiss".</string>
+    <string name="add_recipe_save_snackbar_message">has been saved in your phone</string>
+    <string name="add_recipe_save_snackbar_action">see</string>
+
+    <!-- Modal drawer -->
+    <string name="drawer_empty_name">Set up your nickname</string>
+    <string name="drawer_name_change">Change your nickname</string>
+    <string name="drawer_name_set">Your nickname is %s</string>
+    <string name="drawer_dialog_text">It will be used as an author name on the recipe you will add on your phone and that you can share later.</string>
+    <string name="drawer_dialog_placeholder">Nickname</string>
+
+    <!-- scaffold -->
+    <string name="scaffold_title" >Popote</string>
+    <string name="scaffold_open_menu_a11y">open lateral menu</string>
+    <string name="scaffold_close_menu_a11y">close lateral menu</string>
+    <string name="scaffold_navigate_up_a11y">navigate up</string>
+
+    <!-- error -->
+    <string name="error_title">Sorry an error occurred !</string>
+    <string name="error_description">You should check your network. If you have access to the internet you can visit our website by clicking below.</string>
+    <string name="error_website_button">Go to website</string>
+    <string name="error_expand">Expand to see the error</string>
+
+    <!-- in progress -->
+    <string name="wip_page_message">This page is currently in development and will be available soon</string>
+
+    <!-- favorite -->
+    <string name="favorite_button_content_description">Like to save in your favorites</string>
+
+    <!-- locally saved -->
+    <string name="locally_saved_button_content_description">Indicate that this recipe was created by you and is only available on this phone</string>
+</resources>
