@@ -7,11 +7,21 @@ import platform.UIKit.UIApplicationOpenSettingsURLString
 
 actual class UiActionHandler {
     actual fun handle(action: UiAction) {
+        when (action) {
+            UiAction.LaunchSettings -> launchSettings()
+            UiAction.RedirectToWebsite -> redirectToWebsite()
+        }
     }
 
-    fun launchSettings() {
+    private fun launchSettings() {
         NSURL.URLWithString(UIApplicationOpenSettingsURLString)?.let {
             UIApplication.sharedApplication.openURL(it)
+        }
+    }
+
+    private fun redirectToWebsite() {
+        NSURL.URLWithString("https://neuracr.github.io/")?.let { url ->
+            UIApplication.sharedApplication.openURL(url)
         }
     }
 }

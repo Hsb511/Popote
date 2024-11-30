@@ -14,7 +14,7 @@ class DateUiMapper {
             if (getLocalLanguage() == "fr") {
                 "$dayOfMonth ${toFrenchStringMonth(month)} $year"
             } else {
-                "${month.name.lowercase().capitalize()} $dayOfMonth, $year"
+                "${month.name.lowercase().replaceFirstChar { it.uppercase() }} $dayOfMonth, $year"
             }
         }
 
