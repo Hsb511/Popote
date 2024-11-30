@@ -34,7 +34,7 @@ internal class RecipeDataRepository(
     private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
     private val tagDao = neuracrLocalDataSource.tagDao
 
-    override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
+    override suspend fun getAllCachedSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
         val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
         val summarizedRecipeDomainModels =
             summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels)
@@ -43,14 +43,19 @@ internal class RecipeDataRepository(
 
     override suspend fun getCountSummarizedRecipes(): Int = summarizedRecipeDao.getCount().toInt()
 
-    override suspend fun loadAllSummarizedRecipesIfNeeded() {
-        if (getCountSummarizedRecipes() == 0) {
-            val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
-            val recipeDataModels =
-                summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
-            summarizedRecipeDao.insertAll(*recipeDataModels.toTypedArray())
-        }
+    override suspend fun loadAllRemoteSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
+        val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
+        val recipeDataModels =
+			summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
+        val summarizedRecipeDomainModels =
+            summarizedRecipeMapper.toSummarizedRecipeDomainModels(recipeDataModels)
+	    return summarizedRecipeDomainModels.map(::enrichWithFavorite)
     }
+
+	override suspend fun storeRecipe(recipe: RecipeDomainModel.Summarized) {
+		val recipeDataModel = summarizedRecipeMapper.toSummarizedRecipeDataModel(recipe)
+		summarizedRecipeDao.insertAll(recipeDataModel)
+	}
 
     override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
         if (baseRecipeDao.findBaseRecipeById(recipeId) == null) {

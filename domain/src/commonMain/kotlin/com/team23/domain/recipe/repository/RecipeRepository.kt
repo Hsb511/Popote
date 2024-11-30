@@ -4,9 +4,10 @@ import com.team23.domain.recipe.model.RecipeDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
-    suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized>
+    suspend fun getAllCachedSummarizedRecipes(): List<RecipeDomainModel.Summarized>
     suspend fun getCountSummarizedRecipes(): Int
-    suspend fun loadAllSummarizedRecipesIfNeeded()
+    suspend fun loadAllRemoteSummarizedRecipes(): List<RecipeDomainModel.Summarized>
+    suspend fun storeRecipe(recipe: RecipeDomainModel.Summarized)
     suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String)
     suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full?
     fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>>
