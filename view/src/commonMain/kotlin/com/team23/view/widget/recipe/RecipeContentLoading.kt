@@ -43,8 +43,7 @@ fun RecipeContentLoading(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .fillMaxWidth()
-                // TODO
-                .height(480.dp),//LocalConfiguration.current.screenWidthDp.dp * 3 / 4)
+                .height(480.dp),
         )
         Shimmer(
             textStyle = MaterialTheme.typography.headlineSmall,
