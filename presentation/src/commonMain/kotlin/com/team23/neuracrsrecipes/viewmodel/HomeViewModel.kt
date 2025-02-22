@@ -3,8 +3,10 @@ package com.team23.neuracrsrecipes.viewmodel
 import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
+import com.team23.domain.recipe.usecase.OverwriteAllSummarizedRecipesUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
+import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
@@ -23,6 +25,7 @@ class HomeViewModel(
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val overwriteAllSummarizedRecipesUseCase: OverwriteAllSummarizedRecipesUseCase,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
 ) {
@@ -45,8 +48,7 @@ class HomeViewModel(
                         )
                     }
                 }.onSuccess { data ->
-                    val recipes = data.first
-                    val newRecipesCount = data.second
+                    val (recipes, newRecipesCount) = data
                     viewModelScope.launch(Dispatchers.IO) {
                         snackbarHandler.showLoadingRecipe(newRecipesCount)
                     }
@@ -83,6 +85,36 @@ class HomeViewModel(
     fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
             snackbarHandler.showLocalPhoneMessage()
+        }
+    }
+
+    fun onAction(action: HomeAction) {
+        when (action) {
+            HomeAction.RefreshRecipes -> refreshRecipes()
+        }
+    }
+
+    private fun refreshRecipes() {
+        val currentState = _uiState.value
+        if (currentState is HomeUiState.Data) {
+            _uiState.value = currentState.copy(isRefreshing = true)
+            viewModelScope.launch(Dispatchers.IO) {
+                overwriteAllSummarizedRecipesUseCase.invoke()
+                    .onFailure {
+                        println("HUGO - ${it.message}")
+                        _uiState.value = currentState.copy(isRefreshing = false) }
+                    .onSuccess { data ->
+                        val (recipes, newRecipesCount) = data
+                        snackbarHandler.showLoadingRecipe(newRecipesCount)
+                        withContext(Dispatchers.Main) {
+                            _uiState.value = HomeUiState.Data(
+                                recipes = recipes.map { summarizedRecipeUiMapper.toUiModel(it) },
+                                isRefreshing = false
+                            )
+                        }
+                        snackbarHandler.showLoadingEnded()
+                    }
+            }
         }
     }
 
