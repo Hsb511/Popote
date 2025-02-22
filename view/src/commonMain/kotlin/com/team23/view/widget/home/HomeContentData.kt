@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.property.DisplayType
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
@@ -38,8 +37,6 @@ import org.jetbrains.compose.resources.stringResource
 fun HomeContentData(
     homeData: HomeUiState.Data,
     homeRecipeClick: (String) -> Unit,
-    onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
-    onLocalPhoneClick: () -> Unit,
     onAction: (HomeAction) -> Unit,
 ) {
     val refreshState = rememberPullToRefreshState()
@@ -80,8 +77,14 @@ fun HomeContentData(
                     cellProperty = RecipeUiMapper().toCellProperty(
                         recipe = summarizedRecipeUiModel,
                         displayType = DisplayType.BigCard,
-                        onFavoriteClick = { onFavoriteClick(summarizedRecipeUiModel) },
-                        onLocalPhoneClick = onLocalPhoneClick,
+                        onFavoriteClick = {
+                            onAction(
+                                HomeAction.ToggleFavorite(
+                                    summarizedRecipeUiModel
+                                )
+                            )
+                        },
+                        onLocalPhoneClick = { onAction(HomeAction.ShowLocalPhoneMessage) },
                     ),
                     modifier = Modifier
                         .fillMaxWidth()

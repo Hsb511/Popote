@@ -12,6 +12,6 @@ import com.team23.view.theme.PopoteTheme
 @Preview(showSystemUi = true)
 private fun HomeScreenPreview(@PreviewParameter(HomePreviewParameterProvider::class) homeUiState: HomeUiState) {
     PopoteTheme {
-        HomeScreen(homeUiState, {}, {}, {})
+        HomeScreen(homeUiState)
     }
 }

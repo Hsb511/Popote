@@ -68,7 +68,16 @@ class HomeViewModel(
         }
     }
 
-    fun favoriteClick(recipe: SummarizedRecipeUiModel) {
+
+    fun onAction(action: HomeAction) {
+        when (action) {
+            is HomeAction.RefreshRecipes -> refreshRecipes()
+            is HomeAction.ShowLocalPhoneMessage -> onLocalPhoneClick()
+            is HomeAction.ToggleFavorite -> favoriteClick(action.recipe)
+        }
+    }
+
+    private fun favoriteClick(recipe: SummarizedRecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
             updateFavoriteUseCase.invoke(recipe.id)
             recomputeState(recipe.id)
@@ -82,15 +91,9 @@ class HomeViewModel(
         }
     }
 
-    fun onLocalPhoneClick() {
+    private fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
             snackbarHandler.showLocalPhoneMessage()
-        }
-    }
-
-    fun onAction(action: HomeAction) {
-        when (action) {
-            HomeAction.RefreshRecipes -> refreshRecipes()
         }
     }
 

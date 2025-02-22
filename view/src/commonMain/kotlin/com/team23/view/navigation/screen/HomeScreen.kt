@@ -6,7 +6,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.team23.neuracrsrecipes.model.action.HomeAction
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import com.team23.neuracrsrecipes.viewmodel.HomeViewModel
 import com.team23.view.LocalTitle
@@ -30,8 +29,6 @@ internal data object HomeScreen: Screen {
             homeRecipeClick = { recipeId ->
                 appNavigator.navigateToRecipe(navigator, recipeId)
             },
-            onFavoriteClick = homeViewModel::favoriteClick,
-            onLocalPhoneClick = homeViewModel::onLocalPhoneClick,
             onAction = homeViewModel::onAction,
         )
     }
@@ -40,16 +37,14 @@ internal data object HomeScreen: Screen {
 @Composable
 fun HomeScreen(
     homeUiState: HomeUiState,
-    homeRecipeClick: (String) -> Unit,
-    onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
-    onLocalPhoneClick: () -> Unit,
+    homeRecipeClick: (String) -> Unit = {},
     onAction: (HomeAction) -> Unit = {},
 ) {
     when (homeUiState) {
         is HomeUiState.Loading -> HomeContentLoading()
         is HomeUiState.Error -> ErrorScreen(homeUiState.errorUiModel)
         is HomeUiState.Data -> HomeContentData(
-            homeUiState, homeRecipeClick, onFavoriteClick, onLocalPhoneClick, onAction,
+            homeUiState, homeRecipeClick, onAction,
         )
     }
 }
