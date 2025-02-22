@@ -1,9 +1,5 @@
 package com.team23.view.widget.recipe
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -166,11 +162,7 @@ fun RecipeContentData(
                     modifier = Modifier.padding(top = 16.dp),
                 )
             }
-            AnimatedVisibility(
-                visible = yPosition <= 0f,
-                enter = fadeIn() + slideInVertically(),
-                exit = ExitTransition.None,
-            ) {
+            if (yPosition <= 0f) {
                 RecipeImage(
                     recipeUiModel, onFavoriteClick, onLocalPhoneClick,
                     modifier = Modifier
