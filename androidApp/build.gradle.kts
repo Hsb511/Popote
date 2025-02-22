@@ -5,12 +5,12 @@ plugins {
 }
 
 val majorVersion = 2
-val minorVersion = 0
+val minorVersion = 1
 val fixVersion = 0
 
 android {
     namespace = "com.team23.neuracrsrecipes"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.team23.neuracrsrecipes"
         minSdk = 23
