@@ -25,11 +25,4 @@ class SummarizedRecipeMapper(
 			isFavorite = false,
 			source = RecipeDomainModel.Source.Remote,
 		)
-
-	fun toSummarizedRecipeDataModel(recipe: RecipeDomainModel.Summarized): SummarizedRecipeDataModel =
-		SummarizedRecipeDataModel(
-			href = recipe.id,
-			imgSrc = recipe.imageUrl,
-			title = recipe.title,
-		)
 }
