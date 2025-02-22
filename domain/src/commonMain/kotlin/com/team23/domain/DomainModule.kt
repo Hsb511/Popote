@@ -9,6 +9,7 @@ import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.LoadTemporaryRecipeUseCase
+import com.team23.domain.recipe.usecase.OverwriteAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.SaveRecipeUseCase
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
@@ -33,6 +34,7 @@ val domainModule = module {
     factoryOf(::CreateNewRecipeUseCase)
     factoryOf(::DeleteRecipeUseCase)
     factoryOf(::GetAllSummarizedRecipesUseCase)
+    factoryOf(::OverwriteAllSummarizedRecipesUseCase)
     factoryOf(::GetFullRecipeByIdUseCase)
     factoryOf(::LoadTemporaryRecipeUseCase)
     factoryOf(::SaveRecipeUseCase)

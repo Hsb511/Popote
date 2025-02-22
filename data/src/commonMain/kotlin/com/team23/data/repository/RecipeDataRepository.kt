@@ -52,6 +52,15 @@ internal class RecipeDataRepository(
         }
     }
 
+    override suspend fun loadAllSummarizedRecipes() {
+        val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
+        val recipeDataModels =
+            summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
+        val existingRecipes = summarizedRecipeDao.getAll()
+        val recipesToAdd = recipeDataModels.filter { recipe -> existingRecipes.none { recipe.href == it.href } }
+        summarizedRecipeDao.insertAll(*recipesToAdd.toTypedArray())
+    }
+
     override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
         if (baseRecipeDao.findBaseRecipeById(recipeId) == null) {
             val rawRecipe: Elements = neuracrWebsiteDataSource.getRecipeById(recipeId)

@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import com.team23.neuracrsrecipes.viewmodel.HomeViewModel
@@ -31,6 +32,7 @@ internal data object HomeScreen: Screen {
             },
             onFavoriteClick = homeViewModel::favoriteClick,
             onLocalPhoneClick = homeViewModel::onLocalPhoneClick,
+            onAction = homeViewModel::onAction,
         )
     }
 }
@@ -41,12 +43,13 @@ fun HomeScreen(
     homeRecipeClick: (String) -> Unit,
     onFavoriteClick: (SummarizedRecipeUiModel) -> Unit,
     onLocalPhoneClick: () -> Unit,
+    onAction: (HomeAction) -> Unit = {},
 ) {
     when (homeUiState) {
         is HomeUiState.Loading -> HomeContentLoading()
         is HomeUiState.Error -> ErrorScreen(homeUiState.errorUiModel)
         is HomeUiState.Data -> HomeContentData(
-            homeUiState.recipes, homeRecipeClick, onFavoriteClick, onLocalPhoneClick,
+            homeUiState, homeRecipeClick, onFavoriteClick, onLocalPhoneClick, onAction,
         )
     }
 }
