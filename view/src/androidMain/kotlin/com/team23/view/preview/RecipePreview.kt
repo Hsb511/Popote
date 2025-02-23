@@ -153,13 +153,8 @@ fun RecipeContentDataPreview() {
             ),
             scrollState = rememberScrollState(),
             heightToBeFaded = remember { mutableStateOf(0f) },
-            onAddOneServing = {},
-            onSubtractOneServing = {},
             currentServingsAmount = "4",
-            onValueChanged = {},
             onTagClicked = {},
-            onFavoriteClick = {},
-            onLocalPhoneClick = {},
             onUpdateLocalRecipe = {},
             onDeleteLocalRecipe = {},
             modifier = Modifier.background(color = Color.White)

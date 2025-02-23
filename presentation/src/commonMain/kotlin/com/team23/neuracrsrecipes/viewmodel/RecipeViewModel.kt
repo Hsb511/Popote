@@ -11,6 +11,7 @@ import com.team23.neuracrsrecipes.extension.toUrlRecipeId
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.handler.UiActionHandler
 import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
+import com.team23.neuracrsrecipes.model.action.RecipeAction
 import com.team23.neuracrsrecipes.model.action.UiAction
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
@@ -69,21 +70,31 @@ class RecipeViewModel(
         }
     }
 
-    fun addOneService() {
+    fun onAction(action: RecipeAction) {
+        when (action) {
+            is RecipeAction.AddOneServing -> addOneService()
+            is RecipeAction.ShowLocalPhoneMessage -> onLocalPhoneClick()
+            is RecipeAction.SubtractOneServing -> subtractOneService()
+            is RecipeAction.ToggleFavorite -> favoriteClick(action.recipe)
+            is RecipeAction.UpdateServingsAmount -> updateRecipeData(action.newAmount)
+        }
+    }
+
+    private fun addOneService() {
         if (currentServingsAmount.value < 999) {
             currentServingsAmount.value++
         }
         updateRecipeData()
     }
 
-    fun subtractOneService() {
+    private fun subtractOneService() {
         if (currentServingsAmount.value > 1) {
             currentServingsAmount.value--
         }
         updateRecipeData()
     }
 
-    fun updateRecipeData(newServingsAmount: String) {
+    private fun updateRecipeData(newServingsAmount: String) {
         newServingsAmount.toIntOrNull()?.let { newServingsAmountInt ->
             currentServingsAmount.value = when {
                 newServingsAmountInt < 1 -> 1
@@ -94,7 +105,7 @@ class RecipeViewModel(
         }
     }
 
-    fun favoriteClick(recipe: RecipeUiModel) {
+    private fun favoriteClick(recipe: RecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
             updateFavoriteUseCase.invoke(recipe.id)
             recomputeState(recipe)
@@ -108,7 +119,7 @@ class RecipeViewModel(
         }
     }
 
-    fun onLocalPhoneClick() {
+    private fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
             snackbarHandler.showLocalPhoneMessage()
         }

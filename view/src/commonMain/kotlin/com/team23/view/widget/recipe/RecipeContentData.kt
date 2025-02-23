@@ -24,7 +24,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +37,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.action.RecipeAction
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
@@ -61,14 +61,10 @@ fun RecipeContentData(
     currentServingsAmount: String,
     scrollState: ScrollState,
     heightToBeFaded: MutableState<Float>,
-    onValueChanged: (String) -> Unit,
-    onAddOneServing: () -> Unit,
-    onSubtractOneServing: () -> Unit,
     onTagClicked: (String) -> Unit,
-    onFavoriteClick: (RecipeUiModel) -> Unit,
-    onLocalPhoneClick: () -> Unit,
     onUpdateLocalRecipe: () -> Unit,
     onDeleteLocalRecipe: () -> Unit,
+    onAction: (RecipeAction) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -86,7 +82,11 @@ fun RecipeContentData(
         var yPositionTopInstructions by remember { mutableStateOf(1557f) }
         val coeff = (1 - yPositionImage / (4 * horizontalPadding)).coerceIn(0f, 1f)
         val spaceToAddInPx = with(LocalDensity.current) { horizontalPadding.dp.toPx() } * 2
-        val headerIngredientFraction = (yPositionBottomIngredients / (yPositionBottomIngredients - yPositionTopInstructions)).coerceIn(0f, 1f)
+        val headerIngredientFraction =
+            (yPositionBottomIngredients / (yPositionBottomIngredients - yPositionTopInstructions)).coerceIn(0f, 1f)
+
+        val onFavoriteClick = { recipe: RecipeUiModel -> onAction(RecipeAction.ToggleFavorite(recipe)) }
+        val onLocalPhoneClick = { onAction(RecipeAction.ShowLocalPhoneMessage) }
 
         Box(modifier = modifier.fillMaxSize()) {
             Column(
@@ -149,9 +149,9 @@ fun RecipeContentData(
                     ingredientsUiModel = IngredientsUiModel.FromRecipeScreen(
                         ingredients = recipeUiModel.ingredients,
                         currentServingsAmount = currentServingsAmount,
-                        onValueChanged = onValueChanged,
-                        onAddOneServing = onAddOneServing,
-                        onSubtractOneServing = onSubtractOneServing,
+                        onValueChanged = { newValue -> onAction(RecipeAction.UpdateServingsAmount(newValue)) },
+                        onAddOneServing = { onAction(RecipeAction.AddOneServing) },
+                        onSubtractOneServing = { onAction(RecipeAction.SubtractOneServing) },
                     ),
                     modifier = Modifier.onGloballyPositioned { layoutCoordinates ->
                         yPositionBottomIngredients = layoutCoordinates.positionInRoot().y +
@@ -213,9 +213,9 @@ fun RecipeContentData(
                         ingredientsUiModel = IngredientsUiModel.FromRecipeScreen(
                             ingredients = recipeUiModel.ingredients,
                             currentServingsAmount = currentServingsAmount,
-                            onValueChanged = onValueChanged,
-                            onAddOneServing = onAddOneServing,
-                            onSubtractOneServing = onSubtractOneServing,
+                            onValueChanged = { },
+                            onAddOneServing = { },
+                            onSubtractOneServing = { },
                         ),
                         modifier = Modifier
                             .padding(top = 64.dp)
