@@ -57,14 +57,9 @@ private fun RecipeComposeScreen(
                 scrollState = scrollState,
                 heightToBeFaded = heightToBeFaded,
                 currentServingsAmount = recipeViewModel.currentServingsAmount.value.toString(),
-                onValueChanged = recipeViewModel::updateRecipeData,
-                onAddOneServing = recipeViewModel::addOneService,
-                onSubtractOneServing = recipeViewModel::subtractOneService,
                 onTagClicked = { tagId ->
                     appNavigator.navigateToSearch(navigator, tagId)
                 },
-                onFavoriteClick = recipeViewModel::favoriteClick,
-                onLocalPhoneClick = recipeViewModel::onLocalPhoneClick,
                 onUpdateLocalRecipe = {
                     recipeViewModel.onUpdateLocalRecipe {
                         appNavigator.navigateToAdd(navigator)
@@ -75,6 +70,7 @@ private fun RecipeComposeScreen(
                         appNavigator.navigateToHome(navigator)
                     }
                 },
+                onAction = recipeViewModel::onAction,
                 modifier = modifier,
             )
             title.value = recipeUiState.recipe.title
