@@ -31,7 +31,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
@@ -190,6 +192,10 @@ fun RecipeContentData(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
+                            .blur(
+                                radius = 8.dp * headerIngredientFraction,
+                                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(16.dp))
+                            )
                             .padding(horizontal = horizontalPadding.dp)
                             .graphicsLayer {
                                 scaleX = (size.width + spaceToAddInPx) / size.width
