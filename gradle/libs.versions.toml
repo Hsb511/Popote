@@ -1,14 +1,14 @@
 [versions]
 accompanistPermission = "0.36.0"
-agp = "8.7.1"
+agp = "8.7.3"
 androidx-activity = "1.10.0"
-jetbrainsCompose = "1.7.3"
+composePlugin = "1.7.3"
 kamel = "0.9.1"
 koin = "3.5.6"
 koinCompose = "1.1.5"
-kotlin = "1.9.23"
-kotlinxCoroutines = "1.8.0"
-kotlinxDatetime = "0.5.0"
+kotlin = "2.1.0"
+kotlinxCoroutines = "1.10.1"
+kotlinxDatetime = "0.6.0"
 kotlinxSerializer = "1.7.3"
 ksoup = "0.1.2"
 ktor = "2.3.7"
@@ -27,7 +27,6 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serializer = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializer" }
 ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
@@ -50,10 +49,10 @@ voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", vers
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "jetbrainsCompose" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 
