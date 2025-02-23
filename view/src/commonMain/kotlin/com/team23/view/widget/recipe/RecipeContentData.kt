@@ -24,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -80,9 +81,9 @@ fun RecipeContentData(
         val density = LocalDensity.current
         val horizontalPadding = horizontalGutterPadding.value
         val imageHeight = getCurrentScreenWidth() * 3f / 4 - 64.dp
-        var yPositionImage by remember { mutableStateOf(0f) }
-        var yPositionBottomIngredients by remember { mutableStateOf(0f) }
-        var yPositionTopInstructions by remember { mutableStateOf(0f) }
+        var yPositionImage by remember { mutableStateOf(541f) }
+        var yPositionBottomIngredients by remember { mutableStateOf(1375f) }
+        var yPositionTopInstructions by remember { mutableStateOf(1557f) }
         val coeff = (1 - yPositionImage / (4 * horizontalPadding)).coerceIn(0f, 1f)
         val spaceToAddInPx = with(LocalDensity.current) { horizontalPadding.dp.toPx() } * 2
         val headerIngredientFraction = (yPositionBottomIngredients / (yPositionBottomIngredients - yPositionTopInstructions)).coerceIn(0f, 1f)
