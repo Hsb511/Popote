@@ -2,7 +2,9 @@ package com.team23.view.ds.scaffold
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
@@ -25,6 +27,7 @@ fun PopoteScaffold(
 	content: @Composable (PaddingValues) -> Unit
 ) {
 	Scaffold(
+		contentWindowInsets = WindowInsets.safeDrawing,
 		content = content,
 		topBar = {
 			TopBar(

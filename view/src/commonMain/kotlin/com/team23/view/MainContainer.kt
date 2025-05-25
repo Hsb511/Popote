@@ -65,7 +65,7 @@ fun MainContainer() {
                             drawerUiModel = DrawerUiModel("2.0.0"),
                             drawerState = drawerState,
                         ) {
-                            Box(modifier = Modifier.padding(bottom = padding.calculateBottomPadding())) {
+                            Box(modifier = Modifier.padding(padding)) {
                                 CurrentScreen()
                             }
                         }

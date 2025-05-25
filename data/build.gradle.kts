@@ -54,7 +54,7 @@ kotlin {
 
 android {
     namespace = "com.team23.neuracrsrecipes"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         minSdk = 23
     }
