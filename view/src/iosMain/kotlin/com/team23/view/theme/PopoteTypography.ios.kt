@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.platform.Font
+import com.team23.view.Res
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.resource
 
 private val cache: MutableMap<String, Font> = mutableMapOf()
 
@@ -17,7 +17,7 @@ actual fun font(
     weight: FontWeight
 ) = cache.getOrPut(resId) {
     val byteArray = runBlocking {
-        resource("font/$resId.ttf").readBytes()
+        Res.readBytes("font/$resId.ttf")
     }
     Font(resId, byteArray, weight)
 }

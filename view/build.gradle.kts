@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
+    kotlin("native.cocoapods")
 }
 
 kotlin {
@@ -27,7 +28,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.presentation)
+            api(projects.presentation)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.runtime)
@@ -44,6 +45,21 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        iosMain.dependencies {
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.runtime)
+            implementation(compose.ui)
+        }
+    }
+
+    cocoapods {
+        version = "1.0.0"
+        ios.deploymentTarget = "16.0"
+        framework {
+            baseName = "view"
+            isStatic = true
         }
     }
 }
