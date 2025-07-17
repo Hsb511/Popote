@@ -1,12 +1,21 @@
 import SwiftUI
-import presentation
+import view
+
+
+struct MainContainerComposeView: UIViewControllerRepresentable {
+  func makeUIViewController(context: Context) -> UIViewController {
+     ComposeUIViewController {
+          MainContainer()
+        }
+      }
+  func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
+}
 
 struct ContentView: View {
-	let greet = Greeting().greet()
-
-	var body: some View {
-		Text(greet)
-	}
+  var body: some View {
+    MainContainerComposeView()
+      .edgesIgnoringSafeArea(.all)   // now this modifier applies to the SwiftUI View
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {

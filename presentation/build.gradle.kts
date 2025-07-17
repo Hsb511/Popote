@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
+    kotlin("native.cocoapods")
 }
 
 kotlin {
@@ -42,6 +43,15 @@ kotlin {
             implementation(libs.accompanist.permissions)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.activity.ktx)
+        }
+    }
+
+    cocoapods {
+        version = "1.0.0"
+        ios.deploymentTarget = "16.0"
+        framework {
+            baseName = "presentation"
+            isStatic = true
         }
     }
 }
