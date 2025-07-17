@@ -2,7 +2,10 @@ package com.team23.view.ds.scaffold
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -21,8 +24,10 @@ import com.team23.view.navigation.NavItemProperty
 
 @Composable
 internal fun BottomBar(navItemProperties: List<NavItemProperty>, closeMenu: () -> Unit) {
+	val navigationBarHeight = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 	NavigationBar(
-		modifier = Modifier.height(56.dp)
+		modifier = Modifier
+			.height(56.dp + navigationBarHeight)
 	) {
 		navItemProperties.map { navItemProperty ->
 			NavigationBarItem(

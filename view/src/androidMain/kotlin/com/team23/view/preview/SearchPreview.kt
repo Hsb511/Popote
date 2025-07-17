@@ -11,7 +11,6 @@ import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.view.navigation.screen.SearchScreen
 import com.team23.view.sample.uimodel.previewTextFieldSample
-import com.team23.view.widget.search.SearchRecipeCard
 import com.team23.view.sample.uimodel.summarizedRecipeSample
 import com.team23.view.theme.PopoteTheme
 import com.team23.view.widget.search.SearchFilterChip
@@ -26,14 +25,6 @@ fun SearchFilterChipPreview() {
         SearchFilterChip(
             TagUiModel("soup", true)
         ) {}
-    }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun SearchRecipeCardPreview() {
-    PopoteTheme {
-        SearchRecipeCard(summarizedRecipeSample, { })
     }
 }
 
