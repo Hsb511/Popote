@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -94,9 +95,10 @@ fun RecipeContentData(
                 modifier = Modifier
                     .verticalScroll(scrollState)
                     .padding(padding)
-                    .padding(horizontal = horizontalPadding.dp)
+                    .padding(horizontal = horizontalPadding.dp, vertical = 16.dp)
                     .background(color = MaterialTheme.colorScheme.background)
             ) {
+                Spacer(modifier = Modifier.height(64.dp + 8.dp))
                 Text(
                     text = recipeUiModel.title,
                     style = MaterialTheme.typography.displaySmall,
@@ -222,10 +224,10 @@ fun RecipeContentData(
                             onSubtractOneServing = { },
                         ),
                         modifier = Modifier
-                            .height(imageHeight)
+                            .padding(top = 88.dp)
+                            .height(imageHeight - 72.dp)
                             .alpha(headerIngredientFraction)
                             .verticalScroll(rememberScrollState())
-                            .padding(vertical = 8.dp)
                     )
                 }
             }

@@ -2,7 +2,9 @@ package com.team23.view.widget.favorite
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
@@ -11,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
+import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 
 @Composable
@@ -32,6 +35,9 @@ fun FavoriteDataScreen(
 		horizontalArrangement = Arrangement.spacedBy(16.dp),
 		modifier = modifier.fillMaxSize()
 	) {
+		item(span = StaggeredGridItemSpan.FullLine) {
+			Spacer(modifier = Modifier.height(64.dp + 8.dp))
+		}
 		item(span = StaggeredGridItemSpan.FullLine) {
 			FavoriteHeader(
 				displayType = displayType,
