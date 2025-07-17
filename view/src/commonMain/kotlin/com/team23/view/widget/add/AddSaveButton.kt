@@ -1,5 +1,6 @@
 package com.team23.view.widget.add
 
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
@@ -27,7 +28,7 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
 
     FloatingActionButton(
         onClick = { openDialog.value = true },
-        modifier = Modifier.size(56.dp),
+        modifier = Modifier.size(56.dp).offset(y = 56.dp),
     ) {
         NeuracrIcon(
             iconProperty = IconProperty.Resource(

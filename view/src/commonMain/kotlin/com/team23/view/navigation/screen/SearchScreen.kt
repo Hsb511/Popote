@@ -5,9 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -90,7 +88,6 @@ internal fun SearchScreen(
             .padding(start = 16.dp, top = 8.dp, end = 16.dp)
             .fillMaxSize()
     ) {
-        Spacer(modifier = Modifier.height(64.dp + 16.dp))
         SearchTextField(searchUiModel.textField)
 
         SearchTagsRow(searchUiModel.tagsRow)
@@ -113,7 +110,7 @@ internal fun SearchScreen(
                         onLocalPhoneClick = searchUiModel.onLocalPhoneClick,
                     ),
                     modifier = Modifier
-                        .animateItemPlacement()
+                        .animateItem()
                         .clickable {
                             searchUiModel.onRecipeClick(recipe)
                         }
