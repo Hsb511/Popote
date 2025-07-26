@@ -9,15 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.FlagProperty
-import com.team23.view.ds.flag.NeuracrFlag
+import com.team23.view.ds.flag.PopoteFlag
 
 @Composable
 internal fun CellFlag(
     flagProperty: FlagProperty,
     modifier: Modifier = Modifier,
 ) {
-	NeuracrFlag(
-		neuracrFlagProperty = flagProperty,
+	PopoteFlag(
+		flagProperty = flagProperty,
 		modifier = modifier
 			.clip(
 				shape = MaterialTheme.shapes.medium.copy(
