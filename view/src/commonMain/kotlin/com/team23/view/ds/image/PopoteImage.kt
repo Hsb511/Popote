@@ -24,7 +24,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalKamelApi::class)
 @Composable
-fun NeuracrImage(
+fun PopoteImage(
 	neuracrImageProperty: ImageProperty,
 	maxImageHeight: Dp,
 	modifier: Modifier = Modifier,

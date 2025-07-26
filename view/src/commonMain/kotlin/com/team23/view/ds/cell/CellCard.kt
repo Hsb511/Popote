@@ -21,7 +21,7 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.ic_local_smartphone
 import com.team23.view.locally_saved_button_content_description
@@ -35,7 +35,7 @@ internal fun CellCard(
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
-			NeuracrImage(
+			PopoteImage(
 				neuracrImageProperty = cellProperty.imageProperty,
 				maxImageHeight = getImageMaxHeight(),
 				displayType = displayType,

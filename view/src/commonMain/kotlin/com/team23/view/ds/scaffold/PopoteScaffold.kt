@@ -48,7 +48,7 @@ fun PopoteScaffold(
 			)
 		},
 		snackbarHost = {
-			NeuracrSnackbarHost(snackbarHostState)
+			PopoteSnackbarHost(snackbarHostState)
 		},
 		modifier = Modifier.fillMaxSize()
 	)

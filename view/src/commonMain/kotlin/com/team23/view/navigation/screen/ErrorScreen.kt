@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.view.Res
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.image.PopoteImage
 import com.team23.view.error_description
 import com.team23.view.error_expand
 import com.team23.view.error_title
@@ -56,7 +56,7 @@ fun ErrorScreen(errorUiModel: ErrorUiModel, modifier: Modifier = Modifier) {
 			.verticalScroll(scrollState)
 			.padding(all = horizontalGutterPadding)
 	) {
-		NeuracrImage(
+		PopoteImage(
 			neuracrImageProperty = ImageProperty.Resource(
 				contentDescription = null,
 				drawableResource = Res.drawable.neuracr_error,
