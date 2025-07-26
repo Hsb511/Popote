@@ -46,7 +46,7 @@ import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 import com.team23.view.Res
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.getCurrentScreenWidth
 import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.extension.horizontalGutterPadding
@@ -247,7 +247,7 @@ private fun RecipeImage(
         modifier = modifier,
     ) {
         Box {
-            NeuracrImage(
+            PopoteImage(
                 neuracrImageProperty = recipeUiModel.image,
                 maxImageHeight = getImageMaxHeight(),
             )

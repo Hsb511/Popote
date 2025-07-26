@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.Res
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.favorite_empty_description_part1
 import com.team23.view.favorite_empty_description_part2
@@ -45,7 +45,7 @@ fun FavoriteDataEmptyScreen(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center,
         )
-        NeuracrImage(
+        PopoteImage(
             neuracrImageProperty = ImageProperty.Resource(
                 contentDescription = null,
                 drawableResource = Res.drawable.neuracr_wip,

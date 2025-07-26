@@ -7,7 +7,7 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun NeuracrIcon(
+internal fun PopoteIcon(
     iconProperty: IconProperty,
     modifier: Modifier = Modifier,
 ) {

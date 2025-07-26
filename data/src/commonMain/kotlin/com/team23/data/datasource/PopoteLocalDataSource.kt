@@ -11,7 +11,7 @@ import com.team23.data.dao.UserDao
 import data.AppDatabase
 
 
-internal class NeuracrLocalDataSource(databaseDriverFactory: DatabaseDriverFactory) {
+internal class PopoteLocalDataSource(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = AppDatabase(databaseDriverFactory.createDriver())
     private val dbQueries = database.appDatabaseQueries
 

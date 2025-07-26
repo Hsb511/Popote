@@ -1,7 +1,7 @@
 package com.team23.data
 
-import com.team23.data.datasource.NeuracrLocalDataSource
-import com.team23.data.datasource.NeuracrWebsiteDataSource
+import com.team23.data.datasource.PopoteLocalDataSource
+import com.team23.data.datasource.PopoteWebsiteDataSource
 import com.team23.data.mappers.DateMapper
 import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.ImageMapper
@@ -43,8 +43,8 @@ val dataModule = module {
     factory { CIO.create() }
     factory { HttpClientFactory(get()) }
     single { provideHttpClient(get()) }
-    singleOf(::NeuracrLocalDataSource)
-    factory { NeuracrWebsiteDataSource(get()) }
+    singleOf(::PopoteLocalDataSource)
+    factory { PopoteWebsiteDataSource(get()) }
 
     // Repositories
     singleOf(::FavoriteDataRepository) { bind<FavoriteRepository>() }

@@ -18,7 +18,7 @@ import com.team23.view.add_recipe_save_dialog_title
 import com.team23.view.dialog_confirm
 import com.team23.view.dialog_dismiss
 import com.team23.view.ds.button.ButtonTextDialog
-import com.team23.view.ds.icon.NeuracrIcon
+import com.team23.view.ds.icon.PopoteIcon
 import com.team23.view.ic_save
 import org.jetbrains.compose.resources.stringResource
 
@@ -30,7 +30,7 @@ fun AddSaveButton(onSaveButtonClick: () -> Unit) {
         onClick = { openDialog.value = true },
         modifier = Modifier.size(56.dp).offset(y = 56.dp),
     ) {
-        NeuracrIcon(
+        PopoteIcon(
             iconProperty = IconProperty.Resource(
                 drawableResource = Res.drawable.ic_save,
             ),

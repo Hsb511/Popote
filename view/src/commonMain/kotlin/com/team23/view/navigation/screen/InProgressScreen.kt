@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.Res
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.neuracr_wip
 import com.team23.view.wip_page_message
@@ -29,7 +29,7 @@ fun InProgressScreen(modifier: Modifier = Modifier) {
 			.fillMaxSize()
 			.padding(all = horizontalGutterPadding)
 	) {
-		NeuracrImage(
+		PopoteImage(
 			neuracrImageProperty = ImageProperty.Resource(
 				contentDescription = null,
 				drawableResource = Res.drawable.neuracr_wip,
