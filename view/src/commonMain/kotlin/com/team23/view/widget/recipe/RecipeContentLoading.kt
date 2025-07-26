@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,7 +23,7 @@ fun RecipeContentLoading(modifier: Modifier = Modifier) {
             textStyle = MaterialTheme.typography.displaySmall,
             modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)
         )
-        Divider(modifier = Modifier.padding(top = 8.dp))
+        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
         Shimmer(
             fontSize = 14.sp,
             modifier = Modifier
