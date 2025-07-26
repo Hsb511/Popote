@@ -5,11 +5,11 @@ import androidx.compose.ui.Modifier
 import com.team23.neuracrsrecipes.model.property.FlagProperty
 
 @Composable
-fun NeuracrFlag(
-    neuracrFlagProperty: FlagProperty,
+fun PopoteFlag(
+    flagProperty: FlagProperty,
     modifier: Modifier = Modifier
 ) {
-    when (neuracrFlagProperty) {
+    when (flagProperty) {
         FlagProperty.FRENCH -> FrenchFlag(modifier)
         FlagProperty.UK_US -> UkUsFlag(modifier)
     }
