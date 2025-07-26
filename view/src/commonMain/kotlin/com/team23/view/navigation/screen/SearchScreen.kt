@@ -117,7 +117,7 @@ internal fun SearchScreen(
                         onLocalPhoneClick = searchUiModel.onLocalPhoneClick,
                     ),
                     modifier = Modifier
-                        .animateItemPlacement()
+                        .animateItem()
                         .clickable {
                             searchUiModel.onRecipeClick(recipe)
                         }
