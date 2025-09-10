@@ -1,6 +1,6 @@
 [versions]
 accompanistPermission = "0.36.0"
-agp = "8.7.3"
+agp = "8.13.0"
 androidx-activity = "1.10.0"
 composePlugin = "1.7.3"
 kamel = "0.9.1"
