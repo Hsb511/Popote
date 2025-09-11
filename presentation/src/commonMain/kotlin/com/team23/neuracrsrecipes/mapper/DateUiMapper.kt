@@ -1,36 +1,38 @@
 package com.team23.neuracrsrecipes.mapper
 
 import com.team23.neuracrsrecipes.extension.getLocalLanguage
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 class DateUiMapper {
 
     fun toSubtitleDate(localDate: LocalDate): String =
         with(localDate) {
             if (getLocalLanguage() == "fr") {
-                "$dayOfMonth ${toFrenchStringMonth(month)} $year"
+                "$day ${toFrenchStringMonth(month)} $year"
             } else {
-                "${month.name.lowercase().replaceFirstChar { it.uppercase() }} $dayOfMonth, $year"
+                "${month.name.lowercase().replaceFirstChar { it.uppercase() }} $day, $year"
             }
         }
 
+    @OptIn(ExperimentalTime::class)
     fun toLocalDate(stringDate: String): LocalDate = when {
         stringDate.matches(Regex(FRENCH_RAW_DATE_FORMAT)) -> stringDate.split(" ").let {
             val year = it[2].toInt()
             val month = toMonth(it[1])
             val day = it[0].toInt()
-            LocalDate(year = year, month = month, dayOfMonth = day)
+            LocalDate(year = year, month = month, day = day)
         }
 
         stringDate.matches(Regex(ENGLISH_RAW_DATE_FORMAT)) -> stringDate.split(" ").let {
             val year = it[2].toInt()
             val month = Month.valueOf(it[0].uppercase())
             val day = it[1].split(",")[0].toInt()
-            LocalDate(year = year, month = month, dayOfMonth = day)
+            LocalDate(year = year, month = month, day = day)
         }
 
         else -> Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
@@ -49,7 +51,6 @@ class DateUiMapper {
         Month.OCTOBER -> FRENCH_OCTOBER
         Month.NOVEMBER -> FRENCH_NOVEMBER
         Month.DECEMBER -> FRENCH_DECEMBER
-        else -> throw IllegalArgumentException()
     }
 
     private fun toMonth(frenchStringMonth: String): Month = when (frenchStringMonth) {
