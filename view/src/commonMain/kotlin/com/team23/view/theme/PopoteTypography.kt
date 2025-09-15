@@ -12,11 +12,12 @@ import androidx.compose.ui.unit.sp
 expect fun font(resId: String, weight: FontWeight): Font
 
 @Composable
-private fun neuracrFontFamily() = FontFamily(
+private fun neuracrFontFamily() = FontFamily.Default /* FontFamily(
 	font("alice", titleFontWeight()),
 	font("roboto_medium", boldFontWeight()),
 	font("roboto_light", bodyFontWeight()),
 )
+*/
 
 @Composable
 internal fun neuracrTypography() = Typography(
