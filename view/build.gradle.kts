@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
-    kotlin("native.cocoapods")
 }
 
 kotlin {
@@ -16,11 +15,10 @@ kotlin {
     }
     
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "view"
             isStatic = true
         }
@@ -51,15 +49,7 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.runtime)
             implementation(compose.ui)
-        }
-    }
-
-    cocoapods {
-        version = "1.0.0"
-        ios.deploymentTarget = "16.0"
-        framework {
-            baseName = "view"
-            isStatic = true
+            api(projects.data)
         }
     }
 }
