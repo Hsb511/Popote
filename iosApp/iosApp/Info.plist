@@ -46,5 +46,11 @@
 	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Need access to your photo library to choose a picture.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Need camera access to take a photo.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Need access to your photo library to select a picture.</string>
 </dict>
 </plist>
