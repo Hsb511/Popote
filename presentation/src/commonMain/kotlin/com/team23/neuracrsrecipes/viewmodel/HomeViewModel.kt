@@ -104,7 +104,6 @@ class HomeViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 overwriteAllSummarizedRecipesUseCase.invoke()
                     .onFailure {
-                        println("HUGO - ${it.message}")
                         _uiState.value = currentState.copy(isRefreshing = false) }
                     .onSuccess { data ->
                         val (recipes, newRecipesCount) = data

@@ -30,12 +30,12 @@ fun DrawerFooter(
         Text(
             text = buildAnnotatedString {
                 append("© ")
-                withLink(LinkAnnotation.Url(url = "https://github.com/neuracr", styles = linkStyle)) {
-                    append("neuracr")
-                }
-                append(" & ")
                 withLink(LinkAnnotation.Url(url = "https://github.com/Hsb511", styles = linkStyle)) {
                     append("Hsb511")
+                }
+                append(" & ")
+                withLink(LinkAnnotation.Url(url = "https://github.com/neuracr", styles = linkStyle)) {
+                    append("neuracr")
                 }
             }
         )
