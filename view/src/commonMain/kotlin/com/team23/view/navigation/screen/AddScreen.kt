@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
@@ -40,6 +39,7 @@ import com.team23.view.add_recipe_conclusion
 import com.team23.view.add_recipe_description
 import com.team23.view.add_recipe_title
 import com.team23.view.extension.horizontalGutterPadding
+import com.team23.view.extension.topScreenHeight
 import com.team23.view.navigation.AppNavigator
 import com.team23.view.recipe_ingredients_title
 import com.team23.view.recipe_instructions_title
@@ -101,7 +101,7 @@ fun AddScreen(
             .padding(horizontal = horizontalGutterPadding, vertical = 16.dp)
             .background(color = MaterialTheme.colorScheme.background)
     ) {
-        Spacer(modifier = Modifier.height(64.dp + 8.dp))
+        Spacer(modifier = Modifier.topScreenHeight(additionalHeight = 8.dp))
         AddTextField(
             text = addRecipe.recipe.title,
             onTextChange = addRecipe.onTitleChange,

@@ -32,6 +32,7 @@ import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
 import com.team23.view.LocalTitle
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
+import com.team23.view.extension.topScreenHeight
 import com.team23.view.mapper.RecipeUiMapper
 import com.team23.view.navigation.AppNavigator
 import com.team23.view.search_textfield_label
@@ -94,7 +95,7 @@ internal fun SearchScreen(
             .padding(start = 16.dp, top = 8.dp, end = 16.dp)
             .fillMaxSize()
     ) {
-        Spacer(modifier = Modifier.height(64.dp + 16.dp))
+        Spacer(modifier = Modifier.topScreenHeight(additionalHeight = 24.dp))
         SearchTextField(searchUiModel.textField)
 
         SearchTagsRow(searchUiModel.tagsRow)

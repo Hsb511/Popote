@@ -49,7 +49,9 @@ import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.getCurrentScreenWidth
 import com.team23.view.extension.getImageMaxHeight
+import com.team23.view.extension.getTopScreenHeight
 import com.team23.view.extension.horizontalGutterPadding
+import com.team23.view.extension.topScreenHeight
 import com.team23.view.mapper.FavoriteUiMapper
 import com.team23.view.mapper.LocalPhoneUiMapper
 import com.team23.view.recipe_ingredients_title
@@ -98,7 +100,7 @@ fun RecipeContentData(
                     .padding(horizontal = horizontalPadding.dp, vertical = 16.dp)
                     .background(color = MaterialTheme.colorScheme.background)
             ) {
-                Spacer(modifier = Modifier.height(64.dp + 8.dp))
+                Spacer(modifier = Modifier.topScreenHeight())
                 Text(
                     text = recipeUiModel.title,
                     style = MaterialTheme.typography.displaySmall,
@@ -224,8 +226,8 @@ fun RecipeContentData(
                             onSubtractOneServing = { },
                         ),
                         modifier = Modifier
-                            .padding(top = 88.dp)
-                            .height(imageHeight - 72.dp)
+                            .padding(top = getTopScreenHeight(additionalHeight = 28.dp))
+                            .height(imageHeight - getTopScreenHeight(additionalHeight = 12.dp))
                             .alpha(headerIngredientFraction)
                             .verticalScroll(rememberScrollState())
                     )
