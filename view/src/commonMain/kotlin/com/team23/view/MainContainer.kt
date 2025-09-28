@@ -24,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
-import org.koin.compose.koinInject
 
 @Composable
 fun MainContainer() {
@@ -42,7 +41,7 @@ fun MainContainer() {
                 PopoteNavigator(scrollState, heightToBeFaded, title) { navigator ->
                     val drawerState = rememberDrawerState(DrawerValue.Closed)
                     val scope = rememberCoroutineScope()
-                    val snackbarHostState = koinInject<SnackbarHostState>()
+                    val snackbarHostState = remember { SnackbarHostState() }
 
                     val closeDrawer: () -> Unit = {
                         scope.launch(Dispatchers.IO) { drawerState.close() }

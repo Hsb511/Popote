@@ -11,10 +11,10 @@
     <string name="snackbar_favorite_action">annuler</string>
     <string name="snackbar_start_loading">Début du chargement des recettes</string>
     <string name="snackbar_loading_one">Chargement d\'une nouvelle recette</string>
-    <string name="snackbar_loading_several">Chargement de %s nouvelles recettes</string>
+    <string name="snackbar_loading_several">Chargement de %1$s nouvelles recettes</string>
     <string name="snackbar_loading_done">Chargement terminé</string>
-    <string name="snackbar_recipe_deleted">%s a été supprimée de votre base de données</string>
-    <string name="snackbar_recipe_not_deleted">Une erreur est survenue. %s n\' a pas été supprimée de votre base de données</string>
+    <string name="snackbar_recipe_deleted">%1$s a été supprimée de votre base de données</string>
+    <string name="snackbar_recipe_not_deleted">Une erreur est survenue. %1$s n\' a pas été supprimée de votre base de données</string>
 
     <!-- dialog -->
     <string name="dialog_dismiss">ignorer</string>
@@ -67,7 +67,7 @@
     <!-- Modal drawer -->
     <string name="drawer_empty_name">Ajouter un pseudo</string>
     <string name="drawer_name_change">Changer votre pseudo</string>
-    <string name="drawer_name_set">Votre pseudo est %s</string>
+    <string name="drawer_name_set">Votre pseudo est %1$s</string>
     <string name="drawer_dialog_text">Il sera utilisé comme nom d\'auteur sur les recettes que vous ajouterez sur votre téléphone et que vous pourrez partager plus tard.</string>
     <string name="drawer_dialog_placeholder">Pseudo</string>
 

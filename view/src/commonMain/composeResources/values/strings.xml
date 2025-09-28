@@ -11,10 +11,10 @@
     <string name="snackbar_favorite_action">undo</string>
     <string name="snackbar_start_loading">Start loading recipes</string>
     <string name="snackbar_loading_one">Loading 1 new recipe</string>
-    <string name="snackbar_loading_several">Loading %s new recipes</string>
+    <string name="snackbar_loading_several">Loading %1$s new recipes</string>
     <string name="snackbar_loading_done">Loading finished</string>
-    <string name="snackbar_recipe_deleted">%s has been deleted from your database</string>
-    <string name="snackbar_recipe_not_deleted">An error occurred. %s has not been deleted from your database</string>
+    <string name="snackbar_recipe_deleted">%1$s has been deleted from your database</string>
+    <string name="snackbar_recipe_not_deleted">An error occurred. %1$s has not been deleted from your database</string>
 
     <!-- dialog -->
     <string name="dialog_dismiss">dismiss</string>
@@ -66,7 +66,7 @@
     <!-- Modal drawer -->
     <string name="drawer_empty_name">Set up your nickname</string>
     <string name="drawer_name_change">Change your nickname</string>
-    <string name="drawer_name_set">Your nickname is %s</string>
+    <string name="drawer_name_set">Your nickname is %1$s</string>
     <string name="drawer_dialog_text">It will be used as an author name on the recipe you will add on your phone and that you can share later.</string>
     <string name="drawer_dialog_placeholder">Nickname</string>
 

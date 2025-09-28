@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import com.team23.neuracrsrecipes.model.action.UiAction
+import androidx.core.net.toUri
 
 actual class UiActionHandler(
     private val context: Context,
@@ -19,7 +20,7 @@ actual class UiActionHandler(
     private fun redirectToWebsite() {
         Intent().apply {
             action = Intent.ACTION_VIEW
-            data = Uri.parse("https://neuracr.github.io/")
+            data = "https://neuracr.github.io/".toUri()
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }.also { intent ->
             context.startActivity(intent)

@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
-import com.team23.view.ds.icon.NeuracrIcon
+import com.team23.view.ds.icon.PopoteIcon
 import com.team23.view.ic_tag
 
 @Composable
@@ -38,7 +38,7 @@ fun AddTagChip(
         },
         modifier = Modifier.width(80.dp)
     ) {
-        NeuracrIcon(
+        PopoteIcon(
             iconProperty = IconProperty.Resource(
                 drawableResource = Res.drawable.ic_tag,
                 contentDescription = "Add",

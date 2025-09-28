@@ -4,12 +4,15 @@ import com.team23.domain.recipe.model.IngredientDomainModel
 import com.team23.domain.recipe.model.InstructionDomainModel
 import com.team23.domain.recipe.model.LanguageDomainModel
 import com.team23.domain.recipe.model.RecipeDomainModel
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 class CreateNewRecipeUseCase {
-	fun invoke(): RecipeDomainModel.Full = RecipeDomainModel.Full(
+
+	@OptIn(ExperimentalTime::class)
+    fun invoke(): RecipeDomainModel.Full = RecipeDomainModel.Full(
 		id = TEMP_RECIPE_ID,
 		title = "",
 		imageUrl = "",

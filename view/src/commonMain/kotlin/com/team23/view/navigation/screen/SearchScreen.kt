@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -61,9 +62,12 @@ internal data class SearchScreen(
                 textField = TextFieldUiModel(
                     searchValue = searchViewModel.searchValue.value,
                     onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
-                    label = stringResource(Res.string.search_textfield_label),
+                    label = stringResource(Res.string .search_textfield_label),
                     placeholder = stringResource(Res.string.search_textfield_placeholder),
-                    leadingIcon = IconProperty.Vector(Icons.Filled.Search),
+                    leadingIcon = IconProperty.Vector(
+                        imageVector = Icons.Filled.Search,
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                    ),
                 ),
                 tagsRow = TagsRowUiModel(
                     tags = searchViewModel.tags.collectAsState().value,
@@ -113,7 +117,7 @@ internal fun SearchScreen(
                         onLocalPhoneClick = searchUiModel.onLocalPhoneClick,
                     ),
                     modifier = Modifier
-                        .animateItemPlacement()
+                        .animateItem()
                         .clickable {
                             searchUiModel.onRecipeClick(recipe)
                         }
