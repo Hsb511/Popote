@@ -7,6 +7,7 @@ import com.team23.neuracrsrecipes.model.property.ImageProperty
 expect fun rememberCameraManager(onResult: (ImageProperty.UserPick) -> Unit): CameraManager
 
 
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class CameraManager(
     onLaunch: () -> Unit
 ) {

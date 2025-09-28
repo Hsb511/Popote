@@ -7,6 +7,7 @@ import com.team23.neuracrsrecipes.model.property.ImageProperty
 expect fun rememberGalleryManager(onResult: (ImageProperty.UserPick) -> Unit): GalleryManager
 
 
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class GalleryManager(
     onLaunch: () -> Unit
 ) {
