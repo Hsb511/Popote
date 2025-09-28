@@ -6,7 +6,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 
-internal class NeuracrWebsiteDataSource(
+internal class PopoteWebsiteDataSource(
     private val httpClient: HttpClient,
 ) {
 

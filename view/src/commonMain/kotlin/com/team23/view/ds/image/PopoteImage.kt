@@ -24,7 +24,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalKamelApi::class)
 @Composable
-fun NeuracrImage(
+fun PopoteImage(
 	neuracrImageProperty: ImageProperty,
 	maxImageHeight: Dp,
 	modifier: Modifier = Modifier,
@@ -32,22 +32,23 @@ fun NeuracrImage(
 	contentScale: ContentScale = ContentScale.FillWidth,
 	hasNoCornerEnd: Boolean = false,
 ) {
-	val imageModifier = modifier
-		.clip(
-			shape = if (hasNoCornerEnd) MaterialTheme.shapes.medium.copy(
-				topEnd = CornerSize(0.dp),
-				bottomEnd = CornerSize(0.dp),
-			) else MaterialTheme.shapes.medium
-		)
-	when (neuracrImageProperty) {
-		is ImageProperty.Resource -> Image(
-			painter = painterResource(neuracrImageProperty.drawableResource),
-			contentDescription = neuracrImageProperty.contentDescription,
-			contentScale = contentScale,
-			modifier = imageModifier.heightIn(max = maxImageHeight),
-		)
-		is ImageProperty.Remote -> {
-			var dynamicMaxImageHeight = maxImageHeight
+    val imageModifier = modifier
+        .clip(
+            shape = if (hasNoCornerEnd) MaterialTheme.shapes.medium.copy(
+                topEnd = CornerSize(0.dp),
+                bottomEnd = CornerSize(0.dp),
+            ) else MaterialTheme.shapes.medium
+        )
+    when (neuracrImageProperty) {
+        is ImageProperty.Resource -> Image(
+            painter = painterResource(neuracrImageProperty.drawableResource),
+            contentDescription = neuracrImageProperty.contentDescription,
+            contentScale = contentScale,
+            modifier = imageModifier.heightIn(max = maxImageHeight),
+        )
+
+        is ImageProperty.Remote -> {
+            var dynamicMaxImageHeight = maxImageHeight
 
 			KamelImageBox(
 				resource = asyncPainterResource(neuracrImageProperty.url),
@@ -76,12 +77,14 @@ fun NeuracrImage(
 				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
 			)
 		}
-		is ImageProperty.UserPick -> Image(
-			bitmap = getImageBitmapFromUri(neuracrImageProperty.uri),
-			contentDescription = neuracrImageProperty.contentDescription,
-			contentScale = contentScale,
-			modifier = imageModifier.heightIn(max = maxImageHeight),
-		)
+        is ImageProperty.UserPick -> getImageBitmapFromUri(neuracrImageProperty.uri)?.let { bitmap ->
+            Image(
+                bitmap = bitmap,
+                contentDescription = neuracrImageProperty.contentDescription,
+                contentScale = contentScale,
+                modifier = imageModifier.heightIn(max = maxImageHeight),
+            )
+        }
 		is ImageProperty.None -> Unit
 	}
 }

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
-import com.team23.view.ds.icon.NeuracrIcon
+import com.team23.view.ds.icon.PopoteIcon
 
 @Composable
 fun SearchTextField(
@@ -51,7 +51,7 @@ fun SearchTextField(
 			)
 		},
 		leadingIcon = {
-			NeuracrIcon(textFieldUiModel.leadingIcon)
+			PopoteIcon(textFieldUiModel.leadingIcon)
 		},
 		trailingIcon = {
 			if (textFieldUiModel.searchValue.isNotEmpty()) {

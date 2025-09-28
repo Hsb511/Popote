@@ -1,7 +1,6 @@
 package com.team23.data.repository
 
-import com.team23.data.datasource.NeuracrLocalDataSource
-import com.team23.data.mappers.SourceMapper
+import com.team23.data.datasource.PopoteLocalDataSource
 import com.team23.data.mappers.SummarizedRecipeMapper
 import com.team23.data.models.FavoriteDataModel
 import com.team23.domain.favorite.repository.FavoriteRepository
@@ -10,12 +9,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class FavoriteDataRepository(
-	neuracrLocalDataSource: NeuracrLocalDataSource,
+	popoteLocalDataSource: PopoteLocalDataSource,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
-	private val sourceMapper: SourceMapper,
+	// private val sourceMapper: SourceMapper,
 ) : FavoriteRepository {
-	private val favoriteDao = neuracrLocalDataSource.favoriteDao
-	private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
+	private val favoriteDao = popoteLocalDataSource.favoriteDao
+	private val summarizedRecipeDao = popoteLocalDataSource.summarizedRecipeDao
 
 	override suspend fun updateFavorite(recipeId: String) {
 		if (favoriteDao.isStored(recipeId)) {

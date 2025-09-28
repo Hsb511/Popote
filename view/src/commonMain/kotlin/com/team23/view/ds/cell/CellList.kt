@@ -19,7 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.view.ds.button.ButtonLike
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.image.PopoteImage
 
 @Composable
 fun CellList(
@@ -34,7 +34,7 @@ fun CellList(
 			verticalAlignment = Alignment.CenterVertically,
 			modifier = Modifier.fillMaxSize(),
 		) {
-			NeuracrImage(
+			PopoteImage(
 				neuracrImageProperty = neuracrCellProperty.imageProperty,
 				maxImageHeight = 200.dp,
 				hasNoCornerEnd = true,

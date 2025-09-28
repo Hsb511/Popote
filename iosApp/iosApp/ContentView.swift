@@ -4,10 +4,8 @@ import view
 
 struct MainContainerComposeView: UIViewControllerRepresentable {
   func makeUIViewController(context: Context) -> UIViewController {
-     ComposeUIViewController {
-          MainContainer()
-        }
-      }
+      view.MainContainerViewControllerKt.MainContainerViewControllerKt()
+}
   func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
 }
 

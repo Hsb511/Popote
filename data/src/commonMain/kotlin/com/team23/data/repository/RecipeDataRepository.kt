@@ -1,8 +1,8 @@
 package com.team23.data.repository
 
 import com.fleeksoft.ksoup.select.Elements
-import com.team23.data.datasource.NeuracrLocalDataSource
-import com.team23.data.datasource.NeuracrWebsiteDataSource
+import com.team23.data.datasource.PopoteLocalDataSource
+import com.team23.data.datasource.PopoteWebsiteDataSource
 import com.team23.data.mappers.FullRecipeMapper
 import com.team23.data.mappers.SourceMapper
 import com.team23.data.mappers.SubtitleMapper
@@ -18,8 +18,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class RecipeDataRepository(
-    neuracrLocalDataSource: NeuracrLocalDataSource,
-    private val neuracrWebsiteDataSource: NeuracrWebsiteDataSource,
+    popoteLocalDataSource: PopoteLocalDataSource,
+    private val popoteWebsiteDataSource: PopoteWebsiteDataSource,
     private val summarizedRecipeParser: SummarizedRecipeParser,
     private val summarizedRecipeMapper: SummarizedRecipeMapper,
     private val fullRecipeMapper: FullRecipeMapper,
@@ -27,12 +27,12 @@ internal class RecipeDataRepository(
     private val sourceMapper: SourceMapper,
     private val subtitleMapper: SubtitleMapper,
 ) : RecipeRepository {
-    private val baseRecipeDao = neuracrLocalDataSource.baseRecipeDao
-    private val favoriteDao = neuracrLocalDataSource.favoriteDao
-    private val ingredientDao = neuracrLocalDataSource.ingredientDao
-    private val instructionDao = neuracrLocalDataSource.instructionDao
-    private val summarizedRecipeDao = neuracrLocalDataSource.summarizedRecipeDao
-    private val tagDao = neuracrLocalDataSource.tagDao
+    private val baseRecipeDao = popoteLocalDataSource.baseRecipeDao
+    private val favoriteDao = popoteLocalDataSource.favoriteDao
+    private val ingredientDao = popoteLocalDataSource.ingredientDao
+    private val instructionDao = popoteLocalDataSource.instructionDao
+    private val summarizedRecipeDao = popoteLocalDataSource.summarizedRecipeDao
+    private val tagDao = popoteLocalDataSource.tagDao
 
     override suspend fun getAllSummarizedRecipes(): List<RecipeDomainModel.Summarized> {
         val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
@@ -45,7 +45,7 @@ internal class RecipeDataRepository(
 
     override suspend fun loadAllSummarizedRecipesIfNeeded() {
         if (getCountSummarizedRecipes() == 0) {
-            val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
+            val recipesElements = popoteWebsiteDataSource.getLatestPostsFromHome()
             val recipeDataModels =
                 summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
             summarizedRecipeDao.insertAll(*recipeDataModels.toTypedArray())
@@ -53,7 +53,7 @@ internal class RecipeDataRepository(
     }
 
     override suspend fun loadAllSummarizedRecipes() {
-        val recipesElements = neuracrWebsiteDataSource.getLatestPostsFromHome()
+        val recipesElements = popoteWebsiteDataSource.getLatestPostsFromHome()
         val recipeDataModels =
             summarizedRecipeParser.toSummarizedRecipeDataModels(recipesElements)
         val existingRecipes = summarizedRecipeDao.getAll()
@@ -63,7 +63,7 @@ internal class RecipeDataRepository(
 
     override suspend fun loadFullRecipeByIdFromNeuracrIfNeeded(recipeId: String) {
         if (baseRecipeDao.findBaseRecipeById(recipeId) == null) {
-            val rawRecipe: Elements = neuracrWebsiteDataSource.getRecipeById(recipeId)
+            val rawRecipe: Elements = popoteWebsiteDataSource.getRecipeById(recipeId)
             val fullRecipeDataModel = fullRecipeParser.toFullRecipeDataModel(recipeId, rawRecipe)
             insertOrReplaceFullRecipe(fullRecipeDataModel)
         }

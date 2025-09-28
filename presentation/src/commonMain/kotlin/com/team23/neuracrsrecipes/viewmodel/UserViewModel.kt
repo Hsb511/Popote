@@ -1,6 +1,5 @@
 package com.team23.neuracrsrecipes.viewmodel
 
-import com.team23.domain.user.usecase.GetExistingNicknamesUseCase
 import com.team23.domain.user.usecase.GetUserNicknameUseCase
 import com.team23.domain.user.usecase.SetUserNicknameUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(
 	getUserNicknameUseCase: GetUserNicknameUseCase,
-	private val getExistingNicknamesUseCase: GetExistingNicknamesUseCase,
+	// private val getExistingNicknamesUseCase: GetExistingNicknamesUseCase,
 	private val setUserNicknameUseCase: SetUserNicknameUseCase,
 	private val viewModelScope: CoroutineScope,
 ) {

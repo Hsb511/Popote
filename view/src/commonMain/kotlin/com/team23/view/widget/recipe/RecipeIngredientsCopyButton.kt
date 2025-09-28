@@ -10,7 +10,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
-import com.team23.view.ds.icon.NeuracrIcon
+import com.team23.view.ds.icon.PopoteIcon
 import com.team23.view.ic_content_copy
 import com.team23.view.recipe_copy_to_clipboard_a11y
 import org.jetbrains.compose.resources.stringResource
@@ -35,7 +35,7 @@ fun RecipeIngredientsCopyButton(
         },
         modifier = modifier.offset(x = 8.dp, y = 8.dp)
     ) {
-        NeuracrIcon(
+        PopoteIcon(
             iconProperty = IconProperty.Resource(
                 drawableResource = Res.drawable.ic_content_copy,
                 contentDescription = stringResource(Res.string.recipe_copy_to_clipboard_a11y),

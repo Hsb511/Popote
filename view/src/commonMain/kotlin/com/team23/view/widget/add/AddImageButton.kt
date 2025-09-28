@@ -25,8 +25,8 @@ import com.team23.neuracrsrecipes.permission.createPermissionsManager
 import com.team23.neuracrsrecipes.permission.rememberCameraManager
 import com.team23.neuracrsrecipes.permission.rememberGalleryManager
 import com.team23.view.Res
-import com.team23.view.ds.icon.NeuracrIcon
-import com.team23.view.ds.image.NeuracrImage
+import com.team23.view.ds.icon.PopoteIcon
+import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.ic_upload_image
 import kotlinx.coroutines.Dispatchers
@@ -132,7 +132,7 @@ fun AddImageButton(
             }
     ) {
         if (neuracrImageProperty is ImageProperty.None) {
-            NeuracrIcon(
+            PopoteIcon(
                 iconProperty = IconProperty.Resource(
                     drawableResource = Res.drawable.ic_upload_image,
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -140,7 +140,7 @@ fun AddImageButton(
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
-            NeuracrImage(
+            PopoteImage(
                 neuracrImageProperty = neuracrImageProperty,
                 maxImageHeight = getImageMaxHeight(),
             )

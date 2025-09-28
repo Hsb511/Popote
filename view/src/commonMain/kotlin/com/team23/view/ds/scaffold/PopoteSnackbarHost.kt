@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun NeuracrSnackbarHost(
+fun PopoteSnackbarHost(
 	snackbarHostState: SnackbarHostState,
 	modifier: Modifier = Modifier,
 ) {
