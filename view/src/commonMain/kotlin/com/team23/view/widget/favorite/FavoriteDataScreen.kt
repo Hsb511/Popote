@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
+import com.team23.view.extension.topScreenHeight
 
 @Composable
 fun FavoriteDataScreen(
@@ -36,7 +37,7 @@ fun FavoriteDataScreen(
 		modifier = modifier.fillMaxSize()
 	) {
 		item(span = StaggeredGridItemSpan.FullLine) {
-			Spacer(modifier = Modifier.height(64.dp + 8.dp))
+			Spacer(modifier = Modifier.topScreenHeight())
 		}
 		item(span = StaggeredGridItemSpan.FullLine) {
 			FavoriteHeader(

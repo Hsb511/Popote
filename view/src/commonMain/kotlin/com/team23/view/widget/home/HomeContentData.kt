@@ -4,10 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
@@ -21,6 +25,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.property.DisplayType
@@ -28,6 +33,7 @@ import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.horizontalGutterPadding
+import com.team23.view.extension.topScreenHeight
 import com.team23.view.home_title
 import com.team23.view.mapper.RecipeUiMapper
 import org.jetbrains.compose.resources.stringResource
@@ -63,7 +69,7 @@ fun HomeContentData(
             modifier = Modifier.fillMaxSize()
         ) {
             item(span = StaggeredGridItemSpan.FullLine) {
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.topScreenHeight())
             }
             item(span = StaggeredGridItemSpan.FullLine) {
                 Text(
