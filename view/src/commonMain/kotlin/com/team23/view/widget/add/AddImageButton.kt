@@ -70,7 +70,6 @@ fun AddImageButton(
         coroutineScope.launch {
             val bitmap = withContext(Dispatchers.Default) { it }
             imageBitmap = bitmap
-            println("HUGO - $bitmap")
             onImageSelected(bitmap)
         }
     }
@@ -79,7 +78,6 @@ fun AddImageButton(
         coroutineScope.launch {
             val bitmap = withContext(Dispatchers.Default) { it }
             imageBitmap = bitmap
-            println("HUGO - $bitmap")
             onImageSelected(bitmap)
         }
     }

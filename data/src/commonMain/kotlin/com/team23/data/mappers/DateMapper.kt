@@ -9,7 +9,7 @@ class DateMapper {
         val (year, month, day) = dateStr
             .split("/")
             .map { it.toInt() }
-        return LocalDate(year = year, monthNumber = month, dayOfMonth = day)
+        return LocalDate(year = year, month = month, day = day)
     }
 
     fun toLocalDateFromSubtitleDate(dateStr: String): LocalDate {
@@ -19,12 +19,12 @@ class DateMapper {
         return LocalDate(
             year = year.toInt(),
             month = Month.valueOf(month.uppercase()),
-            dayOfMonth = day.toInt(),
+            day = day.toInt(),
         )
     }
 
     fun toDateString(localDate: LocalDate): String = with(localDate) {
-        "${translateEnglishMonth(month)} $dayOfMonth, $year"
+        "${translateEnglishMonth(month)} $day, $year"
     }
 
     private fun translateEnglishMonth(month: Month) =
