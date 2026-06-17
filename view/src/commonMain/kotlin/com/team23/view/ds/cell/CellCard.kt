@@ -15,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
@@ -25,13 +27,13 @@ import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.getImageMaxHeight
 import com.team23.view.ic_local_smartphone
 import com.team23.view.locally_saved_button_content_description
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CellCard(
 	cellProperty: CellProperty,
 	displayType: DisplayType,
 	modifier: Modifier = Modifier,
+	onAction: (CellAction) -> Unit = {},
 ) {
 	Card(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
@@ -46,12 +48,12 @@ internal fun CellCard(
 					localPhone = CellProperty.LocalPhone(
 						iconProperty = IconProperty.Resource(
 							drawableResource = Res.drawable.ic_local_smartphone,
-							contentDescription = stringResource(Res.string.locally_saved_button_content_description),
-							tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
+							contentDescription = Res.string.locally_saved_button_content_description,
+							tint = ColorProperty.DefaultIcon,
 						),
-						onLocalPhoneClick = cellProperty.localPhone.onLocalPhoneClick,
 					),
 					modifier = Modifier.align(Alignment.TopStart).offset(x = (-8).dp, y = (-8).dp),
+					onClick = { onAction(CellAction.LocalPhoneClick) }
 				)
 			}
 			Text(
@@ -73,7 +75,7 @@ internal fun CellCard(
 			CellFlag(cellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
 			ButtonLike(
 				iconProperty = cellProperty.favorite.iconProperty,
-				onFavoriteClick = cellProperty.favorite.onFavoriteClick,
+				onFavoriteClick = { onAction(cellProperty.favorite.action) },
 				modifier = Modifier.align(Alignment.BottomEnd).offset(x = 8.dp, y = 8.dp)
 			)
 		}

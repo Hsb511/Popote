@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 import com.team23.view.ds.cell.Cell
@@ -51,16 +52,20 @@ fun FavoriteDataScreen(
 		items(
 			items = summarizedRecipes,
 			key = { recipe -> recipe.id },
-		) { summarizedRecipe ->
+		) { recipe ->
 			Cell(
 				cellProperty = recipeUiMapper.toCellProperty(
-					recipe = summarizedRecipe,
+					recipe = recipe,
 					displayType = displayType,
-					onFavoriteClick = { onFavoriteClick(summarizedRecipe.id) },
-					onLocalPhoneClick = onLocalPhoneClick,
 				),
+				onAction = { action ->
+					when (action) {
+                        CellAction.FavoriteClick -> onFavoriteClick(recipe.id)
+                        CellAction.LocalPhoneClick -> onLocalPhoneClick()
+                    }
+				},
 				modifier = Modifier.clickable {
-					onRecipeClick(summarizedRecipe.id)
+					onRecipeClick(recipe.id)
 				},
 			)
 		}

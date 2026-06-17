@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
 import com.team23.view.ds.icon.PopoteIcon
@@ -41,8 +42,7 @@ fun AddTagChip(
         PopoteIcon(
             iconProperty = IconProperty.Resource(
                 drawableResource = Res.drawable.ic_tag,
-                contentDescription = "Add",
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                tint = ColorProperty.AccentIcon,
             ),
         )
     }

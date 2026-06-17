@@ -255,7 +255,8 @@ private fun RecipeImage(
             )
             if (recipeUiModel.isLocallySaved) {
                 ButtonLocalPhone(
-                    localPhone = LocalPhoneUiMapper().toLocalPhoneProperty(onLocalPhoneClick),
+                    localPhone = LocalPhoneUiMapper().toLocalPhoneProperty(),
+                    onClick = onLocalPhoneClick,
                     modifier = Modifier.align(Alignment.TopStart),
                 )
             }

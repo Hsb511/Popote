@@ -9,5 +9,5 @@ internal val previewTextFieldSample = TextFieldUiModel(
     searchValue = "Bretzels",
     label = "Label",
     placeholder = "Placeholder",
-    leadingIcon = IconProperty.Vector(Icons.Filled.Search, ""),
+    leadingIcon = IconProperty.Vector(Icons.Filled.Search),
 )

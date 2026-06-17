@@ -10,9 +10,10 @@ import com.team23.view.ds.icon.PopoteIcon
 fun ButtonLocalPhone(
     localPhone: CellProperty.LocalPhone,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     IconButton(
-        onClick = localPhone.onLocalPhoneClick,
+        onClick = onClick,
         modifier = modifier,
     ) {
         PopoteIcon(iconProperty = localPhone.iconProperty)

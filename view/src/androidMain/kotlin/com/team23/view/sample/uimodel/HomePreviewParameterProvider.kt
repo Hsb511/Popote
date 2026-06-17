@@ -8,6 +8,6 @@ class HomePreviewParameterProvider: PreviewParameterProvider<HomeUiState> {
     override val values = sequenceOf(
         HomeUiState.Loading,
         HomeUiState.Error(errorUiModel = ErrorUiModel("errorUiModel") {}),
-        HomeUiState.Data(recipes = List(6) { summarizedRecipeSample })
+        HomeUiState.Data(recipes = List(6) { summarizedRecipeSample.copy(id = "$it") })
     )
 }

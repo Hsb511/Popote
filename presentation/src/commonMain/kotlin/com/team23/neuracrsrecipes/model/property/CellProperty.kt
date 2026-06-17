@@ -1,5 +1,9 @@
 package com.team23.neuracrsrecipes.model.property
 
+import androidx.compose.runtime.Immutable
+import com.team23.neuracrsrecipes.model.action.CellAction
+
+@Immutable
 data class CellProperty(
 	val displayType: DisplayType,
 	val imageProperty: ImageProperty,
@@ -10,13 +14,15 @@ data class CellProperty(
 	val favorite: Favorite,
 ) {
 
+	@Immutable
 	data class LocalPhone(
 		val iconProperty: IconProperty,
-		val onLocalPhoneClick: () -> Unit,
+		val action: CellAction = CellAction.LocalPhoneClick,
 	)
 
+	@Immutable
 	data class Favorite(
 		val iconProperty: IconProperty.Vector,
-		val onFavoriteClick: () -> Unit,
+		val action: CellAction = CellAction.FavoriteClick,
 	)
 }

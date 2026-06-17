@@ -1,7 +1,9 @@
 package com.team23.neuracrsrecipes.model.property
 
+import androidx.compose.runtime.Immutable
 import org.jetbrains.compose.resources.DrawableResource
 
+@Immutable
 sealed class ImageProperty(open val contentDescription: String?) {
 	data object None : ImageProperty(null)
 

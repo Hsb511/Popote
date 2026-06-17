@@ -23,8 +23,10 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.action.SearchAction
 import com.team23.neuracrsrecipes.model.event.SearchUiEvent
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
@@ -75,7 +77,7 @@ internal data class SearchScreen(
                     placeholder = stringResource(Res.string.search_textfield_placeholder),
                     leadingIcon = IconProperty.Vector(
                         imageVector = Icons.Filled.Search,
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                        tint = ColorProperty.AccentIcon,
                     ),
                 ),
                 tagsRow = TagsRowUiModel(
@@ -87,12 +89,6 @@ internal data class SearchScreen(
                         cellProperty = recipeUiMapper.toCellProperty(
                             recipe = recipe,
                             displayType = DisplayType.List,
-                            onFavoriteClick = {
-                                searchViewModel.handleSearchAction(SearchAction.FavoriteClick(recipe.id, recipe.title))
-                            },
-                            onLocalPhoneClick = {
-                                searchViewModel.handleSearchAction(SearchAction.LocalPhoneClick)
-                            },
                         ),
                     )
                 },
@@ -137,6 +133,12 @@ internal fun SearchScreen(
             ) { item ->
                 Cell(
                     cellProperty = item.cellProperty,
+                    onAction = { action ->
+                        when (action) {
+                            CellAction.FavoriteClick -> performAction(SearchAction.FavoriteClick(item.id, item.cellProperty.title))
+                            CellAction.LocalPhoneClick -> performAction(SearchAction.LocalPhoneClick)
+                        }
+                    },
                     modifier = Modifier
                         .animateItem()
                         .clickable {

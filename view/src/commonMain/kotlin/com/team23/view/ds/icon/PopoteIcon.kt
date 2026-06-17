@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PopoteIcon(
@@ -14,15 +15,15 @@ internal fun PopoteIcon(
     when (iconProperty) {
         is IconProperty.Resource -> Icon(
             painter = painterResource(iconProperty.drawableResource),
-            contentDescription = iconProperty.contentDescription,
-            tint = iconProperty.tint,
+            contentDescription = iconProperty.contentDescription?.let { stringResource(it) },
+            tint = iconProperty.tint.materialColor(),
             modifier = modifier,
         )
 
         is IconProperty.Vector -> Icon(
             imageVector = iconProperty.imageVector,
-            contentDescription = iconProperty.contentDescription,
-            tint = iconProperty.tint,
+            contentDescription = iconProperty.contentDescription?.let { stringResource(it) },
+            tint = iconProperty.tint.materialColor(),
             modifier = modifier,
         )
     }

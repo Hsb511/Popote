@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.image.PopoteImage
@@ -25,6 +26,7 @@ import com.team23.view.ds.image.PopoteImage
 fun CellList(
     neuracrCellProperty: CellProperty,
     modifier: Modifier = Modifier,
+	onAction: (CellAction) -> Unit = {},
 ) {
 	Card(
 		elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -55,7 +57,7 @@ fun CellList(
 				CellFlag(neuracrCellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
 				ButtonLike(
 					iconProperty = neuracrCellProperty.favorite.iconProperty,
-					onFavoriteClick = neuracrCellProperty.favorite.onFavoriteClick,
+					onFavoriteClick = { onAction(neuracrCellProperty.favorite.action) },
 					modifier = Modifier.align(Alignment.BottomEnd).offset(x = 8.dp, y = 8.dp)
 				)
 			}

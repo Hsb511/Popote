@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
@@ -51,8 +52,8 @@ fun SearchTagsRow(
 			placeholder = stringResource(Res.string.search_textfield_placeholder),
 			leadingIcon = IconProperty.Resource(
 				drawableResource = Res.drawable.ic_tag,
-				contentDescription = "",
-				tint = MaterialTheme.colorScheme.onSecondaryContainer,
+				contentDescription = null,
+				tint = ColorProperty.AccentIcon,
 			),
 		),
 		onValueChange = { newValue -> searchTagValue = newValue },

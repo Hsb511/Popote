@@ -85,8 +85,6 @@ private fun SearchScreenPreview() {
                         cellProperty = recipeUiMapper.toCellProperty(
                             recipe = recipe,
                             displayType = DisplayType.List,
-                            onFavoriteClick = {},
-                            onLocalPhoneClick = {},
                         ),
                     )
                 }

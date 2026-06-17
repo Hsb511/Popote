@@ -1,7 +1,7 @@
 package com.team23.view.sample.property
 
-import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.CellProperty
+import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.FlagProperty
 
 fun getCellPropertySample(displayType: DisplayType = DisplayType.BigCard) = CellProperty(
@@ -10,6 +10,6 @@ fun getCellPropertySample(displayType: DisplayType = DisplayType.BigCard) = Cell
 	imageProperty = resourceImagePreviewSample,
 	flagProperty = FlagProperty.FRENCH,
 	isLocallySaved = true,
-	localPhone = CellProperty.LocalPhone(localPhoneButtonPreviewSample) {},
-	favorite = CellProperty.Favorite(favoriteButtonPreviewSample) {},
+	localPhone = CellProperty.LocalPhone(localPhoneButtonPreviewSample),
+	favorite = CellProperty.Favorite(favoriteButtonPreviewSample),
 )

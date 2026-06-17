@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.permission.PermissionCallback
@@ -133,7 +134,7 @@ fun AddImageButton(
             PopoteIcon(
                 iconProperty = IconProperty.Resource(
                     drawableResource = Res.drawable.ic_upload_image,
-                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                    tint = ColorProperty.AccentIcon,
                 ),
                 modifier = Modifier.align(Alignment.Center)
             )

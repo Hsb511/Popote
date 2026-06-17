@@ -1,22 +1,22 @@
 package com.team23.view.mapper
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
 import com.team23.view.ic_local_smartphone
+import com.team23.view.locally_saved_button_content_description
 
 class LocalPhoneUiMapper {
 
-    @Composable
-    fun toLocalPhoneProperty(onLocalPhoneClick: () -> Unit): CellProperty.LocalPhone =
+    fun toLocalPhoneProperty(): CellProperty.LocalPhone =
         CellProperty.LocalPhone(
             iconProperty = IconProperty.Resource(
                 drawableResource = Res.drawable.ic_local_smartphone,
-                contentDescription = "locally_saved_button_content_description",
-                tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.69f),
+                contentDescription = Res.string.locally_saved_button_content_description,
+                tint = ColorProperty.DefaultIcon,
             ),
-            onLocalPhoneClick = onLocalPhoneClick
+            action = CellAction.LocalPhoneClick,
         )
 }
