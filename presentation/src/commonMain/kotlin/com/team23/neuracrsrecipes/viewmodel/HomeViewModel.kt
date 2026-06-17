@@ -1,6 +1,6 @@
 package com.team23.neuracrsrecipes.viewmodel
 
-import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
+import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.OverwriteAllSummarizedRecipesUseCase
@@ -24,7 +24,7 @@ class HomeViewModel(
     private val getAllSummarizedRecipesUseCase: GetAllSummarizedRecipesUseCase,
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
-    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val favoriteRepository: FavoriteRepository,
     private val overwriteAllSummarizedRecipesUseCase: OverwriteAllSummarizedRecipesUseCase,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
@@ -79,12 +79,12 @@ class HomeViewModel(
 
     private fun favoriteClick(recipe: SummarizedRecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            updateFavoriteUseCase.invoke(recipe.id)
+            favoriteRepository.updateFavorite(recipe.id)
             recomputeState(recipe.id)
             if (!recipe.isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(recipe.title)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    updateFavoriteUseCase.invoke(recipe.id)
+                    favoriteRepository.updateFavorite(recipe.id)
                     recomputeState(recipe.id)
                 }
             }

@@ -7,10 +7,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
@@ -19,6 +24,7 @@ import com.team23.view.ds.display.DisplayBigCard
 import com.team23.view.ds.display.DisplayList
 import com.team23.view.ds.display.DisplaySmallCard
 import com.team23.view.extension.next
+import com.team23.view.favorite_button_remove_all_a11y
 import com.team23.view.favorite_title
 import org.jetbrains.compose.resources.stringResource
 
@@ -26,11 +32,13 @@ import org.jetbrains.compose.resources.stringResource
 fun FavoriteHeader(
     displayType: DisplayType,
     onDisplayClick: () -> Unit,
+    onRemoveAllClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val headerPadding = if (displayType == DisplayType.BigCard) 0.dp else 16.dp
 
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxSize()
             .padding(top = headerPadding, start = headerPadding, end = headerPadding)
@@ -42,8 +50,19 @@ fun FavoriteHeader(
         )
         Spacer(modifier = Modifier.weight(1f))
         IconButton(
+            onClick = onRemoveAllClick,
+            modifier = Modifier.offset(x = 16.dp),
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Delete,
+                contentDescription = stringResource(Res.string.favorite_button_remove_all_a11y),
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.size(32.dp),
+            )
+        }
+        IconButton(
             onClick = onDisplayClick,
-            modifier = Modifier.offset(x = 8.dp, y = (-4).dp)
+            modifier = Modifier.offset(x = 12.dp),
         ) {
             val tint = MaterialTheme.colorScheme.onBackground
             val iconModifier = Modifier.padding(all = 8.dp)

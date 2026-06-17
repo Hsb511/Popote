@@ -26,6 +26,10 @@ internal class FavoriteDao(
         .asFlow()
         .mapToList(Dispatchers.IO)
 
+    fun deleteAll() {
+        dbQueries.deleteAllFavorites()
+    }
+
     private fun toDataModel() = { _: Long, recipeId: String ->
         recipeId
     }

@@ -29,6 +29,7 @@ fun FavoriteDataScreenPreview(@PreviewParameter(SampleDisplayTypeProvider::class
             onFavoriteClick = {},
             onDisplayClick = {},
             onLocalPhoneClick = {},
+            onRemoveAllClick = {},
         )
     }
 }
@@ -46,6 +47,6 @@ fun FavoriteDataEmptyScreenPreview() {
 @PreviewWithSystemUi
 fun FavoriteScreenPreview(@PreviewParameter(FavoritePreviewParameterProvider::class) favoriteUiState: FavoriteUiState) {
     PopoteTheme {
-        FavoriteScreen(favoriteUiState, {}, {}, {}, {})
+        FavoriteScreen(favoriteUiState, {}, {}, {}, {}, {})
     }
 }

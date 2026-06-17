@@ -1,8 +1,7 @@
 package com.team23.neuracrsrecipes.viewmodel
 
-
 import androidx.compose.runtime.mutableStateOf
-import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
+import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
@@ -29,9 +28,9 @@ import org.koin.core.component.getScopeName
 
 class RecipeViewModel(
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
-    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
     private val setRecipeBackToTempUseCase: SetRecipeBackToTempUseCase,
     private val deleteRecipeUseCase: DeleteRecipeUseCase,
+    private val favoriteRepository: FavoriteRepository,
     private val recipeUiMapper: RecipeUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
@@ -107,12 +106,12 @@ class RecipeViewModel(
 
     private fun favoriteClick(recipe: RecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            updateFavoriteUseCase.invoke(recipe.id)
+            favoriteRepository.updateFavorite(recipe.id)
             recomputeState(recipe)
             if (!recipe.isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(recipe.title)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    updateFavoriteUseCase.invoke(recipe.id)
+                    favoriteRepository.updateFavorite(recipe.id)
                     recomputeState(recipe)
                 }
             }

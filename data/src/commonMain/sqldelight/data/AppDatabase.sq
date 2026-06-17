@@ -82,6 +82,9 @@ INSERT INTO FavoriteDataModel(recipeId) VALUES(?);
 deleteFavorite:
 DELETE FROM FavoriteDataModel WHERE recipeId = :recipeId;
 
+deleteAllFavorites:
+DELETE FROM FavoriteDataModel;
+
 selectUser:
 SELECT * FROM UserDataModel LIMIT 1;
 

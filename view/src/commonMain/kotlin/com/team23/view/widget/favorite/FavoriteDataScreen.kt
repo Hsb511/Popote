@@ -27,6 +27,7 @@ fun FavoriteDataScreen(
 	onFavoriteClick: (String) -> Unit,
 	onDisplayClick: () -> Unit,
 	onLocalPhoneClick: () -> Unit,
+	onRemoveAllClick: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	val displayType = state.displayType
@@ -47,6 +48,7 @@ fun FavoriteDataScreen(
 			FavoriteHeader(
 				displayType = displayType,
 				onDisplayClick = onDisplayClick,
+				onRemoveAllClick = onRemoveAllClick,
 			)
 		}
 		items(

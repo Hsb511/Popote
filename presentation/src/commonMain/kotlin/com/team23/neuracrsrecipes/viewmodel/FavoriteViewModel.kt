@@ -1,7 +1,6 @@
 package com.team23.neuracrsrecipes.viewmodel
 
-import com.team23.domain.favorite.usecase.GetAllFavoritesUseCase
-import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
+import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.neuracrsrecipes.extension.next
@@ -18,8 +17,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class FavoriteViewModel(
-    getAllFavoritesUseCase: GetAllFavoritesUseCase,
-    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val favoriteRepository: FavoriteRepository,
     private val getPreferenceDisplayTypeUseCase: GetPreferenceDisplayTypeUseCase,
     private val updatePreferenceUseCase: UpdatePreferenceUseCase,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
@@ -34,7 +32,7 @@ class FavoriteViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val displayType =
                 displayTypeUiMapper.toDisplayTypeUiModel(getPreferenceDisplayTypeUseCase.invoke())
-            getAllFavoritesUseCase.invoke().map { recipes ->
+            favoriteRepository.getAllFavorites().map { recipes ->
                 recipes.map { summarizedRecipeUiMapper.toUiModel(it) }
             }.collect { favorites ->
                 _uiState.value = if (favorites.isEmpty()) {
@@ -51,7 +49,7 @@ class FavoriteViewModel(
 
     fun onFavoriteClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            updateFavoriteUseCase.invoke(recipeId)
+            favoriteRepository.updateFavorite(recipeId)
         }
     }
 
@@ -73,6 +71,12 @@ class FavoriteViewModel(
     fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
             snackbarHandler.showLocalPhoneMessage()
+        }
+    }
+
+    fun onRemoveAllConfirm() {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteRepository.clearAllFavorites()
         }
     }
 }

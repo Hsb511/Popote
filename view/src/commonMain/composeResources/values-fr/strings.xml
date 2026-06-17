@@ -87,6 +87,9 @@
 
     <!-- favorite -->
     <string name="favorite_button_content_description">Aimer pour sauvegarder dans vos favoris</string>
+    <string name="favorite_button_remove_all_a11y">Supprimer tous vos favoris</string>
+    <string name="favorite_delete_all_dialog_title">Supprimer tous vos favoris</string>
+    <string name="favorite_delete_all_dialog_description">Êtes-vous sûr de vouloir supprimer tous vos favoris ? Une fois que vous aurez cliqué sur « Confirmer », ils seront définitivement supprimés. Sinon, cliquez sur « Annuler ». Vous pouvez également retirer chaque recette de vos favoris une par une.</string>
 
     <!-- locally saved -->
     <string name="locally_saved_button_content_description">Indique que cette recette a été créée par vous et est disponible seulement sur ce téléphone</string>

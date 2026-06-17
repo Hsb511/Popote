@@ -38,4 +38,8 @@ internal class FavoriteDataRepository(
 					)
 				}
 			}
+
+	override suspend fun clearAllFavorites() {
+		favoriteDao.deleteAll()
+	}
 }

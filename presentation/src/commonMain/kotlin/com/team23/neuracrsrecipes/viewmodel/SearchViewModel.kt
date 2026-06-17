@@ -1,7 +1,7 @@
 package com.team23.neuracrsrecipes.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
-import com.team23.domain.favorite.usecase.UpdateFavoriteUseCase
+import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 class SearchViewModel(
     private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
     private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
-    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val favoriteRepository: FavoriteRepository,
     private val tagUiMapper: TagUiMapper,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val viewModelScope: CoroutineScope,
@@ -103,12 +103,12 @@ class SearchViewModel(
 
     private fun favoriteClick(action: SearchAction.FavoriteClick) {
         viewModelScope.launch(Dispatchers.IO) {
-            val isFavorite = updateFavoriteUseCase.invoke(action.recipeId)
+            val isFavorite = favoriteRepository.updateFavorite(action.recipeId)
             recomputeState(action.recipeId)
             if (isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(action.recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    updateFavoriteUseCase.invoke(action.recipeId)
+                    favoriteRepository.updateFavorite(action.recipeId)
                     recomputeState(action.recipeId)
                 }
             }
