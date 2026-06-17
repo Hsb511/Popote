@@ -18,7 +18,7 @@ class RecipeUiMapper {
         displayType = displayType,
         imageProperty = recipe.imageProperty,
         title = recipe.title,
-        flagProperty = recipe.flagProperty,
+        languageFlag = recipe.flagProperty,
         isLocallySaved = recipe.isLocallySaved,
         localPhone = localPhoneUiMapper.toLocalPhoneProperty(),
         favorite = CellProperty.Favorite(

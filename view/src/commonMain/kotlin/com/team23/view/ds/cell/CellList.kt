@@ -54,7 +54,7 @@ fun CellList(
 						.padding(all = 8.dp)
 						.align(Alignment.CenterStart)
 				)
-				CellFlag(neuracrCellProperty.flagProperty, Modifier.align(Alignment.TopEnd))
+				CellFlag(neuracrCellProperty.languageFlag, Modifier.align(Alignment.TopEnd))
 				ButtonLike(
 					iconProperty = neuracrCellProperty.favorite.iconProperty,
 					onFavoriteClick = { onAction(neuracrCellProperty.favorite.action) },
