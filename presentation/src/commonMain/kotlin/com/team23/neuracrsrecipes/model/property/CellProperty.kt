@@ -1,6 +1,7 @@
 package com.team23.neuracrsrecipes.model.property
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.unit.Dp
 import com.team23.neuracrsrecipes.model.action.CellAction
 
 @Immutable
@@ -12,6 +13,7 @@ data class CellProperty(
 	val isLocallySaved: Boolean,
 	val localPhone: LocalPhone,
 	val favorite: Favorite,
+	val maxHeight: Dp? = null,
 ) {
 
 	@Immutable

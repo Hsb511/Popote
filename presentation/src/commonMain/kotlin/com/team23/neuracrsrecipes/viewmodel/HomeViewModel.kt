@@ -3,11 +3,14 @@ package com.team23.neuracrsrecipes.viewmodel
 import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
+import com.team23.domain.recipe.usecase.GetPromotedLanesUseCase
 import com.team23.domain.recipe.usecase.OverwriteAllSummarizedRecipesUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
+import com.team23.neuracrsrecipes.mapper.PromotedLaneUiMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
+import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
@@ -16,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.getScopeName
@@ -23,14 +27,18 @@ import org.koin.core.component.getScopeName
 class HomeViewModel(
     private val getAllSummarizedRecipesUseCase: GetAllSummarizedRecipesUseCase,
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
-    private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
-    private val favoriteRepository: FavoriteRepository,
+    private val getPromotedLanesUseCase: GetPromotedLanesUseCase,
     private val overwriteAllSummarizedRecipesUseCase: OverwriteAllSummarizedRecipesUseCase,
+    private val favoriteRepository: FavoriteRepository,
+    private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
+    private val promotedLaneUiMapper: PromotedLaneUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
 ) {
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
+
+
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -54,9 +62,10 @@ class HomeViewModel(
                     }
 
                     withContext(Dispatchers.Main) {
-                        _uiState.value = HomeUiState.Data(recipes = recipes.map {
-                            summarizedRecipeUiMapper.toUiModel(it)
-                        })
+                        _uiState.value = HomeUiState.Data(
+                            recipes = summarizedRecipeUiMapper.toUiModels(recipes),
+                            promotedLanes = getPromotedLaneUiModels(),
+                        )
                     }
                     recipes.forEach { recipe ->
                         getFullRecipeByIdUseCase.invoke(recipe.id)
@@ -67,6 +76,9 @@ class HomeViewModel(
                 }
         }
     }
+
+    private suspend fun getPromotedLaneUiModels(): List<PromotedLaneUiModel> =
+        promotedLaneUiMapper.toPromotedLaneUiModels(getPromotedLanesUseCase.invoke())
 
 
     fun onAction(action: HomeAction) {
@@ -111,6 +123,7 @@ class HomeViewModel(
                         withContext(Dispatchers.Main) {
                             _uiState.value = HomeUiState.Data(
                                 recipes = recipes.map { summarizedRecipeUiMapper.toUiModel(it) },
+                                promotedLanes = getPromotedLaneUiModels(),
                                 isRefreshing = false
                             )
                         }
@@ -120,7 +133,7 @@ class HomeViewModel(
         }
     }
 
-    private fun recomputeState(recipeId: String) {
+    private suspend fun recomputeState(recipeId: String) {
         val currentState = _uiState.value
         if (currentState is HomeUiState.Data) {
             val newRecipes = currentState.recipes.toMutableList()
@@ -128,7 +141,9 @@ class HomeViewModel(
             val recipeIndex = newRecipes.indexOf(recipe)
             newRecipes.remove(recipe)
             newRecipes.add(recipeIndex, recipe.copy(isFavorite = !recipe.isFavorite))
-            _uiState.value = HomeUiState.Data(newRecipes)
+            _uiState.update {
+                currentState.copy(recipes = newRecipes, promotedLanes = getPromotedLaneUiModels())
+            }
         }
     }
 }

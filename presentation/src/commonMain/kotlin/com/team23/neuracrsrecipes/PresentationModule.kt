@@ -5,6 +5,7 @@ import com.team23.neuracrsrecipes.mapper.DisplayTypeUiMapper
 import com.team23.neuracrsrecipes.mapper.ImageUiMapper
 import com.team23.neuracrsrecipes.mapper.IngredientUiMapper
 import com.team23.neuracrsrecipes.mapper.InstructionUiMapper
+import com.team23.neuracrsrecipes.mapper.PromotedLaneUiMapper
 import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.mapper.TagUiMapper
@@ -36,6 +37,7 @@ val presentationModule = module {
     factoryOf(::RecipeUiMapper)
     factoryOf(::SummarizedRecipeUiMapper)
     factoryOf(::TagUiMapper)
+    factoryOf(::PromotedLaneUiMapper)
 
     // View model
     factoryOf(::AddViewModel)

@@ -20,12 +20,14 @@ import com.team23.data.parsers.InstructionTitleParser
 import com.team23.data.parsers.RecipeParser
 import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.data.parsers.TagParser
+import com.team23.data.locale_info.LocaleBasedSeasonProvider
 import com.team23.data.repository.FavoriteDataRepository
 import com.team23.data.repository.PreferenceDataRepository
 import com.team23.data.repository.RecipeDataRepository
 import com.team23.data.repository.TagDataRepository
 import com.team23.data.repository.UserDataRepository
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.locale_info.SeasonProvider
 import com.team23.domain.preference.repository.PreferenceRepository
 import com.team23.domain.recipe.repository.RecipeRepository
 import com.team23.domain.tag.repository.TagRepository
@@ -48,6 +50,7 @@ val dataModule = module {
 
     // Repositories
     singleOf(::FavoriteDataRepository) { bind<FavoriteRepository>() }
+    singleOf(::LocaleBasedSeasonProvider) { bind<SeasonProvider>() }
     singleOf(::PreferenceDataRepository) { bind<PreferenceRepository>() }
     singleOf(::RecipeDataRepository) { bind<RecipeRepository>() }
     singleOf(::TagDataRepository) { bind<TagRepository>() }

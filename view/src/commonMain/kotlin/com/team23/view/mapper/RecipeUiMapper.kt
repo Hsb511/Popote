@@ -1,5 +1,6 @@
 package com.team23.view.mapper
 
+import androidx.compose.ui.unit.Dp
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
@@ -11,6 +12,7 @@ class RecipeUiMapper {
     fun toCellProperty(
         recipe: SummarizedRecipeUiModel,
         displayType: DisplayType,
+        maxHeight: Dp? = null,
     ): CellProperty = CellProperty(
         displayType = displayType,
         imageProperty = recipe.imageProperty,
@@ -21,5 +23,6 @@ class RecipeUiMapper {
         favorite = CellProperty.Favorite(
             iconProperty = favoriteUiMapper.toFavoriteIconProperty(recipe.isFavorite),
         ),
+        maxHeight = maxHeight,
     )
 }

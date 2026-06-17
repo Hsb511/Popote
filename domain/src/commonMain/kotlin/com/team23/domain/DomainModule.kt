@@ -6,6 +6,7 @@ import com.team23.domain.recipe.usecase.CreateNewRecipeUseCase
 import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
+import com.team23.domain.recipe.usecase.GetPromotedLanesUseCase
 import com.team23.domain.recipe.usecase.LoadTemporaryRecipeUseCase
 import com.team23.domain.recipe.usecase.OverwriteAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.SaveRecipeUseCase
@@ -30,6 +31,7 @@ val domainModule = module {
     factoryOf(::GetAllSummarizedRecipesUseCase)
     factoryOf(::OverwriteAllSummarizedRecipesUseCase)
     factoryOf(::GetFullRecipeByIdUseCase)
+    factoryOf(::GetPromotedLanesUseCase)
     factoryOf(::LoadTemporaryRecipeUseCase)
     factoryOf(::SaveRecipeUseCase)
     factoryOf(::SetRecipeBackToTempUseCase)

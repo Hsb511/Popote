@@ -3,8 +3,10 @@ package com.team23.view.ds.cell
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -14,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
@@ -39,9 +42,12 @@ internal fun CellCard(
 		Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
 			PopoteImage(
 				neuracrImageProperty = cellProperty.imageProperty,
-				maxImageHeight = getImageMaxHeight(),
+				maxImageHeight = cellProperty.maxHeight ?: getImageMaxHeight(),
 				displayType = displayType,
-				modifier = Modifier.fillMaxWidth()
+				contentScale = cellProperty.maxHeight?.let { ContentScale.Fit } ?: ContentScale.FillWidth,
+				modifier = cellProperty.maxHeight
+					?.let { maxHeight -> Modifier.widthIn(max = maxHeight * 3f / 2f).height(maxHeight) }
+					?: Modifier.fillMaxWidth()
 			)
 			if (cellProperty.isLocallySaved) {
 				ButtonLocalPhone(

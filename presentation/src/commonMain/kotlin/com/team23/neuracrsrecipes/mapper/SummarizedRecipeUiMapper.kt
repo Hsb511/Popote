@@ -10,6 +10,9 @@ class SummarizedRecipeUiMapper(
     private val imageUiMapper: ImageUiMapper,
 ) {
 
+    fun toUiModels(summarizedRecipes: List<RecipeDomainModel.Summarized>) =
+        summarizedRecipes.map(::toUiModel)
+
     fun toUiModel(summarizedRecipe: RecipeDomainModel.Summarized) = with(summarizedRecipe) {
         SummarizedRecipeUiModel(
             id = id,
