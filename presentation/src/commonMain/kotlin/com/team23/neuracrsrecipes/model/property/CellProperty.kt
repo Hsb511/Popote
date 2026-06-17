@@ -6,6 +6,7 @@ import com.team23.neuracrsrecipes.model.action.CellAction
 
 @Immutable
 data class CellProperty(
+	val id: String,
 	val displayType: DisplayType,
 	val imageProperty: ImageProperty,
 	val title: String,

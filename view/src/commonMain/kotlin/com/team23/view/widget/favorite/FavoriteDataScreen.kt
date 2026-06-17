@@ -33,6 +33,14 @@ fun FavoriteDataScreen(
 	val displayType = state.displayType
 	val summarizedRecipes = state.favorites
 	val recipeUiMapper = remember { RecipeUiMapper() }
+	val recipeCellProperties = remember {
+		summarizedRecipes.map { recipe ->
+			recipeUiMapper.toCellProperty(
+				recipe = recipe,
+				displayType = displayType,
+			)
+		}
+	}
 
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(if (displayType == DisplayType.SmallCard) 150.dp else 300.dp),
@@ -52,22 +60,19 @@ fun FavoriteDataScreen(
 			)
 		}
 		items(
-			items = summarizedRecipes,
+			items = recipeCellProperties,
 			key = { recipe -> recipe.id },
-		) { recipe ->
+		) { cellProperty ->
 			Cell(
-				cellProperty = recipeUiMapper.toCellProperty(
-					recipe = recipe,
-					displayType = displayType,
-				),
+				cellProperty = cellProperty,
 				onAction = { action ->
 					when (action) {
-                        CellAction.FavoriteClick -> onFavoriteClick(recipe.id)
+                        CellAction.FavoriteClick -> onFavoriteClick(cellProperty.id)
                         CellAction.LocalPhoneClick -> onLocalPhoneClick()
                     }
 				},
 				modifier = Modifier.clickable {
-					onRecipeClick(recipe.id)
+					onRecipeClick(cellProperty.id)
 				},
 			)
 		}

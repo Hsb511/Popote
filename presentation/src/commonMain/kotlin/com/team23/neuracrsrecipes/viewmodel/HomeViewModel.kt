@@ -12,7 +12,6 @@ import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -85,19 +84,19 @@ class HomeViewModel(
         when (action) {
             is HomeAction.RefreshRecipes -> refreshRecipes()
             is HomeAction.ShowLocalPhoneMessage -> onLocalPhoneClick()
-            is HomeAction.ToggleFavorite -> favoriteClick(action.recipe)
+            is HomeAction.ToggleFavorite -> favoriteClick(action.recipeId, action.recipeTitle)
         }
     }
 
-    private fun favoriteClick(recipe: SummarizedRecipeUiModel) {
+    private fun favoriteClick(recipeId: String, recipeTitle: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteRepository.updateFavorite(recipe.id)
-            recomputeState(recipe.id)
-            if (!recipe.isFavorite) {
-                val result = snackbarHandler.showFavoriteMessage(recipe.title)
+            val isFavorite = favoriteRepository.updateFavorite(recipeId)
+            recomputeState(recipeId)
+            if (isFavorite) {
+                val result = snackbarHandler.showFavoriteMessage(recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    favoriteRepository.updateFavorite(recipe.id)
-                    recomputeState(recipe.id)
+                    favoriteRepository.updateFavorite(recipeId)
+                    recomputeState(recipeId)
                 }
             }
         }

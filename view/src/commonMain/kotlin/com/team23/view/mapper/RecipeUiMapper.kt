@@ -14,6 +14,7 @@ class RecipeUiMapper {
         displayType: DisplayType,
         maxHeight: Dp? = null,
     ): CellProperty = CellProperty(
+        id = recipe.id,
         displayType = displayType,
         imageProperty = recipe.imageProperty,
         title = recipe.title,

@@ -5,6 +5,7 @@ import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.FlagProperty
 
 fun getCellPropertySample(displayType: DisplayType = DisplayType.BigCard) = CellProperty(
+	id = "",
 	displayType = displayType,
 	title = "bretzels",
 	imageProperty = resourceImagePreviewSample,

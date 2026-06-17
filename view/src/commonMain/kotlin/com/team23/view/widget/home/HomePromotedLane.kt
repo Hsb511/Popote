@@ -13,21 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.HomeAction
-import com.team23.neuracrsrecipes.model.property.DisplayType
-import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
-import com.team23.view.Res
+import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.horizontalGutterPadding
-import com.team23.view.home_seasonal_section_title
-import com.team23.view.home_vegan_section_title
-import com.team23.view.home_vegetarian_section_title
-import com.team23.view.mapper.RecipeUiMapper
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomePromotedLane(
-    promotedLane: PromotedLaneUiModel,
-    recipeUiMapper: RecipeUiMapper,
+    title: String,
+    recipeCellProperties: List<CellProperty>,
     modifier: Modifier = Modifier,
     onAction: (HomeAction) -> Unit = {},
     homeRecipeClick: (String) -> Unit = {},
@@ -36,13 +29,9 @@ fun HomePromotedLane(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier,
     ) {
-        val titleRes = when(promotedLane.type) {
-            PromotedLaneUiModel.Type.Seasonal -> Res.string.home_seasonal_section_title
-            PromotedLaneUiModel.Type.Vegetarian -> Res.string.home_vegetarian_section_title
-            PromotedLaneUiModel.Type.Vegan -> Res.string.home_vegan_section_title
-        }
+
         HomeSectionTitle(
-            text = stringResource(titleRes),
+            text = title,
             modifier = Modifier
                 .padding(horizontal = horizontalGutterPadding),
         )
@@ -52,16 +41,16 @@ fun HomePromotedLane(
             contentPadding = PaddingValues(horizontal = horizontalGutterPadding),
         ) {
             items(
-                items = promotedLane.recipes,
+                items = recipeCellProperties,
                 key = { recipe -> recipe.id }
-            ) { recipe ->
+            ) { cellProperty ->
                 Cell(
-                    cellProperty = recipeUiMapper.toCellProperty(recipe, DisplayType.SmallCard, 200.dp),
-                    onAction = { action -> handleCellAction(action, recipe, onAction) },
+                    cellProperty = cellProperty,
+                    onAction = { action -> handleCellAction(action, cellProperty.id, cellProperty.title, onAction) },
                     modifier = Modifier
                         .widthIn(max = 300.dp)
                         .height(200.dp)
-                        .clickable { homeRecipeClick(recipe.id) },
+                        .clickable { homeRecipeClick(cellProperty.id) },
                 )
             }
         }

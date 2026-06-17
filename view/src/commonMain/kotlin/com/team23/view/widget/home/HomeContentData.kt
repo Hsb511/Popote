@@ -24,15 +24,19 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.property.DisplayType
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.getCurrentScreenWidth
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.topScreenHeight
+import com.team23.view.home_seasonal_section_title
 import com.team23.view.home_title
+import com.team23.view.home_vegan_section_title
+import com.team23.view.home_vegetarian_section_title
 import com.team23.view.mapper.RecipeUiMapper
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +63,14 @@ fun HomeContentData(
             )
         }
     ) {
+        val recipeCellProperties = remember(homeData.recipes) {
+            homeData.recipes.map { recipe ->
+                recipeUiMapper.toCellProperty(
+                    recipe = recipe,
+                    displayType = DisplayType.BigCard,
+                )
+            }
+        }
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Adaptive(minColumnSize),
             verticalItemSpacing = 16.dp,
@@ -74,9 +86,18 @@ fun HomeContentData(
                 span = { StaggeredGridItemSpan.FullLine },
                 contentType = { "promotedLane" },
             ) { promotedLane ->
+                val recipeCellProperties = remember(homeData.recipes) {
+                    promotedLane.recipes.map { recipe ->
+                        recipeUiMapper.toCellProperty(
+                            recipe = recipe,
+                            displayType = DisplayType.BigCard,
+                            maxHeight = 200.dp,
+                        )
+                    }
+                }
                 HomePromotedLane(
-                    promotedLane = promotedLane,
-                    recipeUiMapper = recipeUiMapper,
+                    title = stringResource(getTitleRes(promotedLane.type)),
+                    recipeCellProperties = recipeCellProperties,
                     onAction = onAction,
                     homeRecipeClick = homeRecipeClick,
                 )
@@ -89,10 +110,10 @@ fun HomeContentData(
                 )
             }
             itemsIndexed(
-                items = homeData.recipes,
+                items = recipeCellProperties,
                 key = { _, recipe -> recipe.id },
                 contentType = { _, _ -> "recipeTile" },
-            ) { index, recipe ->
+            ) { index, cellProperty ->
                 Row(modifier = Modifier
                     .padding(
                         start = if (isLeft(index)) horizontalGutterPadding else 0.dp,
@@ -100,15 +121,12 @@ fun HomeContentData(
                     )
                 ) {
                     Cell(
-                        cellProperty = recipeUiMapper.toCellProperty(
-                            recipe = recipe,
-                            displayType = DisplayType.BigCard,
-                        ),
-                        onAction = { action -> handleCellAction(action, recipe, onAction) },
+                        cellProperty = cellProperty,
+                        onAction = { action -> handleCellAction(action, cellProperty.id, cellProperty.title, onAction) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                homeRecipeClick(recipe.id)
+                                homeRecipeClick(cellProperty.id)
                             }
                     )
                 }
@@ -138,11 +156,17 @@ private fun getAdaptiveColumns(): Int {
     return ((screenWidthDp - horizontalSpacing) / (minSize + horizontalSpacing)).toInt().coerceAtLeast(1)
 }
 
+private fun getTitleRes(type: PromotedLaneUiModel.Type): StringResource = when(type) {
+    PromotedLaneUiModel.Type.Seasonal -> Res.string.home_seasonal_section_title
+    PromotedLaneUiModel.Type.Vegetarian -> Res.string.home_vegetarian_section_title
+    PromotedLaneUiModel.Type.Vegan -> Res.string.home_vegan_section_title
+}
+
 private val minColumnSize = 250.dp
 
-internal fun handleCellAction(action: CellAction, recipe: SummarizedRecipeUiModel, onAction: (HomeAction) -> Unit) {
+internal fun handleCellAction(action: CellAction, recipeId: String, recipeTitle: String, onAction: (HomeAction) -> Unit) {
     when (action) {
-        CellAction.FavoriteClick -> onAction(HomeAction.ToggleFavorite(recipe))
+        CellAction.FavoriteClick -> onAction(HomeAction.ToggleFavorite(recipeId, recipeTitle))
         CellAction.LocalPhoneClick -> onAction(HomeAction.ShowLocalPhoneMessage)
     }
 }
