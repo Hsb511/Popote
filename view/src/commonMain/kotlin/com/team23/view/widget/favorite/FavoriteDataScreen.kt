@@ -1,21 +1,23 @@
 package com.team23.view.widget.favorite
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.DisplayType
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
+import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.topScreenHeight
+import com.team23.view.mapper.RecipeUiMapper
 
 @Composable
 fun FavoriteDataScreen(
@@ -28,6 +30,7 @@ fun FavoriteDataScreen(
 ) {
 	val displayType = state.displayType
 	val summarizedRecipes = state.favorites
+	val recipeUiMapper = remember { RecipeUiMapper() }
 
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Adaptive(if (displayType == DisplayType.SmallCard) 150.dp else 300.dp),
@@ -45,13 +48,20 @@ fun FavoriteDataScreen(
 				onDisplayClick = onDisplayClick,
 			)
 		}
-		items(summarizedRecipes) { summarizedRecipe ->
-			FavoriteItem(
-				displayType = displayType,
-				summarizedRecipe = summarizedRecipe,
-				onRecipeClick = onRecipeClick,
-				onFavoriteClick = onFavoriteClick,
-				onLocalPhoneClick = onLocalPhoneClick,
+		items(
+			items = summarizedRecipes,
+			key = { recipe -> recipe.id },
+		) { summarizedRecipe ->
+			Cell(
+				cellProperty = recipeUiMapper.toCellProperty(
+					recipe = summarizedRecipe,
+					displayType = displayType,
+					onFavoriteClick = { onFavoriteClick(summarizedRecipe.id) },
+					onLocalPhoneClick = onLocalPhoneClick,
+				),
+				modifier = Modifier.clickable {
+					onRecipeClick(summarizedRecipe.id)
+				},
 			)
 		}
 	}

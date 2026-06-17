@@ -10,7 +10,11 @@ class FavoritePreviewParameterProvider : PreviewParameterProvider<FavoriteUiStat
         FavoriteUiState.Data.Empty,
         FavoriteUiState.Data.WithFavorites(
             displayType = DisplayType.BigCard,
-            favorites = listOf(summarizedRecipeSample, summarizedRecipeSample, summarizedRecipeSample)
+            favorites = listOf(
+                summarizedRecipeSample.copy(id = "1"),
+                summarizedRecipeSample.copy(id = "2"),
+                summarizedRecipeSample.copy(id = "3"),
+            )
         )
     )
 }
