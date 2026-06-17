@@ -21,6 +21,9 @@
     <string name="dialog_confirm">confirm</string>
 
     <!-- home -->
+    <string name="home_seasonal_section_title">Seasonal recipes</string>
+    <string name="home_vegetarian_section_title">Vegetarian recipes</string>
+    <string name="home_vegan_section_title">Vegan recipes</string>
     <string name="home_title">Latest posts</string>
 
     <!-- recipe -->

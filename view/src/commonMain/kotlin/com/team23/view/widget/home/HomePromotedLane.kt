@@ -15,9 +15,14 @@ import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
+import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.horizontalGutterPadding
+import com.team23.view.home_seasonal_section_title
+import com.team23.view.home_vegan_section_title
+import com.team23.view.home_vegetarian_section_title
 import com.team23.view.mapper.RecipeUiMapper
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomePromotedLane(
@@ -31,8 +36,13 @@ fun HomePromotedLane(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier,
     ) {
+        val titleRes = when(promotedLane.type) {
+            PromotedLaneUiModel.Type.Seasonal -> Res.string.home_seasonal_section_title
+            PromotedLaneUiModel.Type.Vegetarian -> Res.string.home_vegetarian_section_title
+            PromotedLaneUiModel.Type.Vegan -> Res.string.home_vegan_section_title
+        }
         HomeSectionTitle(
-            text = promotedLane.title,
+            text = stringResource(titleRes),
             modifier = Modifier
                 .padding(horizontal = horizontalGutterPadding),
         )

@@ -21,6 +21,9 @@
     <string name="dialog_confirm">confirmer</string>
 
     <!-- home -->
+    <string name="home_seasonal_section_title">Recettes de saison</string>
+    <string name="home_vegetarian_section_title">Recettes végé</string>
+    <string name="home_vegan_section_title">Recettes véganes</string>
     <string name="home_title">Dernières recettes</string>
 
     <!-- recipe -->

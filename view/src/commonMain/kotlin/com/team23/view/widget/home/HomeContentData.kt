@@ -70,7 +70,7 @@ fun HomeContentData(
             }
             items(
                 items = homeData.promotedLanes,
-                key = { lane -> lane.title },
+                key = { lane -> lane.type },
                 span = { StaggeredGridItemSpan.FullLine },
                 contentType = { "promotedLane" },
             ) { promotedLane ->
