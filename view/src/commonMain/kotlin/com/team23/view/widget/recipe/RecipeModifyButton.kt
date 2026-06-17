@@ -14,11 +14,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,11 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.team23.view.Res
-import com.team23.view.dialog_confirm
-import com.team23.view.dialog_dismiss
+import com.team23.view.ds.dialog.SimpleAlertDialog
 import com.team23.view.recipe_delete_dialog_text
 import com.team23.view.recipe_delete_dialog_title
 import com.team23.view.recipe_delete_label
@@ -46,7 +42,7 @@ fun RecipeModifyButton(
     modifier: Modifier = Modifier,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
-    var openDialog by remember { mutableStateOf(false) }
+    val openDialog = remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(
         targetValue = if (isExpanded) -225f else 0f,
         animationSpec = getTween(),
@@ -73,7 +69,7 @@ fun RecipeModifyButton(
             RecipeFabRowButton(
                 text = stringResource(Res.string.recipe_delete_label),
                 icon = Icons.Outlined.Delete,
-                onIconClick = { openDialog = true },
+                onIconClick = { openDialog.value = true },
                 modifier = Modifier.padding(bottom = 8.dp),
             )
         }
@@ -91,31 +87,12 @@ fun RecipeModifyButton(
         }
     }
 
-    if (openDialog) {
-        AlertDialog(
-            onDismissRequest = { openDialog = false },
-            title = {
-                Text(
-                    stringResource(Res.string.recipe_delete_dialog_title),
-                    textAlign = TextAlign.Center
-                )
-            },
-            text = { Text(stringResource(Res.string.recipe_delete_dialog_text)) },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        openDialog = false
-                        onDeleteRecipe()
-                    }
-                ) { Text(stringResource(Res.string.dialog_confirm)) }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = { openDialog = false }
-                ) { Text(stringResource(Res.string.dialog_dismiss)) }
-            }
-        )
-    }
+    SimpleAlertDialog(
+        title = Res.string.recipe_delete_dialog_title,
+        description = Res.string.recipe_delete_dialog_text,
+        isVisible = openDialog,
+        confirmButtonClick = onDeleteRecipe,
+    )
 }
 
 @Composable
