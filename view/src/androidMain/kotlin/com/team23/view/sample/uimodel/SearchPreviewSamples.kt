@@ -7,7 +7,6 @@ import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 
 internal val previewTextFieldSample = TextFieldUiModel(
     searchValue = "Bretzels",
-    onValueChange = { },
     label = "Label",
     placeholder = "Placeholder",
     leadingIcon = IconProperty.Vector(Icons.Filled.Search, ""),

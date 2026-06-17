@@ -7,13 +7,17 @@ import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.mapper.TagUiMapper
+import com.team23.neuracrsrecipes.model.action.SearchAction
+import com.team23.neuracrsrecipes.model.event.SearchUiEvent
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,6 +39,9 @@ class SearchViewModel(
     private val _tags = MutableStateFlow<List<TagUiModel>>(emptyList())
     val tags: StateFlow<List<TagUiModel>> = _tags
 
+    private val _uiEvent = MutableSharedFlow<SearchUiEvent>()
+    val uiEvent: SharedFlow<SearchUiEvent> = _uiEvent
+
     var selectedTag: String? = null
 
     init {
@@ -48,12 +55,22 @@ class SearchViewModel(
         searchNewRecipes()
     }
 
-    fun onValueChange(newValue: String) {
+    fun handleSearchAction(action: SearchAction) {
+        when(action) {
+            is SearchAction.SearchValueChange -> onValueChange(action.value)
+            is SearchAction.TagClick -> onTagSelected(action.tag)
+            is SearchAction.FavoriteClick -> favoriteClick(action)
+            is SearchAction.RecipeClick -> recipeClick(action.recipeId)
+            is SearchAction.LocalPhoneClick -> onLocalPhoneClick()
+        }
+    }
+
+    private fun onValueChange(newValue: String) {
         searchValue.value = newValue
         searchNewRecipes(searchText = newValue)
     }
 
-    fun onTagSelected(tag: TagUiModel) {
+    private fun onTagSelected(tag: TagUiModel) {
         val tagIndex = _tags.value.indexOf(tag)
         val newTags = _tags.value.toMutableList()
         newTags.removeAt(tagIndex)
@@ -62,7 +79,7 @@ class SearchViewModel(
         searchNewRecipes(tagsList = newTags)
     }
 
-    fun onLocalPhoneClick() {
+    private fun onLocalPhoneClick() {
         viewModelScope.launch(Dispatchers.IO) {
             snackbarHandler.showLocalPhoneMessage()
         }
@@ -84,17 +101,23 @@ class SearchViewModel(
         }
     }
 
-    fun favoriteClick(recipe: SummarizedRecipeUiModel) {
+    private fun favoriteClick(action: SearchAction.FavoriteClick) {
         viewModelScope.launch(Dispatchers.IO) {
-            updateFavoriteUseCase.invoke(recipe.id)
-            recomputeState(recipe.id)
-            if (!recipe.isFavorite) {
-                val result = snackbarHandler.showFavoriteMessage(recipe.title)
+            val isFavorite = updateFavoriteUseCase.invoke(action.recipeId)
+            recomputeState(action.recipeId)
+            if (isFavorite) {
+                val result = snackbarHandler.showFavoriteMessage(action.recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    updateFavoriteUseCase.invoke(recipe.id)
-                    recomputeState(recipe.id)
+                    updateFavoriteUseCase.invoke(action.recipeId)
+                    recomputeState(action.recipeId)
                 }
             }
+        }
+    }
+
+    private fun recipeClick(recipeId: String) {
+        viewModelScope.launch {
+            _uiEvent.emit(SearchUiEvent.NavigateToRecipe(recipeId))
         }
     }
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.IconProperty
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.view.Res
@@ -30,7 +31,11 @@ import com.team23.view.search_textfield_placeholder
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier) {
+fun SearchTagsRow(
+	tagsRowUiModel: TagsRowUiModel,
+	modifier: Modifier = Modifier,
+	onTagSelected: (TagUiModel) -> Unit = { },
+) {
 	var searchTagValue by remember { mutableStateOf("") }
 	var isMenuExpanded by remember { mutableStateOf(false) }
 	val focusManager = LocalFocusManager.current
@@ -42,7 +47,6 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 	SearchTextField(
 		textFieldUiModel = TextFieldUiModel(
 			searchValue = searchTagValue,
-			onValueChange = { newValue -> searchTagValue = newValue },
 			label = stringResource(Res.string.search_tags_row_label),
 			placeholder = stringResource(Res.string.search_textfield_placeholder),
 			leadingIcon = IconProperty.Resource(
@@ -51,6 +55,7 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 				tint = MaterialTheme.colorScheme.onSecondaryContainer,
 			),
 		),
+		onValueChange = { newValue -> searchTagValue = newValue },
 		modifier = modifier
 			.clickable {
 				isMenuExpanded = true
@@ -68,7 +73,7 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 			.padding(top = 8.dp, bottom = 8.dp)
 	) {
 		items(selectedTags) { tag ->
-			SearchFilterChip(tag, tagsRowUiModel.onTagSelected)
+			SearchFilterChip(tag, onTagSelected)
 		}
 	}
 
@@ -85,7 +90,7 @@ fun SearchTagsRow(tagsRowUiModel: TagsRowUiModel, modifier: Modifier = Modifier)
 				.filter { !it.isSelected }
 				.filter { it.label.contains(searchTagValue) }
 			) { tag ->
-				SearchFilterChip(tag = tag, onTagSelected = tagsRowUiModel.onTagSelected)
+				SearchFilterChip(tag = tag, onTagSelected = onTagSelected)
 			}
 		}
 	}

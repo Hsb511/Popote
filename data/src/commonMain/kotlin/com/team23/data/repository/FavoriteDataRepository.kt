@@ -11,17 +11,17 @@ import kotlinx.coroutines.flow.map
 internal class FavoriteDataRepository(
 	popoteLocalDataSource: PopoteLocalDataSource,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
-	// private val sourceMapper: SourceMapper,
 ) : FavoriteRepository {
 	private val favoriteDao = popoteLocalDataSource.favoriteDao
 	private val summarizedRecipeDao = popoteLocalDataSource.summarizedRecipeDao
 
-	override suspend fun updateFavorite(recipeId: String) {
+	override suspend fun updateFavorite(recipeId: String): Boolean {
 		if (favoriteDao.isStored(recipeId)) {
 			favoriteDao.delete(recipeId)
 		} else {
 			favoriteDao.insertOrReplace(FavoriteDataModel(recipeId = recipeId))
 		}
+		return favoriteDao.isStored(recipeId)
 	}
 
 	override fun getAllFavorites(): Flow<List<RecipeDomainModel.Summarized>> =

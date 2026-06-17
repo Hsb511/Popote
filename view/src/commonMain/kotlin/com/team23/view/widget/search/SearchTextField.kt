@@ -20,13 +20,14 @@ import com.team23.view.ds.icon.PopoteIcon
 fun SearchTextField(
 	textFieldUiModel: TextFieldUiModel,
 	modifier: Modifier = Modifier,
+	onValueChange: (String) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
 	val keyboard = LocalSoftwareKeyboardController.current
 
 	OutlinedTextField(
 		value = textFieldUiModel.searchValue,
-		onValueChange = textFieldUiModel.onValueChange,
+		onValueChange = onValueChange,
 		maxLines = 1,
 		singleLine = true,
 		shape = MaterialTheme.shapes.small,
@@ -35,12 +36,12 @@ fun SearchTextField(
 			onDone = {
 				keyboard?.hide()
 				focusManager.clearFocus()
-				textFieldUiModel.onValueChange("")
+				onValueChange("")
 			},
 			onGo = {
 				keyboard?.hide()
 				focusManager.clearFocus()
-				textFieldUiModel.onValueChange("")
+				onValueChange("")
 			}
 		),
 		placeholder = {
@@ -60,7 +61,7 @@ fun SearchTextField(
 					contentDescription = null,
 					tint = MaterialTheme.colorScheme.onSecondaryContainer,
 					modifier = Modifier.clickable {
-						textFieldUiModel.onValueChange("")
+						onValueChange("")
 					}
 				)
 			}

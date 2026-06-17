@@ -6,7 +6,7 @@ class UpdateFavoriteUseCase(
    private val favoriteRepository: FavoriteRepository,
 ) {
 
-    suspend fun invoke(recipeId: String) {
-        favoriteRepository.updateFavorite(recipeId = recipeId)
+    suspend fun invoke(recipeId: String): Boolean {
+        return favoriteRepository.updateFavorite(recipeId = recipeId)
     }
 }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,16 +15,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.team23.neuracrsrecipes.model.action.SearchAction
+import com.team23.neuracrsrecipes.model.event.SearchUiEvent
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
@@ -39,6 +41,7 @@ import com.team23.view.search_textfield_label
 import com.team23.view.search_textfield_placeholder
 import com.team23.view.widget.search.SearchTagsRow
 import com.team23.view.widget.search.SearchTextField
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
@@ -51,8 +54,14 @@ internal data class SearchScreen(
         val searchViewModel = koinInject<SearchViewModel>()
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
-        val onRecipeClick = { recipe: SummarizedRecipeUiModel ->
-            appNavigator.navigateToRecipe(navigator, recipe.id)
+        val recipeUiMapper = remember { RecipeUiMapper() }
+
+        LaunchedEffect(true) {
+            searchViewModel.uiEvent.collectLatest { event ->
+                when (event) {
+                    is SearchUiEvent.NavigateToRecipe -> appNavigator.navigateToRecipe(navigator, event.recipeId)
+                }
+            }
         }
 
         LocalTitle.current.value = null
@@ -62,8 +71,7 @@ internal data class SearchScreen(
             searchUiModel = SearchUiModel(
                 textField = TextFieldUiModel(
                     searchValue = searchViewModel.searchValue.value,
-                    onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
-                    label = stringResource(Res.string .search_textfield_label),
+                    label = stringResource(Res.string.search_textfield_label),
                     placeholder = stringResource(Res.string.search_textfield_placeholder),
                     leadingIcon = IconProperty.Vector(
                         imageVector = Icons.Filled.Search,
@@ -72,13 +80,24 @@ internal data class SearchScreen(
                 ),
                 tagsRow = TagsRowUiModel(
                     tags = searchViewModel.tags.collectAsState().value,
-                    onTagSelected = { tag -> searchViewModel.onTagSelected(tag) },
                 ),
-                recipes = searchViewModel.recipes.collectAsState().value,
-                onRecipeClick = onRecipeClick,
-                onFavoriteClick = searchViewModel::favoriteClick,
-                onLocalPhoneClick = searchViewModel::onLocalPhoneClick,
+                items = searchViewModel.recipes.collectAsState().value.map { recipe ->
+                    SearchUiModel.Item(
+                        id = recipe.id,
+                        cellProperty = recipeUiMapper.toCellProperty(
+                            recipe = recipe,
+                            displayType = DisplayType.List,
+                            onFavoriteClick = {
+                                searchViewModel.handleSearchAction(SearchAction.FavoriteClick(recipe.id, recipe.title))
+                            },
+                            onLocalPhoneClick = {
+                                searchViewModel.handleSearchAction(SearchAction.LocalPhoneClick)
+                            },
+                        ),
+                    )
+                },
             ),
+            performAction = searchViewModel::handleSearchAction,
         )
     }
 }
@@ -87,7 +106,8 @@ internal data class SearchScreen(
 @Composable
 internal fun SearchScreen(
     searchUiModel: SearchUiModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    performAction: (SearchAction) -> Unit = { },
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -96,9 +116,13 @@ internal fun SearchScreen(
             .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.topScreenHeight(additionalHeight = 24.dp))
-        SearchTextField(searchUiModel.textField)
+        SearchTextField(searchUiModel.textField) { newValue ->
+            performAction(SearchAction.SearchValueChange(newValue))
+        }
 
-        SearchTagsRow(searchUiModel.tagsRow)
+        SearchTagsRow(searchUiModel.tagsRow) { tag ->
+            performAction(SearchAction.TagClick(tag))
+        }
 
         LazyVerticalGrid(
             columns = GridCells.Adaptive(300.dp),
@@ -107,20 +131,16 @@ internal fun SearchScreen(
             contentPadding = PaddingValues(bottom = 16.dp),
             modifier = modifier.fillMaxSize()
         ) {
-            items(searchUiModel.recipes) { recipe ->
+            items(
+                items = searchUiModel.items,
+                key = { item -> item.id },
+            ) { item ->
                 Cell(
-                    cellProperty = RecipeUiMapper().toCellProperty(
-                        recipe = recipe,
-                        displayType = DisplayType.List,
-                        onFavoriteClick = {
-                            searchUiModel.onFavoriteClick(recipe)
-                        },
-                        onLocalPhoneClick = searchUiModel.onLocalPhoneClick,
-                    ),
+                    cellProperty = item.cellProperty,
                     modifier = Modifier
                         .animateItem()
                         .clickable {
-                            searchUiModel.onRecipeClick(recipe)
+                            performAction(SearchAction.RecipeClick(item.id))
                         }
                 )
             }
