@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import com.team23.neuracrsrecipes.model.property.DisplayType
+import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
@@ -25,7 +25,7 @@ import com.team23.view.widget.search.SearchTextField
 fun SearchFilterChipPreview() {
     PopoteTheme {
         SearchFilterChip(
-            TagUiModel("soup", true)
+            TagUiModel.Label("soup", true)
         ) {}
     }
 }
@@ -36,14 +36,7 @@ fun SearchTagsRowPreview() {
     PopoteTheme {
         SearchTagsRow(
             tagsRowUiModel = TagsRowUiModel(
-                tags = listOf(
-                    TagUiModel("soup", true),
-                    TagUiModel("veggie", true),
-                    TagUiModel("cocktail", false),
-                    TagUiModel("drink", false),
-                    TagUiModel("main", false),
-                    TagUiModel("italian", true)
-                ),
+                tags = tags,
             )
         )
     }
@@ -70,14 +63,7 @@ private fun SearchScreenPreview() {
             searchUiModel = SearchUiModel(
                 textField = previewTextFieldSample,
                 tagsRow = TagsRowUiModel(
-                    tags = listOf(
-                        TagUiModel("soup", true),
-                        TagUiModel("veggie", true),
-                        TagUiModel("cocktail", false),
-                        TagUiModel("drink", false),
-                        TagUiModel("main", false),
-                        TagUiModel("italian", true)
-                    ),
+                    tags = tags,
                 ),
                 items = List(6) { summarizedRecipeSample }.mapIndexed { id, recipe ->
                     SearchUiModel.Item(
@@ -93,3 +79,13 @@ private fun SearchScreenPreview() {
         )
     }
 }
+
+private val tags = listOf(
+    TagUiModel.Flag("", true, FlagProperty.ITALIAN),
+    TagUiModel.Label("soup", true),
+    TagUiModel.Label("veggie", true),
+    TagUiModel.Label("cocktail", false),
+    TagUiModel.Label("drink", false),
+    TagUiModel.Label("main", false),
+    TagUiModel.Label("italian", true)
+)

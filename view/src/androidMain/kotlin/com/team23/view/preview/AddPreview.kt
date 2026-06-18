@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.view.navigation.screen.AddScreen
 import com.team23.view.sample.property.resourceImagePreviewSample
 import com.team23.view.theme.PopoteTheme
@@ -82,7 +83,7 @@ fun AddScreenPreview() {
                     title = "quo",
                     date = "varius",
                     author = "sed",
-                    tags = listOf("a", "b", "cccc"),
+                    tags = listOf("a", "b", "cccc").map { TagUiModel.Label(it) },
                     image = resourceImagePreviewSample,
                     ingredients = listOf(),
                     instructions = listOf(),
@@ -95,7 +96,7 @@ fun AddScreenPreview() {
             ),
             scrollState = rememberScrollState(),
             heightToBeFaded = remember { mutableFloatStateOf(120f) },
-            allTags = listOf("a", "bbbb", "23232323"),
+            allTags = listOf("a", "bbbb", "23232323").map { TagUiModel.Label(it) },
         )
     }
 }

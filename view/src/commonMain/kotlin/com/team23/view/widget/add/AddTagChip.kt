@@ -16,15 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.view.Res
 import com.team23.view.ds.icon.PopoteIcon
 import com.team23.view.ic_tag
 
 @Composable
 fun AddTagChip(
-    tags: MutableState<List<String>>,
-    allTags: List<String>,
-    onAddTag: (String) -> Unit,
+    tags: MutableState<List<TagUiModel>>,
+    allTags: List<TagUiModel>,
+    onAddTag: (TagUiModel) -> Unit,
 ) {
     val expanded = remember { mutableStateOf(false) }
 
@@ -59,8 +60,8 @@ fun AddTagChip(
 
 @Composable
 private fun TagMenu(
-    allTags: List<String>,
-    onAddTag: (String) -> Unit,
+    allTags: List<TagUiModel>,
+    onAddTag: (TagUiModel) -> Unit,
     expanded: MutableState<Boolean>,
 ) {
     DropdownMenu(
@@ -69,7 +70,7 @@ private fun TagMenu(
     ) {
         allTags.forEach { tag ->
             DropdownMenuItem(
-                text = { Text(tag) },
+                text = { Text(tag.label) },
                 onClick = { onAddTag(tag) }
             )
         }

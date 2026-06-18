@@ -42,14 +42,14 @@ class SearchViewModel(
     private val _uiEvent = MutableSharedFlow<SearchUiEvent>()
     val uiEvent: SharedFlow<SearchUiEvent> = _uiEvent
 
-    var selectedTag: String? = null
+    var selectedTag: TagUiModel? = null
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val tags = tagUiMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
             withContext(Dispatchers.Main) { _tags.value = tags }
             selectedTag?.let { tag ->
-                onTagSelected(TagUiModel(label = tag, isSelected = false))
+                onTagSelected(tag)
             }
         }
         searchNewRecipes()
@@ -74,7 +74,11 @@ class SearchViewModel(
         val tagIndex = _tags.value.indexOf(tag)
         val newTags = _tags.value.toMutableList()
         newTags.removeAt(tagIndex)
-        newTags.add(tagIndex, tag.copy(isSelected = !tag.isSelected))
+        val newTag = when (tag) {
+            is TagUiModel.Flag -> tag.copy(isSelected = !tag.isSelected)
+            is TagUiModel.Label -> tag.copy(isSelected = !tag.isSelected)
+        }
+        newTags.add(tagIndex, newTag)
         _tags.value = newTags
         searchNewRecipes(tagsList = newTags)
     }

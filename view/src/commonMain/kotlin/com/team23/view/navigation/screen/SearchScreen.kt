@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,6 +29,7 @@ import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.SearchUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TagsRowUiModel
 import com.team23.neuracrsrecipes.model.uimodel.TextFieldUiModel
 import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
@@ -67,7 +67,7 @@ internal data class SearchScreen(
         }
 
         LocalTitle.current.value = null
-        searchViewModel.selectedTag = selectedTag
+        searchViewModel.selectedTag = selectedTag?.let { TagUiModel.Label(it) }
 
         SearchScreen(
             searchUiModel = SearchUiModel(

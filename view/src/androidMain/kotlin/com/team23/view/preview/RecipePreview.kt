@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team23.neuracrsrecipes.model.uimodel.InstructionUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.view.sample.property.resourceImagePreviewSample
 import com.team23.view.sample.uimodel.ingredientsPreviewSamples
 import com.team23.view.sample.uimodel.ingredientsUiModelPreviewSamples
@@ -134,7 +135,7 @@ fun RecipeContentDataPreview() {
                 title = "Bretzels ! Bretzels !",
                 date = "23 Octobre 2023",
                 author = "Guiiiii",
-                tags = listOf("swiss", "bread"),
+                tags = listOf("swiss", "bread").map { TagUiModel.Label(it) },
                 image = resourceImagePreviewSample,
                 defaultServingsAmount = 4,
                 description = "description",
@@ -152,7 +153,7 @@ fun RecipeContentDataPreview() {
                 isLocallySaved = true,
             ),
             scrollState = rememberScrollState(),
-            heightToBeFaded = remember { mutableStateOf(0f) },
+            heightToBeFaded = remember { mutableFloatStateOf(0f) },
             currentServingsAmount = "4",
             onTagClicked = {},
             onUpdateLocalRecipe = {},

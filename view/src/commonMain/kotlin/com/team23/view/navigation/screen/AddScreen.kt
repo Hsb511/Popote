@@ -29,6 +29,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import com.team23.neuracrsrecipes.viewmodel.AddViewModel
 import com.team23.view.LocalHeightToBeFaded
 import com.team23.view.LocalScrollState
@@ -87,7 +88,7 @@ internal data object AddScreen : Screen {
 @Composable
 fun AddScreen(
     addRecipe: AddRecipeUiModel,
-    allTags: List<String>,
+    allTags: List<TagUiModel>,
     scrollState: ScrollState,
     heightToBeFaded: MutableState<Float>,
     modifier: Modifier = Modifier,

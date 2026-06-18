@@ -7,10 +7,17 @@ import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 class TagUiMapper {
 
     fun toTagUiModels(tags: List<TagDomainModel>): List<TagUiModel> = tags.map { tag ->
-        TagUiModel(
-            label = tag.localizedName,
-            isSelected = false,
-        )
+        when (tag){
+            is TagDomainModel.CuisineRegion -> TagUiModel.Flag(
+                label = tag.localizedName,
+                isSelected = false,
+                flagProperty = toFlagProperty(listOf(tag)) ?: FlagProperty.UK_US,
+            )
+            is TagDomainModel.Normal -> TagUiModel.Label(
+                label = tag.localizedName,
+                isSelected = false,
+            )
+        }
     }
 
     fun toFlagProperty(tags: List<TagDomainModel>): FlagProperty? {

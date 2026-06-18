@@ -7,7 +7,7 @@ data class RecipeUiModel(
     val title: String,
     val date: String,
     val author: String,
-    val tags: List<String>,
+    val tags: List<TagUiModel>,
     val image: ImageProperty,
     val ingredients: List<IngredientUiModel>,
     val instructions: List<InstructionUiModel>,

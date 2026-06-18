@@ -11,14 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 
 @Composable
 fun AddTagSection(
-    allTags: List<String>,
-    onAddTag: (String) -> Unit,
-    onRemoveTag: (String) -> Unit,
+    allTags: List<TagUiModel>,
+    onAddTag: (TagUiModel) -> Unit,
+    onRemoveTag: (TagUiModel) -> Unit,
 ) {
-    val tags = remember { mutableStateOf(emptyList<String>()) }
+    val tags = remember { mutableStateOf(emptyList<TagUiModel>()) }
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         item {
@@ -37,7 +38,7 @@ fun AddTagSection(
                     tags.value = currentTags
                 },
                 label = {
-                    Text(text = tag)
+                    Text(text = tag.label)
                 }
             )
         }

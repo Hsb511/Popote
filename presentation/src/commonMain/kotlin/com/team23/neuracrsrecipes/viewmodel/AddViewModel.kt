@@ -9,6 +9,7 @@ import com.team23.domain.user.usecase.GetUserNicknameUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.handler.UiActionHandler
 import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
+import com.team23.neuracrsrecipes.mapper.TagUiMapper
 import com.team23.neuracrsrecipes.model.action.UiAction
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.neuracrsrecipes.model.uimodel.AddRecipeUiModel
@@ -16,6 +17,7 @@ import com.team23.neuracrsrecipes.model.uimodel.IngredientUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
+import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -40,6 +42,7 @@ class AddViewModel(
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
     private val uiActionHandler: UiActionHandler,
+    private val tagUiMapper: TagUiMapper,
 ) {
 
     private val _recipe = MutableStateFlow(createNewRecipe())
@@ -52,8 +55,8 @@ class AddViewModel(
         .map(::createAddRecipe)
         .stateIn(viewModelScope, SharingStarted.Eagerly, createAddRecipe(_recipe.value))
 
-    private val _tags = MutableStateFlow<List<String>>(emptyList())
-    val tags: StateFlow<List<String>> = _tags
+    private val _tags = MutableStateFlow<List<TagUiModel>>(emptyList())
+    val tags: StateFlow<List<TagUiModel>> = _tags
 
     private fun createAddRecipe(recipe: RecipeUiModel) = AddRecipeUiModel(
         recipe = recipe,
@@ -80,7 +83,7 @@ class AddViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val nickname = getUserNicknameUseCase.invoke().firstOrNull() ?: ""
             _recipe.value = _recipe.value.copy(author = nickname)
-            _tags.value = getAndSortAllTagsUseCase.invoke().map { it.localizedName }
+            _tags.value = tagUiMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
             loadTemporaryRecipeUseCase.invoke()?.let { temporaryRecipe ->
                 _recipe.value = recipeUiMapper.toRecipeUiModel(temporaryRecipe)
             }
@@ -112,14 +115,14 @@ class AddViewModel(
         _recipe.value = _recipe.value.copy(author = newAuthor)
     }
 
-    private fun onAddTag(newTag: String) {
+    private fun onAddTag(newTag: TagUiModel) {
         _recipe.value = _recipe.value.copy(tags = _recipe.value.tags + newTag)
         val tags = _tags.value.toMutableList()
         tags.remove(newTag)
         _tags.value = tags
     }
 
-    private fun onRemoveTag(tag: String) {
+    private fun onRemoveTag(tag: TagUiModel) {
         val currentTags = _recipe.value.tags.toMutableList()
         currentTags.remove(tag)
         _recipe.value = _recipe.value.copy(tags = currentTags)
