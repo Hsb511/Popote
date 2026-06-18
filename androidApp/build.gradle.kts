@@ -6,7 +6,7 @@ plugins {
 }
 
 val majorVersion = 2
-val minorVersion = 1
+val minorVersion = 2
 val fixVersion = 0
 
 android {
