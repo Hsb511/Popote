@@ -12,9 +12,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import com.team23.view.theme.ukBlue
 import com.team23.view.theme.ukRed
-import com.team23.view.theme.ukUsWhite
-import com.team23.view.theme.usBlue
-import com.team23.view.theme.usRed
+import com.team23.view.theme.white
 
 @Composable
 internal fun UkUsFlag(modifier: Modifier = Modifier) {
@@ -40,71 +38,19 @@ internal fun UkUsFlag(modifier: Modifier = Modifier) {
     }
 }
 
-private fun DrawScope.drawUsFlag(canvasWidth: Float, canvasHeight: Float) {
-    val usStripeHeight = canvasHeight / 13
-    val usUnionWidth = 2 * canvasWidth / 5
-    val usUnionHeight = 7 * canvasHeight / 13
-    drawRect(
-        color = ukUsWhite(),
-        size = Size(width = canvasWidth, height = canvasHeight),
-    )
-    for (i in 0..13 step 2) {
-        drawRect(
-            color = usRed(),
-            size = Size(width = canvasWidth, height = usStripeHeight),
-            topLeft = Offset(x = 0f, y = i * usStripeHeight),
-        )
-    }
-    drawRect(
-        color = usBlue(),
-        size = Size(width = usUnionWidth, height = usUnionHeight),
-    )
-    for (row in 1..5) {
-        for (col in 1..6) {
-            usStar(
-                canvasHeight = canvasHeight,
-                center = Offset(
-                    x = col * usUnionWidth / 6 - usUnionWidth / 12,
-                    y = row * usUnionHeight / 5 - usUnionHeight / 10,
-                ),
-            )
-        }
-    }
-    for (row in 1..4) {
-        for (col in 1..5) {
-            usStar(
-                canvasHeight = canvasHeight,
-                center = Offset(
-                    x = col * usUnionWidth / 5 - col * usUnionWidth / 30,
-                    y = row * usUnionHeight / 4 - row * usUnionHeight / 20,
-                ),
-            )
-        }
-    }
-}
-
-private fun DrawScope.usStar(canvasHeight: Float, center: Offset) {
-    val starSize = canvasHeight / 24
-    drawCircle(
-        color = ukUsWhite(),
-        radius = starSize / 2,
-        center = center,
-    )
-}
-
 private fun DrawScope.drawUkFlag(canvasWidth: Float, canvasHeight: Float) {
     drawRect(
         color = ukBlue(),
         size = Size(width = canvasWidth, height = canvasHeight),
     )
     drawLine(
-        color = ukUsWhite(),
+        color = white(),
         start = Offset(x = 0f, y = 0f),
         end = Offset(x = canvasWidth, y = canvasHeight),
         strokeWidth = 6 * canvasHeight / 30,
     )
     drawLine(
-        color = ukUsWhite(),
+        color = white(),
         start = Offset(x = canvasWidth, y = 0f),
         end = Offset(x = 0f, y = canvasHeight),
         strokeWidth = 6 * canvasHeight / 30,
@@ -134,7 +80,7 @@ private fun DrawScope.drawUkFlag(canvasWidth: Float, canvasHeight: Float) {
         strokeWidth = 2 * canvasHeight / 30,
     )
     drawRect(
-        color = ukUsWhite(),
+        color = white(),
         size = Size(width = 10 * canvasWidth / 50, height = canvasHeight),
         topLeft = Offset(x = 20 * canvasWidth / 50, y = 0f)
     )
@@ -145,7 +91,7 @@ private fun DrawScope.drawUkFlag(canvasWidth: Float, canvasHeight: Float) {
         strokeWidth = 2 * canvasHeight / 30,
     )
     drawRect(
-        color = ukUsWhite(),
+        color = white(),
         size = Size(width = canvasWidth, height = 10 * canvasHeight / 30),
         topLeft = Offset(x = 0f, y = 10 * canvasHeight / 30)
     )

@@ -18,7 +18,8 @@ class SummarizedRecipeUiMapper(
             id = id,
             title = title,
             imageProperty = imageUiMapper.toImageProperty(imageUrl, title),
-            flagProperty = when (language) {
+            cuisineFlag = null,
+            languageFlag = when (language) {
                 LanguageDomainModel.ENGLISH -> FlagProperty.UK_US
                 LanguageDomainModel.FRENCH -> FlagProperty.FRENCH
             },

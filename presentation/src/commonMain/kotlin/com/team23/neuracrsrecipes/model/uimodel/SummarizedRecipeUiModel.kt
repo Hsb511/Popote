@@ -9,7 +9,8 @@ data class SummarizedRecipeUiModel(
     val id: String,
     val title: String,
     val imageProperty: ImageProperty,
-    val flagProperty: FlagProperty,
+    val cuisineFlag: FlagProperty?,
+    val languageFlag: FlagProperty,
     val isFavorite: Boolean,
     val isLocallySaved: Boolean,
 )

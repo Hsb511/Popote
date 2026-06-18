@@ -9,6 +9,7 @@ fun getCellPropertySample(displayType: DisplayType = DisplayType.BigCard) = Cell
 	displayType = displayType,
 	title = "bretzels",
 	imageProperty = resourceImagePreviewSample,
+	cuisineFlag = FlagProperty.NORMAN,
 	languageFlag = FlagProperty.FRENCH,
 	isLocallySaved = true,
 	localPhone = CellProperty.LocalPhone(localPhoneButtonPreviewSample),

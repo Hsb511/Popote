@@ -1,6 +1,7 @@
 package com.team23.neuracrsrecipes.viewmodel
 
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.GetPromotedLanesUseCase
@@ -8,10 +9,12 @@ import com.team23.domain.recipe.usecase.OverwriteAllSummarizedRecipesUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.PromotedLaneUiMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
+import com.team23.neuracrsrecipes.mapper.TagUiMapper
 import com.team23.neuracrsrecipes.model.action.HomeAction
 import com.team23.neuracrsrecipes.model.uimodel.ErrorUiModel
 import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
+import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +34,7 @@ class HomeViewModel(
     private val favoriteRepository: FavoriteRepository,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val promotedLaneUiMapper: PromotedLaneUiMapper,
+    private val tagUiMapper: TagUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
 ) {
@@ -67,12 +71,34 @@ class HomeViewModel(
                         )
                     }
                     recipes.forEach { recipe ->
-                        getFullRecipeByIdUseCase.invoke(recipe.id)
+                        getFullRecipeByIdUseCase.invoke(recipe.id).getOrNull()?.let { fullRecipe ->
+                            val currentState = _uiState.value
+                            if (currentState is HomeUiState.Data) {
+                                _uiState.value = currentState.copy(
+                                    recipes = updateRecipesWithCuisineFlag(currentState.recipes, fullRecipe),
+                                    promotedLanes = currentState.promotedLanes.map { promotedLane ->
+                                        promotedLane.copy(
+                                            recipes = updateRecipesWithCuisineFlag(promotedLane.recipes, fullRecipe)
+                                        )
+                                    }
+                                )
+                            }
+                        }
                     }
                     if (newRecipesCount != 0) {
                         snackbarHandler.showLoadingEnded()
                     }
                 }
+        }
+    }
+
+    private fun updateRecipesWithCuisineFlag(recipes: List<SummarizedRecipeUiModel>, fullRecipe: RecipeDomainModel.Full): List<SummarizedRecipeUiModel> {
+        return recipes.map { recipe ->
+            if (recipe.id == fullRecipe.id) {
+                recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags))
+            } else {
+                recipe
+            }
         }
     }
 

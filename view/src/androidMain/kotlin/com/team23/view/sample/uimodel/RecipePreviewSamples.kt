@@ -8,7 +8,8 @@ val summarizedRecipeSample = SummarizedRecipeUiModel(
     id = "",
     imageProperty = resourceImagePreviewSample,
     title = "Bretzels",
-    flagProperty = FlagProperty.FRENCH,
+    cuisineFlag = FlagProperty.NORMAN,
+    languageFlag = FlagProperty.FRENCH,
     isFavorite = true,
     isLocallySaved = true,
 )

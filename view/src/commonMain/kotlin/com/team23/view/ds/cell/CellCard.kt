@@ -88,10 +88,13 @@ internal fun CellCard(
                         .padding(bottom = 2.dp)
                 )
             }
-            /*CellFlag(
-                flagProperty = cellProperty.languageFlag,
-                modifier = Modifier.align(Alignment.TopEnd),
-            )*/
+            cellProperty.cuisineFlag?.let { cuisineFlag ->
+                CellFlag(
+                    flagProperty = cuisineFlag,
+                    modifier = Modifier.align(Alignment.TopEnd),
+                    topStartCorner = 0.dp,
+                )
+            }
             ButtonLike(
                 iconProperty = cellProperty.favorite.iconProperty,
                 onFavoriteClick = { onAction(cellProperty.favorite.action) },

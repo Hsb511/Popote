@@ -10,6 +10,7 @@ data class CellProperty(
 	val displayType: DisplayType,
 	val imageProperty: ImageProperty,
 	val title: String,
+	val cuisineFlag: FlagProperty? = null,
 	val languageFlag: FlagProperty,
 	val isLocallySaved: Boolean,
 	val localPhone: LocalPhone,
