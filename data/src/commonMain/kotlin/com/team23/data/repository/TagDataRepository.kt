@@ -13,7 +13,9 @@ internal class TagDataRepository(
 
     private val tagDao = popoteLocalDataSource.tagDao
 
-    override suspend fun getAllTags(): List<TagDomainModel> = tagMapper.toTagDomainModel(tagDao.loadAll())
+    override suspend fun getAllTags(): List<TagDomainModel> = tagMapper.toTagDomainModel(tagDao.loadAll().also {
+        println("HUGO - TagDataRepository - getAllTags - loaded tags from database: ${it.map { a -> a.label }.distinct()}")
+    })
 
     override fun getRecipeIdByTags(tagsList: List<String>): Flow<List<String>> =
         tagDao.getRecipeIdByLabel(tagsList.flatMap { tagMapper.translateBackToEnglish(it) })

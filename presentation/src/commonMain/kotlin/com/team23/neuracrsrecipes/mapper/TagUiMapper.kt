@@ -18,7 +18,7 @@ class TagUiMapper {
                 isSelected = false,
             )
         }
-    }
+    }.sortedBy { if (it is TagUiModel.Flag) 0 else 1 }
 
     fun toFlagProperty(tags: List<TagDomainModel>): FlagProperty? {
         val cuisineRegionTag = tags.filterIsInstance<TagDomainModel.CuisineRegion>().firstOrNull() ?: return null

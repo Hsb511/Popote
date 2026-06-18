@@ -42,13 +42,13 @@ class SearchViewModel(
     private val _uiEvent = MutableSharedFlow<SearchUiEvent>()
     val uiEvent: SharedFlow<SearchUiEvent> = _uiEvent
 
-    var selectedTag: TagUiModel? = null
+    var rawSelectedTag: String? = null
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val tags = tagUiMapper.toTagUiModels(getAndSortAllTagsUseCase.invoke())
             withContext(Dispatchers.Main) { _tags.value = tags }
-            selectedTag?.let { tag ->
+            tags.firstOrNull { it.label == rawSelectedTag }?.let { tag ->
                 onTagSelected(tag)
             }
         }
