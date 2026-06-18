@@ -5,14 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import com.team23.view.theme.chineseRed
 import com.team23.view.theme.chineseYellow
-import com.team23.view.theme.hungarianGreen
-import com.team23.view.theme.hungarianRed
-import com.team23.view.theme.white
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

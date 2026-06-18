@@ -5,12 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import com.team23.view.theme.frenchBlue
-import com.team23.view.theme.frenchRed
 import com.team23.view.theme.thaiBlue
 import com.team23.view.theme.thaiRed
 import com.team23.view.theme.thaiWhite
-import com.team23.view.theme.white
 
 @Composable
 internal fun ThaiFlag(

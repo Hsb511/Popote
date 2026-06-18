@@ -18,6 +18,7 @@ fun PopoteFlag(
         FlagProperty.ITALIAN -> ItalianFlag(modifier)
         FlagProperty.NORMAN -> NormanFlag(modifier)
         FlagProperty.THAI -> ThaiFlag(modifier)
+        FlagProperty.TURKISH -> Unit
         FlagProperty.UK_US -> UkUsFlag(modifier)
         FlagProperty.US -> UsFlag(modifier)
         FlagProperty.US_MEXICAN -> Unit

@@ -7,16 +7,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.CellAction
@@ -29,8 +32,10 @@ import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.getImageMaxHeight
+import com.team23.view.ic_language
 import com.team23.view.ic_local_smartphone
 import com.team23.view.locally_saved_button_content_description
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun CellCard(
@@ -68,10 +73,20 @@ internal fun CellCard(
                     .align(Alignment.BottomStart)
                     .padding(end = 32.dp)
             ) {
-                CellFlag(
-                    flagProperty = cellProperty.languageFlag,
-                    bottomStartCorner = 0.dp,
-                )
+                Box {
+                    CellFlag(
+                        flagProperty = cellProperty.languageFlag,
+                        bottomStartCorner = 0.dp,
+                    )
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_language),
+                        contentDescription = null,
+                        tint = Black.copy(alpha = 0.5f),
+                        modifier = Modifier
+                            .size(20.dp)
+                            .align(Alignment.Center)
+                    )
+                }
                 Text(
                     text = cellProperty.title,
                     color = MaterialTheme.colorScheme.onTertiary,
