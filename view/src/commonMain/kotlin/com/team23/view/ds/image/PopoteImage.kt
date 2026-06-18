@@ -48,19 +48,20 @@ fun PopoteImage(
         )
 
         is ImageProperty.Remote -> {
-            var dynamicMaxImageHeight = maxImageHeight
-
 			KamelImageBox(
 				resource = asyncPainterResource(neuracrImageProperty.url),
 				onLoading = {
-					dynamicMaxImageHeight = 1.dp
-					Shimmer(modifier.height(maxImageHeight))
+					Shimmer(
+						modifier = Modifier
+							.fillMaxWidth()
+							.height(maxImageHeight)
+					)
 				},
 				onSuccess = { painter ->
 					val imageRatio = painter.intrinsicSize.width / painter.intrinsicSize.height
 					val remoteContentScale = when {
 						contentScale == ContentScale.FillBounds -> ContentScale.FillBounds
-						imageRatio < 4 / 3f  -> ContentScale.FillWidth
+						imageRatio < 3f / 2f -> ContentScale.FillWidth
 						else -> ContentScale.FillHeight
 					}
 					Image(
@@ -74,7 +75,7 @@ fun PopoteImage(
 						}
 					)
 				},
-				modifier = imageModifier.heightIn(max = dynamicMaxImageHeight),
+				modifier = imageModifier.heightIn(max = maxImageHeight),
 			)
 		}
         is ImageProperty.UserPick -> getImageBitmapFromUri(neuracrImageProperty.uri)?.let { bitmap ->

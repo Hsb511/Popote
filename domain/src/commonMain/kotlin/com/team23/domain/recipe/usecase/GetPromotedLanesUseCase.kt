@@ -21,7 +21,7 @@ class GetPromotedLanesUseCase(
         allSummarizedRecipes = recipeRepository.getAllSummarizedRecipes()
         listOf(
             PromotedLaneDomainModel(PromotedLaneDomainModel.Type.Seasonal, filterSeasonal()),
-            PromotedLaneDomainModel(PromotedLaneDomainModel.Type.Vegetarian, filterByTag(listOf(VEGETARIAN_TAG, VEGAN_TAG))),
+            PromotedLaneDomainModel(PromotedLaneDomainModel.Type.Vegetarian, filterByTag(listOf(VEGETARIAN_TAG, VEGGIE_TAG))),
             PromotedLaneDomainModel(PromotedLaneDomainModel.Type.Vegan, filterByTag(listOf(VEGAN_TAG)))
         )
     }.getOrElse { emptyList() }
@@ -45,6 +45,7 @@ class GetPromotedLanesUseCase(
 
     companion object {
         private const val VEGETARIAN_TAG = "vegetarian"
+        private const val VEGGIE_TAG = "veggie"
         private const val VEGAN_TAG = "vegan"
         private const val SOUP_TAG = "soup"
         private const val PIE_TAG = "pie"

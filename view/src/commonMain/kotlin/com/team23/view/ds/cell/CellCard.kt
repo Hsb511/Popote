@@ -48,7 +48,7 @@ internal fun CellCard(
         Box(modifier = modifier.clip(shape = MaterialTheme.shapes.medium)) {
             PopoteImage(
                 neuracrImageProperty = cellProperty.imageProperty,
-                maxImageHeight = cellProperty.maxHeight ?: getImageMaxHeight(),
+                maxImageHeight = getImageMaxHeight(),
                 displayType = displayType,
                 contentScale = cellProperty.maxHeight?.let { ContentScale.Fit } ?: ContentScale.FillWidth,
                 modifier = cellProperty.maxHeight
