@@ -90,6 +90,8 @@ internal fun thaiRed() = Color(0xFFA51931) // https://web.archive.org/web/202005
 internal fun thaiWhite() = Color(0xFFF4F5F8) // https://web.archive.org/web/20200527231905/https://www.nstda.or.th/th/nstda-knowledge/11557-thaiflag-color
 internal fun thaiBlue() = Color(0xFF2D2A4A) // https://web.archive.org/web/20200527231905/https://www.nstda.or.th/th/nstda-knowledge/11557-thaiflag-color
 
+internal fun turkishRed() = Color(0xFFE30A17) // https://en.wikipedia.org/wiki/Flag_of_Turkey
+
 internal fun ukBlue() = Color(0xFF00247D)
 internal fun ukRed() = Color(0xFFCF142B)
 

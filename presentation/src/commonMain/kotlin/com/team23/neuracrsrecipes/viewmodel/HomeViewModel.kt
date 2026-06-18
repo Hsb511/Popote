@@ -74,14 +74,16 @@ class HomeViewModel(
                         getFullRecipeByIdUseCase.invoke(recipe.id).getOrNull()?.let { fullRecipe ->
                             val currentState = _uiState.value
                             if (currentState is HomeUiState.Data) {
-                                _uiState.value = currentState.copy(
-                                    recipes = updateRecipesWithCuisineFlag(currentState.recipes, fullRecipe),
-                                    promotedLanes = currentState.promotedLanes.map { promotedLane ->
-                                        promotedLane.copy(
-                                            recipes = updateRecipesWithCuisineFlag(promotedLane.recipes, fullRecipe)
-                                        )
-                                    }
-                                )
+                                withContext(Dispatchers.Main) {
+                                    _uiState.value = currentState.copy(
+                                        recipes = updateRecipesWithCuisineFlag(currentState.recipes, fullRecipe),
+                                        promotedLanes = currentState.promotedLanes.map { promotedLane ->
+                                            promotedLane.copy(
+                                                recipes = updateRecipesWithCuisineFlag(promotedLane.recipes, fullRecipe)
+                                            )
+                                        }
+                                    )
+                                }
                             }
                         }
                     }

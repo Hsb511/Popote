@@ -3,6 +3,7 @@ package com.team23.neuracrsrecipes.mapper
 import com.team23.domain.recipe.model.LanguageDomainModel
 import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.model.RecipeDomainModel.Source
+import com.team23.domain.recipe.model.TagDomainModel
 import com.team23.neuracrsrecipes.extension.getLocalLanguage
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 
@@ -19,7 +20,7 @@ class RecipeUiMapper(
 			title = title,
 			date = dateUiMapper.toSubtitleDate(date),
 			author = author,
-			tags = tags,
+			tags = tags.map { it.localizedName },
 			image = imageUiMapper.toImageProperty(imageUrl, null),
 			ingredients = ingredientUiMapper.toIngredientUiModels(ingredients),
 			defaultServingsAmount = servingsNumber,
@@ -37,7 +38,7 @@ class RecipeUiMapper(
 			title = title,
 			date = dateUiMapper.toLocalDate(recipeUiModel.date),
 			author = author,
-			tags = tags,
+			tags = tags.map { TagDomainModel.Normal(it) },
 			imageUrl = imageUiMapper.toImageUri(image),
 			ingredients = ingredientUiMapper.toIngredientDomainModels(ingredients),
 			servingsNumber = defaultServingsAmount,

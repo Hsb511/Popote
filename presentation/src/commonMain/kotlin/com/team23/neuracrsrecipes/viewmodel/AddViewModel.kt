@@ -80,7 +80,7 @@ class AddViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val nickname = getUserNicknameUseCase.invoke().firstOrNull() ?: ""
             _recipe.value = _recipe.value.copy(author = nickname)
-            _tags.value = getAndSortAllTagsUseCase.invoke()
+            _tags.value = getAndSortAllTagsUseCase.invoke().map { it.localizedName }
             loadTemporaryRecipeUseCase.invoke()?.let { temporaryRecipe ->
                 _recipe.value = recipeUiMapper.toRecipeUiModel(temporaryRecipe)
             }

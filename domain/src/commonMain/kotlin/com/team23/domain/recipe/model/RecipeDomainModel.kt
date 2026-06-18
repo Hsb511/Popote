@@ -39,7 +39,7 @@ sealed class RecipeDomainModel(
         override val isFavorite: Boolean,
         override val source: Source,
         val author: String,
-        val tags: List<String>,
+        val tags: List<TagDomainModel>,
         val servingsNumber: Int,
         val ingredients: List<IngredientDomainModel>,
         val startingText: String,

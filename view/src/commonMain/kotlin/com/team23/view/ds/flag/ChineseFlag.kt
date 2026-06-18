@@ -49,7 +49,7 @@ internal fun ChineseFlag(
     }
 }
 
-fun DrawScope.drawStar(
+private fun DrawScope.drawStar(
     center: Offset,
     radius: Float,
     rotationRad: Float = -PI.toFloat() / 2f
@@ -73,6 +73,6 @@ fun DrawScope.drawStar(
     drawPath(path, chineseYellow())
 }
 
-fun angleTowards(from: Offset, to: Offset): Float {
+private fun angleTowards(from: Offset, to: Offset): Float {
     return kotlin.math.atan2(to.y - from.y, to.x - from.x) - PI.toFloat() / 2f
 }

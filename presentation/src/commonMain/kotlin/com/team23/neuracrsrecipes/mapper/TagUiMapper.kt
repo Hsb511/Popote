@@ -1,42 +1,32 @@
 package com.team23.neuracrsrecipes.mapper
 
+import com.team23.domain.recipe.model.TagDomainModel
 import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.neuracrsrecipes.model.uimodel.TagUiModel
 
 class TagUiMapper {
 
-    fun toTagUiModels(tags: List<String>): List<TagUiModel> = tags.map { tagString ->
+    fun toTagUiModels(tags: List<TagDomainModel>): List<TagUiModel> = tags.map { tag ->
         TagUiModel(
-            label = tagString,
+            label = tag.localizedName,
             isSelected = false,
         )
     }
 
-    fun toFlagProperty(tags: List<String>): FlagProperty? {
-        return if ("french" in tags || "francais" in tags || "français" in tags) {
-            FlagProperty.FRENCH
-        } else if ("american" in tags || "américain" in tags || "americain" in tags) {
-            FlagProperty.US
-        } else if ("italian" in tags || "italien" in tags) {
-            FlagProperty.ITALIAN
-        } else if ("indian" in tags || "indien" in tags) {
-            FlagProperty.INDIAN
-        } else if ("alsatian" in tags || "alsacien" in tags) {
-            FlagProperty.ALSATIAN
-        } else if ("norman" in tags || "normand" in tags || "normandy" in tags || "normandie" in tags) {
-            FlagProperty.NORMAN
-        } else if ("thai" in tags || "thaïlandais" in tags || "thailandais" in tags) {
-            FlagProperty.THAI
-        } else if ("hungarian" in tags || "hongrois" in tags) {
-            FlagProperty.HUNGARIAN
-        } else if ("tex-mex" in tags) {
-            FlagProperty.US_MEXICAN
-        } else if ("chinese" in tags || "chinois" in tags) {
-            FlagProperty.CHINESE
-        } else if ("turkish" in tags || "turc" in tags) {
-            FlagProperty.TURKISH
-        } else {
-            null
+    fun toFlagProperty(tags: List<TagDomainModel>): FlagProperty? {
+        val cuisineRegionTag = tags.filterIsInstance<TagDomainModel.CuisineRegion>().firstOrNull() ?: return null
+        return when (cuisineRegionTag.region) {
+            TagDomainModel.Region.AMERICAN -> FlagProperty.US
+            TagDomainModel.Region.AMERICAN_MEXICAN -> FlagProperty.US_MEXICAN
+            TagDomainModel.Region.ALSATIAN -> FlagProperty.ALSATIAN
+            TagDomainModel.Region.CHINESE -> FlagProperty.CHINESE
+            TagDomainModel.Region.FRENCH -> FlagProperty.FRENCH
+            TagDomainModel.Region.HUNGARIAN -> FlagProperty.HUNGARIAN
+            TagDomainModel.Region.ITALIAN -> FlagProperty.ITALIAN
+            TagDomainModel.Region.INDIAN -> FlagProperty.INDIAN
+            TagDomainModel.Region.NORMAN -> FlagProperty.NORMAN
+            TagDomainModel.Region.THAI -> FlagProperty.THAI
+            TagDomainModel.Region.TURKISH -> FlagProperty.TURKISH
         }
     }
 }
