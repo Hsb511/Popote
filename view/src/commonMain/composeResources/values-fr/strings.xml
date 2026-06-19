@@ -27,7 +27,9 @@
     <string name="home_title">Dernières recettes</string>
 
     <!-- recipe -->
-    <string name="recipe_written_by">Écrit par</string>
+    <string name="recipe_written_by">écrit par</string>
+    <string name="recipe_date_written_by">%1$s - écrit par</string>
+    <string name="drawer_version">v%1$s</string>
     <string name="recipe_ingredients_title">Ingrédients</string>
     <string name="recipe_number_of_servings">personnes</string>
     <string name="recipe_instructions_title">Instructions</string>

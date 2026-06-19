@@ -14,6 +14,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import com.team23.view.Res
+import com.team23.view.drawer_version
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DrawerFooter(
@@ -41,7 +44,7 @@ fun DrawerFooter(
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "v$versionName",
+            text = stringResource(Res.string.drawer_version, versionName),
         )
     }
 }

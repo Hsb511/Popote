@@ -28,6 +28,8 @@
 
     <!-- recipe -->
     <string name="recipe_written_by">Written by</string>
+    <string name="recipe_date_written_by">%1$s - Written by</string>
+    <string name="drawer_version">v%1$s</string>
     <string name="recipe_ingredients_title">Ingredients</string>
     <string name="recipe_number_of_servings">servings</string>
     <string name="recipe_instructions_title">Instructions</string>

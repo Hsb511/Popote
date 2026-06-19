@@ -44,7 +44,7 @@ import com.team23.view.extension.topScreenHeight
 import com.team23.view.navigation.AppNavigator
 import com.team23.view.recipe_ingredients_title
 import com.team23.view.recipe_instructions_title
-import com.team23.view.recipe_written_by
+import com.team23.view.recipe_date_written_by
 import com.team23.view.widget.add.AddImageButton
 import com.team23.view.widget.add.AddSaveButton
 import com.team23.view.widget.add.AddTagSection
@@ -120,7 +120,7 @@ fun AddScreen(
         )
         Row {
             Text(
-                text = "${addRecipe.recipe.date} - ${stringResource(Res.string.recipe_written_by)}",
+                text = stringResource(Res.string.recipe_date_written_by, addRecipe.recipe.date),
                 style = MaterialTheme.typography.labelLarge,
             )
             AddTextField(
