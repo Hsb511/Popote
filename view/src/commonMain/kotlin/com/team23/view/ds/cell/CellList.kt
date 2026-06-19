@@ -36,15 +36,22 @@ fun CellList(
 			verticalAlignment = Alignment.CenterVertically,
 			modifier = Modifier.fillMaxSize(),
 		) {
-			PopoteImage(
-				neuracrImageProperty = neuracrCellProperty.imageProperty,
-				maxImageHeight = 200.dp,
-				hasNoCornerEnd = true,
-				contentScale = ContentScale.FillBounds,
-				modifier = Modifier
-					.fillMaxHeight()
-					.width(64.dp),
-			)
+			Box {
+				PopoteImage(
+					neuracrImageProperty = neuracrCellProperty.imageProperty,
+					maxImageHeight = 200.dp,
+					hasNoCornerEnd = true,
+					contentScale = ContentScale.FillBounds,
+					modifier = Modifier
+						.fillMaxHeight()
+						.width(64.dp),
+				)
+				CellFlag(
+					flagProperty = neuracrCellProperty.languageFlag,
+					withLanguageWatermark = true,
+					modifier = Modifier.align(Alignment.BottomStart)
+				)
+			}
 			Box(modifier = Modifier.fillMaxSize()) {
 				Text(
 					text = neuracrCellProperty.title,
@@ -54,11 +61,19 @@ fun CellList(
 						.padding(all = 8.dp)
 						.align(Alignment.CenterStart)
 				)
-				CellFlag(neuracrCellProperty.languageFlag, Modifier.align(Alignment.TopEnd))
+				neuracrCellProperty.cuisineFlag?.let { cuisineFlag ->
+					CellFlag(
+						flagProperty = cuisineFlag,
+						modifier = Modifier
+							.align(Alignment.TopEnd),
+					)
+				}
 				ButtonLike(
 					iconProperty = neuracrCellProperty.favorite.iconProperty,
 					onFavoriteClick = { onAction(neuracrCellProperty.favorite.action) },
-					modifier = Modifier.align(Alignment.BottomEnd).offset(x = 8.dp, y = 8.dp)
+					modifier = Modifier
+						.align(Alignment.BottomEnd)
+						.offset(x = 8.dp, y = 8.dp)
 				)
 			}
 		}

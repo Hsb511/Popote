@@ -2,6 +2,7 @@ package com.team23.neuracrsrecipes.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
@@ -25,6 +26,7 @@ import kotlinx.coroutines.withContext
 class SearchViewModel(
     private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
     private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
+    private val fullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val favoriteRepository: FavoriteRepository,
     private val tagUiMapper: TagUiMapper,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
@@ -101,6 +103,15 @@ class SearchViewModel(
                 val recipeUiModels =
                     recipes.map { recipe -> summarizedRecipeUiMapper.toUiModel(recipe) }
                 withContext(Dispatchers.Main) { _recipes.value = recipeUiModels }
+                // Load cuisine flags for the displayed recipes
+                viewModelScope.launch(Dispatchers.IO) {
+                    val updatedRecipes = recipeUiModels.map { recipe ->
+                        fullRecipeByIdUseCase.invoke(recipe.id).getOrNull()?.let { fullRecipe ->
+                            recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags))
+                        } ?: recipe
+                    }
+                    withContext(Dispatchers.Main) { _recipes.value = updatedRecipes }
+                }
             }
         }
     }

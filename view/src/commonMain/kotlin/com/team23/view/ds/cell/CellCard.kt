@@ -73,20 +73,11 @@ internal fun CellCard(
                     .align(Alignment.BottomStart)
                     .padding(end = 32.dp)
             ) {
-                Box {
-                    CellFlag(
-                        flagProperty = cellProperty.languageFlag,
-                        bottomStartCorner = 0.dp,
-                    )
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_language),
-                        contentDescription = null,
-                        tint = Black.copy(alpha = 0.5f),
-                        modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center)
-                    )
-                }
+                CellFlag(
+                    flagProperty = cellProperty.languageFlag,
+                    withLanguageWatermark = true,
+                    bottomStartCorner = 0.dp,
+                )
                 Text(
                     text = cellProperty.title,
                     color = MaterialTheme.colorScheme.onTertiary,
