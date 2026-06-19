@@ -36,7 +36,7 @@
     <string name="recipe_update_label">Update</string>
     <string name="recipe_delete_label">Delete</string>
     <string name="recipe_delete_dialog_title">Confirm deleting</string>
-    <string name="recipe_delete_dialog_text">If you\'re sure you want to delete this recipe, click on "confirm." Otherwise, click on "dismiss."</string>
+    <string name="recipe_delete_dialog_text">If you're sure you want to delete this recipe, click on "confirm." Otherwise, click on "dismiss."</string>
 
     <!-- search -->
     <string name="search_textfield_placeholder">Type to search…</string>
@@ -54,12 +54,12 @@
 
     <!-- Add recipe screen -->
     <string name="add_recipe_title">Recipe title</string>
-    <string name="add_recipe_author_name">Author\'s name</string>
+    <string name="add_recipe_author_name">Author's name</string>
     <string name="add_recipe_description">Description of your recipe, advice for the cooking or cooking time, …</string>
     <string name="add_recipe_conclusion">A conclusion to your recipe, sides you can cook it with or preparation ideas</string>
     <string name="add_recipe_ingredient_quantity" >10</string>
     <string name="add_recipe_ingredient_unit" >mL</string>
-    <string name="add_recipe_ingredient_label">Ingredient\'s name</string>
+    <string name="add_recipe_ingredient_label">Ingredient's name</string>
     <string name="add_recipe_instruction_placeholder">Type your recipe step here</string>
     <string name="add_recipe_save_dialog_title">Confirm saving</string>
     <string name="add_recipe_save_dialog_text">If you are certain that you have finished and filled out all the fields, click on "confirm". Otherwise, to continue editing your recipe, click on "dismiss".</string>
