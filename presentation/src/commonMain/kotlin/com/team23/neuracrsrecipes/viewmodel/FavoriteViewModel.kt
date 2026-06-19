@@ -35,11 +35,13 @@ class FavoriteViewModel(
             favoriteRepository.getAllFavorites().map { recipes ->
                 recipes.map { summarizedRecipeUiMapper.toUiModel(it) }
             }.collect { favorites ->
+                val currentDisplayType = (_uiState.value as? FavoriteUiState.Data.WithFavorites)?.displayType
+                    ?: displayType
                 _uiState.value = if (favorites.isEmpty()) {
                     FavoriteUiState.Data.Empty
                 } else {
                     FavoriteUiState.Data.WithFavorites(
-                        displayType = displayType,
+                        displayType = currentDisplayType,
                         favorites = favorites,
                     )
                 }

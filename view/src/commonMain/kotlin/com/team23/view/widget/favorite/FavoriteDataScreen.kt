@@ -33,7 +33,7 @@ fun FavoriteDataScreen(
 	val displayType = state.displayType
 	val summarizedRecipes = state.favorites
 	val recipeUiMapper = remember { RecipeUiMapper() }
-	val recipeCellProperties = remember {
+	val recipeCellProperties = remember(displayType, summarizedRecipes) {
 		summarizedRecipes.map { recipe ->
 			recipeUiMapper.toCellProperty(
 				recipe = recipe,
