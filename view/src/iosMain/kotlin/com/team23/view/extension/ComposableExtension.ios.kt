@@ -11,6 +11,11 @@ import androidx.compose.ui.unit.Dp
 actual fun getCurrentScreenWidth(): Dp =
     with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
 
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+actual fun getCurrentScreenHeight(): Dp =
+    with(LocalDensity.current) { LocalWindowInfo.current.containerSize.height.toDp() }
+
 @Composable
 actual fun BackHandler(enabled: Boolean, onBackPressed: () -> Unit) {
 }

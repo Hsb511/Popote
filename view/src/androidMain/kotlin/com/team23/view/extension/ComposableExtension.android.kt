@@ -11,6 +11,10 @@ actual fun getCurrentScreenWidth(): Dp =
     LocalConfiguration.current.screenWidthDp.dp
 
 @Composable
+actual fun getCurrentScreenHeight(): Dp =
+    LocalConfiguration.current.screenHeightDp.dp
+
+@Composable
 actual fun BackHandler(enabled: Boolean, onBackPressed: () -> Unit) {
     AndroidBackHandler(enabled, onBackPressed)
 }

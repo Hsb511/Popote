@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -28,6 +29,7 @@ import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
+import com.team23.view.extension.getCurrentScreenHeight
 import com.team23.view.extension.getCurrentScreenWidth
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.topScreenHeight
@@ -125,6 +127,7 @@ fun HomeContentData(
                         onAction = { action -> handleCellAction(action, cellProperty.id, cellProperty.title, onAction) },
                         modifier = Modifier
                             .fillMaxWidth()
+                            .heightIn(max = getCurrentScreenHeight() / 2)
                             .clickable {
                                 homeRecipeClick(cellProperty.id)
                             }

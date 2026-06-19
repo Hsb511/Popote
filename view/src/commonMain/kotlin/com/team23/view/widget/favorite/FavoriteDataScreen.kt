@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
@@ -17,6 +18,7 @@ import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 import com.team23.view.ds.cell.Cell
+import com.team23.view.extension.getCurrentScreenHeight
 import com.team23.view.extension.topScreenHeight
 import com.team23.view.mapper.RecipeUiMapper
 
@@ -71,8 +73,10 @@ fun FavoriteDataScreen(
                         CellAction.LocalPhoneClick -> onLocalPhoneClick()
                     }
 				},
-				modifier = Modifier.clickable {
-					onRecipeClick(cellProperty.id)
+				modifier = Modifier
+					.heightIn(max = getCurrentScreenHeight() / 2)
+					.clickable {
+						onRecipeClick(cellProperty.id)
 				},
 			)
 		}

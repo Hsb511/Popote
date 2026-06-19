@@ -10,6 +10,9 @@ fun getImageMaxHeight(): Dp = (getCurrentScreenWidth() - horizontalGutterPadding
 @Composable
 expect fun getCurrentScreenWidth(): Dp
 
+@Composable
+expect fun getCurrentScreenHeight(): Dp
+
 internal val horizontalGutterPadding = 32.dp
 
 @Composable
