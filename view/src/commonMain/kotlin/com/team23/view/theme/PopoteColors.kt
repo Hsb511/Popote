@@ -69,6 +69,10 @@ fun black26() = Color(0xFF1A1A1A)
 private fun black13() = Color(0xFF0D0D0D)
 private fun black() = Color.Black
 
+internal fun belgianBlack() = Color(0xFF2D2926) // https://www.flagcolorcodes.com/belgium
+internal fun belgianYellow() = Color(0xFFFFCD00) // https://www.flagcolorcodes.com/belgium
+internal fun belgianRed() = Color(0xFFC8102E) // https://www.flagcolorcodes.com/belgium
+
 internal fun chineseRed() = Color(0xFFEE1C25) // https://en.wikipedia.org/wiki/Flag_of_China
 internal fun chineseYellow() = Color(0xFFFFFF00) // https://en.wikipedia.org/wiki/Flag_of_China
 

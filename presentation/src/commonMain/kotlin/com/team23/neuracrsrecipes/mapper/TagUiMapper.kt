@@ -26,11 +26,13 @@ class TagUiMapper {
             TagDomainModel.Region.AMERICAN -> FlagProperty.US
             TagDomainModel.Region.AMERICAN_MEXICAN -> FlagProperty.US_MEXICAN
             TagDomainModel.Region.ALSATIAN -> FlagProperty.ALSATIAN
+            TagDomainModel.Region.BELGIAN -> FlagProperty.BELGIAN
             TagDomainModel.Region.CHINESE -> FlagProperty.CHINESE
             TagDomainModel.Region.FRENCH -> FlagProperty.FRENCH
             TagDomainModel.Region.HUNGARIAN -> FlagProperty.HUNGARIAN
             TagDomainModel.Region.ITALIAN -> FlagProperty.ITALIAN
             TagDomainModel.Region.INDIAN -> FlagProperty.INDIAN
+            TagDomainModel.Region.LEBANESE -> FlagProperty.LEBANESE
             TagDomainModel.Region.NORMAN -> FlagProperty.NORMAN
             TagDomainModel.Region.THAI -> FlagProperty.THAI
             TagDomainModel.Region.TURKISH -> FlagProperty.TURKISH

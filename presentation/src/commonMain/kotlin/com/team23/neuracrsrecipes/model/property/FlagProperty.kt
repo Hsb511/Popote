@@ -12,5 +12,7 @@ enum class FlagProperty {
     HUNGARIAN,
     US_MEXICAN,
     CHINESE,
-    TURKISH
+    TURKISH,
+    BELGIAN,
+    LEBANESE,
 }

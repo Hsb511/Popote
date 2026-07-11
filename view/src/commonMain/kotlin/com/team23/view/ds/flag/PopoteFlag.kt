@@ -11,11 +11,13 @@ fun PopoteFlag(
 ) {
     when (flagProperty) {
         FlagProperty.ALSATIAN -> AlsatianFlag(modifier)
+        FlagProperty.BELGIAN -> BelgianFlag(modifier)
         FlagProperty.CHINESE -> ChineseFlag(modifier)
         FlagProperty.FRENCH -> FrenchFlag(modifier)
         FlagProperty.HUNGARIAN -> HungarianFlag(modifier)
         FlagProperty.INDIAN -> IndianFlag(modifier)
         FlagProperty.ITALIAN -> ItalianFlag(modifier)
+        FlagProperty.LEBANESE -> LebaneseFlag(modifier)
         FlagProperty.NORMAN -> NormanFlag(modifier)
         FlagProperty.THAI -> ThaiFlag(modifier)
         FlagProperty.TURKISH -> TurkishFlag(modifier)
