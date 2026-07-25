@@ -36,6 +36,7 @@ class TagUiMapper {
             TagDomainModel.Region.INDIAN -> FlagProperty.INDIAN
             TagDomainModel.Region.LEBANESE -> FlagProperty.LEBANESE
             TagDomainModel.Region.NORMAN -> FlagProperty.NORMAN
+            TagDomainModel.Region.PUERTO_RICAN -> FlagProperty.PUERTO_RICAN
             TagDomainModel.Region.THAI -> FlagProperty.THAI
             TagDomainModel.Region.TURKISH -> FlagProperty.TURKISH
         }

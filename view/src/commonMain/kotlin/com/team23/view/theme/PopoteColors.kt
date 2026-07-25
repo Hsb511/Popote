@@ -95,6 +95,9 @@ internal fun italianGreen() = Color(0xFF009246) // https://radiomarconi1895.alte
 internal fun italianWhite() = Color(0xFFF4F5F0) // https://radiomarconi1895.altervista.org/marconi/dpcm_14-06.html
 internal fun italianRed() = Color(0xFFCE2B37) // https://radiomarconi1895.altervista.org/marconi/dpcm_14-06.html
 
+internal fun puertoRicanBlue() = Color(0xFF0044ff) // https://en.wikipedia.org/wiki/Flag_of_Puerto_Rico
+internal fun puertoRicanRed() = Color(0xFFed0000) // https://en.wikipedia.org/wiki/Flag_of_Puerto_Rico
+
 internal fun thaiRed() = Color(0xFFA51931) // https://web.archive.org/web/20200527231905/https://www.nstda.or.th/th/nstda-knowledge/11557-thaiflag-color
 internal fun thaiWhite() = Color(0xFFF4F5F8) // https://web.archive.org/web/20200527231905/https://www.nstda.or.th/th/nstda-knowledge/11557-thaiflag-color
 internal fun thaiBlue() = Color(0xFF2D2A4A) // https://web.archive.org/web/20200527231905/https://www.nstda.or.th/th/nstda-knowledge/11557-thaiflag-color

@@ -20,6 +20,7 @@ fun PopoteFlag(
         FlagProperty.INDIAN -> IndianFlag(modifier)
         FlagProperty.ITALIAN -> ItalianFlag(modifier)
         FlagProperty.LEBANESE -> LebaneseFlag(modifier)
+        FlagProperty.PUERTO_RICAN -> PuertoRicanFlag(modifier)
         FlagProperty.NORMAN -> NormanFlag(modifier)
         FlagProperty.THAI -> ThaiFlag(modifier)
         FlagProperty.TURKISH -> TurkishFlag(modifier)

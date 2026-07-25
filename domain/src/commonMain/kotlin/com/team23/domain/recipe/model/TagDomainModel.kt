@@ -24,6 +24,7 @@ sealed interface TagDomainModel {
         INDIAN,
         LEBANESE,
         NORMAN,
+        PUERTO_RICAN,
         THAI,
         TURKISH,
     }

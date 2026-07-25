@@ -85,6 +85,7 @@ private val tagCuisineRegion: Map<String, TagDomainModel.Region> = mapOf(
     "italian" to TagDomainModel.Region.ITALIAN,
     "lebanese" to TagDomainModel.Region.LEBANESE,
     "norman" to TagDomainModel.Region.NORMAN,
+    "puerto-rican" to TagDomainModel.Region.PUERTO_RICAN,
     "thai" to TagDomainModel.Region.THAI,
     "turkish" to TagDomainModel.Region.TURKISH,
 )

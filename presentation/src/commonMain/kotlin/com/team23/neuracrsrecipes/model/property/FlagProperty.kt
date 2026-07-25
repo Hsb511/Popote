@@ -17,4 +17,5 @@ enum class FlagProperty {
     LEBANESE,
     GREEK,
     CUBAN,
+    PUERTO_RICAN,
 }
