@@ -79,6 +79,8 @@ internal fun chineseYellow() = Color(0xFFFFFF00) // https://en.wikipedia.org/wik
 internal fun frenchBlue() = Color(0xFF000091) // https://www.info.gouv.fr/marque-de-letat/les-couleurs
 internal fun frenchRed() = Color(0xFFE1000F) // https://www.info.gouv.fr/marque-de-letat/les-couleurs
 
+internal fun greekCyan() = Color(0xFF014488) // https://en.wikipedia.org/wiki/Flag_of_Greece#Colours
+
 internal fun hungarianRed() = Color(0xFFCE2939) // https://en.wikipedia.org/wiki/Flag_of_Hungary
 internal fun hungarianGreen() = Color(0xFF477050) // https://en.wikipedia.org/wiki/Flag_of_Hungary
 

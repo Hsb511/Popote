@@ -14,6 +14,7 @@ fun PopoteFlag(
         FlagProperty.BELGIAN -> BelgianFlag(modifier)
         FlagProperty.CHINESE -> ChineseFlag(modifier)
         FlagProperty.FRENCH -> FrenchFlag(modifier)
+        FlagProperty.GREEK -> GreekFlag(modifier)
         FlagProperty.HUNGARIAN -> HungarianFlag(modifier)
         FlagProperty.INDIAN -> IndianFlag(modifier)
         FlagProperty.ITALIAN -> ItalianFlag(modifier)

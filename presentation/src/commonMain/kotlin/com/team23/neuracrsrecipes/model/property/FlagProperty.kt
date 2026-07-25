@@ -15,4 +15,5 @@ enum class FlagProperty {
     TURKISH,
     BELGIAN,
     LEBANESE,
+    GREEK,
 }

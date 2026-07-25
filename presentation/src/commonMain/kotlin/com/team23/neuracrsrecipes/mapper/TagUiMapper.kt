@@ -29,6 +29,7 @@ class TagUiMapper {
             TagDomainModel.Region.BELGIAN -> FlagProperty.BELGIAN
             TagDomainModel.Region.CHINESE -> FlagProperty.CHINESE
             TagDomainModel.Region.FRENCH -> FlagProperty.FRENCH
+            TagDomainModel.Region.GREEK -> FlagProperty.GREEK
             TagDomainModel.Region.HUNGARIAN -> FlagProperty.HUNGARIAN
             TagDomainModel.Region.ITALIAN -> FlagProperty.ITALIAN
             TagDomainModel.Region.INDIAN -> FlagProperty.INDIAN
