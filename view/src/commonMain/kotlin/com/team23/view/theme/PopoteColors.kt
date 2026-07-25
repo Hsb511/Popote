@@ -76,6 +76,9 @@ internal fun belgianRed() = Color(0xFFC8102E) // https://www.flagcolorcodes.com/
 internal fun chineseRed() = Color(0xFFEE1C25) // https://en.wikipedia.org/wiki/Flag_of_China
 internal fun chineseYellow() = Color(0xFFFFFF00) // https://en.wikipedia.org/wiki/Flag_of_China
 
+internal fun cubanBlue() = Color(0xFF002590) // https://en.wikipedia.org/wiki/Flag_of_Cuba
+internal fun cubanRed() = Color(0xFFCC0D0D) // https://en.wikipedia.org/wiki/Flag_of_Cuba
+
 internal fun frenchBlue() = Color(0xFF000091) // https://www.info.gouv.fr/marque-de-letat/les-couleurs
 internal fun frenchRed() = Color(0xFFE1000F) // https://www.info.gouv.fr/marque-de-letat/les-couleurs
 

@@ -16,6 +16,7 @@ sealed interface TagDomainModel {
         ALSATIAN,
         BELGIAN,
         CHINESE,
+        CUBAN,
         FRENCH,
         GREEK,
         HUNGARIAN,
