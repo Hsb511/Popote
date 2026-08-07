@@ -17,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -32,11 +34,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun RecipeServingsWidget(
     currentServingsAmount: String,
-    onValueChanged: (String) -> Unit,
-    onAddOneServing: () -> Unit,
-    onSubtractOneServing: () -> Unit,
-    widgetWidth: MutableState<Int>,
     modifier: Modifier = Modifier,
+    widgetWidth: MutableState<Int> = remember { mutableIntStateOf(0) },
+    onValueChanged: (String) -> Unit = {},
+    onAddOneServing: () -> Unit = {},
+    onSubtractOneServing: () -> Unit = {},
 ) {
     val localFocusManager = LocalFocusManager.current
 

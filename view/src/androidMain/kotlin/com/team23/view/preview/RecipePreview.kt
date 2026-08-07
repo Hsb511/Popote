@@ -61,9 +61,6 @@ fun RecipeServingsWidgetPreview() {
     PopoteTheme {
         RecipeServingsWidget(
             currentServingsAmount = "4",
-            onValueChanged = {},
-            onAddOneServing = {},
-            onSubtractOneServing = {},
             widgetWidth = remember { mutableIntStateOf(100) }
         )
     }

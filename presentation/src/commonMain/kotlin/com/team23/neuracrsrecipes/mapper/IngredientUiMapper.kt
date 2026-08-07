@@ -12,7 +12,7 @@ class IngredientUiMapper {
 	fun toIngredientDomainModels(ingredients: List<IngredientUiModel>): List<IngredientDomainModel> =
 		ingredients.map(::toIngredientDomainModel)
 
-	private fun toIngredientUiModel(ingredient: IngredientDomainModel): IngredientUiModel = when (ingredient) {
+	fun toIngredientUiModel(ingredient: IngredientDomainModel): IngredientUiModel = when (ingredient) {
 		is IngredientDomainModel.WithQuantity.WithUnit -> with(ingredient) {
 			IngredientUiModel(quantity = quantity.toReadableQuantity(), unit = unit, label = label)
 		}

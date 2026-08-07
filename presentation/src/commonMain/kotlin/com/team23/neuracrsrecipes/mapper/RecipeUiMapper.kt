@@ -5,7 +5,9 @@ import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.model.RecipeDomainModel.Source
 import com.team23.domain.recipe.model.TagDomainModel
 import com.team23.neuracrsrecipes.extension.getLocalLanguage
+import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
+import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 
 class RecipeUiMapper(
 	private val dateUiMapper: DateUiMapper,
@@ -28,6 +30,21 @@ class RecipeUiMapper(
 			instructions = instructionUiMapper.toInstructionUiModels(instructions),
 			description = startingText,
 			conclusion = endingText,
+			isFavorite = isFavorite,
+			isLocallySaved = source is Source.Local.Saved,
+		)
+	}
+
+	fun toSummarizedRecipeUiModel(fullRecipe: RecipeDomainModel.Full): SummarizedRecipeUiModel =  with(fullRecipe) {
+		SummarizedRecipeUiModel(
+			id = id,
+			title = title,
+			imageProperty = imageUiMapper.toImageProperty(imageUrl, title),
+			cuisineFlag = null,
+			languageFlag = when (language) {
+				LanguageDomainModel.ENGLISH -> FlagProperty.UK_US
+				LanguageDomainModel.FRENCH -> FlagProperty.FRENCH
+			},
 			isFavorite = isFavorite,
 			isLocallySaved = source is Source.Local.Saved,
 		)
