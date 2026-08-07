@@ -5,6 +5,7 @@
     <string name="navigation_search_display_name">Recherche</string>
     <string name="navigation_upload_display_name">Ajouter</string>
     <string name="navigation_favorite_display_name">Favoris</string>
+    <string name="navigation_weekly_grocery_list_display_name">Courses</string>
 
     <!-- snackbar -->
     <string name="snackbar_favorite">a été ajouté à vos favoris</string>
@@ -101,4 +102,9 @@
 
     <!-- locally saved -->
     <string name="locally_saved_button_content_description">Indique que cette recette a été créée par vous et est disponible seulement sur ce téléphone</string>
+
+    <!-- weekly grocery list -->
+    <string name="weekly_grocery_list_title">List de courses de la semaine</string>
+    <string name="weekly_grocery_list_recipes_section">Recettes</string>
+    <string name="weekly_grocery_list_ingredients_section">Ingredients à acheter</string>
 </resources>

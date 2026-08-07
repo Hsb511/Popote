@@ -1,6 +1,8 @@
 package com.team23.view.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -20,10 +22,12 @@ import com.team23.view.navigation.screen.AddScreen
 import com.team23.view.navigation.screen.FavoriteScreen
 import com.team23.view.navigation.screen.HomeScreen
 import com.team23.view.navigation.screen.SearchScreen
+import com.team23.view.navigation.screen.WeeklyGroceryListScreen
 import com.team23.view.navigation_favorite_display_name
 import com.team23.view.navigation_home_display_name
 import com.team23.view.navigation_search_display_name
 import com.team23.view.navigation_upload_display_name
+import com.team23.view.navigation_weekly_grocery_list_display_name
 import org.jetbrains.compose.resources.stringResource
 
 data class NavItemProperty(
@@ -77,6 +81,16 @@ internal fun createBottomNavItems(
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
+    },
+    with(isLastSelectedBottomScreen<WeeklyGroceryListScreen>()) {
+        createBottomNavItem(
+            title = stringResource(Res.string.navigation_weekly_grocery_list_display_name),
+            icon = if (this) Icons.AutoMirrored.Filled.List else Icons.AutoMirrored.Outlined.List,
+            isSelected = this,
+            screen = WeeklyGroceryListScreen,
+            navigator = navigator,
+            closeDrawer = closeDrawer,
+        )
     }
 )
 
@@ -102,7 +116,7 @@ private fun createBottomNavItem(
 private inline fun <reified T> isLastSelectedBottomScreen(): Boolean {
     val navigator = LocalNavigator.currentOrThrow
     val lastBottomScreen = navigator.items
-        .last { it is HomeScreen || it is SearchScreen || it is AddScreen || it is FavoriteScreen }
+        .last { it is HomeScreen || it is SearchScreen || it is AddScreen || it is FavoriteScreen || it is WeeklyGroceryListScreen }
 
     return lastBottomScreen is T
 }
