@@ -1,6 +1,7 @@
 package com.team23.view.ds.cell
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +20,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
+import com.team23.view.ds.button.ButtonGroceryList
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.image.PopoteImage
 
 @Composable
 fun CellList(
-    neuracrCellProperty: CellProperty,
-    modifier: Modifier = Modifier,
+	cellProperty: CellProperty,
+	modifier: Modifier = Modifier,
 	onAction: (CellAction) -> Unit = {},
 ) {
 	Card(
@@ -38,7 +40,7 @@ fun CellList(
 		) {
 			Box {
 				PopoteImage(
-					neuracrImageProperty = neuracrCellProperty.imageProperty,
+					neuracrImageProperty = cellProperty.imageProperty,
 					maxImageHeight = 200.dp,
 					hasNoCornerEnd = true,
 					contentScale = ContentScale.FillBounds,
@@ -47,34 +49,43 @@ fun CellList(
 						.width(64.dp),
 				)
 				CellFlag(
-					flagProperty = neuracrCellProperty.languageFlag,
+					flagProperty = cellProperty.languageFlag,
 					withLanguageWatermark = true,
 					modifier = Modifier.align(Alignment.BottomStart)
 				)
 			}
 			Box(modifier = Modifier.fillMaxSize()) {
 				Text(
-					text = neuracrCellProperty.title,
+					text = cellProperty.title,
 					color = MaterialTheme.colorScheme.onBackground,
 					style = MaterialTheme.typography.titleSmall,
 					modifier = Modifier
 						.padding(all = 8.dp)
 						.align(Alignment.CenterStart)
 				)
-				neuracrCellProperty.cuisineFlag?.let { cuisineFlag ->
+				cellProperty.cuisineFlag?.let { cuisineFlag ->
 					CellFlag(
 						flagProperty = cuisineFlag,
 						modifier = Modifier
 							.align(Alignment.TopEnd),
 					)
 				}
-				ButtonLike(
-					iconProperty = neuracrCellProperty.favorite.iconProperty,
-					onFavoriteClick = { onAction(neuracrCellProperty.favorite.action) },
+
+				Row(
 					modifier = Modifier
 						.align(Alignment.BottomEnd)
 						.offset(x = 8.dp, y = 8.dp)
-				)
+				) {
+					ButtonGroceryList(
+						iconProperty = cellProperty.groceryList.iconProperty,
+						onGroceryListClick = { onAction(cellProperty.groceryList.action) },
+						modifier = Modifier.offset(x = 16.dp)
+					)
+					ButtonLike(
+						iconProperty = cellProperty.favorite.iconProperty,
+						onFavoriteClick = { onAction(cellProperty.favorite.action) },
+					)
+				}
 			}
 		}
 	}

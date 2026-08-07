@@ -25,6 +25,7 @@ class SummarizedRecipeUiMapper(
             },
             isFavorite = isFavorite,
             isLocallySaved = source is Source.Local.Saved,
+            isInGroceryList = isInGroceryList,
         )
     }
 }

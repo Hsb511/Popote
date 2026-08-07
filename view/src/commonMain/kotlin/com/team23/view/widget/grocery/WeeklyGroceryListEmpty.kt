@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,10 +23,12 @@ import com.team23.neuracrsrecipes.model.property.ImageProperty
 import com.team23.view.Res
 import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.horizontalGutterPadding
+import com.team23.view.ic_grocery_list_add
 import com.team23.view.neuracr_wip
 import com.team23.view.weekly_grocery_list_empty_description_part1
 import com.team23.view.weekly_grocery_list_empty_description_part2
 import com.team23.view.weekly_grocery_list_empty_title
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -64,7 +64,7 @@ fun WeeklyGroceryListEmpty() {
                 Placeholder(20.sp, 20.sp, PlaceholderVerticalAlign.TextCenter)
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.List,
+                    painter = painterResource(Res.drawable.ic_grocery_list_add),
                     contentDescription = null,
                     tint = if (isSystemInDarkTheme())
                         MaterialTheme.colorScheme.onBackground

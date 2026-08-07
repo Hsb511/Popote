@@ -7,10 +7,12 @@ import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.view.Res
+import com.team23.view.ds.button.ButtonGroceryList
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.button.ButtonTextDialog
 import com.team23.view.ic_local_smartphone
+import com.team23.view.sample.property.ButtonGroceryListParameterProvider
 import com.team23.view.sample.property.ButtonLikePreviewParameterProvider
 import com.team23.view.theme.PopoteTheme
 
@@ -18,7 +20,15 @@ import com.team23.view.theme.PopoteTheme
 @Preview(showBackground = true)
 private fun ButtonLikePreview(@PreviewParameter(ButtonLikePreviewParameterProvider::class) iconProperty: IconProperty.Vector) {
     PopoteTheme{
-        ButtonLike(iconProperty, {})
+        ButtonLike(iconProperty)
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun ButtonGroceryListPreview(@PreviewParameter(ButtonGroceryListParameterProvider::class) iconProperty: IconProperty.Resource) {
+    PopoteTheme{
+        ButtonGroceryList(iconProperty)
     }
 }
 

@@ -11,6 +11,7 @@ sealed class RecipeDomainModel(
     open val language: LanguageDomainModel,
     open val isFavorite: Boolean,
     open val source: Source,
+    open val isInGroceryList: Boolean,
 ) {
     data class Summarized(
         override val id: String,
@@ -20,6 +21,7 @@ sealed class RecipeDomainModel(
         override val language: LanguageDomainModel,
         override val isFavorite: Boolean,
         override val source: Source,
+        override val isInGroceryList: Boolean,
     ) : RecipeDomainModel(
         id = id,
         title = title,
@@ -28,6 +30,7 @@ sealed class RecipeDomainModel(
         language = language,
         isFavorite = isFavorite,
         source = source,
+        isInGroceryList = isInGroceryList
     )
 
     data class Full(
@@ -38,6 +41,7 @@ sealed class RecipeDomainModel(
         override val language: LanguageDomainModel,
         override val isFavorite: Boolean,
         override val source: Source,
+        override val isInGroceryList: Boolean,
         val author: String,
         val tags: List<TagDomainModel>,
         val servingsNumber: Int,
@@ -54,6 +58,7 @@ sealed class RecipeDomainModel(
         language = language,
         isFavorite = isFavorite,
         source = source,
+        isInGroceryList = isInGroceryList,
     )
 
     sealed class Source {

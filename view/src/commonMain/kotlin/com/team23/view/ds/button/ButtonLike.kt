@@ -11,8 +11,8 @@ import com.team23.view.ds.icon.PopoteIcon
 @Composable
 fun ButtonLike(
 	iconProperty: IconProperty.Vector,
-	onFavoriteClick: () -> Unit,
 	modifier: Modifier = Modifier,
+	onFavoriteClick: () -> Unit = {},
 ) {
 
 	IconButton(

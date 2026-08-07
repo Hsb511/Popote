@@ -91,7 +91,8 @@ fun AddScreenPreview() {
                     description = "quisque",
                     conclusion = "mandamus",
                     isFavorite = true,
-                    isLocallySaved = true
+                    isLocallySaved = true,
+                    isInGroceryList = false,
                 ),
             ),
             scrollState = rememberScrollState(),

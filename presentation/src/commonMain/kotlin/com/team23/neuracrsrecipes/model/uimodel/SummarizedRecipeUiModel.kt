@@ -1,6 +1,7 @@
 package com.team23.neuracrsrecipes.model.uimodel
 
 import androidx.compose.runtime.Immutable
+import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.FlagProperty
 import com.team23.neuracrsrecipes.model.property.ImageProperty
 
@@ -13,4 +14,5 @@ data class SummarizedRecipeUiModel(
     val languageFlag: FlagProperty,
     val isFavorite: Boolean,
     val isLocallySaved: Boolean,
+    val isInGroceryList: Boolean,
 )

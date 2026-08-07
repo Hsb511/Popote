@@ -10,7 +10,7 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 internal class ButtonLikePreviewParameterProvider : PreviewParameterProvider<IconProperty.Vector> {
     override val values = sequenceOf(
         favoriteButtonPreviewSample,
-        localPhoneButtonPreviewSample,
+        favoriteButtonLikedPreviewSample,
     )
 }
 
@@ -19,7 +19,7 @@ internal val favoriteButtonPreviewSample = IconProperty.Vector(
     tint = ColorProperty.DefaultIcon,
 )
 
-internal val localPhoneButtonPreviewSample = IconProperty.Vector(
+internal val favoriteButtonLikedPreviewSample = IconProperty.Vector(
     imageVector = Icons.Filled.Favorite,
     tint = ColorProperty.FavoriteIcon,
 )

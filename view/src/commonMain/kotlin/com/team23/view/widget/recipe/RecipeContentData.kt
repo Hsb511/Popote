@@ -4,10 +4,12 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,6 +41,7 @@ import com.team23.neuracrsrecipes.model.uimodel.IngredientsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.InstructionsUiModel
 import com.team23.neuracrsrecipes.model.uimodel.RecipeUiModel
 import com.team23.view.Res
+import com.team23.view.ds.button.ButtonGroceryList
 import com.team23.view.ds.button.ButtonLike
 import com.team23.view.ds.button.ButtonLocalPhone
 import com.team23.view.ds.image.PopoteImage
@@ -48,6 +51,7 @@ import com.team23.view.extension.getTopScreenHeight
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.topScreenHeight
 import com.team23.view.mapper.FavoriteUiMapper
+import com.team23.view.mapper.GroceryListUiMapper
 import com.team23.view.mapper.LocalPhoneUiMapper
 import com.team23.view.recipe_ingredients_title
 import com.team23.view.recipe_instructions_title
@@ -245,11 +249,22 @@ private fun RecipeImage(
                     modifier = Modifier.align(Alignment.TopStart),
                 )
             }
-            ButtonLike(
-                iconProperty = FavoriteUiMapper().toFavoriteIconProperty(recipeUiModel.isFavorite),
-                onFavoriteClick = { onFavoriteClick(recipeUiModel) },
+            Column(
                 modifier = Modifier.align(Alignment.BottomEnd)
-            )
+            ) {
+                val groceryListUiMapper = remember { GroceryListUiMapper() }
+                ButtonGroceryList(
+                    iconProperty = groceryListUiMapper.toGroceryListIconProperty(recipeUiModel.isInGroceryList),
+                    onGroceryListClick = { TODO() },
+                    modifier = Modifier.offset(y = 12.dp)
+                )
+                val favoriteUiMapper = remember { FavoriteUiMapper() }
+                ButtonLike(
+                    iconProperty = favoriteUiMapper.toFavoriteIconProperty(recipeUiModel.isFavorite),
+                    onFavoriteClick = { onFavoriteClick(recipeUiModel) },
+                )
+            }
+
         }
     }
 }

@@ -12,6 +12,7 @@ fun getCellPropertySample(displayType: DisplayType = DisplayType.BigCard) = Cell
 	cuisineFlag = FlagProperty.NORMAN,
 	languageFlag = FlagProperty.FRENCH,
 	isLocallySaved = true,
-	localPhone = CellProperty.LocalPhone(localPhoneButtonPreviewSample),
+	localPhone = CellProperty.LocalPhone(favoriteButtonLikedPreviewSample),
 	favorite = CellProperty.Favorite(favoriteButtonPreviewSample),
+	groceryList = CellProperty.GroceryList(groceryListCheckedButtonPreviewSample)
 )

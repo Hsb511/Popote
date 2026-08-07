@@ -16,4 +16,5 @@ data class RecipeUiModel(
     val conclusion: String,
     val isFavorite: Boolean,
     val isLocallySaved: Boolean,
+    val isInGroceryList: Boolean,
 )

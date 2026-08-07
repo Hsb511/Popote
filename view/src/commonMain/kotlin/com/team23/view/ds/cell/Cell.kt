@@ -26,7 +26,7 @@ fun Cell(
             modifier = modifier
         )
         DisplayType.List -> CellList(
-            neuracrCellProperty = cellProperty,
+            cellProperty = cellProperty,
             onAction = onAction,
             modifier = modifier,
         )

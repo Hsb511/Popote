@@ -4,5 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 enum class CellAction {
-    LocalPhoneClick, FavoriteClick
+    LocalPhoneClick,
+    FavoriteClick,
+    GroceryListClick,
 }

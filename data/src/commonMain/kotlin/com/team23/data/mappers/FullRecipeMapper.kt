@@ -31,6 +31,7 @@ class FullRecipeMapper (
 		sections = listOf(),
 		isFavorite = false,
 		source = sourceMapper.toDomainSource(fullRecipeDataModel.recipe),
+		isInGroceryList = false,
 	)
 
 	fun toFullRecipeDataModel(fullRecipeDomainModel: RecipeDomainModel.Full) = with(fullRecipeDomainModel) {

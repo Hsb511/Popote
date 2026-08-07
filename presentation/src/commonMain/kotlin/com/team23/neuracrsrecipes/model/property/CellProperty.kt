@@ -15,6 +15,7 @@ data class CellProperty(
 	val isLocallySaved: Boolean,
 	val localPhone: LocalPhone,
 	val favorite: Favorite,
+	val groceryList: GroceryList,
 	val maxHeight: Dp? = null,
 ) {
 
@@ -28,5 +29,11 @@ data class CellProperty(
 	data class Favorite(
 		val iconProperty: IconProperty.Vector,
 		val action: CellAction = CellAction.FavoriteClick,
+	)
+
+	@Immutable
+	data class GroceryList(
+		val iconProperty: IconProperty.Resource,
+		val action: CellAction = CellAction.GroceryListClick,
 	)
 }

@@ -12,4 +12,5 @@ val summarizedRecipeSample = SummarizedRecipeUiModel(
     languageFlag = FlagProperty.FRENCH,
     isFavorite = true,
     isLocallySaved = true,
+    isInGroceryList = false,
 )

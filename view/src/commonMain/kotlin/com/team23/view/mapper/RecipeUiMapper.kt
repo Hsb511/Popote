@@ -8,6 +8,7 @@ import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 class RecipeUiMapper {
     private val localPhoneUiMapper = LocalPhoneUiMapper()
     private val favoriteUiMapper = FavoriteUiMapper()
+    private val groceryListUiMapper = GroceryListUiMapper()
 
     fun toCellProperty(
         recipe: SummarizedRecipeUiModel,
@@ -24,6 +25,9 @@ class RecipeUiMapper {
         localPhone = localPhoneUiMapper.toLocalPhoneProperty(),
         favorite = CellProperty.Favorite(
             iconProperty = favoriteUiMapper.toFavoriteIconProperty(recipe.isFavorite),
+        ),
+        groceryList = CellProperty.GroceryList(
+            iconProperty = groceryListUiMapper.toGroceryListIconProperty(recipe.isInGroceryList),
         ),
         maxHeight = maxHeight,
     )

@@ -32,6 +32,7 @@ class RecipeUiMapper(
 			conclusion = endingText,
 			isFavorite = isFavorite,
 			isLocallySaved = source is Source.Local.Saved,
+			isInGroceryList = isInGroceryList,
 		)
 	}
 
@@ -47,6 +48,7 @@ class RecipeUiMapper(
 			},
 			isFavorite = isFavorite,
 			isLocallySaved = source is Source.Local.Saved,
+			isInGroceryList = isInGroceryList,
 		)
 	}
 
@@ -70,6 +72,7 @@ class RecipeUiMapper(
 				else -> LanguageDomainModel.ENGLISH
 			},
 			sections = emptyList(),
+			isInGroceryList = isInGroceryList,
 		)
 	}
 }

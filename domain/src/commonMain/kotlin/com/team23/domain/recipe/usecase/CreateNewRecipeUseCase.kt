@@ -28,5 +28,6 @@ class CreateNewRecipeUseCase {
 		endingText = "",
 		sections = listOf(),
 		source = RecipeDomainModel.Source.Local.Temporary,
+		isInGroceryList = false,
 	)
 }

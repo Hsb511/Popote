@@ -24,5 +24,6 @@ class SummarizedRecipeMapper(
 			language = languageMapper.toLanguageDomainModel(summarizedRecipeDataModel.href),
 			isFavorite = false,
 			source = RecipeDomainModel.Source.Remote,
+			isInGroceryList = false,
 		)
 }

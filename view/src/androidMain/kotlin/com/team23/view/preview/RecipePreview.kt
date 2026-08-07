@@ -148,6 +148,7 @@ fun RecipeContentDataPreview() {
                 ),
                 isFavorite = true,
                 isLocallySaved = true,
+                isInGroceryList = false,
             ),
             scrollState = rememberScrollState(),
             heightToBeFaded = remember { mutableFloatStateOf(0f) },

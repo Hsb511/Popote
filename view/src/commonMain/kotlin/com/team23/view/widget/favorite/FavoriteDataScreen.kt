@@ -71,6 +71,7 @@ fun FavoriteDataScreen(
 					when (action) {
                         CellAction.FavoriteClick -> onFavoriteClick(cellProperty.id)
                         CellAction.LocalPhoneClick -> onLocalPhoneClick()
+                        CellAction.GroceryListClick -> TODO()
                     }
 				},
 				modifier = Modifier
