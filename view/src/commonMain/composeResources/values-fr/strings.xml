@@ -111,4 +111,6 @@
     <string name="weekly_grocery_list_empty_title">Votre liste de courses de la semaine est vide !</string>
     <string name="weekly_grocery_list_empty_description_part1">Vous pouvez ajouter une recette à votre list de courses en cliquant sur le</string>
     <string name="weekly_grocery_list_empty_description_part2">en bas à droite des images des recettes.</string>
+    <string name="snackbar_grocery_list">Recette ajoutée à votre liste de courses</string>
+    <string name="snackbar_grocery_list_action">annuler</string>
 </resources>

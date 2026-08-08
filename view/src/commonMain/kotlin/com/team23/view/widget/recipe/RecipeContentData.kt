@@ -90,6 +90,7 @@ fun RecipeContentData(
 
         val onFavoriteClick = { recipe: RecipeUiModel -> onAction(RecipeAction.ToggleFavorite(recipe)) }
         val onLocalPhoneClick = { onAction(RecipeAction.ShowLocalPhoneMessage) }
+        val onGroceryListClick = { recipe: RecipeUiModel -> onAction(RecipeAction.ToggleGroceryList(recipe)) }
 
         Box(modifier = modifier.fillMaxSize()) {
             Column(
@@ -119,7 +120,10 @@ fun RecipeContentData(
                     onTagClicked = onTagClicked,
                 )
                 RecipeImage(
-                    recipeUiModel, onFavoriteClick, onLocalPhoneClick,
+                    recipeUiModel = recipeUiModel,
+                    onFavoriteClick = onFavoriteClick,
+                    onLocalPhoneClick = onLocalPhoneClick,
+                    onGroceryListClick = onGroceryListClick,
                     modifier = Modifier
                         .padding(vertical = 8.dp)
                         .fillMaxWidth()
@@ -179,7 +183,10 @@ fun RecipeContentData(
             Box {
                 if (yPositionImage <= 0f) {
                     RecipeImage(
-                        recipeUiModel, onFavoriteClick, onLocalPhoneClick,
+                        recipeUiModel = recipeUiModel,
+                        onFavoriteClick = onFavoriteClick,
+                        onLocalPhoneClick = onLocalPhoneClick,
+                        onGroceryListClick = onGroceryListClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
@@ -230,6 +237,7 @@ fun RecipeContentData(
 private fun RecipeImage(
     recipeUiModel: RecipeUiModel,
     onFavoriteClick: (RecipeUiModel) -> Unit,
+    onGroceryListClick: (RecipeUiModel) -> Unit,
     onLocalPhoneClick: () -> Unit,
     modifier: Modifier,
 ) {
@@ -255,7 +263,7 @@ private fun RecipeImage(
                 val groceryListUiMapper = remember { GroceryListUiMapper() }
                 ButtonGroceryList(
                     iconProperty = groceryListUiMapper.toGroceryListIconProperty(recipeUiModel.isInGroceryList),
-                    onGroceryListClick = { TODO() },
+                    onGroceryListClick = { onGroceryListClick(recipeUiModel) },
                     modifier = Modifier.offset(y = 12.dp)
                 )
                 val favoriteUiMapper = remember { FavoriteUiMapper() }

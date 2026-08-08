@@ -1,6 +1,5 @@
 package com.team23.domain
 
-import com.team23.domain.grocery.usecase.GetWeeklyGroceryListUseCase
 import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.domain.recipe.usecase.CreateNewRecipeUseCase
@@ -48,7 +47,4 @@ val domainModule = module {
     factoryOf(::GetUserNicknameUseCase)
     factoryOf(::GetExistingNicknamesUseCase)
     factoryOf(::SetUserNicknameUseCase)
-
-    // Weekly Grocery List
-    factoryOf(::GetWeeklyGroceryListUseCase)
 }

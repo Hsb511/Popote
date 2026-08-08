@@ -8,4 +8,5 @@ sealed interface RecipeAction {
     data object SubtractOneServing : RecipeAction
     data class ToggleFavorite(val recipe: RecipeUiModel) : RecipeAction
     data object ShowLocalPhoneMessage : RecipeAction
+    data class ToggleGroceryList(val recipe: RecipeUiModel) : RecipeAction
 }

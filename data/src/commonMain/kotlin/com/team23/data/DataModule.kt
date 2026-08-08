@@ -22,11 +22,13 @@ import com.team23.data.parsers.SummarizedRecipeParser
 import com.team23.data.parsers.TagParser
 import com.team23.data.locale_info.LocaleBasedSeasonProvider
 import com.team23.data.repository.FavoriteDataRepository
+import com.team23.data.repository.GroceryListDataRepository
 import com.team23.data.repository.PreferenceDataRepository
 import com.team23.data.repository.RecipeDataRepository
 import com.team23.data.repository.TagDataRepository
 import com.team23.data.repository.UserDataRepository
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.locale_info.SeasonProvider
 import com.team23.domain.preference.repository.PreferenceRepository
 import com.team23.domain.recipe.repository.RecipeRepository
@@ -55,6 +57,7 @@ val dataModule = module {
     singleOf(::RecipeDataRepository) { bind<RecipeRepository>() }
     singleOf(::TagDataRepository) { bind<TagRepository>() }
     singleOf(::UserDataRepository) { bind<UserRepository>() }
+    singleOf(::GroceryListDataRepository) { bind<GroceryListRepository>() }
 
     // Parsers
     factoryOf(::DateMapper)

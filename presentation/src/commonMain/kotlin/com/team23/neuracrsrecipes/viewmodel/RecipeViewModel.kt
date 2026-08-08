@@ -2,6 +2,7 @@ package com.team23.neuracrsrecipes.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.SetRecipeBackToTempUseCase
@@ -31,6 +32,7 @@ class RecipeViewModel(
     private val setRecipeBackToTempUseCase: SetRecipeBackToTempUseCase,
     private val deleteRecipeUseCase: DeleteRecipeUseCase,
     private val favoriteRepository: FavoriteRepository,
+    private val groceryListRepository: GroceryListRepository,
     private val recipeUiMapper: RecipeUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
@@ -76,6 +78,7 @@ class RecipeViewModel(
             is RecipeAction.SubtractOneServing -> subtractOneService()
             is RecipeAction.ToggleFavorite -> favoriteClick(action.recipe)
             is RecipeAction.UpdateServingsAmount -> updateRecipeData(action.newAmount)
+            is RecipeAction.ToggleGroceryList -> toggleGroceryList(action.recipe)
         }
     }
 
@@ -107,12 +110,26 @@ class RecipeViewModel(
     private fun favoriteClick(recipe: RecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteRepository.updateFavorite(recipe.id)
-            recomputeState(recipe)
+            recomputeState(recipe, isFavorite = !recipe.isFavorite)
             if (!recipe.isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(recipe.title)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
                     favoriteRepository.updateFavorite(recipe.id)
-                    recomputeState(recipe)
+                    recomputeState(recipe, isFavorite = !recipe.isFavorite)
+                }
+            }
+        }
+    }
+
+    private fun toggleGroceryList(recipe: RecipeUiModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryListRepository.updateGroceryList(recipe.id)
+            recomputeState(recipe, isInGroceryList = !recipe.isInGroceryList)
+            if (!recipe.isInGroceryList) {
+                val result = snackbarHandler.showGroceryListMessage(recipe.title)
+                if (result == SnackbarResultUiModel.ActionPerformed) {
+                    groceryListRepository.updateGroceryList(recipe.id)
+                    recomputeState(recipe, isInGroceryList = !recipe.isInGroceryList)
                 }
             }
         }
@@ -152,10 +169,14 @@ class RecipeViewModel(
         }
     }
 
-    private fun recomputeState(recipe: RecipeUiModel) {
+    private fun recomputeState(
+        recipe: RecipeUiModel,
+        isFavorite: Boolean = recipe.isFavorite,
+        isInGroceryList: Boolean = recipe.isInGroceryList,
+    ) {
         val currentState = _uiState.value
         if (currentState is RecipeUiState.Data) {
-            _uiState.value = RecipeUiState.Data(recipe.copy(isFavorite = !recipe.isFavorite))
+            _uiState.value = RecipeUiState.Data(recipe.copy(isFavorite = isFavorite, isInGroceryList = isInGroceryList))
         }
     }
 

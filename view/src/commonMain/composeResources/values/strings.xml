@@ -111,4 +111,6 @@
     <string name="weekly_grocery_list_empty_title">Your weekly grocery list is empty!</string>
     <string name="weekly_grocery_list_empty_description_part1">You can add a recipe to your grocery list by clicking on the</string>
     <string name="weekly_grocery_list_empty_description_part2">at the bottom right of the recipe images.</string>
+    <string name="snackbar_grocery_list">Recipe added to your grocery list</string>
+    <string name="snackbar_grocery_list_action">undo</string>
 </resources>

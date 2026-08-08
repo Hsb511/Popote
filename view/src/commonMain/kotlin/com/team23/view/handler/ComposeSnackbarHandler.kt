@@ -11,6 +11,8 @@ import com.team23.view.add_recipe_save_snackbar_message
 import com.team23.view.recipe_local_phone_info
 import com.team23.view.snackbar_favorite
 import com.team23.view.snackbar_favorite_action
+import com.team23.view.snackbar_grocery_list
+import com.team23.view.snackbar_grocery_list_action
 import com.team23.view.snackbar_loading_done
 import com.team23.view.snackbar_loading_one
 import com.team23.view.snackbar_loading_several
@@ -60,6 +62,15 @@ class ComposeSnackbarHandler(
         return snackbarHostState.showSnackbar(
             message = "$recipeTitle ${getString(Res.string.snackbar_favorite)}",
             actionLabel = getString(Res.string.snackbar_favorite_action).uppercase(),
+            duration = SnackbarDuration.Short,
+        ).toUiModel()
+    }
+
+    override suspend fun showGroceryListMessage(recipeTitle: String): SnackbarResultUiModel {
+        snackbarHostState.currentSnackbarData?.dismiss()
+        return snackbarHostState.showSnackbar(
+            message = "$recipeTitle ${getString(Res.string.snackbar_grocery_list)}",
+            actionLabel = getString(Res.string.snackbar_grocery_list_action).uppercase(),
             duration = SnackbarDuration.Short,
         ).toUiModel()
     }

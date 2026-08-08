@@ -11,4 +11,5 @@ interface SnackbarHandler {
     suspend fun showRecipeHasBeenSaved(recipeTitle: String): SnackbarResultUiModel
     suspend fun showRecipeHasBeenDeleted(recipeTitle: String)
     suspend fun showRecipeHasNotBeenDeleted(recipeTitle: String)
+    suspend fun showGroceryListMessage(recipeTitle: String): SnackbarResultUiModel
 }
