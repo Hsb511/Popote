@@ -34,9 +34,10 @@ internal data object FavoriteScreen : Screen {
         FavoriteScreen(
             favoriteUiState = favoriteViewModel.uiState.collectAsState().value,
             onRecipeClick = { recipeId -> appNavigator.navigateToRecipe(navigator, recipeId) },
-            onFavoriteClick = { recipe -> favoriteViewModel.onFavoriteClick(recipe) },
+            onFavoriteClick = favoriteViewModel::onFavoriteClick,
             onDisplayClick = favoriteViewModel::onDisplayTypeClick,
             onLocalPhoneClick = favoriteViewModel::onLocalPhoneClick,
+            onToggleGroceryListClick = favoriteViewModel::onToggleGroceryListClick,
             onRemoveAllClick = { openDialog.value = true },
         )
 
@@ -52,11 +53,12 @@ internal data object FavoriteScreen : Screen {
 @Composable
 fun FavoriteScreen(
     favoriteUiState: FavoriteUiState,
-    onRecipeClick: (String) -> Unit,
-    onFavoriteClick: (String) -> Unit,
-    onDisplayClick: () -> Unit,
-    onLocalPhoneClick: () -> Unit,
-    onRemoveAllClick: () -> Unit,
+    onRecipeClick: (String) -> Unit = {},
+    onFavoriteClick: (String) -> Unit = {},
+    onToggleGroceryListClick: (String) -> Unit = {},
+    onDisplayClick: () -> Unit = {},
+    onLocalPhoneClick: () -> Unit = {},
+    onRemoveAllClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     when (favoriteUiState) {
@@ -67,6 +69,7 @@ fun FavoriteScreen(
             onDisplayClick = onDisplayClick,
             onLocalPhoneClick = onLocalPhoneClick,
             onRemoveAllClick = onRemoveAllClick,
+            onToggleGroceryListClick = onToggleGroceryListClick,
             modifier = modifier,
         )
 

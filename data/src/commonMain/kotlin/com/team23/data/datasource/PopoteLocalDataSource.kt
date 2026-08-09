@@ -1,6 +1,7 @@
 package com.team23.data.datasource
 
 import com.team23.data.dao.FavoriteDao
+import com.team23.data.dao.GroceryListDao
 import com.team23.data.dao.IngredientDao
 import com.team23.data.dao.InstructionDao
 import com.team23.data.dao.PreferenceDao
@@ -16,6 +17,7 @@ internal class PopoteLocalDataSource(databaseDriverFactory: DatabaseDriverFactor
     private val dbQueries = database.appDatabaseQueries
 
     internal val favoriteDao = FavoriteDao(dbQueries)
+    internal val groceryListDao = GroceryListDao(dbQueries)
     internal val ingredientDao = IngredientDao(dbQueries)
     internal val instructionDao = InstructionDao(dbQueries)
     internal val preferenceDao = PreferenceDao(dbQueries)

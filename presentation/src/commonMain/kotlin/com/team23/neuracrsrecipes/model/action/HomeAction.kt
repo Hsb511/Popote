@@ -5,4 +5,5 @@ sealed interface HomeAction {
     data object RefreshRecipes: HomeAction
     data class ToggleFavorite(val recipeId: String, val recipeTitle: String): HomeAction
     data object ShowLocalPhoneMessage: HomeAction
+    data class ToggleGroceryList(val recipeId: String, val recipeTitle: String): HomeAction
 }

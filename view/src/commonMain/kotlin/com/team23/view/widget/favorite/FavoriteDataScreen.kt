@@ -25,12 +25,13 @@ import com.team23.view.mapper.RecipeUiMapper
 @Composable
 fun FavoriteDataScreen(
 	state: FavoriteUiState.Data.WithFavorites,
-	onRecipeClick: (String) -> Unit,
-	onFavoriteClick: (String) -> Unit,
-	onDisplayClick: () -> Unit,
-	onLocalPhoneClick: () -> Unit,
-	onRemoveAllClick: () -> Unit,
 	modifier: Modifier = Modifier,
+	onRecipeClick: (String) -> Unit = {},
+	onFavoriteClick: (String) -> Unit = {},
+	onToggleGroceryListClick: (String) -> Unit = {},
+	onDisplayClick: () -> Unit = {},
+	onLocalPhoneClick: () -> Unit = {},
+	onRemoveAllClick: () -> Unit = {},
 ) {
 	val displayType = state.displayType
 	val summarizedRecipes = state.favorites
@@ -71,7 +72,7 @@ fun FavoriteDataScreen(
 					when (action) {
                         CellAction.FavoriteClick -> onFavoriteClick(cellProperty.id)
                         CellAction.LocalPhoneClick -> onLocalPhoneClick()
-                        CellAction.GroceryListClick -> TODO()
+                        CellAction.GroceryListClick -> onToggleGroceryListClick(cellProperty.id)
                     }
 				},
 				modifier = Modifier

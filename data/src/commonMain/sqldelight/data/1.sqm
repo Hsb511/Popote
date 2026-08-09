@@ -1,0 +1,4 @@
+CREATE TABLE GroceryListDataModel(
+    recipeId TEXT NOT NULL PRIMARY KEY,
+    servingsAmount INTEGER NOT NULL
+);

@@ -155,3 +155,27 @@ DELETE FROM BaseRecipeDataModel WHERE href = ?;
 
 selectAllBaseRecipeSubtitles:
 SELECT subTitle FROM BaseRecipeDataModel;
+
+
+CREATE TABLE GroceryListDataModel(
+    recipeId TEXT NOT NULL PRIMARY KEY,
+    servingsAmount INTEGER NOT NULL
+);
+
+selectAllGroceryListItems:
+SELECT GroceryListDataModel.* FROM GroceryListDataModel;
+
+isGroceryListItemStored:
+SELECT EXISTS(SELECT * FROM GroceryListDataModel WHERE recipeId = :recipeId);
+
+insertGroceryListItem:
+INSERT INTO GroceryListDataModel(recipeId, servingsAmount) VALUES(:recipeId, :servingsAmount);
+
+updateGroceryListItemServings:
+UPDATE GroceryListDataModel SET servingsAmount = :servingsAmount WHERE recipeId = :recipeId;
+
+deleteGroceryListItem:
+DELETE FROM GroceryListDataModel WHERE recipeId = :recipeId;
+
+deleteAllGroceryListItems:
+DELETE FROM GroceryListDataModel;

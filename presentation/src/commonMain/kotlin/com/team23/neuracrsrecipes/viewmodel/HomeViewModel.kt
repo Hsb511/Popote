@@ -1,6 +1,7 @@
 package com.team23.neuracrsrecipes.viewmodel
 
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.recipe.model.RecipeDomainModel
 import com.team23.domain.recipe.usecase.GetAllSummarizedRecipesUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
@@ -32,6 +33,7 @@ class HomeViewModel(
     private val getPromotedLanesUseCase: GetPromotedLanesUseCase,
     private val overwriteAllSummarizedRecipesUseCase: OverwriteAllSummarizedRecipesUseCase,
     private val favoriteRepository: FavoriteRepository,
+    private val groceryListRepository: GroceryListRepository,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val promotedLaneUiMapper: PromotedLaneUiMapper,
     private val tagUiMapper: TagUiMapper,
@@ -113,18 +115,33 @@ class HomeViewModel(
             is HomeAction.RefreshRecipes -> refreshRecipes()
             is HomeAction.ShowLocalPhoneMessage -> onLocalPhoneClick()
             is HomeAction.ToggleFavorite -> favoriteClick(action.recipeId, action.recipeTitle)
+            is HomeAction.ToggleGroceryList -> groceryListClick(action.recipeId, action.recipeTitle)
         }
     }
 
     private fun favoriteClick(recipeId: String, recipeTitle: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val isFavorite = favoriteRepository.updateFavorite(recipeId)
-            recomputeState(recipeId)
+            recomputeState(recipeId, toggleFavorite = true)
             if (isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
                     favoriteRepository.updateFavorite(recipeId)
-                    recomputeState(recipeId)
+                    recomputeState(recipeId, toggleFavorite = true)
+                }
+            }
+        }
+    }
+
+    private fun groceryListClick(recipeId: String, recipeTitle: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val isInGroceryList = groceryListRepository.updateGroceryList(recipeId)
+            recomputeState(recipeId, toggleGroceryList = true)
+            if (isInGroceryList) {
+                val result = snackbarHandler.showGroceryListMessage(recipeTitle)
+                if (result == SnackbarResultUiModel.ActionPerformed) {
+                    groceryListRepository.updateGroceryList(recipeId)
+                    recomputeState(recipeId, toggleGroceryList = true)
                 }
             }
         }
@@ -160,14 +177,17 @@ class HomeViewModel(
         }
     }
 
-    private suspend fun recomputeState(recipeId: String) {
+    private suspend fun recomputeState(recipeId: String, toggleFavorite: Boolean = false, toggleGroceryList: Boolean = false) {
         val currentState = _uiState.value
         if (currentState is HomeUiState.Data) {
             val newRecipes = currentState.recipes.toMutableList()
             val recipe = newRecipes.first { recipe -> recipe.id == recipeId }
             val recipeIndex = newRecipes.indexOf(recipe)
             newRecipes.remove(recipe)
-            newRecipes.add(recipeIndex, recipe.copy(isFavorite = !recipe.isFavorite))
+            newRecipes.add(recipeIndex, recipe.copy(
+                isFavorite = if (toggleFavorite) !recipe.isFavorite else recipe.isFavorite,
+                isInGroceryList = if (toggleGroceryList) !recipe.isInGroceryList else recipe.isInGroceryList
+            ))
             _uiState.update {
                 currentState.copy(recipes = newRecipes, promotedLanes = getPromotedLaneUiModels())
             }

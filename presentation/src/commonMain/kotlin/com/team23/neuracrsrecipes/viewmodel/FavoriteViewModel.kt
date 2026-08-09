@@ -1,6 +1,7 @@
 package com.team23.neuracrsrecipes.viewmodel
 
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
@@ -22,6 +23,7 @@ import kotlinx.coroutines.withContext
 
 class FavoriteViewModel(
     private val favoriteRepository: FavoriteRepository,
+    private val groceryListRepository: GroceryListRepository,
     private val getPreferenceDisplayTypeUseCase: GetPreferenceDisplayTypeUseCase,
     private val updatePreferenceUseCase: UpdatePreferenceUseCase,
     private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
@@ -106,6 +108,12 @@ class FavoriteViewModel(
     fun onRemoveAllConfirm() {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteRepository.clearAllFavorites()
+        }
+    }
+
+    fun onToggleGroceryListClick(recipeId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryListRepository.updateGroceryList(recipeId)
         }
     }
 }

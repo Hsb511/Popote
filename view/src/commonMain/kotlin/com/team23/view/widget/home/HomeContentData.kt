@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.action.HomeAction
-import com.team23.neuracrsrecipes.model.action.HomeAction.*
 import com.team23.neuracrsrecipes.model.property.DisplayType
 import com.team23.neuracrsrecipes.model.uimodel.PromotedLaneUiModel
 import com.team23.neuracrsrecipes.model.uistate.HomeUiState
@@ -170,8 +169,8 @@ private val minColumnSize = 250.dp
 
 internal fun handleCellAction(action: CellAction, recipeId: String, recipeTitle: String, onAction: (HomeAction) -> Unit) {
     when (action) {
-        CellAction.FavoriteClick -> onAction(ToggleFavorite(recipeId, recipeTitle))
+        CellAction.FavoriteClick -> onAction(HomeAction.ToggleFavorite(recipeId, recipeTitle))
         CellAction.LocalPhoneClick -> onAction(HomeAction.ShowLocalPhoneMessage)
-        CellAction.GroceryListClick -> TODO()
+        CellAction.GroceryListClick -> onAction(HomeAction.ToggleGroceryList(recipeId, recipeTitle))
     }
 }
