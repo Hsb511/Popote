@@ -62,7 +62,7 @@ fun MainContainer() {
                         isNavigationEmpty = !navigator.canPop
                     ) { padding ->
                         ModalMenuDrawer(
-                            drawerUiModel = DrawerUiModel("2.3.0"),
+                            drawerUiModel = DrawerUiModel("2.3.1"),
                             drawerState = drawerState,
                         ) {
                             Box(modifier = Modifier
