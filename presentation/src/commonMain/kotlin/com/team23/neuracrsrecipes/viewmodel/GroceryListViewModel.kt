@@ -81,11 +81,11 @@ class GroceryListViewModel(
     }
 
     private suspend fun groceryListClick(recipeId: String, recipeTitle: String) {
-        val isInGroceryList = groceryListRepository.updateGroceryList(recipeId)
+        val isInGroceryList = groceryListRepository.toggleInGroceryList(recipeId)
         if (isInGroceryList) {
             val result = snackbarHandler.showGroceryListMessage(recipeTitle)
             if (result == SnackbarResultUiModel.ActionPerformed) {
-                groceryListRepository.updateGroceryList(recipeId)
+                groceryListRepository.toggleInGroceryList(recipeId)
             }
         }
     }

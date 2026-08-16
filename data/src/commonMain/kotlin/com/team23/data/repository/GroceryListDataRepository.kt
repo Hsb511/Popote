@@ -22,7 +22,7 @@ internal class GroceryListDataRepository(
     private val instructionDao = popoteLocalDataSource.instructionDao
     private val favoriteDao = popoteLocalDataSource.favoriteDao
 
-    override suspend fun updateGroceryList(recipeId: String): Boolean {
+    override suspend fun toggleInGroceryList(recipeId: String): Boolean {
         if (groceryListDao.isStored(recipeId)) {
             groceryListDao.delete(recipeId)
         } else {

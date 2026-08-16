@@ -116,11 +116,11 @@ class FavoriteViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val currentState = (_uiState as? FavoriteUiState.Data) as? FavoriteUiState.Data.WithFavorites
             val recipeTitle = currentState?.favorites?.find { it.id == recipeId }?.title.orEmpty()
-            val isInGroceryList = groceryListRepository.updateGroceryList(recipeId)
+            val isInGroceryList = groceryListRepository.toggleInGroceryList(recipeId)
             if (isInGroceryList) {
                 val result = snackbarHandler.showGroceryListMessage(recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    groceryListRepository.updateGroceryList(recipeId)
+                    groceryListRepository.toggleInGroceryList(recipeId)
                 }
             }
         }

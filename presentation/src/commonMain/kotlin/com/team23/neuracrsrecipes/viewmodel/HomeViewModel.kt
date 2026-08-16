@@ -135,12 +135,12 @@ class HomeViewModel(
 
     private fun groceryListClick(recipeId: String, recipeTitle: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val isInGroceryList = groceryListRepository.updateGroceryList(recipeId)
+            val isInGroceryList = groceryListRepository.toggleInGroceryList(recipeId)
             recomputeState(recipeId, toggleGroceryList = true)
             if (isInGroceryList) {
                 val result = snackbarHandler.showGroceryListMessage(recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    groceryListRepository.updateGroceryList(recipeId)
+                    groceryListRepository.toggleInGroceryList(recipeId)
                     recomputeState(recipeId, toggleGroceryList = true)
                 }
             }

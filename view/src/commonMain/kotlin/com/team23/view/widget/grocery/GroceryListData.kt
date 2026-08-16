@@ -24,8 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -164,6 +162,7 @@ private fun GroceryListRecipe(
     servingsAmount: Int,
     modifier: Modifier = Modifier,
     onRecipeClick: () -> Unit = {},
+    onChangeServingsAmount: (Int) -> Unit = {},
     onCellAction: (CellAction) -> Unit = {}
 ) {
     Row(
@@ -179,21 +178,17 @@ private fun GroceryListRecipe(
                 .width(getCurrentScreenWidth() - 16.dp * 2 - 8.dp - 88.dp)
                 .clickable { onRecipeClick() }
         )
-        val density = LocalDensity.current
         RecipeServingsWidget(
             currentServingsAmount = currentAmount.toString(),
             isLabelVisible = false,
-            onAddOneServing = { currentAmount++ },
-            onSubtractOneServing = { if (currentAmount > 1) currentAmount-- },
+            onAddOneServing = { onChangeServingsAmount(currentAmount + 1) },
+            onSubtractOneServing = { if (currentAmount > 1) onChangeServingsAmount(currentAmount - 1) },
             onValueChanged = { newValue ->
                 val newAmount = newValue.toIntOrNull()
                 if (newAmount != null && newAmount > 0) {
-                    currentAmount = newAmount
+                    onChangeServingsAmount(newAmount)
                 }
             },
-            modifier = Modifier.onSizeChanged {
-                with(density) { println("HUGO - ${it.width.toDp()}") }
-            }
         )
     }
 }

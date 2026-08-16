@@ -135,12 +135,12 @@ class SearchViewModel(
 
     private fun onGroceryListClick(action: SearchAction.GroceryListClick) {
         viewModelScope.launch(Dispatchers.IO) {
-            val isFavorite = groceryListRepository.updateGroceryList(action.recipeId)
+            val isFavorite = groceryListRepository.toggleInGroceryList(action.recipeId)
             recomputeState(action.recipeId, toggleGroceryList = true)
             if (isFavorite) {
                 val result = snackbarHandler.showGroceryListMessage(action.recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    groceryListRepository.updateGroceryList(action.recipeId)
+                    groceryListRepository.toggleInGroceryList(action.recipeId)
                     recomputeState(action.recipeId, toggleGroceryList = true)
                 }
             }

@@ -123,12 +123,12 @@ class RecipeViewModel(
 
     private fun toggleGroceryList(recipe: RecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            groceryListRepository.updateGroceryList(recipe.id)
+            groceryListRepository.toggleInGroceryList(recipe.id)
             recomputeState(recipe, isInGroceryList = !recipe.isInGroceryList)
             if (!recipe.isInGroceryList) {
                 val result = snackbarHandler.showGroceryListMessage(recipe.title)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
-                    groceryListRepository.updateGroceryList(recipe.id)
+                    groceryListRepository.toggleInGroceryList(recipe.id)
                     recomputeState(recipe, isInGroceryList = !recipe.isInGroceryList)
                 }
             }
