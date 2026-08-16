@@ -1,0 +1,73 @@
+package com.team23.view.navigation.screen
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import com.team23.neuracrsrecipes.viewmodel.GroceryListViewModel
+import com.team23.view.widget.grocery.GroceryListData
+import com.team23.view.widget.grocery.GroceryListEmpty
+import org.koin.compose.koinInject
+
+
+internal data object GroceryListScreen : Screen {
+
+    @Composable
+    override fun Content() {
+        val viewModel = koinInject<GroceryListViewModel>()
+        val uiState by viewModel.uiState.collectAsState()
+
+        FadingVisibility(uiState.isLoading) {
+            GroceryListLoading()
+        }
+
+        FadingVisibility(uiState.isEmpty) {
+            GroceryListEmpty()
+        }
+
+        FadingVisibility(!uiState.isLoading && !uiState.isEmpty) {
+            GroceryListData(
+                uiModel = uiState,
+                onAction = viewModel::onAction,
+            )
+        }
+    }
+}
+
+@Composable
+private fun FadingVisibility(
+    visible: Boolean,
+    content: @Composable () -> Unit
+) {
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        content()
+    }
+}
+
+@Composable
+private fun GroceryListLoading() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        CircularProgressIndicator(
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.size(92.dp)
+        )
+    }
+}

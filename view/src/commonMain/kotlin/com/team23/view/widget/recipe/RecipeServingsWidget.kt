@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -35,6 +36,7 @@ import org.jetbrains.compose.resources.stringResource
 fun RecipeServingsWidget(
     currentServingsAmount: String,
     modifier: Modifier = Modifier,
+    isLabelVisible: Boolean = true,
     widgetWidth: MutableState<Int> = remember { mutableIntStateOf(0) },
     onValueChanged: (String) -> Unit = {},
     onAddOneServing: () -> Unit = {},
@@ -44,7 +46,7 @@ fun RecipeServingsWidget(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .height(IntrinsicSize.Min)
             .background(
                 color = MaterialTheme.colorScheme.primary,
@@ -80,7 +82,7 @@ fun RecipeServingsWidget(
             keyboardActions = KeyboardActions(onDone = {
                 localFocusManager.clearFocus()
             }),
-            modifier = modifier
+            modifier = Modifier
                 .width(
                     currentServingsAmount
                         .toIntOrNull()
@@ -97,11 +99,14 @@ fun RecipeServingsWidget(
                         localFocusManager.clearFocus()
                     })
                 }
+                .then(if (!isLabelVisible) Modifier.offset(x = ((-2).dp * currentServingsAmount.length)) else Modifier)
         )
-        Text(
-            text = stringResource(Res.string.recipe_number_of_servings),
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
+        if (isLabelVisible) {
+            Text(
+                text = stringResource(Res.string.recipe_number_of_servings),
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        }
         IconButton(
             onClick = onAddOneServing,
             modifier = Modifier.size(36.dp)

@@ -5,6 +5,7 @@ import com.team23.neuracrsrecipes.mapper.GroceryListUiMapper
 import com.team23.neuracrsrecipes.model.action.GroceryListAction
 import com.team23.neuracrsrecipes.model.uimodel.GroceryListUiModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -19,7 +20,7 @@ class GroceryListViewModel(
         .map(groceryListUiMapper::toUiModel)
         .stateIn(
             scope = viewModelScope,
-            started = kotlinx.coroutines.flow.SharingStarted.Lazily,
+            started = SharingStarted.Lazily,
             initialValue = GroceryListUiModel()
         )
 
@@ -29,6 +30,7 @@ class GroceryListViewModel(
             is GroceryListAction.Clear -> clearGroceryList()
             is GroceryListAction.OnRecipeClick -> TODO()
             is GroceryListAction.ToggleIngredient -> TODO()
+            is GroceryListAction.CopyIngredients -> TODO()
         }
     }
 

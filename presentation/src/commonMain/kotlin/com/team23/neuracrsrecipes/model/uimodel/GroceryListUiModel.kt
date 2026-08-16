@@ -4,11 +4,12 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 
 data class GroceryListUiModel(
+    val isLoading: Boolean = true,
     val recipes: List<Recipe> = emptyList(),
     val ingredients: List<Ingredient> = emptyList(),
 ) {
     val isEmpty: Boolean
-        get() = recipes.isEmpty() && ingredients.isEmpty()
+        get() = recipes.isEmpty() && ingredients.isEmpty() && !isLoading
 
 
     data class Recipe(

@@ -22,7 +22,7 @@ import com.team23.view.navigation.screen.AddScreen
 import com.team23.view.navigation.screen.FavoriteScreen
 import com.team23.view.navigation.screen.HomeScreen
 import com.team23.view.navigation.screen.SearchScreen
-import com.team23.view.navigation.screen.WeeklyGroceryListScreen
+import com.team23.view.navigation.screen.GroceryListScreen
 import com.team23.view.navigation_favorite_display_name
 import com.team23.view.navigation_home_display_name
 import com.team23.view.navigation_search_display_name
@@ -82,12 +82,12 @@ internal fun createBottomNavItems(
             closeDrawer = closeDrawer,
         )
     },
-    with(isLastSelectedBottomScreen<WeeklyGroceryListScreen>()) {
+    with(isLastSelectedBottomScreen<GroceryListScreen>()) {
         createBottomNavItem(
             title = stringResource(Res.string.navigation_grocery_list_display_name),
             icon = if (this) Icons.AutoMirrored.Filled.List else Icons.AutoMirrored.Outlined.List,
             isSelected = this,
-            screen = WeeklyGroceryListScreen,
+            screen = GroceryListScreen,
             navigator = navigator,
             closeDrawer = closeDrawer,
         )
@@ -116,7 +116,7 @@ private fun createBottomNavItem(
 private inline fun <reified T> isLastSelectedBottomScreen(): Boolean {
     val navigator = LocalNavigator.currentOrThrow
     val lastBottomScreen = navigator.items
-        .last { it is HomeScreen || it is SearchScreen || it is AddScreen || it is FavoriteScreen || it is WeeklyGroceryListScreen }
+        .last { it is HomeScreen || it is SearchScreen || it is AddScreen || it is FavoriteScreen || it is GroceryListScreen }
 
     return lastBottomScreen is T
 }

@@ -14,4 +14,5 @@ sealed interface GroceryListAction {
     data class OnRecipeClick(
         val recipeId: String,
     ): GroceryListAction
+    data object CopyIngredients: GroceryListAction
 }

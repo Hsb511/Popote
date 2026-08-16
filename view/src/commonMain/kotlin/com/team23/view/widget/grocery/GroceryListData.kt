@@ -1,12 +1,14 @@
 package com.team23.view.widget.grocery
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -16,23 +18,35 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.team23.neuracrsrecipes.model.action.GroceryListAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
+import com.team23.neuracrsrecipes.model.property.ColorProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
+import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.GroceryListUiModel
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
-import com.team23.view.extension.horizontalGutterPadding
+import com.team23.view.ds.icon.PopoteIcon
+import com.team23.view.extension.getCurrentScreenWidth
 import com.team23.view.extension.topScreenHeight
-import com.team23.view.mapper.RecipeUiMapper
 import com.team23.view.grocery_list_clear_a11y
 import com.team23.view.grocery_list_ingredients_section
 import com.team23.view.grocery_list_recipes_section
 import com.team23.view.grocery_list_title
+import com.team23.view.ic_content_copy
+import com.team23.view.mapper.RecipeUiMapper
+import com.team23.view.recipe_copy_to_clipboard_a11y
 import com.team23.view.widget.recipe.RecipeServingsWidget
 import org.jetbrains.compose.resources.stringResource
 
@@ -45,7 +59,7 @@ fun GroceryListData(
 
     val recipeUiMapper = remember { RecipeUiMapper() }
     val recipes = uiModel.recipes.map { recipe -> recipeUiMapper.toCellProperty(recipe.uiModel, DisplayType.List) to recipe.servingsAmount }
-    LazyColumn(modifier = modifier.padding(horizontal = horizontalGutterPadding)) {
+    LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
             Spacer(modifier = Modifier.topScreenHeight(48.dp))
         }
@@ -61,6 +75,8 @@ fun GroceryListData(
             )
         }
 
+        verticalSpacer(8.dp)
+
         items(
             items = recipes,
             key = { it.first.id },
@@ -73,30 +89,25 @@ fun GroceryListData(
 
         }
 
-        item {
-            Text(
-                text = stringResource(Res.string.grocery_list_ingredients_section),
-                style = MaterialTheme.typography.headlineSmall,
-            )
-        }
+        verticalSpacer(8.dp)
 
         item {
-            Spacer(modifier = Modifier.height(16.dp))
+            GroceryListIngredientsSectionTitle(onCopyClick = { onAction(GroceryListAction.CopyIngredients) })
         }
+
+        verticalSpacer(8.dp)
 
         items(
             items = uiModel.ingredients,
             key = { ingredient -> ingredient.id },
         ) { ingredient ->
-            WeeklyGroceryListIngredient(
+            GroceryListIngredient(
                 ingredient = ingredient,
                 onCheckedChange = { onAction(GroceryListAction.ToggleIngredient(ingredient)) }
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        verticalSpacer(16.dp)
     }
 }
 
@@ -120,6 +131,32 @@ private fun GroceryListHeader(
 }
 
 @Composable
+private fun GroceryListIngredientsSectionTitle(
+    onCopyClick: () -> Unit = {},
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(Res.string.grocery_list_ingredients_section),
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.weight(1f)
+        )
+        IconButton(
+            onClick = { onCopyClick() },
+        ) {
+            PopoteIcon(
+                iconProperty = IconProperty.Resource(
+                    drawableResource = Res.drawable.ic_content_copy,
+                    contentDescription = Res.string.recipe_copy_to_clipboard_a11y,
+                    tint = ColorProperty.AccentIcon,
+                )
+            )
+        }
+    }
+}
+
+@Composable
 private fun GroceryListRecipe(
     cellProperty: CellProperty,
     servingsAmount: Int,
@@ -128,22 +165,38 @@ private fun GroceryListRecipe(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.padding(vertical = 4.dp),
     ) {
+        var currentAmount by remember { mutableIntStateOf(servingsAmount) }
         Cell(
             cellProperty = cellProperty,
             modifier = Modifier
+                .width(getCurrentScreenWidth() - 16.dp * 2 - 8.dp - 88.dp)
                 .clickable { onRecipeClick() }
         )
+        val density = LocalDensity.current
         RecipeServingsWidget(
-            currentServingsAmount = servingsAmount.toString(),
+            currentServingsAmount = currentAmount.toString(),
+            isLabelVisible = false,
+            onAddOneServing = { currentAmount++ },
+            onSubtractOneServing = { if (currentAmount > 1) currentAmount-- },
+            onValueChanged = { newValue ->
+                val newAmount = newValue.toIntOrNull()
+                if (newAmount != null && newAmount > 0) {
+                    currentAmount = newAmount
+                }
+            },
+            modifier = Modifier.onSizeChanged {
+                with(density) { println("HUGO - ${it.width.toDp()}") }
+            }
         )
     }
 }
 
 
 @Composable
-private fun WeeklyGroceryListIngredient(
+private fun GroceryListIngredient(
     ingredient: GroceryListUiModel.Ingredient,
     modifier: Modifier = Modifier,
     onCheckedChange: (Boolean) -> Unit = {}
@@ -165,7 +218,15 @@ private fun WeeklyGroceryListIngredient(
         Text(
             text = ingredient.displaySecondaryLabel,
             style = MaterialTheme.typography.bodyLarge,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.width(64.dp),
         )
+    }
+}
+
+fun LazyListScope.verticalSpacer(height: Dp) {
+    item {
+        Spacer(modifier = Modifier.height(height))
     }
 }

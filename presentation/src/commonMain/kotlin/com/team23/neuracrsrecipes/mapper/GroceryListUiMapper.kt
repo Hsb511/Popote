@@ -11,7 +11,8 @@ class GroceryListUiMapper(
     fun toUiModel(groceryList: GroceryDomainModel): GroceryListUiModel {
         return GroceryListUiModel(
             recipes = groceryList.recipes.map(::toGroceryRecipeUiModel),
-            ingredients = groceryList.ingredients.map(::toGroceryIngredientUiModel)
+            ingredients = groceryList.ingredients.map(::toGroceryIngredientUiModel),
+            isLoading = false,
         )
     }
 
