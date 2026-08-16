@@ -8,10 +8,10 @@ class GroceryListUiMapper(
     val ingredientUiMapper: IngredientUiMapper,
 ) {
 
-    fun toUiModel(groceryList: GroceryDomainModel): GroceryListUiModel {
+    fun toUiModel(groceryList: GroceryDomainModel, excludedIngredientIds: Set<String>): GroceryListUiModel {
         return GroceryListUiModel(
             recipes = groceryList.recipes.map(::toGroceryRecipeUiModel),
-            ingredients = groceryList.ingredients.map(::toGroceryIngredientUiModel),
+            ingredients = groceryList.ingredients.map { toGroceryIngredientUiModel(it, excludedIngredientIds) },
             isLoading = false,
         )
     }
@@ -23,10 +23,12 @@ class GroceryListUiMapper(
         )
     }
 
-    fun toGroceryIngredientUiModel(ingredient: GroceryDomainModel.Ingredient): GroceryListUiModel.Ingredient {
-        return GroceryListUiModel.Ingredient(
+    fun toGroceryIngredientUiModel(ingredient: GroceryDomainModel.Ingredient, excludedIngredientIds: Set<String>): GroceryListUiModel.Ingredient {
+        val ingredientUiModel = GroceryListUiModel.Ingredient(
             uiModel = ingredientUiMapper.toIngredientUiModel(ingredient.ingredientDomainModel),
-            isChecked = ingredient.isSelected,
+        )
+        return ingredientUiModel.copy(
+            isChecked =  ingredientUiModel.id !in excludedIngredientIds
         )
     }
 }

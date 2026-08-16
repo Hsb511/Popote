@@ -13,10 +13,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -27,9 +28,12 @@ class GroceryListViewModel(
     val favoriteRepository: FavoriteRepository,
     private val snackbarHandler: SnackbarHandler,
 ) {
-    val uiState: StateFlow<GroceryListUiModel> = groceryListRepository.getGroceryList()
-        .map(groceryListUiMapper::toUiModel)
-        .stateIn(
+
+    private val excludedIngredientIds: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
+    val uiState: StateFlow<GroceryListUiModel> =
+        combine(groceryListRepository.getGroceryList(), excludedIngredientIds) { groceryList, excludedIngredientIds ->
+            groceryListUiMapper.toUiModel(groceryList, excludedIngredientIds)
+        }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
             initialValue = GroceryListUiModel()
@@ -42,7 +46,7 @@ class GroceryListViewModel(
             is GroceryListAction.ChangeServingsAmount -> changeServingsAmount(action.recipeId, action.newServingsAmount)
             is GroceryListAction.Clear -> clearGroceryList()
             is GroceryListAction.OnRecipeClick -> handleRecipeClick(action.recipeId)
-            is GroceryListAction.ToggleIngredient -> TODO()
+            is GroceryListAction.ToggleIngredient -> toggleIngredient(action.ingredient)
             is GroceryListAction.CopyIngredients -> TODO()
             is GroceryListAction.OnCellAction -> handleCellAction(action)
         }
@@ -63,6 +67,16 @@ class GroceryListViewModel(
     private fun handleRecipeClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _uiEvent.emit(GroceryUiEvent.OpenRecipe(recipeId))
+        }
+    }
+
+    private fun toggleIngredient(ingredient: GroceryListUiModel.Ingredient) {
+        viewModelScope.launch {
+            if (ingredient.isChecked) {
+                excludedIngredientIds.emit(excludedIngredientIds.value + ingredient.id)
+            } else {
+                excludedIngredientIds.emit(excludedIngredientIds.value - ingredient.id)
+            }
         }
     }
 
