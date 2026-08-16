@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.team23.neuracrsrecipes.model.action.CellAction
 import com.team23.neuracrsrecipes.model.action.GroceryListAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.ColorProperty
@@ -85,6 +86,7 @@ fun GroceryListData(
                 cellProperty = cellProperty,
                 servingsAmount = servingsAmount,
                 onRecipeClick = { onAction(GroceryListAction.OnRecipeClick(cellProperty.id)) },
+                onCellAction = { cellAction -> onAction(GroceryListAction.OnCellAction(cellAction, cellProperty.id, cellProperty.title)) },
             )
 
         }
@@ -161,7 +163,8 @@ private fun GroceryListRecipe(
     cellProperty: CellProperty,
     servingsAmount: Int,
     modifier: Modifier = Modifier,
-    onRecipeClick: () -> Unit = {}
+    onRecipeClick: () -> Unit = {},
+    onCellAction: (CellAction) -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -171,6 +174,7 @@ private fun GroceryListRecipe(
         var currentAmount by remember { mutableIntStateOf(servingsAmount) }
         Cell(
             cellProperty = cellProperty,
+            onAction = onCellAction,
             modifier = Modifier
                 .width(getCurrentScreenWidth() - 16.dp * 2 - 8.dp - 88.dp)
                 .clickable { onRecipeClick() }

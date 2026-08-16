@@ -8,7 +8,7 @@ import com.team23.domain.grocery.model.GroceryDomainModel
 import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.recipe.model.IngredientDomainModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 
 internal class GroceryListDataRepository(
     popoteLocalDataSource: PopoteLocalDataSource,
@@ -35,9 +35,9 @@ internal class GroceryListDataRepository(
     }
 
     override fun getGroceryList(): Flow<GroceryDomainModel> =
-        groceryListDao.getAll().map { groceryItems ->
+        combine(groceryListDao.getAll(), favoriteDao.getAllFavorites()) { groceryItems, favoriteRecipeIds ->
             val recipes = groceryItems.mapNotNull { item ->
-                buildFullRecipeDomainModel(item.recipeId)?.let { fullRecipe ->
+                buildFullRecipeDomainModel(item.recipeId, favoriteRecipeIds)?.let { fullRecipe ->
                     GroceryDomainModel.Recipe(
                         recipeDomainModel = fullRecipe,
                         servingsAmount = item.servingsAmount,
@@ -58,7 +58,7 @@ internal class GroceryListDataRepository(
         groceryListDao.deleteAll()
     }
 
-    private fun buildFullRecipeDomainModel(recipeId: String) =
+    private fun buildFullRecipeDomainModel(recipeId: String, favoriteRecipeIds: List<String>) =
         baseRecipeDao.findBaseRecipeById(recipeId)?.let { baseRecipe ->
             val fullRecipeDataModel = FullRecipeDataModel(
                 recipe = baseRecipe,
@@ -67,7 +67,7 @@ internal class GroceryListDataRepository(
                 instructions = instructionDao.getAllByRecipeId(recipeId),
             )
             fullRecipeMapper.toFullRecipeDomainModel(fullRecipeDataModel).copy(
-                isFavorite = favoriteDao.isStored(recipeId),
+                isFavorite = recipeId in favoriteRecipeIds,
                 isInGroceryList = true,
             )
         }

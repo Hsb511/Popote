@@ -7,7 +7,9 @@ import com.team23.data.models.FavoriteDataModel
 import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.model.RecipeDomainModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlin.text.contains
 
 internal class FavoriteDataRepository(
 	popoteLocalDataSource: PopoteLocalDataSource,
@@ -29,23 +31,18 @@ internal class FavoriteDataRepository(
 	}
 
 	override fun getAllFavorites(): Flow<List<RecipeDomainModel.Summarized>> =
-		favoriteDao.getAllFavorites()
-			.map { recipeIdList ->
-				summarizedRecipeDao.getAll().filter { summarizedRecipe -> recipeIdList.contains(summarizedRecipe.href) }
+		combine(favoriteDao.getAllFavorites(), groceryListDao.getAll()) { recipeIdList, groceryItems ->
+			val summarizedRecipe = summarizedRecipeDao.getAll().filter { summarizedRecipe -> recipeIdList.contains(summarizedRecipe.href) }
+			summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipe).map { recipe ->
+				recipe.copy(
+					isFavorite = true,
+					isInGroceryList = recipe.id in groceryItems.map { it.recipeId },
+					source = sourceMapper.toDomainSource(
+						baseRecipe = baseRecipeDao.findBaseRecipeById(recipe.id)
+					),
+				)
 			}
-			.map { summarizedRecipe ->
-				summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipe).map { recipe ->
-					recipe.copy(
-						isFavorite = favoriteDao.isStored(recipe.id),
-						isInGroceryList = groceryListDao.isStored(recipe.id),
-						source = sourceMapper.toDomainSource(
-							baseRecipe = baseRecipeDao.findBaseRecipeById(
-								recipe.id
-							)
-						),
-					)
-				}
-			}
+		}
 
 	override suspend fun clearAllFavorites() {
 		favoriteDao.deleteAll()

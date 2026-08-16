@@ -10,6 +10,7 @@ import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.DisplayTypeUiMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.mapper.TagUiMapper
+import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
 import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 import kotlinx.coroutines.CoroutineScope
@@ -113,21 +114,13 @@ class FavoriteViewModel(
 
     fun onToggleGroceryListClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            groceryListRepository.updateGroceryList(recipeId)
-            withContext(Dispatchers.Main) {
-                val currentState = _uiState.value
-                if (currentState is FavoriteUiState.Data.WithFavorites) {
-                    val updatedFavorites = currentState.favorites.map { recipe ->
-                        if (recipe.id == recipeId) {
-                            viewModelScope.launch(Dispatchers.IO) {
-                                snackbarHandler.showGroceryListMessage(recipe.title)
-                            }
-                            recipe.copy(isInGroceryList = !recipe.isInGroceryList)
-                        } else {
-                            recipe
-                        }
-                    }
-                    _uiState.value = currentState.copy(favorites = updatedFavorites)
+            val currentState = (_uiState as? FavoriteUiState.Data) as? FavoriteUiState.Data.WithFavorites
+            val recipeTitle = currentState?.favorites?.find { it.id == recipeId }?.title.orEmpty()
+            val isInGroceryList = groceryListRepository.updateGroceryList(recipeId)
+            if (isInGroceryList) {
+                val result = snackbarHandler.showGroceryListMessage(recipeTitle)
+                if (result == SnackbarResultUiModel.ActionPerformed) {
+                    groceryListRepository.updateGroceryList(recipeId)
                 }
             }
         }
