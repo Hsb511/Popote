@@ -20,6 +20,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.team23.neuracrsrecipes.model.event.GroceryUiEvent
 import com.team23.neuracrsrecipes.viewmodel.GroceryListViewModel
+import com.team23.view.LocalTitle
 import com.team23.view.navigation.AppNavigator
 import com.team23.view.widget.grocery.GroceryListData
 import com.team23.view.widget.grocery.GroceryListEmpty
@@ -35,6 +36,8 @@ internal data object GroceryListScreen : Screen {
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
         val uiState by viewModel.uiState.collectAsState()
+
+        LocalTitle.current.value = null
 
         FadingVisibility(uiState.isLoading) {
             GroceryListLoading()
