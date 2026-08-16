@@ -9,14 +9,14 @@ import com.team23.neuracrsrecipes.mapper.PromotedLaneUiMapper
 import com.team23.neuracrsrecipes.mapper.RecipeUiMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
 import com.team23.neuracrsrecipes.mapper.TagUiMapper
-import com.team23.neuracrsrecipes.mapper.WeeklyGroceryListUiMapper
+import com.team23.neuracrsrecipes.mapper.GroceryListUiMapper
 import com.team23.neuracrsrecipes.viewmodel.AddViewModel
 import com.team23.neuracrsrecipes.viewmodel.FavoriteViewModel
 import com.team23.neuracrsrecipes.viewmodel.HomeViewModel
 import com.team23.neuracrsrecipes.viewmodel.RecipeViewModel
 import com.team23.neuracrsrecipes.viewmodel.SearchViewModel
 import com.team23.neuracrsrecipes.viewmodel.UserViewModel
-import com.team23.neuracrsrecipes.viewmodel.WeeklyGroceryListViewModel
+import com.team23.neuracrsrecipes.viewmodel.GroceryListViewModel
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.plus
@@ -40,7 +40,7 @@ val presentationModule = module {
     factoryOf(::SummarizedRecipeUiMapper)
     factoryOf(::TagUiMapper)
     factoryOf(::PromotedLaneUiMapper)
-    factoryOf(::WeeklyGroceryListUiMapper)
+    factoryOf(::GroceryListUiMapper)
 
     // View model
     factoryOf(::AddViewModel)
@@ -49,7 +49,7 @@ val presentationModule = module {
     factoryOf(::RecipeViewModel)
     factoryOf(::SearchViewModel)
     factoryOf(::UserViewModel)
-    factoryOf(::WeeklyGroceryListViewModel)
+    factoryOf(::GroceryListViewModel)
 }
 
 internal expect fun platformModule(): Module

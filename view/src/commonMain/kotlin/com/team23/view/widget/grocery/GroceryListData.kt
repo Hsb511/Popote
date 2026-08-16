@@ -3,6 +3,7 @@ package com.team23.view.widget.grocery
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,27 +20,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.team23.neuracrsrecipes.model.action.WeeklyGroceryListAction
+import com.team23.neuracrsrecipes.model.action.GroceryListAction
 import com.team23.neuracrsrecipes.model.property.CellProperty
 import com.team23.neuracrsrecipes.model.property.DisplayType
-import com.team23.neuracrsrecipes.model.uimodel.WeeklyGroceryListUiModel
+import com.team23.neuracrsrecipes.model.uimodel.GroceryListUiModel
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.extension.topScreenHeight
 import com.team23.view.mapper.RecipeUiMapper
-import com.team23.view.weekly_grocery_list_clear_a11y
-import com.team23.view.weekly_grocery_list_ingredients_section
-import com.team23.view.weekly_grocery_list_recipes_section
-import com.team23.view.weekly_grocery_list_title
+import com.team23.view.grocery_list_clear_a11y
+import com.team23.view.grocery_list_ingredients_section
+import com.team23.view.grocery_list_recipes_section
+import com.team23.view.grocery_list_title
 import com.team23.view.widget.recipe.RecipeServingsWidget
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun WeeklyGroceryListData(
-    uiModel: WeeklyGroceryListUiModel,
+fun GroceryListData(
+    uiModel: GroceryListUiModel,
     modifier: Modifier = Modifier,
-    onAction: (WeeklyGroceryListAction) -> Unit = {},
+    onAction: (GroceryListAction) -> Unit = {},
 ) {
 
     val recipeUiMapper = remember { RecipeUiMapper() }
@@ -50,25 +51,12 @@ fun WeeklyGroceryListData(
         }
 
         item {
-            Row {
-                Text(
-                    text = stringResource(Res.string.weekly_grocery_list_title),
-                    style = MaterialTheme.typography.displaySmall,
-                    modifier = Modifier.weight(1f)
-                )
-                IconButton(onClick = { onAction(WeeklyGroceryListAction.Clear) }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(Res.string.weekly_grocery_list_clear_a11y),
-                    )
-                }
-            }
-
+            GroceryListHeader(clearList = { onAction(GroceryListAction.Clear) })
         }
 
         item {
             Text(
-                text = stringResource(Res.string.weekly_grocery_list_recipes_section),
+                text = stringResource(Res.string.grocery_list_recipes_section),
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
@@ -77,19 +65,23 @@ fun WeeklyGroceryListData(
             items = recipes,
             key = { it.first.id },
         ) { (cellProperty, servingsAmount) ->
-            WeeklyGroceryListRecipe(
+            GroceryListRecipe(
                 cellProperty = cellProperty,
                 servingsAmount = servingsAmount,
-                onRecipeClick = { onAction(WeeklyGroceryListAction.OnRecipeClick(cellProperty.id)) },
+                onRecipeClick = { onAction(GroceryListAction.OnRecipeClick(cellProperty.id)) },
             )
 
         }
 
         item {
             Text(
-                text = stringResource(Res.string.weekly_grocery_list_ingredients_section),
+                text = stringResource(Res.string.grocery_list_ingredients_section),
                 style = MaterialTheme.typography.headlineSmall,
             )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
         items(
@@ -98,15 +90,37 @@ fun WeeklyGroceryListData(
         ) { ingredient ->
             WeeklyGroceryListIngredient(
                 ingredient = ingredient,
-                onCheckedChange = { onAction(WeeklyGroceryListAction.ToggleIngredient(ingredient)) }
+                onCheckedChange = { onAction(GroceryListAction.ToggleIngredient(ingredient)) }
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+private fun GroceryListHeader(
+    clearList: () -> Unit = {},
+) {
+    Row {
+        Text(
+            text = stringResource(Res.string.grocery_list_title),
+            style = MaterialTheme.typography.displaySmall,
+            modifier = Modifier.weight(1f)
+        )
+        IconButton(onClick = { clearList()}) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(Res.string.grocery_list_clear_a11y),
             )
         }
     }
 }
 
-
 @Composable
-private fun WeeklyGroceryListRecipe(
+private fun GroceryListRecipe(
     cellProperty: CellProperty,
     servingsAmount: Int,
     modifier: Modifier = Modifier,
@@ -130,7 +144,7 @@ private fun WeeklyGroceryListRecipe(
 
 @Composable
 private fun WeeklyGroceryListIngredient(
-    ingredient: WeeklyGroceryListUiModel.Ingredient,
+    ingredient: GroceryListUiModel.Ingredient,
     modifier: Modifier = Modifier,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
@@ -141,21 +155,17 @@ private fun WeeklyGroceryListIngredient(
         Checkbox(
             checked = ingredient.isChecked,
             onCheckedChange = onCheckedChange,
+            modifier = Modifier.height(24.dp),
         )
         Text(
-            text = ingredient.uiModel.label,
+            text = ingredient.displayMainLabel,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         Text(
-            text = ingredient.uiModel.quantity.orEmpty(),
+            text = ingredient.displaySecondaryLabel,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.width(64.dp)
-        )
-        Text(
-            text = ingredient.uiModel.unit.orEmpty(),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.width(32.dp)
+            modifier = Modifier.width(64.dp),
         )
     }
 }

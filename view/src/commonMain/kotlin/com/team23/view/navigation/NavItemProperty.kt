@@ -27,7 +27,7 @@ import com.team23.view.navigation_favorite_display_name
 import com.team23.view.navigation_home_display_name
 import com.team23.view.navigation_search_display_name
 import com.team23.view.navigation_upload_display_name
-import com.team23.view.navigation_weekly_grocery_list_display_name
+import com.team23.view.navigation_grocery_list_display_name
 import org.jetbrains.compose.resources.stringResource
 
 data class NavItemProperty(
@@ -84,7 +84,7 @@ internal fun createBottomNavItems(
     },
     with(isLastSelectedBottomScreen<WeeklyGroceryListScreen>()) {
         createBottomNavItem(
-            title = stringResource(Res.string.navigation_weekly_grocery_list_display_name),
+            title = stringResource(Res.string.navigation_grocery_list_display_name),
             icon = if (this) Icons.AutoMirrored.Filled.List else Icons.AutoMirrored.Outlined.List,
             isSelected = this,
             screen = WeeklyGroceryListScreen,

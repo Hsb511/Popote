@@ -5,7 +5,7 @@
     <string name="navigation_search_display_name">Recherche</string>
     <string name="navigation_upload_display_name">Ajouter</string>
     <string name="navigation_favorite_display_name">Favoris</string>
-    <string name="navigation_weekly_grocery_list_display_name">Courses</string>
+    <string name="navigation_grocery_list_display_name">Courses</string>
 
     <!-- snackbar -->
     <string name="snackbar_favorite">a été ajouté à vos favoris</string>
@@ -103,14 +103,14 @@
     <!-- locally saved -->
     <string name="locally_saved_button_content_description">Indique que cette recette a été créée par vous et est disponible seulement sur ce téléphone</string>
 
-    <!-- weekly grocery list -->
-    <string name="weekly_grocery_list_title">List de courses de la semaine</string>
-    <string name="weekly_grocery_list_clear_a11y">Vider la liste</string>
-    <string name="weekly_grocery_list_recipes_section">Recettes</string>
-    <string name="weekly_grocery_list_ingredients_section">Ingredients à acheter</string>
-    <string name="weekly_grocery_list_empty_title">Votre liste de courses de la semaine est vide !</string>
-    <string name="weekly_grocery_list_empty_description_part1">Vous pouvez ajouter une recette à votre list de courses en cliquant sur le</string>
-    <string name="weekly_grocery_list_empty_description_part2">en bas à droite des images des recettes.</string>
+    <!-- grocery list -->
+    <string name="grocery_list_title">Liste de courses</string>
+    <string name="grocery_list_clear_a11y">Vider la liste</string>
+    <string name="grocery_list_recipes_section">Recettes</string>
+    <string name="grocery_list_ingredients_section">Ingredients à acheter</string>
+    <string name="grocery_list_empty_title">Votre liste de courses est vide !</string>
+    <string name="grocery_list_empty_description_part1">Vous pouvez ajouter une recette à votre list de courses en cliquant sur le</string>
+    <string name="grocery_list_empty_description_part2">en bas à droite des images des recettes.</string>
     <string name="snackbar_grocery_list">Recette ajoutée à votre liste de courses</string>
     <string name="snackbar_grocery_list_action">annuler</string>
 </resources>

@@ -25,14 +25,14 @@ import com.team23.view.ds.image.PopoteImage
 import com.team23.view.extension.horizontalGutterPadding
 import com.team23.view.ic_grocery_list_add
 import com.team23.view.neuracr_wip
-import com.team23.view.weekly_grocery_list_empty_description_part1
-import com.team23.view.weekly_grocery_list_empty_description_part2
-import com.team23.view.weekly_grocery_list_empty_title
+import com.team23.view.grocery_list_empty_description_part1
+import com.team23.view.grocery_list_empty_description_part2
+import com.team23.view.grocery_list_empty_title
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun WeeklyGroceryListEmpty() {
+fun GroceryListEmpty() {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -41,7 +41,7 @@ fun WeeklyGroceryListEmpty() {
             .padding(all = horizontalGutterPadding),
     ) {
         Text(
-            text = stringResource(Res.string.weekly_grocery_list_empty_title),
+            text = stringResource(Res.string.grocery_list_empty_title),
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center,
         )
@@ -55,9 +55,9 @@ fun WeeklyGroceryListEmpty() {
         )
 
         val description = buildAnnotatedString {
-            append(stringResource(Res.string.weekly_grocery_list_empty_description_part1) + " ")
+            append(stringResource(Res.string.grocery_list_empty_description_part1) + " ")
             appendInlineContent(id = "list")
-            append(" " + stringResource(Res.string.weekly_grocery_list_empty_description_part2))
+            append(" " + stringResource(Res.string.grocery_list_empty_description_part2))
         }
         val inlineContentMap = mapOf(
             "list" to InlineTextContent(

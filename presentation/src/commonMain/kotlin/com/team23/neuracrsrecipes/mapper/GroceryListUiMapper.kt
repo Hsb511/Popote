@@ -1,29 +1,29 @@
 package com.team23.neuracrsrecipes.mapper
 
 import com.team23.domain.grocery.model.GroceryDomainModel
-import com.team23.neuracrsrecipes.model.uimodel.WeeklyGroceryListUiModel
+import com.team23.neuracrsrecipes.model.uimodel.GroceryListUiModel
 
-class WeeklyGroceryListUiMapper(
+class GroceryListUiMapper(
     val fullRecipeUiMapper: RecipeUiMapper,
     val ingredientUiMapper: IngredientUiMapper,
 ) {
 
-    fun toUiModel(groceryList: GroceryDomainModel): WeeklyGroceryListUiModel {
-        return WeeklyGroceryListUiModel(
+    fun toUiModel(groceryList: GroceryDomainModel): GroceryListUiModel {
+        return GroceryListUiModel(
             recipes = groceryList.recipes.map(::toGroceryRecipeUiModel),
             ingredients = groceryList.ingredients.map(::toGroceryIngredientUiModel)
         )
     }
 
-    fun toGroceryRecipeUiModel(recipe: GroceryDomainModel.Recipe): WeeklyGroceryListUiModel.Recipe {
-        return WeeklyGroceryListUiModel.Recipe(
+    fun toGroceryRecipeUiModel(recipe: GroceryDomainModel.Recipe): GroceryListUiModel.Recipe {
+        return GroceryListUiModel.Recipe(
             uiModel = fullRecipeUiMapper.toSummarizedRecipeUiModel(recipe.recipeDomainModel),
             servingsAmount = recipe.servingsAmount,
         )
     }
 
-    fun toGroceryIngredientUiModel(ingredient: GroceryDomainModel.Ingredient): WeeklyGroceryListUiModel.Ingredient {
-        return WeeklyGroceryListUiModel.Ingredient(
+    fun toGroceryIngredientUiModel(ingredient: GroceryDomainModel.Ingredient): GroceryListUiModel.Ingredient {
+        return GroceryListUiModel.Ingredient(
             uiModel = ingredientUiMapper.toIngredientUiModel(ingredient.ingredientDomainModel),
             isChecked = ingredient.isSelected,
         )

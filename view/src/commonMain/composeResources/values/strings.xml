@@ -5,7 +5,7 @@
     <string name="navigation_search_display_name">Search</string>
     <string name="navigation_upload_display_name">Add</string>
     <string name="navigation_favorite_display_name">Favorites</string>
-    <string name="navigation_weekly_grocery_list_display_name">Grocery</string>
+    <string name="navigation_grocery_list_display_name">Grocery</string>
 
     <!-- snackbar -->
     <string name="snackbar_favorite">has been added to your favorites</string>
@@ -103,14 +103,14 @@
     <!-- locally saved -->
     <string name="locally_saved_button_content_description">Indicate that this recipe was created by you and is only available on this phone</string>
 
-    <!-- weekly grocery list -->
-    <string name="weekly_grocery_list_title">Weekly grocery list</string>
-    <string name="weekly_grocery_list_clear_a11y">Empty grocery list</string>
-    <string name="weekly_grocery_list_recipes_section">Recipes</string>
-    <string name="weekly_grocery_list_ingredients_section">Ingredients</string>
-    <string name="weekly_grocery_list_empty_title">Your weekly grocery list is empty!</string>
-    <string name="weekly_grocery_list_empty_description_part1">You can add a recipe to your grocery list by clicking on the</string>
-    <string name="weekly_grocery_list_empty_description_part2">at the bottom right of the recipe images.</string>
+    <!-- grocery list -->
+    <string name="grocery_list_title">Grocery list</string>
+    <string name="grocery_list_clear_a11y">Empty grocery list</string>
+    <string name="grocery_list_recipes_section">Recipes</string>
+    <string name="grocery_list_ingredients_section">Ingredients</string>
+    <string name="grocery_list_empty_title">Your grocery list is empty!</string>
+    <string name="grocery_list_empty_description_part1">You can add a recipe to your grocery list by clicking on the</string>
+    <string name="grocery_list_empty_description_part2">at the bottom right of the recipe images.</string>
     <string name="snackbar_grocery_list">Recipe added to your grocery list</string>
     <string name="snackbar_grocery_list_action">undo</string>
 </resources>
