@@ -8,4 +8,6 @@ interface GroceryListRepository {
     suspend fun updateServings(recipeId: String, servingsAmount: Int)
     fun getGroceryList(): Flow<GroceryDomainModel>
     suspend fun clearAllGroceryList()
+    fun getExcludedIngredientIds(): Flow<Set<String>>
+    suspend fun toggleExcludedIngredient(ingredientId: String): Boolean
 }

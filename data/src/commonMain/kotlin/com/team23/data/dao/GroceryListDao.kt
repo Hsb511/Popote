@@ -42,6 +42,26 @@ internal class GroceryListDao(
         dbQueries.deleteAllGroceryListItems()
     }
 
+    fun getAllExcludedIngredientIds(): Flow<List<String>> =
+        dbQueries.selectAllExcludedIngredientIds()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+
+    fun isExcludedIngredientStored(ingredientId: String): Boolean =
+        dbQueries.isExcludedIngredientStored(ingredientId).executeAsOne()
+
+    fun insertExcludedIngredient(ingredientId: String) {
+        dbQueries.insertExcludedIngredient(ingredientId)
+    }
+
+    fun deleteExcludedIngredient(ingredientId: String) {
+        dbQueries.deleteExcludedIngredient(ingredientId)
+    }
+
+    fun deleteAllExcludedIngredients() {
+        dbQueries.deleteAllExcludedIngredients()
+    }
+
     private fun toDataModel() = { recipeId: String, servingsAmount: Long ->
         GroceryListDataModel(recipeId = recipeId, servingsAmount = servingsAmount.toInt())
     }

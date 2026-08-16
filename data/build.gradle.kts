@@ -54,7 +54,7 @@ kotlin {
 
 android {
     namespace = "com.team23.neuracrsrecipes"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         minSdk = 23
     }
@@ -65,7 +65,7 @@ sqldelight {
     databases {
         create("AppDatabase") {
             packageName.set("data")
-            version = 2
+            version = 3
         }
     }
 }

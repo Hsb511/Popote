@@ -162,6 +162,10 @@ CREATE TABLE GroceryListDataModel(
     servingsAmount INTEGER NOT NULL
 );
 
+CREATE TABLE ExcludedGroceryIngredientDataModel(
+    ingredientId TEXT NOT NULL PRIMARY KEY
+);
+
 selectAllGroceryListItems:
 SELECT GroceryListDataModel.* FROM GroceryListDataModel;
 
@@ -179,3 +183,18 @@ DELETE FROM GroceryListDataModel WHERE recipeId = :recipeId;
 
 deleteAllGroceryListItems:
 DELETE FROM GroceryListDataModel;
+
+selectAllExcludedIngredientIds:
+SELECT ingredientId FROM ExcludedGroceryIngredientDataModel;
+
+isExcludedIngredientStored:
+SELECT EXISTS(SELECT * FROM ExcludedGroceryIngredientDataModel WHERE ingredientId = :ingredientId);
+
+insertExcludedIngredient:
+INSERT INTO ExcludedGroceryIngredientDataModel(ingredientId) VALUES(:ingredientId);
+
+deleteExcludedIngredient:
+DELETE FROM ExcludedGroceryIngredientDataModel WHERE ingredientId = :ingredientId;
+
+deleteAllExcludedIngredients:
+DELETE FROM ExcludedGroceryIngredientDataModel;

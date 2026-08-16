@@ -9,6 +9,7 @@ import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.recipe.model.IngredientDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 
 internal class GroceryListDataRepository(
     popoteLocalDataSource: PopoteLocalDataSource,
@@ -56,6 +57,19 @@ internal class GroceryListDataRepository(
 
     override suspend fun clearAllGroceryList() {
         groceryListDao.deleteAll()
+        groceryListDao.deleteAllExcludedIngredients()
+    }
+
+    override fun getExcludedIngredientIds(): Flow<Set<String>> =
+        groceryListDao.getAllExcludedIngredientIds().map { it.toSet() }
+
+    override suspend fun toggleExcludedIngredient(ingredientId: String): Boolean {
+        if (groceryListDao.isExcludedIngredientStored(ingredientId)) {
+            groceryListDao.deleteExcludedIngredient(ingredientId)
+        } else {
+            groceryListDao.insertExcludedIngredient(ingredientId)
+        }
+        return groceryListDao.isExcludedIngredientStored(ingredientId)
     }
 
     override suspend fun updateServings(recipeId: String, servingsAmount: Int) {

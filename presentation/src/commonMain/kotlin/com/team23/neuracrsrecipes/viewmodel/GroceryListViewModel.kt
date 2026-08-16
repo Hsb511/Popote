@@ -29,9 +29,8 @@ class GroceryListViewModel(
     private val snackbarHandler: SnackbarHandler,
 ) {
 
-    private val excludedIngredientIds: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
     val uiState: StateFlow<GroceryListUiModel> =
-        combine(groceryListRepository.getGroceryList(), excludedIngredientIds) { groceryList, excludedIngredientIds ->
+        combine(groceryListRepository.getGroceryList(), groceryListRepository.getExcludedIngredientIds()) { groceryList, excludedIngredientIds ->
             groceryListUiMapper.toUiModel(groceryList, excludedIngredientIds)
         }.stateIn(
             scope = viewModelScope,
@@ -72,11 +71,7 @@ class GroceryListViewModel(
 
     private fun toggleIngredient(ingredient: GroceryListUiModel.Ingredient) {
         viewModelScope.launch {
-            if (ingredient.isChecked) {
-                excludedIngredientIds.emit(excludedIngredientIds.value + ingredient.id)
-            } else {
-                excludedIngredientIds.emit(excludedIngredientIds.value - ingredient.id)
-            }
+            groceryListRepository.toggleExcludedIngredient(ingredient.id)
         }
     }
 
