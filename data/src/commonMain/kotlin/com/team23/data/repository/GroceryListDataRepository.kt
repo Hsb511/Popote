@@ -6,6 +6,7 @@ import com.team23.data.models.FullRecipeDataModel
 import com.team23.data.models.GroceryListDataModel
 import com.team23.domain.grocery.model.GroceryDomainModel
 import com.team23.domain.grocery.repository.GroceryListRepository
+import com.team23.domain.recipe.model.IngredientDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -43,11 +44,13 @@ internal class GroceryListDataRepository(
                     )
                 }
             }
-            val ingredients = recipes.flatMap { recipe ->
-                recipe.recipeDomainModel.ingredients.map { ingredient ->
+            val ingredients = recipes
+                .flatMap { recipe -> recipe.recipeDomainModel.ingredients }
+                .mergeIngredients()
+                .sortedBy { it.label }
+                .map { ingredient ->
                     GroceryDomainModel.Ingredient(ingredientDomainModel = ingredient)
                 }
-            }
             GroceryDomainModel(recipes = recipes, ingredients = ingredients)
         }
 
@@ -68,5 +71,46 @@ internal class GroceryListDataRepository(
                 isInGroceryList = true,
             )
         }
+
+    private fun List<IngredientDomainModel>.mergeIngredients(): List<IngredientDomainModel> {
+        val result = mutableListOf<IngredientDomainModel>()
+
+        for (ingredient in this) {
+            when (ingredient) {
+                is IngredientDomainModel.WithoutQuantity -> {
+                    val alreadyExists = result.any {
+                        it is IngredientDomainModel.WithoutQuantity &&
+                            it.label == ingredient.label
+                    }
+
+                    if (!alreadyExists) {
+                        result += ingredient
+                    }
+                }
+
+                is IngredientDomainModel.WithQuantity.WithoutUnit -> {
+                    val index = result.indexOfFirst {
+                        it is IngredientDomainModel.WithQuantity.WithoutUnit &&
+                            it.label == ingredient.label
+                    }
+
+                    if (index == -1) {
+                        result += ingredient
+                    } else {
+                        val existing =
+                            result[index] as IngredientDomainModel.WithQuantity.WithoutUnit
+
+                        result[index] = existing.copy(
+                            quantity = existing.quantity + ingredient.quantity
+                        )
+                    }
+                }
+
+                is IngredientDomainModel.WithQuantity.WithUnit -> result += ingredient
+            }
+        }
+
+        return result
+    }
 }
 
