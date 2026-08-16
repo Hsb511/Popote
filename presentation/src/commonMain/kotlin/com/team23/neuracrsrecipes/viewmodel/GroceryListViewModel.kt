@@ -39,12 +39,18 @@ class GroceryListViewModel(
 
     fun onAction(action: GroceryListAction) {
         when (action) {
-            is GroceryListAction.ChangeServingsAmount -> TODO()
+            is GroceryListAction.ChangeServingsAmount -> changeServingsAmount(action.recipeId, action.newServingsAmount)
             is GroceryListAction.Clear -> clearGroceryList()
             is GroceryListAction.OnRecipeClick -> handleRecipeClick(action.recipeId)
             is GroceryListAction.ToggleIngredient -> TODO()
             is GroceryListAction.CopyIngredients -> TODO()
             is GroceryListAction.OnCellAction -> handleCellAction(action)
+        }
+    }
+
+    private fun changeServingsAmount(recipeId: String, newServingsAmount: Int) {
+        viewModelScope.launch {
+            groceryListRepository.updateServings(recipeId, newServingsAmount)
         }
     }
 

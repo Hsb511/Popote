@@ -8,8 +8,6 @@ import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.recipe.model.RecipeDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlin.text.contains
 
 internal class FavoriteDataRepository(
 	popoteLocalDataSource: PopoteLocalDataSource,

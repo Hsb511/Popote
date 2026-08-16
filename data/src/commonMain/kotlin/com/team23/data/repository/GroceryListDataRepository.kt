@@ -45,7 +45,7 @@ internal class GroceryListDataRepository(
                 }
             }
             val ingredients = recipes
-                .flatMap { recipe -> recipe.recipeDomainModel.ingredients }
+                .flatMap { recipe -> applyServingsToIngredients(recipe) }
                 .mergeIngredients()
                 .sortedBy { it.label }
                 .map { ingredient ->
@@ -56,6 +56,10 @@ internal class GroceryListDataRepository(
 
     override suspend fun clearAllGroceryList() {
         groceryListDao.deleteAll()
+    }
+
+    override suspend fun updateServings(recipeId: String, servingsAmount: Int) {
+        groceryListDao.updateServings(recipeId, servingsAmount)
     }
 
     private fun buildFullRecipeDomainModel(recipeId: String, favoriteRecipeIds: List<String>) =
@@ -71,6 +75,23 @@ internal class GroceryListDataRepository(
                 isInGroceryList = true,
             )
         }
+
+    private fun applyServingsToIngredients(
+        groceryRecipe: GroceryDomainModel.Recipe,
+    ): List<IngredientDomainModel> {
+        val factor = groceryRecipe.servingsAmount.toFloat() / groceryRecipe.recipeDomainModel.servingsNumber.toFloat()
+        return groceryRecipe.recipeDomainModel.ingredients.map { ingredient ->
+            when (ingredient) {
+                is IngredientDomainModel.WithoutQuantity -> ingredient
+                is IngredientDomainModel.WithQuantity.WithoutUnit -> ingredient.copy(
+                    quantity = ingredient.quantity * factor
+                )
+                is IngredientDomainModel.WithQuantity.WithUnit -> ingredient.copy(
+                    quantity = ingredient.quantity * factor
+                )
+            }
+        }
+    }
 
     private fun List<IngredientDomainModel>.mergeIngredients(): List<IngredientDomainModel> {
         val result = mutableListOf<IngredientDomainModel>()
@@ -113,4 +134,3 @@ internal class GroceryListDataRepository(
         return result
     }
 }
-

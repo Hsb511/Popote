@@ -18,10 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -84,6 +81,7 @@ fun GroceryListData(
                 cellProperty = cellProperty,
                 servingsAmount = servingsAmount,
                 onRecipeClick = { onAction(GroceryListAction.OnRecipeClick(cellProperty.id)) },
+                onChangeServingsAmount = { newAmount -> onAction(GroceryListAction.ChangeServingsAmount(cellProperty.id, newAmount)) },
                 onCellAction = { cellAction -> onAction(GroceryListAction.OnCellAction(cellAction, cellProperty.id, cellProperty.title)) },
             )
 
@@ -170,7 +168,6 @@ private fun GroceryListRecipe(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier.padding(vertical = 4.dp),
     ) {
-        var currentAmount by remember { mutableIntStateOf(servingsAmount) }
         Cell(
             cellProperty = cellProperty,
             onAction = onCellAction,
@@ -179,10 +176,10 @@ private fun GroceryListRecipe(
                 .clickable { onRecipeClick() }
         )
         RecipeServingsWidget(
-            currentServingsAmount = currentAmount.toString(),
+            currentServingsAmount = servingsAmount.toString(),
             isLabelVisible = false,
-            onAddOneServing = { onChangeServingsAmount(currentAmount + 1) },
-            onSubtractOneServing = { if (currentAmount > 1) onChangeServingsAmount(currentAmount - 1) },
+            onAddOneServing = { onChangeServingsAmount(servingsAmount + 1) },
+            onSubtractOneServing = { if (servingsAmount > 1) onChangeServingsAmount(servingsAmount - 1) },
             onValueChanged = { newValue ->
                 val newAmount = newValue.toIntOrNull()
                 if (newAmount != null && newAmount > 0) {
