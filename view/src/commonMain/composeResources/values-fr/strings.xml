@@ -113,4 +113,6 @@
     <string name="grocery_list_empty_description_part2">en bas à droite des images des recettes.</string>
     <string name="snackbar_grocery_list">Recette ajoutée à votre liste de courses</string>
     <string name="snackbar_grocery_list_action">annuler</string>
+    <string name="grocery_list_clear_dialog_title">Vider la liste de courses</string>
+    <string name="grocery_list_clear_dialog_description">Êtes-vous sûr de vouloir vider votre liste de courses ? Une fois que vous aurez cliqué sur « Confirmer », elle sera définitivement vidée. Sinon, cliquez sur « Annuler ».</string>
 </resources>

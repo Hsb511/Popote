@@ -113,4 +113,6 @@
     <string name="grocery_list_empty_description_part2">at the bottom right of the recipe images.</string>
     <string name="snackbar_grocery_list">Recipe added to your grocery list</string>
     <string name="snackbar_grocery_list_action">undo</string>
+    <string name="grocery_list_clear_dialog_title">Empty grocery list</string>
+    <string name="grocery_list_clear_dialog_description">Are you sure you want to empty your grocery list ? Once you click "confirm" it will be lost forever, otherwise click on "dismiss".</string>
 </resources>

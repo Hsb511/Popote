@@ -23,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +40,13 @@ import com.team23.neuracrsrecipes.model.property.IconProperty
 import com.team23.neuracrsrecipes.model.uimodel.GroceryListUiModel
 import com.team23.view.Res
 import com.team23.view.ds.cell.Cell
+import com.team23.view.ds.dialog.SimpleAlertDialog
 import com.team23.view.ds.icon.PopoteIcon
 import com.team23.view.extension.getCurrentScreenWidth
 import com.team23.view.extension.topScreenHeight
 import com.team23.view.grocery_list_clear_a11y
+import com.team23.view.grocery_list_clear_dialog_description
+import com.team23.view.grocery_list_clear_dialog_title
 import com.team23.view.grocery_list_ingredients_section
 import com.team23.view.grocery_list_recipes_section
 import com.team23.view.grocery_list_title
@@ -118,13 +122,15 @@ fun GroceryListData(
 private fun GroceryListHeader(
     clearList: () -> Unit = {},
 ) {
+
+    val isClearAllDialogVisible = remember { mutableStateOf(false) }
     Row {
         Text(
             text = stringResource(Res.string.grocery_list_title),
             style = MaterialTheme.typography.displaySmall,
             modifier = Modifier.weight(1f)
         )
-        IconButton(onClick = { clearList()}) {
+        IconButton(onClick = { isClearAllDialogVisible.value = true }) {
             Icon(
                 imageVector = Icons.Outlined.Delete,
                 contentDescription = stringResource(Res.string.grocery_list_clear_a11y),
@@ -133,6 +139,13 @@ private fun GroceryListHeader(
             )
         }
     }
+
+    SimpleAlertDialog(
+        title = Res.string.grocery_list_clear_dialog_title,
+        description = Res.string.grocery_list_clear_dialog_description,
+        isVisible = isClearAllDialogVisible,
+        confirmButtonClick = clearList,
+    )
 }
 
 @Composable
