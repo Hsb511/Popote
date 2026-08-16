@@ -47,7 +47,7 @@ class GroceryListViewModel(
             is GroceryListAction.Clear -> clearGroceryList()
             is GroceryListAction.OnRecipeClick -> handleRecipeClick(action.recipeId)
             is GroceryListAction.ToggleIngredient -> toggleIngredient(action.ingredient)
-            is GroceryListAction.CopyIngredients -> TODO()
+            is GroceryListAction.CopyIngredients -> handleCopyIngredients()
             is GroceryListAction.OnCellAction -> handleCellAction(action)
         }
     }
@@ -79,6 +79,16 @@ class GroceryListViewModel(
             }
         }
     }
+
+    private fun handleCopyIngredients() {
+        viewModelScope.launch {
+            val rawTextToCopy = uiState.value.ingredients
+                .filter { it.isChecked }
+                .joinToString("\n") { "${it.displayMainLabel} - ${it.displaySecondaryLabel}" }
+            _uiEvent.emit(GroceryUiEvent.CopyIngredients(rawTextToCopy))
+        }
+    }
+
 
     private fun handleCellAction(action: GroceryListAction.OnCellAction) {
         viewModelScope.launch(Dispatchers.IO) {

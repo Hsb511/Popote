@@ -14,6 +14,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -35,6 +37,7 @@ internal data object GroceryListScreen : Screen {
         val viewModel = koinInject<GroceryListViewModel>()
         val appNavigator = koinInject<AppNavigator>()
         val navigator = LocalNavigator.currentOrThrow
+        val clipboardManager = LocalClipboardManager.current
         val uiState by viewModel.uiState.collectAsState()
 
         LocalTitle.current.value = null
@@ -58,6 +61,7 @@ internal data object GroceryListScreen : Screen {
             viewModel.uiEvent.collectLatest { event ->
                 when (event) {
                     is GroceryUiEvent.OpenRecipe -> appNavigator.navigateToRecipe(navigator, event.recipeId)
+                    is GroceryUiEvent.CopyIngredients -> clipboardManager.setText(AnnotatedString(event.rawText))
                 }
             }
         }

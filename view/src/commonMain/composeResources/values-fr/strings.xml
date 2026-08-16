@@ -107,7 +107,7 @@
     <string name="grocery_list_title">Liste de courses</string>
     <string name="grocery_list_clear_a11y">Vider la liste</string>
     <string name="grocery_list_recipes_section">Recettes</string>
-    <string name="grocery_list_ingredients_section">Ingredients à acheter</string>
+    <string name="grocery_list_ingredients_section">Ingrédients à acheter</string>
     <string name="grocery_list_empty_title">Votre liste de courses est vide !</string>
     <string name="grocery_list_empty_description_part1">Vous pouvez ajouter une recette à votre list de courses en cliquant sur le</string>
     <string name="grocery_list_empty_description_part2">en bas à droite des images des recettes.</string>
