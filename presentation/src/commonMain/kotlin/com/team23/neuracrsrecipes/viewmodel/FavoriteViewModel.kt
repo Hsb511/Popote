@@ -114,6 +114,22 @@ class FavoriteViewModel(
     fun onToggleGroceryListClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryListRepository.updateGroceryList(recipeId)
+            withContext(Dispatchers.Main) {
+                val currentState = _uiState.value
+                if (currentState is FavoriteUiState.Data.WithFavorites) {
+                    val updatedFavorites = currentState.favorites.map { recipe ->
+                        if (recipe.id == recipeId) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                snackbarHandler.showGroceryListMessage(recipe.title)
+                            }
+                            recipe.copy(isInGroceryList = !recipe.isInGroceryList)
+                        } else {
+                            recipe
+                        }
+                    }
+                    _uiState.value = currentState.copy(favorites = updatedFavorites)
+                }
+            }
         }
     }
 }

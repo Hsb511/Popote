@@ -29,6 +29,7 @@ internal class RecipeDataRepository(
 ) : RecipeRepository {
     private val baseRecipeDao = popoteLocalDataSource.baseRecipeDao
     private val favoriteDao = popoteLocalDataSource.favoriteDao
+    private val groceryListDao = popoteLocalDataSource.groceryListDao
     private val ingredientDao = popoteLocalDataSource.ingredientDao
     private val instructionDao = popoteLocalDataSource.instructionDao
     private val summarizedRecipeDao = popoteLocalDataSource.summarizedRecipeDao
@@ -38,7 +39,7 @@ internal class RecipeDataRepository(
         val summarizedRecipeDataModels = summarizedRecipeDao.getAll()
         val summarizedRecipeDomainModels =
             summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipeDataModels)
-        return summarizedRecipeDomainModels.map(::enrichWithFavorite)
+        return summarizedRecipeDomainModels.map(::enrichWithFavoriteAndGroceryList)
     }
 
     override suspend fun getCountSummarizedRecipes(): Int = summarizedRecipeDao.getCount().toInt()
@@ -79,7 +80,7 @@ internal class RecipeDataRepository(
     override fun getSummarizedRecipesBySearchText(searchText: String): Flow<List<RecipeDomainModel.Summarized>> =
         summarizedRecipeDao.searchBaseRecipeByTitle(searchText)
             .map(summarizedRecipeMapper::toSummarizedRecipeDomainModels)
-            .map { it.map(::enrichWithFavorite) }
+            .map { it.map(::enrichWithFavoriteAndGroceryList) }
 
     override suspend fun updateRecipe(recipe: RecipeDomainModel.Full) {
         val fullRecipeDataModel = fullRecipeMapper.toFullRecipeDataModel(recipe)
@@ -149,9 +150,10 @@ internal class RecipeDataRepository(
             )
         }
 
-    private fun enrichWithFavorite(recipe: RecipeDomainModel.Summarized) =
+    private fun enrichWithFavoriteAndGroceryList(recipe: RecipeDomainModel.Summarized) =
         recipe.copy(
             isFavorite = favoriteDao.isStored(recipe.id),
+            isInGroceryList = groceryListDao.isStored(recipe.id),
             source = sourceMapper.toDomainSource(
                 baseRecipe = baseRecipeDao.findBaseRecipeById(
                     recipe.id

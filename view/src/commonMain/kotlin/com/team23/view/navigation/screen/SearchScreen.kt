@@ -136,7 +136,7 @@ internal fun SearchScreen(
                         when (action) {
                             CellAction.FavoriteClick -> performAction(SearchAction.FavoriteClick(item.id, item.cellProperty.title))
                             CellAction.LocalPhoneClick -> performAction(SearchAction.LocalPhoneClick)
-                            CellAction.GroceryListClick -> TODO()
+                            CellAction.GroceryListClick -> performAction(SearchAction.GroceryListClick(item.id, item.cellProperty.title))
                         }
                     },
                     modifier = Modifier

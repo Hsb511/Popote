@@ -1,6 +1,7 @@
 package com.team23.data.repository
 
 import com.team23.data.datasource.PopoteLocalDataSource
+import com.team23.data.mappers.SourceMapper
 import com.team23.data.mappers.SummarizedRecipeMapper
 import com.team23.data.models.FavoriteDataModel
 import com.team23.domain.favorite.repository.FavoriteRepository
@@ -11,9 +12,12 @@ import kotlinx.coroutines.flow.map
 internal class FavoriteDataRepository(
 	popoteLocalDataSource: PopoteLocalDataSource,
 	private val summarizedRecipeMapper: SummarizedRecipeMapper,
+	private val sourceMapper: SourceMapper,
 ) : FavoriteRepository {
 	private val favoriteDao = popoteLocalDataSource.favoriteDao
+	private val groceryListDao = popoteLocalDataSource.groceryListDao
 	private val summarizedRecipeDao = popoteLocalDataSource.summarizedRecipeDao
+	private val baseRecipeDao = popoteLocalDataSource.baseRecipeDao
 
 	override suspend fun updateFavorite(recipeId: String): Boolean {
 		if (favoriteDao.isStored(recipeId)) {
@@ -31,10 +35,14 @@ internal class FavoriteDataRepository(
 			}
 			.map { summarizedRecipe ->
 				summarizedRecipeMapper.toSummarizedRecipeDomainModels(summarizedRecipe).map { recipe ->
-					// val baseRecipe = recipeDao.findFullRecipeById(recipe.id)?.recipe
 					recipe.copy(
 						isFavorite = favoriteDao.isStored(recipe.id),
-						// source = sourceMapper.toDomainSource(baseRecipe),
+						isInGroceryList = groceryListDao.isStored(recipe.id),
+						source = sourceMapper.toDomainSource(
+							baseRecipe = baseRecipeDao.findBaseRecipeById(
+								recipe.id
+							)
+						),
 					)
 				}
 			}

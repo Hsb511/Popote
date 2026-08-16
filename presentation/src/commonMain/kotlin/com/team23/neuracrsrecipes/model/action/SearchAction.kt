@@ -8,4 +8,5 @@ sealed interface SearchAction {
     data class RecipeClick(val recipeId: String) : SearchAction
     data class FavoriteClick(val recipeId: String, val recipeTitle: String) : SearchAction
     data object LocalPhoneClick : SearchAction
+    data class GroceryListClick(val recipeId: String, val recipeTitle: String) : SearchAction
 }

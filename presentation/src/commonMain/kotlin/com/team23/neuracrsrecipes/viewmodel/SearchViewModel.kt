@@ -2,6 +2,7 @@ package com.team23.neuracrsrecipes.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.grocery.repository.GroceryListRepository
 import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
@@ -28,6 +29,7 @@ class SearchViewModel(
     private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
     private val fullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val favoriteRepository: FavoriteRepository,
+    private val groceryListRepository: GroceryListRepository,
     private val tagUiMapper: TagUiMapper,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val viewModelScope: CoroutineScope,
@@ -64,6 +66,7 @@ class SearchViewModel(
             is SearchAction.FavoriteClick -> favoriteClick(action)
             is SearchAction.RecipeClick -> recipeClick(action.recipeId)
             is SearchAction.LocalPhoneClick -> onLocalPhoneClick()
+            is SearchAction.GroceryListClick -> onGroceryListClick(action)
         }
     }
 
@@ -119,12 +122,26 @@ class SearchViewModel(
     private fun favoriteClick(action: SearchAction.FavoriteClick) {
         viewModelScope.launch(Dispatchers.IO) {
             val isFavorite = favoriteRepository.updateFavorite(action.recipeId)
-            recomputeState(action.recipeId)
+            recomputeState(action.recipeId, toggleFavorite = true)
             if (isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(action.recipeTitle)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
                     favoriteRepository.updateFavorite(action.recipeId)
-                    recomputeState(action.recipeId)
+                    recomputeState(action.recipeId, toggleFavorite = true)
+                }
+            }
+        }
+    }
+
+    private fun onGroceryListClick(action: SearchAction.GroceryListClick) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val isFavorite = groceryListRepository.updateGroceryList(action.recipeId)
+            recomputeState(action.recipeId, toggleGroceryList = true)
+            if (isFavorite) {
+                val result = snackbarHandler.showGroceryListMessage(action.recipeTitle)
+                if (result == SnackbarResultUiModel.ActionPerformed) {
+                    groceryListRepository.updateGroceryList(action.recipeId)
+                    recomputeState(action.recipeId, toggleGroceryList = true)
                 }
             }
         }
@@ -136,13 +153,19 @@ class SearchViewModel(
         }
     }
 
-    private fun recomputeState(recipeId: String) {
+    private fun recomputeState(
+        recipeId: String,
+        toggleFavorite: Boolean = false,
+        toggleGroceryList: Boolean = false,
+    ) {
         val currentState = _recipes.value
         val newRecipes = currentState.toMutableList()
         val recipe = newRecipes.first { recipe -> recipe.id == recipeId }
         val recipeIndex = newRecipes.indexOf(recipe)
         newRecipes.remove(recipe)
-        newRecipes.add(recipeIndex, recipe.copy(isFavorite = !recipe.isFavorite))
+        val newIsFavorite = if (toggleFavorite) !recipe.isFavorite else recipe.isFavorite
+        val newIsInGroceryList = if (toggleGroceryList) !recipe.isInGroceryList else recipe.isInGroceryList
+        newRecipes.add(recipeIndex, recipe.copy(isFavorite = newIsFavorite, isInGroceryList = newIsInGroceryList))
         _recipes.value = newRecipes
     }
 }
