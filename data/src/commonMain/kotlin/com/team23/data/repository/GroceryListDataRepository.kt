@@ -6,7 +6,6 @@ import com.team23.data.models.FullRecipeDataModel
 import com.team23.data.models.GroceryListDataModel
 import com.team23.domain.grocery.model.GroceryDomainModel
 import com.team23.domain.grocery.repository.GroceryListRepository
-import com.team23.domain.recipe.model.IngredientDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -35,9 +34,9 @@ internal class GroceryListDataRepository(
         return groceryListDao.isStored(recipeId)
     }
 
-    override fun getGroceryList(): Flow<GroceryDomainModel> =
+    override fun getGroceryListRecipes(): Flow<List<GroceryDomainModel.Recipe>> =
         combine(groceryListDao.getAll(), favoriteDao.getAllFavorites()) { groceryItems, favoriteRecipeIds ->
-            val recipes = groceryItems.mapNotNull { item ->
+            groceryItems.mapNotNull { item ->
                 buildFullRecipeDomainModel(item.recipeId, favoriteRecipeIds)?.let { fullRecipe ->
                     GroceryDomainModel.Recipe(
                         recipeDomainModel = fullRecipe,
@@ -45,14 +44,6 @@ internal class GroceryListDataRepository(
                     )
                 }
             }
-            val ingredients = recipes
-                .flatMap { recipe -> applyServingsToIngredients(recipe) }
-                .mergeIngredients()
-                .sortedBy { it.label }
-                .map { ingredient ->
-                    GroceryDomainModel.Ingredient(ingredientDomainModel = ingredient)
-                }
-            GroceryDomainModel(recipes = recipes, ingredients = ingredients)
         }
 
     override suspend fun clearAllGroceryList() {
@@ -89,62 +80,4 @@ internal class GroceryListDataRepository(
                 isInGroceryList = true,
             )
         }
-
-    private fun applyServingsToIngredients(
-        groceryRecipe: GroceryDomainModel.Recipe,
-    ): List<IngredientDomainModel> {
-        val factor = groceryRecipe.servingsAmount.toFloat() / groceryRecipe.recipeDomainModel.servingsNumber.toFloat()
-        return groceryRecipe.recipeDomainModel.ingredients.map { ingredient ->
-            when (ingredient) {
-                is IngredientDomainModel.WithoutQuantity -> ingredient
-                is IngredientDomainModel.WithQuantity.WithoutUnit -> ingredient.copy(
-                    quantity = ingredient.quantity * factor
-                )
-                is IngredientDomainModel.WithQuantity.WithUnit -> ingredient.copy(
-                    quantity = ingredient.quantity * factor
-                )
-            }
-        }
-    }
-
-    private fun List<IngredientDomainModel>.mergeIngredients(): List<IngredientDomainModel> {
-        val result = mutableListOf<IngredientDomainModel>()
-
-        for (ingredient in this) {
-            when (ingredient) {
-                is IngredientDomainModel.WithoutQuantity -> {
-                    val alreadyExists = result.any {
-                        it is IngredientDomainModel.WithoutQuantity &&
-                            it.label == ingredient.label
-                    }
-
-                    if (!alreadyExists) {
-                        result += ingredient
-                    }
-                }
-
-                is IngredientDomainModel.WithQuantity.WithoutUnit -> {
-                    val index = result.indexOfFirst {
-                        it is IngredientDomainModel.WithQuantity.WithoutUnit &&
-                            it.label == ingredient.label
-                    }
-
-                    if (index == -1) {
-                        result += ingredient
-                    } else {
-                        val existing =
-                            result[index] as IngredientDomainModel.WithQuantity.WithoutUnit
-
-                        result[index] = existing.copy(
-                            quantity = existing.quantity + ingredient.quantity
-                        )
-                    }
-                }
-
-                is IngredientDomainModel.WithQuantity.WithUnit -> result += ingredient
-            }
-        }
-
-        return result
-    }
 }

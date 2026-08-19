@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -30,7 +31,8 @@ kotlin {
             implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
-            implementation(libs.koin.test)
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

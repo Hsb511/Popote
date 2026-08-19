@@ -12,6 +12,7 @@ kotlinxDatetime = "0.7.1"
 kotlinxSerializer = "1.9.0"
 ksoup = "0.1.2"
 ktor = "2.3.7"
+mokkery = "3.0.0"
 sqlDelight = "2.0.1"
 voyager = "1.0.0"
 org-jetbrains-kotlin-jvm = "1.9.21"
@@ -27,6 +28,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serializer = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializer" }
 ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
@@ -56,6 +58,7 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 sql-delight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 # kotlinNativeCocoapods = { id  = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 
 [bundles]
 ktor-client = [

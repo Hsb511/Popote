@@ -1,5 +1,6 @@
 package com.team23.domain
 
+import com.team23.domain.grocery.usecase.GetGroceryListUseCase
 import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.domain.recipe.usecase.CreateNewRecipeUseCase
@@ -36,6 +37,7 @@ val domainModule = module {
     factoryOf(::SaveRecipeUseCase)
     factoryOf(::SetRecipeBackToTempUseCase)
     factoryOf(::UpdateTempRecipeUseCase)
+    factoryOf(::GetGroceryListUseCase)
 
     // Search
     factoryOf(::SearchSummarizedRecipesUseCase)

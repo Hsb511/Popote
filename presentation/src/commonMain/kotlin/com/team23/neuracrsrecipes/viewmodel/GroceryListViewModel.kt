@@ -2,6 +2,7 @@ package com.team23.neuracrsrecipes.viewmodel
 
 import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.grocery.repository.GroceryListRepository
+import com.team23.domain.grocery.usecase.GetGroceryListUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.GroceryListUiMapper
 import com.team23.neuracrsrecipes.model.action.CellAction
@@ -13,7 +14,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class GroceryListViewModel(
+    getGroceryListUseCase: GetGroceryListUseCase,
     groceryListUiMapper: GroceryListUiMapper,
     val viewModelScope: CoroutineScope,
     val groceryListRepository: GroceryListRepository,
@@ -30,7 +31,7 @@ class GroceryListViewModel(
 ) {
 
     val uiState: StateFlow<GroceryListUiModel> =
-        combine(groceryListRepository.getGroceryList(), groceryListRepository.getExcludedIngredientIds()) { groceryList, excludedIngredientIds ->
+        combine(getGroceryListUseCase.invoke(), groceryListRepository.getExcludedIngredientIds()) { groceryList, excludedIngredientIds ->
             groceryListUiMapper.toUiModel(groceryList, excludedIngredientIds)
         }.stateIn(
             scope = viewModelScope,

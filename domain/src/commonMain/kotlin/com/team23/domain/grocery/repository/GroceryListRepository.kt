@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface GroceryListRepository {
     suspend fun toggleInGroceryList(recipeId: String): Boolean
     suspend fun updateServings(recipeId: String, servingsAmount: Int)
-    fun getGroceryList(): Flow<GroceryDomainModel>
+    fun getGroceryListRecipes(): Flow<List<GroceryDomainModel.Recipe>>
     suspend fun clearAllGroceryList()
     fun getExcludedIngredientIds(): Flow<Set<String>>
     suspend fun toggleExcludedIngredient(ingredientId: String): Boolean
