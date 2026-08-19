@@ -44,35 +44,34 @@ class GetGroceryListUseCase(
         for (ingredient in this) {
             when (ingredient) {
                 is IngredientDomainModel.WithoutQuantity -> {
-                    val alreadyExists = result.any {
-                        it is IngredientDomainModel.WithoutQuantity &&
-                            it.label == ingredient.label
-                    }
-
-                    if (!alreadyExists) {
+                    if (result.none { ingredient.shouldMergeWith(it) }) {
                         result += ingredient
                     }
                 }
 
                 is IngredientDomainModel.WithQuantity.WithoutUnit -> {
-                    val index = result.indexOfFirst {
-                        it is IngredientDomainModel.WithQuantity.WithoutUnit &&
-                            it.label == ingredient.label
-                    }
+                    val index = result.indexOfFirst { ingredient.shouldMergeWith(it) }
 
                     if (index == -1) {
                         result += ingredient
                     } else {
-                        val existing =
-                            result[index] as IngredientDomainModel.WithQuantity.WithoutUnit
+                        val existing = result[index] as IngredientDomainModel.WithQuantity.WithoutUnit
 
-                        result[index] = existing.copy(
-                            quantity = existing.quantity + ingredient.quantity
-                        )
+                        result[index] = existing.copy(quantity = existing.quantity + ingredient.quantity)
                     }
                 }
 
-                is IngredientDomainModel.WithQuantity.WithUnit -> result += ingredient
+                is IngredientDomainModel.WithQuantity.WithUnit -> {
+                    val index = result.indexOfFirst { ingredient.shouldMergeWith(it) }
+
+                    if (index == -1) {
+                        result += ingredient
+                    } else {
+                        val existing = result[index] as IngredientDomainModel.WithQuantity.WithUnit
+
+                        result[index] = existing.copy(quantity = existing.quantity + ingredient.quantity)
+                    }
+                }
             }
         }
 

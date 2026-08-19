@@ -156,7 +156,7 @@ class GetGroceryListUseCaseTest {
     }
 
     @Test
-    fun `Given duplicate ingredients with unit, Then they are not merged`() = runTest {
+    fun `Given duplicate ingredients with same unit, Then quantities are summed`() = runTest {
         // Given
         val recipe1 = emptyGroceryRecipe(ingredients = listOf(ingredientWithUnit(quantity = 100f)))
         val recipe2 = emptyGroceryRecipe(ingredients = listOf(ingredientWithUnit(quantity = 200f)))
@@ -167,9 +167,32 @@ class GetGroceryListUseCaseTest {
         val result = getGroceryListUseCase.invoke().first()
 
         // Then
+        assertEquals(
+            ingredientWithUnit(quantity = 300f),
+            result.ingredients.single().ingredientDomainModel,
+        )
+    }
+
+    @Test
+    fun `Given duplicate ingredients with different units, Then they are not merged`() = runTest {
+        // Given
+        val recipe1 = emptyGroceryRecipe(ingredients = listOf(ingredientWithUnit(quantity = 100f, unit = "g")))
+        val recipe2 = emptyGroceryRecipe(ingredients = listOf(ingredientWithUnit(quantity = 1f, unit = "kg")))
+
+        every { groceryListRepository.getGroceryListRecipes() } returns flowOf(listOf(recipe1, recipe2))
+
+        // When
+        val result = getGroceryListUseCase.invoke().first()
+
+        // Then
         assertEquals(2, result.ingredients.size)
-        assertEquals(ingredientWithUnit(quantity = 100f), result.ingredients[0].ingredientDomainModel)
-        assertEquals(ingredientWithUnit(quantity = 200f), result.ingredients[1].ingredientDomainModel)
+        assertEquals(
+            listOf(
+                ingredientWithUnit(quantity = 100f, unit = "g"),
+                ingredientWithUnit(quantity = 1f, unit = "kg"),
+            ),
+            result.ingredients.map { it.ingredientDomainModel },
+        )
     }
 
     @Test
@@ -199,6 +222,23 @@ class GetGroceryListUseCaseTest {
     }
 
     @Test
+    fun `Given duplicate ingredients with same unit and different casing, Then quantities are summed`() = runTest {
+        // Given
+        val recipe1 = emptyGroceryRecipe(ingredients = listOf(ingredientWithUnit().copy(label = "flour")))
+        val recipe2 = emptyGroceryRecipe(ingredients = listOf(ingredientWithUnit().copy(label = "FLOuR")))
+        every { groceryListRepository.getGroceryListRecipes() } returns flowOf(listOf(recipe1, recipe2))
+
+        // When
+        val result = getGroceryListUseCase.invoke().first()
+
+        // Then
+        assertEquals(
+            ingredientWithUnit().copy(label = "flour", quantity = 200f),
+            result.ingredients.single().ingredientDomainModel,
+        )
+    }
+
+    @Test
     fun `Given ingredients are unsorted, Then ingredients are sorted alphabetically ignoring case`() = runTest {
         // Given
         val tomato = IngredientDomainModel.WithoutQuantity("Tomato")
@@ -222,8 +262,8 @@ class GetGroceryListUseCaseTest {
     private fun ingredientWithoutUnit(quantity: Float = 2f) =
         IngredientDomainModel.WithQuantity.WithoutUnit(label = "Egg", quantity = quantity)
 
-    private fun ingredientWithUnit(quantity: Float = 100f) =
-        IngredientDomainModel.WithQuantity.WithUnit(label = "Flour", quantity = quantity, unit = "g")
+    private fun ingredientWithUnit(quantity: Float = 100f, unit: String = "g") =
+        IngredientDomainModel.WithQuantity.WithUnit(label = "Flour", quantity = quantity, unit = unit)
 
     private fun emptyGroceryRecipe(
         servingsNumber: Int = 2,
