@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -73,7 +74,7 @@ class HomeViewModel(
                         )
                     }
                     recipes.forEach { recipe ->
-                        getFullRecipeByIdUseCase.invoke(recipe.id).getOrNull()?.let { fullRecipe ->
+                        getFullRecipeByIdUseCase.invoke(recipe.id).firstOrNull()?.getOrNull()?.let { fullRecipe ->
                             val currentState = _uiState.value
                             if (currentState is HomeUiState.Data) {
                                 withContext(Dispatchers.Main) {

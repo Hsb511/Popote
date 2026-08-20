@@ -7,6 +7,7 @@ import data.AppDatabaseQueries
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 internal class FavoriteDao(
     private val dbQueries: AppDatabaseQueries,
@@ -21,6 +22,11 @@ internal class FavoriteDao(
     fun delete(recipeId: String) {
         dbQueries.deleteFavorite(recipeId)
     }
+
+    fun isStoredFlow(recipeId: String): Flow<Boolean> = dbQueries.isFavoriteStored(recipeId)
+        .asFlow()
+        .mapToList(Dispatchers.IO)
+        .map { it.firstOrNull() == true }
 
     fun getAllFavorites(): Flow<List<String>> = dbQueries.selectAllFavorites(toDataModel())
         .asFlow()

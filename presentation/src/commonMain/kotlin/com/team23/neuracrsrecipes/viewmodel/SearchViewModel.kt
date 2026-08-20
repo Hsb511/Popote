@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -109,7 +110,7 @@ class SearchViewModel(
                 // Load cuisine flags for the displayed recipes
                 viewModelScope.launch(Dispatchers.IO) {
                     val updatedRecipes = recipeUiModels.map { recipe ->
-                        fullRecipeByIdUseCase.invoke(recipe.id).getOrNull()?.let { fullRecipe ->
+                        fullRecipeByIdUseCase.invoke(recipe.id).firstOrNull()?.getOrNull()?.let { fullRecipe ->
                             recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags))
                         } ?: recipe
                     }

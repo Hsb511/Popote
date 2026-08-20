@@ -49,24 +49,22 @@ class RecipeViewModel(
             _uiState.value = RecipeUiState.Error(createErrorUiModel("The recipe link is invalid"))
         } else {
             viewModelScope.launch(Dispatchers.Main) {
-                getFullRecipeByIdUseCase.invoke(sanitizedRecipeId.toUrlRecipeId())
-                    .onSuccess { fullRecipe ->
+                getFullRecipeByIdUseCase.invoke(sanitizedRecipeId.toUrlRecipeId()).collect { result ->
+                    result.onSuccess { fullRecipe ->
                         val recipeUiModel = recipeUiMapper.toRecipeUiModel(fullRecipe)
                         if (currentServingsAmount.value == 0) {
                             currentServingsAmount.value = recipeUiModel.defaultServingsAmount
                         }
-                        if (_uiState.value !is RecipeUiState.Data) {
-                            _uiState.value = RecipeUiState.Data(recipeUiModel)
-                        }
+                        _uiState.value = RecipeUiState.Data(recipeUiModel)
                         if (!this@RecipeViewModel::defaultIngredients.isInitialized) {
                             defaultIngredients = recipeUiModel.ingredients
                         }
-                    }
-                    .onFailure {
+                    }.onFailure {
                         _uiState.value = RecipeUiState.Error(
                             createErrorUiModel("${it.getScopeName()} ${it.message}")
                         )
                     }
+                }
             }
         }
     }
@@ -110,12 +108,10 @@ class RecipeViewModel(
     private fun favoriteClick(recipe: RecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteRepository.updateFavorite(recipe.id)
-            recomputeState(recipe, isFavorite = !recipe.isFavorite)
             if (!recipe.isFavorite) {
                 val result = snackbarHandler.showFavoriteMessage(recipe.title)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
                     favoriteRepository.updateFavorite(recipe.id)
-                    recomputeState(recipe, isFavorite = !recipe.isFavorite)
                 }
             }
         }
@@ -124,12 +120,10 @@ class RecipeViewModel(
     private fun toggleGroceryList(recipe: RecipeUiModel) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryListRepository.toggleInGroceryList(recipe.id)
-            recomputeState(recipe, isInGroceryList = !recipe.isInGroceryList)
             if (!recipe.isInGroceryList) {
                 val result = snackbarHandler.showGroceryListMessage(recipe.title)
                 if (result == SnackbarResultUiModel.ActionPerformed) {
                     groceryListRepository.toggleInGroceryList(recipe.id)
-                    recomputeState(recipe, isInGroceryList = !recipe.isInGroceryList)
                 }
             }
         }
@@ -166,17 +160,6 @@ class RecipeViewModel(
             } else {
                 snackbarHandler.showRecipeHasNotBeenDeleted(recipe.title)
             }
-        }
-    }
-
-    private fun recomputeState(
-        recipe: RecipeUiModel,
-        isFavorite: Boolean = recipe.isFavorite,
-        isInGroceryList: Boolean = recipe.isInGroceryList,
-    ) {
-        val currentState = _uiState.value
-        if (currentState is RecipeUiState.Data) {
-            _uiState.value = RecipeUiState.Data(recipe.copy(isFavorite = isFavorite, isInGroceryList = isInGroceryList))
         }
     }
 

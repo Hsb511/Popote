@@ -28,6 +28,8 @@ internal class FavoriteDataRepository(
 		return favoriteDao.isStored(recipeId)
 	}
 
+	override fun isFavorite(recipeId: String): Flow<Boolean> = favoriteDao.isStoredFlow(recipeId)
+
 	override fun getAllFavorites(): Flow<List<RecipeDomainModel.Summarized>> =
 		combine(favoriteDao.getAllFavorites(), groceryListDao.getAll()) { recipeIdList, groceryItems ->
 			val summarizedRecipe = summarizedRecipeDao.getAll().filter { summarizedRecipe -> recipeIdList.contains(summarizedRecipe.href) }

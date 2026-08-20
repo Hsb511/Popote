@@ -73,7 +73,8 @@ internal class RecipeDataRepository(
     override suspend fun getFullRecipeById(recipeId: String): RecipeDomainModel.Full? =
         getFullDataRecipeById(recipeId)?.let { fullRecipe ->
             fullRecipeMapper.toFullRecipeDomainModel(fullRecipe).copy(
-                isFavorite = favoriteDao.isStored(recipeId)
+                isFavorite = favoriteDao.isStored(recipeId),
+                isInGroceryList = groceryListDao.isStored(recipeId),
             )
         }
 

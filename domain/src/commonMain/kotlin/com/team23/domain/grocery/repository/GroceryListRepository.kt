@@ -10,4 +10,5 @@ interface GroceryListRepository {
     suspend fun clearAllGroceryList()
     fun getExcludedIngredientIds(): Flow<Set<String>>
     suspend fun toggleExcludedIngredient(ingredientId: String): Boolean
+    fun isInGroceryList(recipeId: String): Flow<Boolean>
 }

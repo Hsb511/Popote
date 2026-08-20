@@ -7,4 +7,5 @@ interface FavoriteRepository {
 	suspend fun updateFavorite(recipeId: String): Boolean
 	fun getAllFavorites(): Flow<List<RecipeDomainModel.Summarized>>
 	suspend fun clearAllFavorites()
+	fun isFavorite(recipeId: String): Flow<Boolean>
 }

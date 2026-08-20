@@ -7,6 +7,7 @@ import data.AppDatabaseQueries
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 internal class GroceryListDao(
     private val dbQueries: AppDatabaseQueries,
@@ -14,6 +15,11 @@ internal class GroceryListDao(
 
     fun isStored(recipeId: String): Boolean =
         dbQueries.isGroceryListItemStored(recipeId).executeAsOne()
+
+    fun isStoredFlow(recipeId: String): Flow<Boolean> = dbQueries.isGroceryListItemStored(recipeId)
+        .asFlow()
+        .mapToList(Dispatchers.IO)
+        .map { it.firstOrNull() == true }
 
     fun insert(groceryListDataModel: GroceryListDataModel) {
         dbQueries.insertGroceryListItem(

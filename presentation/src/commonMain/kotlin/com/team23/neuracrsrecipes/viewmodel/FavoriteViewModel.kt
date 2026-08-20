@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,9 +64,9 @@ class FavoriteViewModel(
     private fun loadCuisineFlags(recipes: List<SummarizedRecipeUiModel>) {
         viewModelScope.launch(Dispatchers.IO) {
             val updatedRecipesWithCuisine = recipes.map { recipe ->
-                val fullRecipe = getFullRecipeByIdUseCase.invoke(recipe.id).getOrNull()
+                val fullRecipe = getFullRecipeByIdUseCase.invoke(recipe.id).firstOrNull()?.getOrNull()
                 if (fullRecipe != null) {
-                    recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags),)
+                    recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags))
                 } else {
                     recipe
                 }

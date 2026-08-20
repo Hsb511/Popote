@@ -67,6 +67,8 @@ internal class GroceryListDataRepository(
         groceryListDao.updateServings(recipeId, servingsAmount)
     }
 
+    override fun isInGroceryList(recipeId: String): Flow<Boolean> = groceryListDao.isStoredFlow(recipeId)
+
     private fun buildFullRecipeDomainModel(recipeId: String, favoriteRecipeIds: List<String>) =
         baseRecipeDao.findBaseRecipeById(recipeId)?.let { baseRecipe ->
             val fullRecipeDataModel = FullRecipeDataModel(
