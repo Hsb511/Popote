@@ -1,7 +1,7 @@
 package com.team23.domain
 
+import com.team23.domain.favorite.usecase.GetAllFavoritesUseCase
 import com.team23.domain.grocery.usecase.GetGroceryListUseCase
-import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
 import com.team23.domain.recipe.usecase.CreateNewRecipeUseCase
 import com.team23.domain.recipe.usecase.DeleteRecipeUseCase
@@ -23,8 +23,10 @@ import org.koin.dsl.module
 
 val domainModule = module {
     // Preference
-    factoryOf(::GetPreferenceDisplayTypeUseCase)
     factoryOf(::UpdatePreferenceUseCase)
+
+    // Favorite
+    factoryOf(::GetAllFavoritesUseCase)
 
     // Recipe
     factoryOf(::CreateNewRecipeUseCase)

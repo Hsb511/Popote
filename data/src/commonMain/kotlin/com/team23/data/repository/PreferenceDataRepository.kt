@@ -5,6 +5,8 @@ import com.team23.data.mappers.PreferenceMapper
 import com.team23.data.models.PreferenceLabel.DISPLAY_TYPE
 import com.team23.domain.preference.model.PreferenceDomainModel
 import com.team23.domain.preference.repository.PreferenceRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 internal class PreferenceDataRepository(
     popoteLocalDataSource: PopoteLocalDataSource,
@@ -19,7 +21,7 @@ internal class PreferenceDataRepository(
 		}
 	}
 
-	override suspend fun getDisplayType() = preferenceMapper.toDomainDisplayType(
-		preferenceDao.getPreferenceByLabel(DISPLAY_TYPE)
-	)
+	override fun getDisplayType(): Flow<PreferenceDomainModel.DisplayType> = preferenceDao.getPreferenceByLabel(DISPLAY_TYPE)
+		.map { it.toInt() }
+		.map(preferenceMapper::toDomainDisplayType)
 }

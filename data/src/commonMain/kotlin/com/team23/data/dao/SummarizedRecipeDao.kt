@@ -15,6 +15,11 @@ internal class SummarizedRecipeDao(
     internal fun getAll(): List<SummarizedRecipeDataModel> =
         dbQueries.selectAllSummarizedRecipes(toDataModel()).executeAsList()
 
+    internal fun getAllFlow(): Flow<List<SummarizedRecipeDataModel>> =
+        dbQueries.selectAllSummarizedRecipes(toDataModel())
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+
     internal fun getCount(): Long = dbQueries.countAllSummarizedRecipes().executeAsOne()
 
     internal fun insertAll(vararg summarizedRecipeDataModel: SummarizedRecipeDataModel) {

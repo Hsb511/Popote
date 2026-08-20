@@ -1,84 +1,50 @@
 package com.team23.neuracrsrecipes.viewmodel
 
 import com.team23.domain.favorite.repository.FavoriteRepository
+import com.team23.domain.favorite.usecase.GetAllFavoritesUseCase
 import com.team23.domain.grocery.repository.GroceryListRepository
-import com.team23.domain.preference.usecase.GetPreferenceDisplayTypeUseCase
+import com.team23.domain.preference.repository.PreferenceRepository
 import com.team23.domain.preference.usecase.UpdatePreferenceUseCase
-import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.neuracrsrecipes.extension.next
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
 import com.team23.neuracrsrecipes.mapper.DisplayTypeUiMapper
 import com.team23.neuracrsrecipes.mapper.SummarizedRecipeUiMapper
-import com.team23.neuracrsrecipes.mapper.TagUiMapper
 import com.team23.neuracrsrecipes.model.uimodel.SnackbarResultUiModel
-import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 import com.team23.neuracrsrecipes.model.uistate.FavoriteUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FavoriteViewModel(
+    getAllFavoritesUseCase: GetAllFavoritesUseCase,
+    preferenceRepository: PreferenceRepository,
     private val favoriteRepository: FavoriteRepository,
     private val groceryListRepository: GroceryListRepository,
-    private val getPreferenceDisplayTypeUseCase: GetPreferenceDisplayTypeUseCase,
     private val updatePreferenceUseCase: UpdatePreferenceUseCase,
-    private val getFullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val summarizedRecipeUiMapper: SummarizedRecipeUiMapper,
     private val displayTypeUiMapper: DisplayTypeUiMapper,
-    private val tagUiMapper: TagUiMapper,
     private val viewModelScope: CoroutineScope,
     private val snackbarHandler: SnackbarHandler,
 ) {
-    private val _uiState = MutableStateFlow<FavoriteUiState>(FavoriteUiState.Loading)
-    val uiState: StateFlow<FavoriteUiState> = _uiState
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val displayType =
-                displayTypeUiMapper.toDisplayTypeUiModel(getPreferenceDisplayTypeUseCase.invoke())
-            favoriteRepository.getAllFavorites().map { recipes ->
-                recipes.map { summarizedRecipeUiMapper.toUiModel(it) }
-            }.collect { favorites ->
-                loadCuisineFlags(favorites)
-                val currentDisplayType = (_uiState.value as? FavoriteUiState.Data.WithFavorites)?.displayType
-                    ?: displayType
-
-                _uiState.value = if (favorites.isEmpty()) {
-                    FavoriteUiState.Data.Empty
-                } else {
-                    FavoriteUiState.Data.WithFavorites(
-                        displayType = currentDisplayType,
-                        favorites = favorites,
-                    )
-                }
-            }
+    val uiState: StateFlow<FavoriteUiState> = combine(
+        getAllFavoritesUseCase.invoke().map(summarizedRecipeUiMapper::toUiModels),
+        preferenceRepository.getDisplayType().map(displayTypeUiMapper::toDisplayTypeUiModel)
+    ) { favorites, displayType ->
+        if (favorites.isEmpty()) {
+            FavoriteUiState.Data.Empty
+        } else {
+            FavoriteUiState.Data.WithFavorites(
+                displayType = displayType,
+                favorites = favorites,
+            )
         }
-    }
-
-    private fun loadCuisineFlags(recipes: List<SummarizedRecipeUiModel>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val updatedRecipesWithCuisine = recipes.map { recipe ->
-                val fullRecipe = getFullRecipeByIdUseCase.invoke(recipe.id).firstOrNull()?.getOrNull()
-                if (fullRecipe != null) {
-                    recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags))
-                } else {
-                    recipe
-                }
-            }
-            withContext(Dispatchers.Main) {
-                _uiState.value = when (val currentState = _uiState.value) {
-                    is FavoriteUiState.Data.WithFavorites -> currentState.copy(favorites = updatedRecipesWithCuisine)
-                    else -> currentState
-                }
-            }
-        }
-    }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, FavoriteUiState.Loading)
 
     fun onFavoriteClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -87,12 +53,9 @@ class FavoriteViewModel(
     }
 
     fun onDisplayTypeClick() {
-        val currentState = _uiState.value
+        val currentState = uiState.value
         if (currentState is FavoriteUiState.Data.WithFavorites) {
             val newDisplayType = currentState.displayType.next()
-            _uiState.value = currentState.copy(
-                displayType = newDisplayType,
-            )
             viewModelScope.launch(Dispatchers.IO) {
                 updatePreferenceUseCase.invoke(
                     displayTypeUiMapper.toDisplayTypeDomainModel(newDisplayType)
@@ -115,7 +78,7 @@ class FavoriteViewModel(
 
     fun onToggleGroceryListClick(recipeId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val currentState = (_uiState as? FavoriteUiState.Data) as? FavoriteUiState.Data.WithFavorites
+            val currentState = (uiState.value as? FavoriteUiState.Data) as? FavoriteUiState.Data.WithFavorites
             val recipeTitle = currentState?.favorites?.find { it.id == recipeId }?.title.orEmpty()
             val isInGroceryList = groceryListRepository.toggleInGroceryList(recipeId)
             if (isInGroceryList) {
