@@ -8,6 +8,7 @@ import com.team23.neuracrsrecipes.model.uimodel.SummarizedRecipeUiModel
 
 class SummarizedRecipeUiMapper(
     private val imageUiMapper: ImageUiMapper,
+    private val tagUiMapper: TagUiMapper,
 ) {
 
     fun toUiModels(summarizedRecipes: List<RecipeDomainModel.Summarized>) =
@@ -18,7 +19,6 @@ class SummarizedRecipeUiMapper(
             id = id,
             title = title,
             imageProperty = imageUiMapper.toImageProperty(imageUrl, title),
-            cuisineFlag = null,
             languageFlag = when (language) {
                 LanguageDomainModel.ENGLISH -> FlagProperty.UK_US
                 LanguageDomainModel.FRENCH -> FlagProperty.FRENCH
@@ -26,6 +26,7 @@ class SummarizedRecipeUiMapper(
             isFavorite = isFavorite,
             isLocallySaved = source is Source.Local.Saved,
             isInGroceryList = isInGroceryList,
+            cuisineFlag = cuisineRegion?.let { tagUiMapper.toFlagProperty(it) },
         )
     }
 }

@@ -7,4 +7,6 @@ interface TagRepository {
 	suspend fun getAllTags(): List<TagDomainModel>
 
 	fun getRecipeIdByTags(tagsList: List<String>): Flow<List<String>>
+
+	suspend fun getCuisineRegion(recipeId: String): TagDomainModel.CuisineRegion?
 }

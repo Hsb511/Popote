@@ -17,4 +17,9 @@ internal class TagDataRepository(
 
     override fun getRecipeIdByTags(tagsList: List<String>): Flow<List<String>> =
         tagDao.getRecipeIdByLabel(tagsList.flatMap { tagMapper.translateBackToEnglish(it) })
+
+    override suspend fun getCuisineRegion(recipeId: String): TagDomainModel.CuisineRegion? =
+        tagMapper.toTagDomainModel(tagDao.getTagsByRecipeId(recipeId))
+            .filterIsInstance<TagDomainModel.CuisineRegion>()
+            .firstOrNull()
 }

@@ -3,7 +3,6 @@ package com.team23.neuracrsrecipes.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import com.team23.domain.favorite.repository.FavoriteRepository
 import com.team23.domain.grocery.repository.GroceryListRepository
-import com.team23.domain.recipe.usecase.GetFullRecipeByIdUseCase
 import com.team23.domain.recipe.usecase.SearchSummarizedRecipesUseCase
 import com.team23.domain.tag.usecase.GetAndSortAllTagsUseCase
 import com.team23.neuracrsrecipes.handler.SnackbarHandler
@@ -21,14 +20,14 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SearchViewModel(
     private val getAndSortAllTagsUseCase: GetAndSortAllTagsUseCase,
     private val searchSummarizedRecipesUseCase: SearchSummarizedRecipesUseCase,
-    private val fullRecipeByIdUseCase: GetFullRecipeByIdUseCase,
     private val favoriteRepository: FavoriteRepository,
     private val groceryListRepository: GroceryListRepository,
     private val tagUiMapper: TagUiMapper,
@@ -99,24 +98,15 @@ class SearchViewModel(
         searchText: String = searchValue.value,
         tagsList: List<TagUiModel> = tags.value,
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchSummarizedRecipesUseCase.invoke(
-                searchText = searchText,
-                tagsList = tagsList.filter { it.isSelected }.map { it.label },
-            ).collect { recipes ->
-                val recipeUiModels =
-                    recipes.map { recipe -> summarizedRecipeUiMapper.toUiModel(recipe) }
-                withContext(Dispatchers.Main) { _recipes.value = recipeUiModels }
-                // Load cuisine flags for the displayed recipes
-                viewModelScope.launch(Dispatchers.IO) {
-                    val updatedRecipes = recipeUiModels.map { recipe ->
-                        fullRecipeByIdUseCase.invoke(recipe.id).firstOrNull()?.getOrNull()?.let { fullRecipe ->
-                            recipe.copy(cuisineFlag = tagUiMapper.toFlagProperty(fullRecipe.tags))
-                        } ?: recipe
-                    }
-                    withContext(Dispatchers.Main) { _recipes.value = updatedRecipes }
+        val selectedTagLabels = tagsList.filter { it.isSelected }.map { it.label }
+
+        viewModelScope.launch {
+            searchSummarizedRecipesUseCase.invoke(searchText = searchText, tagsList = selectedTagLabels)
+                .map { recipes -> recipes.map(summarizedRecipeUiMapper::toUiModel) }
+                .flowOn(Dispatchers.Default)
+                .collect { recipeUiModels ->
+                    _recipes.value = recipeUiModels
                 }
-            }
         }
     }
 

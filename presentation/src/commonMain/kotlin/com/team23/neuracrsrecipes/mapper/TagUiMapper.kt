@@ -20,8 +20,7 @@ class TagUiMapper {
         }
     }.sortedBy { if (it is TagUiModel.Flag) 0 else 1 }
 
-    fun toFlagProperty(tags: List<TagDomainModel>): FlagProperty? {
-        val cuisineRegionTag = tags.filterIsInstance<TagDomainModel.CuisineRegion>().firstOrNull() ?: return null
+    fun toFlagProperty(cuisineRegionTag: TagDomainModel.CuisineRegion): FlagProperty? {
         return when (cuisineRegionTag.region) {
             TagDomainModel.Region.AMERICAN -> FlagProperty.US
             TagDomainModel.Region.AMERICAN_MEXICAN -> FlagProperty.US_MEXICAN
@@ -40,5 +39,10 @@ class TagUiMapper {
             TagDomainModel.Region.THAI -> FlagProperty.THAI
             TagDomainModel.Region.TURKISH -> FlagProperty.TURKISH
         }
+    }
+
+    fun toFlagProperty(tags: List<TagDomainModel>): FlagProperty? {
+        val cuisineRegionTag = tags.filterIsInstance<TagDomainModel.CuisineRegion>().firstOrNull() ?: return null
+        return toFlagProperty(cuisineRegionTag)
     }
 }

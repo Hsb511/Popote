@@ -22,6 +22,7 @@ sealed class RecipeDomainModel(
         override val isFavorite: Boolean,
         override val source: Source,
         override val isInGroceryList: Boolean,
+        val cuisineRegion: TagDomainModel.CuisineRegion? = null,
     ) : RecipeDomainModel(
         id = id,
         title = title,
